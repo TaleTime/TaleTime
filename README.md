@@ -8,9 +8,9 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 
 ## Screenshots
 
-<center>
-    <img src="./.github/screenshot1.png" height="300" alt="Screenshot">
-</center>
+<p align="center">
+    <img src="./.github/screenshot1.png" height="450" alt="Screenshot">
+</p>
 
 
 ## Getting Started
