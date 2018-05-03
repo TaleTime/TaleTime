@@ -9,7 +9,7 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 ## Screenshots
 
 <center>
-    ![screenshot](./.github/screenshot1.png)
+    <img src="./.github/screenshot1.png" height="300" alt="Screenshot">
 </center>
 
 
