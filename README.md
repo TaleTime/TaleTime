@@ -30,15 +30,15 @@ To be destined...
 The app is built with the Ionic and Angular.js (version 1) frameworks.
 
 - [Interaction Design]()  
-  *Explains how the user will interact with the app.*
+  Explains how the user will interact with the app.
 - [App Architecture]()  
-  *Fundamental structure of the app (abstract).*
+  Fundamental structure of the app (abstract).
 - [Processes]()  
-  *Business process model.*
+  Business process model.
 - [User Accounts]()  
-  *Content of the user profile and its properties.*
+  Content of the user profile and its properties.
 - [Story Structure]()  
-  *How stories are built and can be generated.*
+  How stories are built and can be generated.
 
 
 ## Roadmap
