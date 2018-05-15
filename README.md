@@ -14,12 +14,47 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 
 
 ## Getting Started
-
 ### Building TaleTime
+#### Clone this repository
+``git clone https://github.com/TaleTime/TaleTime.git``
+#### Install Ionic and Cordova
+``npm install -g cordova ionic``
+#### Install dependencies
+``npm install``
+#### Install Cordova plug-ins
+```
+npm install @ngx-translate/core --save
+npm install @ngx-translate/http-loader --save
+ionic cordova plugin add cordova-plugin-globalization
+npm install --save @ionic-native/globalization
+ionic cordova plugin add cordova-plugin-file
+npm install --save @ionic-native/file
+ionic cordova plugin add cordova-plugin-tts
+npm install --save @ionic-native/text-to-speech
+ionic cordova plugin add cordova-plugin-speechrecognition
+npm install --save @ionic-native/speech-recognition
+ionic cordova plugin add cordova-plugin-nativeaudio
+npm install --save @ionic-native/native-audio
+ionic cordova plugin add cordova-sqlite-storage
+npm install --save @ionic/storage
+```
 
-To be translated...
 
-### Contributing
+### Run the application
+#### In a browser without Cordova plugins
+``ionic serve``
+#### In a browser with Cordova plugins
+``ionic cordova run browser``
+#### On Android
+``ionic cordova run android``
+#### On iOS
+``ionic cordova run ios``
+
+Use ``--livereload`` or ``-l`` to enable livereload.
+Use ``-c`` to enable terminal logging.
+
+
+## Contributing
 
 To be destined...
 
