@@ -1,0 +1,8 @@
+node_modules/
+platforms/
+www/
+plugins/
+typings/
+.vscode/
+.sourcemaps
+package-lock.json
