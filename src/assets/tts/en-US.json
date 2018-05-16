@@ -1,0 +1,149 @@
+{
+  "answers": {
+    "multiple": [
+      {
+        "id": 0,
+        "value": "How do you want the story to continue: "
+      },
+      {
+        "id": 1,
+        "value": "How would you like to continue: "
+      },
+      {
+        "id": 2,
+        "value": "You have the choice: "
+      }
+    ],
+    "single": [
+      {
+        "id": 0,
+        "value": "Do you want to continue?"
+      },
+      {
+        "id": 1,
+        "value": "Continue?"
+      }
+    ],
+    "help": [
+      {
+        "id": 0,
+        "value": "Tap a button on the screen to continue"
+      }
+    ]
+  },
+  "linking": {
+    "or": [
+      {
+        "id": 0,
+        "value": "or"
+      }
+    ],
+    "and": [
+      {
+        "id": 0,
+        "value": "and"
+      }
+    ]
+  },
+  "repeat": [
+    {
+      "id": 0,
+      "value": "There was no match. Please say that again."
+    },
+    {
+      "id": 1,
+      "value": "Please say that again."
+    },
+    {
+      "id": 2,
+      "value": "Oops. Please say that again."
+    }
+  ],
+  "agree": [
+    {
+      "id": 0,
+      "value": "Yes"
+    },
+    {
+      "id": 1,
+      "value": "Okay"
+    },
+    {
+      "id": 2,
+      "value": "Yep"
+    }
+  ],
+  "decline": [
+    {
+      "id": 0,
+      "value": "No"
+    }
+  ],
+  "enum": [
+    {
+      "id": 0,
+      "value": "first",
+      "index": 1
+    },
+    {
+      "id": 1,
+      "value": "second",
+      "index": 2
+    },
+    {
+      "id": 2,
+      "value": "third",
+      "index": 3
+    }
+  ],
+  "backwards": [
+    {
+      "id": 0,
+      "value": "back"
+    },
+    {
+      "id": 1,
+      "value": "previous"
+    },
+    {
+      "id": 2,
+      "value": "last"
+    }
+  ],
+  "repeatChapter": [
+    {
+      "id": 0,
+      "value": "repeat"
+    },
+    {
+      "id": 1,
+      "value": "play again"
+    },
+    {
+      "id": 2,
+      "value": "start over"
+    }
+  ],
+  "doNotCare": [
+    {
+      "id": 0,
+      "value": "next"
+    },
+    {
+      "id": 1,
+      "value": "skip"
+    },
+    {
+      "id": 2,
+      "value": "move on"
+    },
+    {
+      "id": 3,
+      "value": "don't care"
+    },
+    {
+      "id": 4,
+      "value": "continue"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'USER_MANAGEMENT_CREATE_PROFILE' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="close()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="profile-content" padding>
+  <div class="profile-box">
+    <h2>
+      {{ 'USER_MANAGEMENT_CREATE_PROFILE_SUBTITLE' | translate }}
+    </h2>
+    <form (ngSubmit)="create()" #createProfileForm="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <ion-item>
+              <ion-label floating>{{'USER_MANAGEMENT_NAME' | translate }}</ion-label>
+              <ion-input type="text" name="name" [(ngModel)]="profileCredentials.name" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Für Kinder</ion-label>
+              <ion-toggle name="child" [(ngModel)]="profileCredentials.child"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col width-33 *ngFor="let profileAvatar of profileAvatars" class="col">
+          <img [class.highlightAvatar]="profileAvatar.id == this.activeAvatarId" src='assets/imgs/profile/{{profileAvatar.name}}' (click)="selectAvatar($event, profileAvatar.id)" />
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button full type="submit" [disabled]="!createProfileForm.form.valid">{{'COMMON_CONTINUE' | translate }}</button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+  </div>
+</ion-content>
