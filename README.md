@@ -15,13 +15,14 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 
 ## Getting Started
 ### Building TaleTime
- 1. Clone this repository
-`git clone https://github.com/TaleTime/TaleTime.git`
-2. Install Ionic and Cordova
-`npm install -g cordova ionic`
-3. Install dependencies
-`npm install`
+ 1. Clone this repository<br>
+ 	``git clone https://github.com/TaleTime/TaleTime.git``
+2. Install Ionic and Cordova<br>
+	``npm install -g cordova ionic``
+3. Install dependencies<br>
+	``npm install``
 4. Install Cordova plug-ins
+
 	```
 	npm install @ngx-translate/core --save
 	npm install @ngx-translate/http-loader --save
@@ -41,14 +42,14 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 
 
 ### Run the application
-#### In a browser without Cordova plugins
-`ionic serve`
-#### In a browser with Cordova plugins
-`ionic cordova run browser`
-#### On Android
-`ionic cordova run android`
-#### On iOS
-`ionic cordova run ios`
+- In a browser without Cordova plugins<br>
+	``ionic serve``
+- In a browser with Cordova plugins<br>
+	``ionic cordova run browser``
+- On Android<br>
+	``ionic cordova run android``
+- On iOS<br>
+	``ionic cordova run ios``
 
 Use `--livereload` or `-l` to enable livereload.
 Use `-c` to enable terminal logging.
