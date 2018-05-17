@@ -67,7 +67,7 @@ The app is built with the Ionic and Angular.js (version 1) frameworks.
 
 - [Interaction Design]()  
   Explains how the user will interact with the app.
-- [App Architecture]()  
+- [App Architecture](docs/app_architecture.md)  
   Fundamental structure of the app (abstract).
 - [Processes]()  
   Business process model.
