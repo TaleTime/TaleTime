@@ -73,7 +73,7 @@ The app is built with the Ionic and Angular.js (version 1) frameworks.
   Business process model.
 - [User Accounts]()  
   Content of the user profile and its properties.
-- [Story Structure]()  
+- [Story Structure](docs/story_structure.md)  
   How stories are built and can be generated.
 
 
@@ -84,4 +84,4 @@ To be destined...
 
 ## License
 
-The main app is licensed under GPLv3, other parts may be licensed differently. For further information, please refer to our [license](https://github.com/TaleTime/TaleTime/blob/master/LICENSE).
+The main app is licensed under GPLv3, other parts may be licensed differently. For further information, please refer to our [license](LICENSE).
