@@ -71,7 +71,7 @@ The app is built with the Ionic and Angular.js (version 1) frameworks.
   Fundamental structure of the app (abstract).
 - [Processes]()  
   Business process model.
-- [User Accounts]()  
+- [User Accounts](docs/UserAccounts.md)  
   Content of the user profile and its properties.
 - [Story Structure](docs/story_structure.md)  
   How stories are built and can be generated.
