@@ -1,12 +1,13 @@
-# <img src="./.github/logo.png" width="100" align="left"> TaleTime
-> TaleTime is an interactive audiobook app for iOS and Android.
+# <img src="./.github/logo.png" width="96" align="left"> TaleTime 
+TaleTime is an interactive audiobook app for iOS and Android.
+
+<br>
 
 **TaleTime** is an innovative app for Android and iOS, that lets children experience a new unique way of listening to audiobooks.
 
 Besides our professionally recorded audiobooks we also give parents the opportunity to record the stories themselves. Recording is very convenient and of course can be done without extensive technical know-how. TaleTime also offers children the opportunity to influence the course of the stories themselves.
 
-
-## Screenshots
+<br>
 
 <p align="center">
     <img src="./.github/screenshot1.png" height="450" alt="Screenshot">
@@ -65,12 +66,10 @@ To be destined...
 
 The app is built with the Ionic and Angular.js (version 1) frameworks.
 
-- [Interaction Design]()  
+- [Interaction Design](docs/interaction_design.md)  
   Explains how the user will interact with the app.
 - [App Architecture](docs/app_architecture.md)  
   Fundamental structure of the app (abstract).
-- [Processes]()  
-  Business process model.
 - [User Accounts](docs/UserAccounts.md)  
   Content of the user profile and its properties.
 - [Story Structure](docs/story_structure.md)  
