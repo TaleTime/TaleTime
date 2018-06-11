@@ -78,7 +78,17 @@ The app is built with the Ionic and Angular.js (version 1) frameworks.
 
 ## Roadmap
 
-To be destined...
+Of course this project is not finished. There are several features that we still want to realize.
+For this we designed a special [roadmap](https://www.github.com/TaleTime/TaleTime/projects/1).
+You can head over there and have a look at all the open issues and start developing on a feature
+of your interest right away.
+
+
+## About us
+
+This project was developed by several students of [Hochschule für Technik und Wirtschaft Saar](http://www.htwsaar.de 'HTW Saar Homepage').
+It has been in continous development for two years and now finally we want to take advantage of the huge
+open source community of github.
 
 
 ## License
