@@ -86,7 +86,7 @@ of your interest right away.
 
 ## About us
 
-This project was developed by several students of [Hochschule für Technik und Wirtschaft Saar](http://www.htwsaar.de 'HTW Saar Homepage).
+This project was developed by several students of [Hochschule für Technik und Wirtschaft Saar](http://www.htwsaar.de 'HTW Saar Homepage').
 It has been in continous development for two years and now finally we want to take advantage of the huge
 open source community of github.
 
