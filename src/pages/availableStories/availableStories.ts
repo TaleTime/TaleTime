@@ -4,9 +4,7 @@ import { HTTP } from '@ionic-native/http';
 import { StoryInformation, StoryInformationWithUrl } from "../../datamodels/storyInformation";
 import { StoryProvider } from "../../providers/story/story";
 import { AlertProvider } from "../../providers/alert/alert";
-import { TranslateService, LangChangeEvent } from "@ngx-translate/core";
-import { FileReader } from "@ionic-native/file";
-import { HttpClient } from "@angular/common/http";
+import { TranslateService } from "@ngx-translate/core";
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Zip } from "@ionic-native/zip";
@@ -15,7 +13,6 @@ import { LoadingController } from "ionic-angular/components/loading/loading-cont
 import { LoadingOptions } from "ionic-angular/components/loading/loading-options";
 import { Loading } from "ionic-angular/components/loading/loading";
 import { NgZone } from "@angular/core";
-import { ToastController } from "ionic-angular/components/toast/toast-controller";
 import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
 
 @Component({

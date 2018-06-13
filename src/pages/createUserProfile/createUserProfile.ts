@@ -4,7 +4,7 @@
  * @date 2017-11-28
  */
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { UserProfile } from "../../datamodels/userProfile"; // for avatars
 

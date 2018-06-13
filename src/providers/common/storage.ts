@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Platform } from "ionic-angular";
 import { File } from "@ionic-native/file";
 import { APP_NAME } from "../../app/constants";
 import { LoggerProvider } from "../logger/logger";

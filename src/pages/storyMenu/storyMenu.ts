@@ -1,14 +1,11 @@
 import { Component } from "@angular/core";
 import { MenuController, NavController, Platform } from "ionic-angular";
-import { SettingsPage } from "../settings/settings";
-import { Subscription } from 'rxjs';
 import { Reader, StoryInformation } from "../../datamodels/storyInformation";
 import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile";
 import { AuthProvider } from '../../providers/auth/auth';
 import { StoryDetailsPage } from "../storyDetails/storyDetails";
 import { StoryProvider } from "../../providers/story/story";
 import { PlayerPage } from "../player/player";
-import { AvailableStoriesPage } from "../availableStories/availableStories";
 import { App } from "ionic-angular/components/app/app";
 
 @Component({

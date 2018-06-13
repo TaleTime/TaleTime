@@ -4,9 +4,7 @@
  * @date 2017-11-20
  */
 import { Component } from '@angular/core';
-import { App, NavController, AlertController, Platform, IonicPage } from 'ionic-angular';
-
-import { TabsPage } from '../tabs/tabs';
+import { App, NavController, Platform } from 'ionic-angular';
 import { StartPage } from '../../pages/start/start'
 import { ChangeUserAccountPinPage } from "../../pages/change-user-account-pin/change-user-account-pin";
 

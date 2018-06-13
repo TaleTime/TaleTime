@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular";
-import { StoryInformationWithUrl, StoryInformation } from '../../datamodels/storyInformation';
-import { DEFAULT_READER, SINGLE_STORY_FILE_NAME, APP_NAME } from "../../app/constants";
+import { StoryInformation } from '../../datamodels/storyInformation';
+import { DEFAULT_READER, SINGLE_STORY_FILE_NAME } from "../../app/constants";
 import { HttpClient } from "@angular/common/http";
 import { ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData } from "../../datamodels/story/story";
 import { Observable } from "rxjs/Observable";
 import { SettingsProvider } from "../settings/settings";
 import { Storage } from "@ionic/storage";
-import { JSZipObject } from "jszip"
 import { File } from "@ionic-native/file";
 import { SaveGameProvider } from "../savegame/savegame";
 import { PublicStoryHelperProvider } from "../public-story-helper/public-story-helper"

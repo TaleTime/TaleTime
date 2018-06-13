@@ -4,7 +4,6 @@ import { NavController, NavParams, Platform } from "ionic-angular";
 //Provider
 import { StoryProvider } from "../../providers/story/story";
 import { AudioProvider } from "../../providers/audio/audio";
-import { AuthProvider } from '../../providers/auth/auth';
 import { AnswerMatchingProvider } from "../../providers/speechRecognition/answerMatching";
 import { SettingsProvider } from "../../providers/settings/settings";
 import { TtsTextProvider } from "../../providers/speechRecognition/ttsText";
@@ -12,7 +11,6 @@ import { TtsTextProvider } from "../../providers/speechRecognition/ttsText";
 //Plugins
 import { SpeechRecognition } from "@ionic-native/speech-recognition";
 import { TextToSpeech } from "@ionic-native/text-to-speech";
-import { File } from '@ionic-native/file';
 
 //Datamodels & Constants
 import { ChapterAttributes, MtgaNextStoryNode, StoryMetaData } from "../../datamodels/story/story";
@@ -23,16 +21,13 @@ import {
 	DEFAULT_READER,
 	FILETYPE_MP4,
 	READER_DIR,
-	STORY_DIR,
-	WWW
+	STORY_DIR
 } from "../../app/constants";
 import { Savegame } from "../../datamodels/savegame";
 
 import { StoryMenuPage } from "../storyMenu/storyMenu";
 import { SaveGameProvider } from "../../providers/savegame/savegame";
 import { PublicStoryHelperProvider } from "../../providers/public-story-helper/public-story-helper";
-import { EventEmitter } from "events";
-import { platform } from "os";
 import { PlatformBridgeProvider } from "../../providers/platform-bridge/platform-bridge";
 
 //import Stack from "ts-data.stack";
@@ -77,7 +72,6 @@ export class PlayerPage implements OnDestroy {
 
 	constructor(public navCtrl: NavController,
 		public navParams: NavParams,
-		private authProvider: AuthProvider,
 		private savegameProvider: SaveGameProvider,
 		private audioProvider: AudioProvider,
 		private platform: Platform,
@@ -88,7 +82,6 @@ export class PlayerPage implements OnDestroy {
 		private tts: TextToSpeech,
 		private matching: AnswerMatchingProvider,
 		private settings: SettingsProvider,
-		private file: File,
 		private publicStoryHelper: PublicStoryHelperProvider,
 		private platformBridge : PlatformBridgeProvider) {
 
@@ -255,11 +248,6 @@ export class PlayerPage implements OnDestroy {
 			}
 			
 		})
-	}
-
-	private switchToTTS() {
-		console.log('Switching to TTS');
-		this.usingTTS = true;
 	}
 
 	/**

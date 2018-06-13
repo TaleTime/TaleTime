@@ -54,7 +54,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { Zip } from '@ionic-native/zip';
 import { PublicStoryHelperProvider } from '../providers/public-story-helper/public-story-helper';
 //installed version 4.0.0 instead of latest, latest requires cordova-plugin-file@6.0.0 but file-transfer plugin requires cordova-plugin-file@5.0.0
-import { Media, MediaObject } from '@ionic-native/media';
+import { Media } from '@ionic-native/media';
 import { SimpleToastProvider } from '../providers/simple-toast/simple-toast';
 import { LoggerProvider } from '../providers/logger/logger';
 import { PlatformBridgeProvider } from '../providers/platform-bridge/platform-bridge';

@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Savegame } from '../../datamodels/savegame';
 import { Storage } from '@ionic/storage';
@@ -15,7 +14,7 @@ export class SaveGameProvider {
   private readonly SAVEGAME_KEY = "SAVEGAMES";
   //Stores a Map, that maps profile ids to a story-id/savegame map
   private savegames: Map<string, Map<string, Savegame>> = new Map();
-  constructor(private http: HttpClient, private storage: Storage, private authProvider: AuthProvider) {
+  constructor(private storage: Storage, private authProvider: AuthProvider) {
     this.storage.ready().then((storage) => {
       this.loadSavegames();
     }).catch(error => {

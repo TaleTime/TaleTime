@@ -2,9 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { SettingsPage } from "../pages/settings/settings";
-import { AvailableStoriesPage } from "../pages/availableStories/availableStories";
-import { InfoPage } from "../pages/info/info";
 
 import { AVAILABLE_LANGUAGES, DEFAULT_LANG } from "./constants"; // added 2017-11-14
 import { Globalization } from "@ionic-native/globalization"; // added 2017-11-14
@@ -13,7 +10,6 @@ import { Subscription } from "rxjs/Subscription"; // added 2017-11-14
 import { TranslateService } from '@ngx-translate/core'; // added for translation 2017-11-14
 
 import { StartPage } from '../pages/start/start';
-import { TabsPage } from '../pages/tabs/tabs';
 import { LoggerProvider } from '../providers/logger/logger';
 
 @Component({

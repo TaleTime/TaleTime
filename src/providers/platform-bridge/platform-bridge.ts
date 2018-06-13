@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular/platform/platform';
-import { Storage } from '@ionic/storage/dist/storage';
 import { WWW } from '../../app/constants';
 import { File } from '@ionic-native/file';
 

@@ -4,9 +4,8 @@
  * @date 2017-11-19
  */
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
 import { SelectUserProfilePage } from '../selectUserProfile/selectUserProfile';
 
 import { AuthProvider } from '../../providers/auth/auth';

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { AvailableStoriesPage } from '../availableStories/availableStories';
-import { StartPage } from '../start/start';
 import { SettingsPage } from '../settings/settings';
 import { StoryMenuPage } from '../storyMenu/storyMenu';
 
