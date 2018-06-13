@@ -58,9 +58,9 @@ Use `-c` to enable terminal logging.
 
 ## Contributing
 
-When implementing a new feature or fixing a bug, please make sure that your code follows the same style as the existing codebase and try writing your code as understandable as possible. You should also test your changes and only commit them if they don't break anything. All comments should be in English.
+When implementing a new feature or fixing a bug, please make sure that your code follows the same style as the existing codebase and try writing your code as understandable as possible. You should also test your changes and only commit them if they don't break anything. Your comments should be in English.
 
-You need to create a new branch for your feature or bug fix with ``git checkout -b <branch-name>``. Now you can make your changes and commit them. Please always use the commit messages to describe briefly what you did. Then push your changes to GitHub with ``git push -u origin <branch-name>`` and open a pull request.
+You will need to create a new branch for your feature or bug fix with ``git checkout -b <branch-name>``. Now you can make your changes and commit them. Please always use the commit messages to describe briefly what you did. Then push your changes to GitHub with ``git push -u origin <branch-name>`` and open a pull request.
 
 
 ## Architecture
