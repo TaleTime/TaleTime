@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, AlertController, ToastController } from "ionic-angular";
+import { IonicPage, NavController } from "ionic-angular";
 import { TranslateService } from '@ngx-translate/core'; // added for translation 2017-11-14
 import { SettingsProvider } from "../../providers/settings/settings";
 import { AuthProvider } from '../../providers/auth/auth';
@@ -41,7 +41,6 @@ export class SettingsPage {
     private settings: SettingsProvider,
     private translate: TranslateService,
     private authProvider: AuthProvider,
-    private alertCtrl: AlertController,
     private toastProvider: SimpleToastProvider) {
     this.selectedLanguage = SettingsPage.getLanguageFromCode(this.settings.language);
 

@@ -8,7 +8,7 @@
  */
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, ModalController, IonicPage } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 import { CreateUserProfilePage } from '../createUserProfile/createUserProfile'

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
 
 import { CreateUserAccountPage } from "../../pages/createUserAccount/createUserAccount";
@@ -7,14 +7,11 @@ import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile"
 import { AuthProvider } from '../../providers/auth/auth';
 
 import { SpeechRecognition } from "@ionic-native/speech-recognition";
-import { Subscription } from "rxjs/Subscription";
 import { Platform } from "ionic-angular/platform/platform";
 import { StorageProvider } from "../../providers/common/storage";
 import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
 import { TranslateService } from "@ngx-translate/core";
 import { PlatformBridgeProvider } from "../../providers/platform-bridge/platform-bridge";
-import { LoggerProvider } from "../../providers/logger/logger";
-import { Storage } from "@ionic/storage/dist/storage";
 
 @Component({
   selector: 'page-start',
@@ -26,14 +23,12 @@ export class StartPage {
   constructor(
     public navCtrl: NavController,
     private storageProvider: StorageProvider,
-    private ionStorage : Storage,
     private authProvider: AuthProvider,
     private speechRecognition: SpeechRecognition,
     private platform: Platform,
     private toastProvider: SimpleToastProvider,
     private translate: TranslateService,
-    private platformBridge: PlatformBridgeProvider,
-    private logger : LoggerProvider
+    private platformBridge: PlatformBridgeProvider
   ) {
 
     this.platform.ready().then(() => {
