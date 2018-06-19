@@ -24,7 +24,7 @@
     </ion-item>
     <ion-list radio-group [(ngModel)]="selectedReader">
         <ion-item class="storydetails">
-            <ion-label>default</ion-label>
+            <ion-label>Text-to-speech</ion-label>
             <ion-radio value="default" (click)="saveReader()"></ion-radio>
         </ion-item>
         <ion-item class="storydetails" *ngFor="let reader of selectedStory.readers">
