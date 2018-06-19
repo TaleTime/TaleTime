@@ -6,7 +6,7 @@ import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile"
 
 import { AuthProvider } from '../../providers/auth/auth';
 
-import { SpeechRecognition } from "@ionic-native/speech-recognition";
+//import { SpeechRecognition } from "@ionic-native/speech-recognition";
 import { Platform } from "ionic-angular/platform/platform";
 import { StorageProvider } from "../../providers/common/storage";
 import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
@@ -24,7 +24,7 @@ export class StartPage {
     public navCtrl: NavController,
     private storageProvider: StorageProvider,
     private authProvider: AuthProvider,
-    private speechRecognition: SpeechRecognition,
+    //private speechRecognition: SpeechRecognition,
     private platform: Platform,
     private toastProvider: SimpleToastProvider,
     private translate: TranslateService,
@@ -32,34 +32,37 @@ export class StartPage {
   ) {
 
     this.platform.ready().then(() => {
-      this.speechRecognition.requestPermission().then(
+      /*this.speechRecognition.requestPermission().then(
         () => {
           console.log("Permission granted - everything OK!");
-          /* To get the file permission needed for downloads, we have to check/create a file or folder */
-          this.requestFilePermission(this.storageProvider);
-        },
-        () => {
-          /* To get the file permission needed for downloads, we have to check/create a file or folder */
+          /* To get the file permission needed for downloads, we have to check/create a file or folder 
           this.requestFilePermission(this.storageProvider);
         }
-      );
+      );*/
+        this.requestFilePermission(this.storageProvider);
+
     });
   }
+  
 
   private requestFilePermission(storage: StorageProvider) {
-    if (this.platformBridge.platformIsBrowser()) {
-      //Workaround for missing file plugin in browser
+    storage.createAppDirOnExtRoot().then(() => {
       this.signIn();
-    } else {
-      storage.createAppDirOnExtRoot().then(() => {
-        this.signIn();
-      }).catch(() => {
-        this.translate.get('PERMISSION_FILE_NEEDED').subscribe((msg) => {
-          this.toastProvider.displayToast(msg, null, true, () => {
-            this.requestFilePermission(storage);
-          });
-        })
-      });
+    }).catch(() => {
+      this.translate.get('PERMISSION_FILE_NEEDED').subscribe((msg) => {
+        this.toastProvider.displayToast(msg, null, true, () => {
+          //this.requestFilePermission(storage);
+        });
+      })
+    });
+    if (this.platformBridge.platformIsBrowser()) {
+      this.authProvider.addTestUser();
+      this.authProvider.login({ name: "Test", email: "test@mail.com", pin: "1234"}).subscribe(allowed => {
+      if (allowed) {
+        this.navCtrl.setRoot(SelectUserProfilePage);
+      }
+    });
+      this.signIn();
     }
   }
 
