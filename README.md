@@ -15,8 +15,10 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 
 
 ## Getting Started
+
 ### Building TaleTime
- 1. Clone this repository<br>
+
+1. Clone this repository<br>
  	``git clone https://github.com/TaleTime/TaleTime.git``
 2. Install Ionic and Cordova<br>
 	``npm install -g cordova ionic``
@@ -43,14 +45,15 @@ Besides our professionally recorded audiobooks we also give parents the opportun
 
 
 ### Run the application
-- In a browser without Cordova plugins<br>
-	``ionic serve``
-- In a browser with Cordova plugins<br>
-	``ionic cordova run browser``
-- On Android<br>
-	``ionic cordova run android``
-- On iOS<br>
-	``ionic cordova run ios``
+
+- In a browser without Cordova plugins  
+  ``ionic serve``
+- In a browser with Cordova plugins  
+  ``ionic cordova run browser``
+- On Android  
+  ``ionic cordova run android``
+- On iOS  
+  ``ionic cordova run ios``
 
 Use `--livereload` or `-l` to enable livereload.
 Use `-c` to enable terminal logging.
@@ -71,7 +74,7 @@ The app is built with the Ionic and Angular.js (version 1) frameworks.
   Explains how the user will interact with the app.
 - [App Architecture](docs/app_architecture.md)  
   Fundamental structure of the app (abstract).
-- [User Accounts](docs/UserAccounts.md)  
+- [User Accounts](docs/user_accounts.md)  
   Content of the user profile and its properties.
 - [Story Structure](docs/story_structure.md)  
   How stories are built and can be generated.
@@ -89,7 +92,7 @@ of your interest right away.
 
 This project was developed by several students of [Hochschule für Technik und Wirtschaft Saar](http://www.htwsaar.de 'HTW Saar Homepage').
 It has been in continous development for two years and now finally we want to take advantage of the huge
-open source community of github.
+open source community of GitHub.
 
 
 ## License
