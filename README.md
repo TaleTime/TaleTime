@@ -97,4 +97,4 @@ open source community of GitHub.
 
 ## License
 
-The main app is licensed under GPLv3, other parts may be licensed differently. For further information, please refer to our [license](LICENSE).
+The app itself is licensed under GPL-3.0, all graphical assets are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. The audio files currently do not have their own license, which does however not mean that they are in public domain. We are going to add a proper license for them as soon as possible. For further information, please refer to our [license](LICENSE.md).
