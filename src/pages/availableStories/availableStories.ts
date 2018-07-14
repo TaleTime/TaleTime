@@ -51,28 +51,15 @@ export class AvailableStoriesPage {
    */
   loadDeviceDefaultStories() {
     let newstory = new StoryInformation();
-    newstory.title = "Der Struwwelpeter";
-    newstory.id = "Der_Struwwelpeter";
-    newstory.author = ["Heinrich Heine"];
-    newstory.date = 1844;
-    newstory.language = "Deutsch";
-    newstory.shortDescription = "In dem Buch erzählt Hoffmann geschichten von Kindern, die nicht brav sind, nicht auf ihre Eltern hören und denen deshalb allerlei grausames Unheil widerfährt.";
-    newstory.medium = 'device';
-    newstory.readers = [{ name: "Johannes Ackner", answersPartOfAudioFile: false }];
-    this.availableStories.push(<StoryInformationWithUrl>newstory);
-
-    newstory = new StoryInformation();
     newstory.title = "Der verlorene Ball";
     newstory.id = "Der_verlorene_Ball";
     newstory.author = ["Sarah Philippi", "Lisa Roisch"];
     newstory.date = 2016;
     newstory.cover = "Titelbild_Der_verlorene_Ball-02.png"
     newstory.language = "Deutsch";
-    newstory.shortDescription = "Hey, ich bin eine Beschreibung von der verlorenen Ball";
+    newstory.shortDescription = "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
     newstory.medium = 'device';
-    newstory.readers = [{ name: "Mama", answersPartOfAudioFile: false },
-    { name: "Papa", answersPartOfAudioFile: false },
-    { name: "Kevin", answersPartOfAudioFile: true },
+    newstory.readers = [{ name: "Kevin", answersPartOfAudioFile: true },
     { name: "Raoul", answersPartOfAudioFile: false }];
     this.availableStories.push(<StoryInformationWithUrl>newstory);
 

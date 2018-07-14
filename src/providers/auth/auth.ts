@@ -37,6 +37,15 @@ export class AuthProvider {
     );
   }
 
+  public addTestUser() {
+    console.log("Test");
+    let userAccount = new UserAccount("Test", "test@mail.com", "1234");
+    this.storage.set(AuthProvider.USER_ACCOUNT_KEY, userAccount);
+    this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+      console.log(val);
+    }));
+  }
+
   public register(credentials) {
     if (credentials.email === null || credentials.name === null || credentials.pin === null) {
       return Observable.throw("Please insert credentials");

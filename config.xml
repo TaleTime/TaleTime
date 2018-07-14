@@ -70,9 +70,6 @@
         <splash height="960" platform="ios" src="resources/screens/ios/Default@2x~iphone.png" width="640" />
         <splash height="480" platform="ios" src="resources/screens/ios/Default~iphone.png" width="320" />
     </platform>
-    <engine name="android" spec="6.3.0" />
-    <engine name="browser" spec="5.0.1" />
-    <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-tts" spec="^0.2.3" />
     <plugin name="cordova-plugin-speechrecognition" spec="^1.2.0" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
@@ -84,7 +81,10 @@
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
     <plugin name="cordova-plugin-zip" spec="^3.1.0" />
     <plugin name="cordova-plugin-advanced-http" spec="^1.9.1" />
-    <plugin name="cordova-plugin-media" spec="^4.0.0" />
     <plugin name="cordova-plugin-file" spec="^5.0.0" />
     <plugin name="cordova-plugin-globalization" spec="^1.0.9" />
+    <plugin name="cordova-plugin-media" spec="^4.0.0" />
+    <engine name="android" spec="6.3.0" />
+    <engine name="browser" spec="5.0.1" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
