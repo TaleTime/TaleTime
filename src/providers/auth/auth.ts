@@ -20,7 +20,6 @@ export class AuthProvider {
   constructor(private storage: Storage, private alertCtrl: AlertController,private logger: LoggerProvider) { }
 
   public trySignIn(callback: () => any) {
-    debugger;
     this.storage.ready().then(
       () => this.storage.get(AuthProvider.USER_ACCOUNT_KEY)
     ).then(
