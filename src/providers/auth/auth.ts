@@ -16,33 +16,25 @@ import { LoggerProvider } from '../logger/logger';
 @Injectable()
 export class AuthProvider {
   static USER_ACCOUNT_KEY: string = 'userAccount';
-  currentUser: UserAccount;
+  private currentUser: UserAccount;
   constructor(private storage: Storage, private alertCtrl: AlertController,private logger: LoggerProvider) { }
 
-  public login(credentials) {
-    console.log(credentials);
-    if (credentials.email === null || credentials.pin === null) {
-      return Observable.throw("Please insert credentials");
-    } else {
-      return Observable.create(observer => {
-        // TODO At this point make a request to your backend to make a real check!
-        let access = false;
-        this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
-          console.log(val);
-          if (val) {
-            let storageUser = new UserAccount(val.name, val.email, val.pin, val.userProfiles);
-            access = (credentials.pin === storageUser.pin && credentials.email === storageUser.email); // TODO workaround because pin is store as pin (later in hash). Must be check via UserAccount and checkPin()
-            if (access) {
-              this.currentUser = storageUser;
-            }
-          }
-
-          observer.next(access);
-          observer.complete();
-        }));
-      });
-
-    }
+  public trySignIn(callback: () => any) {
+    this.storage.ready().then(
+      () => this.storage.get(AuthProvider.USER_ACCOUNT_KEY)
+    ).then(
+      (userAccountData) => {
+        if (userAccountData) {
+          this.currentUser = new UserAccount(
+            userAccountData.name,
+            userAccountData.email,
+            userAccountData.hash,
+            userAccountData.userProfiles
+          );
+          callback();
+        }
+      }
+    );
   }
 
   public addTestUser() {
@@ -58,8 +50,8 @@ export class AuthProvider {
     if (credentials.email === null || credentials.name === null || credentials.pin === null) {
       return Observable.throw("Please insert credentials");
     } else {
-      // TODO At this point store the credentials to your backend!
-      let userAccount = new UserAccount(credentials.name, credentials.email, credentials.pin);
+      let userAccount = new UserAccount(credentials.name, credentials.email);
+      userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
 
       return Observable.create(observer => {
@@ -93,7 +85,7 @@ export class AuthProvider {
 
     if (this.currentUserAccount.checkPin(oldPin)) {
       if (newPin === retypePin) {
-        this.currentUserAccount.pin = newPin;
+        this.currentUserAccount.updatePin(newPin);
         this.save();
       } else {
         response.success = false;
@@ -134,19 +126,6 @@ export class AuthProvider {
     return this.currentUserAccount.activeUserProfile;
   }
 
-  public getUserAccount(callback): void {
-    let userAccount;
-    this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
-      if (val) {
-        userAccount = new UserAccount(val.name, val.email, val.pin);
-      }
-      callback(userAccount);
-    }).catch(storageError => {
-      //TODO: Matthias - Handle storage errors
-      this.logger.error(storageError);
-    }));
-  }
-
   public logout() {
     return Observable.create(observer => {
       this.currentUser = null;
@@ -158,10 +137,6 @@ export class AuthProvider {
 
   private save(userAccount?: UserAccount) {
     this.storage.set(AuthProvider.USER_ACCOUNT_KEY, (userAccount || this.currentUserAccount));
-  }
-
-  public isValid(pin: any): boolean {
-    return this.currentUser.isValid(pin);
   }
 
   get currentUserAccount(): UserAccount {
@@ -199,7 +174,7 @@ export class AuthProvider {
           text: 'Ok', // TODO tobi i18
           handler: data => {
             if (validFn) {
-              validFn(this.isValid(data.pin));
+              validFn(this.currentUserAccount.checkPin(data.pin));
             } else {
               this.logger.log('Ok clicked');
             }

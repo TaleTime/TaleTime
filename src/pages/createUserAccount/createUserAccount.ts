@@ -30,24 +30,12 @@ export class CreateUserAccountPage {
         this.createSuccess = true;
 
         // automatic login user
-        this.login();
+        this.authProvider.trySignIn(() => this.navCtrl.setRoot(SelectUserProfilePage));
       } else {
         this.showPopup("Error", "Problem creating account.");
       }
     }, error => {
       this.showPopup("Error", error);
-    });
-  }
-
-  public login() {
-    this.authProvider.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {
-        this.navCtrl.setRoot(SelectUserProfilePage);
-      } else {
-        this.showError("Access Denied");
-      }
-    }, error => {
-      this.showError(error);
     });
   }
 

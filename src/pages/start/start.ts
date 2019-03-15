@@ -68,18 +68,10 @@ export class StartPage {
 
   private signIn() {
     let self = this;
-
-    this.authProvider.getUserAccount(function(userAccount) {
-      if (userAccount) {
-        self.authProvider.login(userAccount).subscribe(allowed => {
-          if (allowed) {
-            self.navCtrl.setRoot(SelectUserProfilePage);
-          }
-        });
-
-      }
+    this.authProvider.trySignIn(() => {
+      console.log("Signed in");
+      self.navCtrl.setRoot(SelectUserProfilePage);
     });
-
   }
 
   goToCreateAccount() {
