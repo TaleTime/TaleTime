@@ -81,18 +81,35 @@ export class SettingsProvider {
 
     set speechRecognition(value: boolean) {
         // make sure the user gave the permission to use the microphone
-        if (value && !this.speechRecognitionProvider.hasPermission()) {
-            this.speechRecognitionProvider.requestPermission().then(
-                () => this.settings.speechRecognition = value,
-                () => {
-                    this.alert.createAlert("Error", "Permission needed to use Speech Recognition", [{ text: "OK" }]).present();
-                    this.settings.speechRecognition = false;
-                }
+        if (value) {
+            this.speechRecognitionProvider.hasPermission().then(
+                (hasPermission: boolean) => {
+                    if (hasPermission){
+                        this.updateAndSaveSpeechRecognitionValue(value);  
+                    } else {
+                        this.speechRecognitionProvider.requestPermission().then(
+                            () => this.updateAndSaveSpeechRecognitionValue(value),
+                            () => {
+                                this.alert.createAlert("Error", 
+                                "Permission needed to use Speech Recognition", 
+                                [{ text: "OK" }])
+                                .present();
+                                this.updateAndSaveSpeechRecognitionValue(false);
+                            }
+                        )            
+                    }
+                },
+                () => this.updateAndSaveSpeechRecognitionValue(false)
             )
         } else {
-            this.logger.log("Speech rec set to " + value);
-            this.settings.speechRecognition = value;
+            this.updateAndSaveSpeechRecognitionValue(value);
         }
+        
+    }
+
+    private updateAndSaveSpeechRecognitionValue(value: boolean): void {
+        this.logger.log("Speech rec set to " + value);
+        this.settings.speechRecognition = value;
         this.save();
     }
 
