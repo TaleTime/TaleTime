@@ -37,6 +37,37 @@ export class AuthProvider {
     );
   }
 
+  /** This method has been removed in the latest merge from March;
+   * it is used in start.ts though. Removal was maybe done because of hashing PIN.
+   * TODO: Find out how to modify start.ts in order to remove this function here again.
+   * @param credentials
+   */
+  public login(credentials) {
+    console.log(credentials);
+    if (credentials.email === null || credentials.pin === null) {
+      return Observable.throw("Please insert credentials");
+    } else {
+      return Observable.create(observer => {
+        // TODO At this point make a request to your backend to make a real check!
+        let access = false;
+        this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+          console.log(val);
+          if (val) {
+            let storageUser = new UserAccount(val.name, val.email, val.pin, val.userProfiles);
+            access = (credentials.pin === storageUser.pin && credentials.email === storageUser.email); // TODO workaround because pin is store as pin (later in hash). Must be check via UserAccount and checkPin()
+            if (access) {
+              this.currentUser = storageUser;
+            }
+          }
+
+          observer.next(access);
+          observer.complete();
+        }));
+      });
+
+    }
+  }
+
   public addTestUser() {
     console.log("Test");
     let userAccount = new UserAccount("Test", "test@mail.com", "1234");
