@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HTTP } from '@ionic-native/http';
+import { HTTP } from '@ionic-native/http/ngx';
 import { MyApp } from './app.component';
 
 /** Pages import */
@@ -42,19 +42,19 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicStorageModule } from '@ionic/storage';
-import { TextToSpeech } from "@ionic-native/text-to-speech";
-import { SpeechRecognition } from "@ionic-native/speech-recognition";
-import { NativeAudio } from "@ionic-native/native-audio";
-import { Globalization } from "@ionic-native/globalization";
-import { File } from "@ionic-native/file";
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { TextToSpeech } from "@ionic-native/text-to-speech/ngx";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
+import { NativeAudio } from "@ionic-native/native-audio/ngx";
+import { Globalization } from "@ionic-native/globalization/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { SaveGameProvider } from '../providers/savegame/savegame';
-import { FileTransfer } from '@ionic-native/file-transfer';
-import { Zip } from '@ionic-native/zip';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { Zip } from '@ionic-native/zip/ngx';
 import { PublicStoryHelperProvider } from '../providers/public-story-helper/public-story-helper';
 //installed version 4.0.0 instead of latest, latest requires cordova-plugin-file@6.0.0 but file-transfer plugin requires cordova-plugin-file@5.0.0
-import { Media } from '@ionic-native/media';
+import { Media } from '@ionic-native/media/ngx';
 import { SimpleToastProvider } from '../providers/simple-toast/simple-toast';
 import { LoggerProvider } from '../providers/logger/logger';
 import { PlatformBridgeProvider } from '../providers/platform-bridge/platform-bridge';

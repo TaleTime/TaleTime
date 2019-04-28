@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular/platform/platform';
 import { WWW } from '../../app/constants';
-import { File } from '@ionic-native/file';
+import { File } from '@ionic-native/file/ngx';
 
 /*
   Generated class for the PlatformBridgeProvider provider.

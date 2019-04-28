@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Media, MediaObject } from '@ionic-native/media';
+import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { EventEmitter } from "events";
 import { LoggerProvider } from "../logger/logger";
 

@@ -7,7 +7,7 @@ import { ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaDa
 import { Observable } from "rxjs/Observable";
 import { SettingsProvider } from "../settings/settings";
 import { Storage } from "@ionic/storage";
-import { File } from "@ionic-native/file";
+import { File } from "@ionic-native/file/ngx";
 import { SaveGameProvider } from "../savegame/savegame";
 import { PublicStoryHelperProvider } from "../public-story-helper/public-story-helper"
 import { LoggerProvider } from "../logger/logger";

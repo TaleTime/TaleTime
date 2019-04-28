@@ -9,8 +9,8 @@ import { SettingsProvider } from "../../providers/settings/settings";
 import { TtsTextProvider } from "../../providers/speechRecognition/ttsText";
 
 //Plugins
-import { SpeechRecognition } from "@ionic-native/speech-recognition";
-import { TextToSpeech } from "@ionic-native/text-to-speech";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
+import { TextToSpeech } from "@ionic-native/text-to-speech/ngx";
 
 //Datamodels & Constants
 import { ChapterAttributes, MtgaNextStoryNode, StoryMetaData } from "../../datamodels/story/story";

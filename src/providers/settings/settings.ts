@@ -4,7 +4,7 @@
  */
 
 import { Injectable } from "@angular/core";
-import { SpeechRecognition } from "@ionic-native/speech-recognition";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { LanguageFileProvider } from "../speechRecognition/languageFile";

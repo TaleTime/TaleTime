@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { File } from '@ionic-native/file'
+import { File } from '@ionic-native/file/ngx'
 import { APP_NAME, READER_DIR, FILETYPE_MP4 } from '../../app/constants';
 import { StoryInformationWithUrl, StoryInformation } from '../../datamodels/storyInformation'
 import { SettingsProvider } from '../../providers/settings/settings'
