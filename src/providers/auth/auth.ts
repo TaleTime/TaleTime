@@ -46,7 +46,7 @@ export class AuthProvider {
     }));
   }
 
-  public register(credentials) {
+  public register(credentials: { name: any; email: any; pin: any; }) {
     if (credentials.email === null || credentials.name === null || credentials.pin === null) {
       return Observable.throw("Please insert credentials");
     } else {
@@ -54,14 +54,14 @@ export class AuthProvider {
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
 
-      return Observable.create(observer => {
+      return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
         observer.next(true);
         observer.complete();
       });
     }
   }
 
-  public createUserProfile(credentials) {
+  public createUserProfile(credentials: { name: any; avatarId: any; child: any; }) {
     if (credentials.name === null) {
       return Observable.throw("Please insert credentials");
     } else {
@@ -70,7 +70,7 @@ export class AuthProvider {
       this.currentUserAccount.addUserProfile(userProfile);
       this.save();
 
-      return Observable.create(observer => {
+      return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
         observer.next(true);
         observer.complete();
       });
@@ -96,27 +96,27 @@ export class AuthProvider {
       response.reason = 'Old pin do not match' // TODO Tobi i18n
     }
 
-    return Observable.create(observer => {
+    return Observable.create((observer: { next: (arg0: { success: boolean; reason: string; }) => void; complete: () => void; }) => {
       observer.next(response);
       observer.complete();
     });
   }
 
-  public deleteUserProfile(userProfileId) {
+  public deleteUserProfile(userProfileId: string) {
     this.currentUserAccount.removeUserProfile(userProfileId);
     this.save();
 
-    return Observable.create(observer => {
+    return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
       observer.next(true);
       observer.complete();
     });
   }
 
-  public setActiveUserProfile(userProfileId) {
+  public setActiveUserProfile(userProfileId: string) {
     this.currentUserAccount.setActiveUserProfile(userProfileId);
     this.save();
 
-    return Observable.create(observer => {
+    return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
       observer.next(true);
       observer.complete();
     });
@@ -126,8 +126,38 @@ export class AuthProvider {
     return this.currentUserAccount.activeUserProfile;
   }
 
+   public login(credentials) 
+   {
+    console.log(credentials);
+    if (credentials.email === null || credentials.pin === null) 
+    {
+      return Observable.throw("Please insert credentials");
+    } 
+    else 
+    {
+      return Observable.create(observer => {
+        // TODO At this point make a request to your backend to make a real check!
+        let access = false;
+        this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+          console.log(val);
+          if (val) {
+            let storageUser = new UserAccount(val.name, val.email, val.pin, val.userProfiles);
+            access = (storageUser.checkCredentials(credentials.email, credentials.pin)); // TODO workaround because pin is store as pin (later in hash). Must be check via UserAccount and checkPin()
+            if (access) {
+              this.currentUser = storageUser;
+            }
+          }
+
+          observer.next(access);
+          observer.complete();
+        }));
+      });
+
+    }
+   }
+
   public logout() {
-    return Observable.create(observer => {
+    return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
       this.currentUser = null;
       this.storage.remove(AuthProvider.USER_ACCOUNT_KEY);
       observer.next(true);
