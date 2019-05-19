@@ -22,7 +22,8 @@
   </ion-row>
   <ion-card *ngFor="let story of this.stories">
     <ion-item>
-      <ion-icon item-start name="book" style="font-size: 64px;"></ion-icon>
+      <img src={{story.cover}} />
+<!--      <ion-icon item-start name="book" style="font-size: 24px;"></ion-icon>-->
       <h1>{{story.title}}</h1>
       <h2>{{story.author}}</h2>
       <p>{{story.date}}</p>

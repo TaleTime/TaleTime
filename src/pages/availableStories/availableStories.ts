@@ -55,7 +55,7 @@ export class AvailableStoriesPage {
     newstory.id = "Der_verlorene_Ball";
     newstory.author = ["Sarah Philippi", "Lisa Roisch"];
     newstory.date = 2016;
-    newstory.cover = "Titelbild_Der_verlorene_Ball-02.png"
+    newstory.cover = "Titelbild_Der_verlorene_Ball-02.png";
     newstory.language = "Deutsch";
     newstory.shortDescription = "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
     newstory.medium = 'device';
