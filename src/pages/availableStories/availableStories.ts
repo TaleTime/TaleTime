@@ -1,13 +1,13 @@
 import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
-import { HTTP } from '@ionic-native/http';
+import { HTTP } from '@ionic-native/http/ngx';
 import { StoryInformation, StoryInformationWithUrl } from "../../datamodels/storyInformation";
 import { StoryProvider } from "../../providers/story/story";
 import { AlertProvider } from "../../providers/alert/alert";
 import { TranslateService } from "@ngx-translate/core";
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
-import { Zip } from "@ionic-native/zip";
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { Zip } from "@ionic-native/zip/ngx";
 import { Platform } from "ionic-angular/platform/platform";
 import { LoadingController } from "ionic-angular/components/loading/loading-controller";
 import { LoadingOptions } from "ionic-angular/components/loading/loading-options";

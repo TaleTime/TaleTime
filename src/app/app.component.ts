@@ -1,10 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { AVAILABLE_LANGUAGES, DEFAULT_LANG } from "./constants"; // added 2017-11-14
-import { Globalization } from "@ionic-native/globalization"; // added 2017-11-14
+import { Globalization } from "@ionic-native/globalization/ngx"; // added 2017-11-14
 import { SettingsProvider } from "../providers/settings/settings"; // added 2017-11-14
 import { Subscription } from "rxjs/Subscription"; // added 2017-11-14
 import { TranslateService } from '@ngx-translate/core'; // added for translation 2017-11-14
