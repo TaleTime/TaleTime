@@ -63,7 +63,17 @@ export class AvailableStoriesPage {
     { name: "Raoul", answersPartOfAudioFile: false }];
     this.availableStories.push(<StoryInformationWithUrl>newstory);
 
-
+    let newstory2 = new StoryInformation();
+    newstory2.title = "Celebrating Shuby the Shy Sheep";
+    newstory2.id = "Celebrating_Shuby_the_Shy_Sheep";
+    newstory2.author = ["André Miede", "Sebastian Barth"];
+    newstory2.date = 2018;
+    newstory2.cover = ""
+    newstory2.language = "English";
+    newstory2.shortDescription = "Description of \"Celebrating Shuby the Shy Sheep\"";
+    newstory2.medium = 'device';
+    newstory2.readers = [];
+    this.availableStories.push(<StoryInformationWithUrl>newstory2);
   }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
