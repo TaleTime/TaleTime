@@ -68,7 +68,7 @@ export class AvailableStoriesPage {
     newstory2.id = "Celebrating_Shuby_the_Shy_Sheep";
     newstory2.author = ["André Miede", "Sebastian Barth"];
     newstory2.date = 2018;
-    newstory2.cover = ""
+    newstory2.cover = "";
     newstory2.language = "English";
     newstory2.shortDescription = "Description of \"Celebrating Shuby the Shy Sheep\"";
     newstory2.medium = 'device';

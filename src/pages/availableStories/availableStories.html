@@ -5,20 +5,23 @@
 </ion-header>
 
 <ion-content class="content">
+
   <ion-card *ngFor="let story of availableStories" (click)="addStory(story)">
+
     <ion-item>
       <ion-thumbnail item-start>
         <ion-icon *ngIf="!story.cover" item-start name="book" style="font-size: 64px;"></ion-icon>
-        <ion-img *ngIf="story.cover" item-start src='assets/imgs/story/{{story.cover}}'></ion-img>
+        <ion-img *ngIf="story.cover" item-start src='assets/stories/{{story.id}}/{{story.cover}}'></ion-img>
       </ion-thumbnail>
-
-
       <h1><ion-icon name="cloud-download" *ngIf="story.medium === 'cloud'"></ion-icon> {{story.title}}</h1>
-      <h2>{{story.author}}</h2>
+      <h2>{{story.author.join(', ')}}</h2>
       <p>{{story.date}}</p>
     </ion-item>
+
     <ion-card-content>
       <p>{{story.shortDescription}}</p>
     </ion-card-content>
+
   </ion-card>
+
 </ion-content>
