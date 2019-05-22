@@ -55,7 +55,7 @@ export class AvailableStoriesPage {
     newstory.id = "Der_verlorene_Ball";
     newstory.author = ["Sarah Philippi", "Lisa Roisch"];
     newstory.date = 2016;
-    newstory.cover = "Titelbild_Der_verlorene_Ball-02.png"
+    newstory.cover = "Titelbild_Der_verlorene_Ball-02.png";
     newstory.language = "Deutsch";
     newstory.shortDescription = "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
     newstory.medium = 'device';
@@ -68,7 +68,7 @@ export class AvailableStoriesPage {
     newstory2.id = "Celebrating_Shuby_the_Shy_Sheep";
     newstory2.author = ["André Miede", "Sebastian Barth"];
     newstory2.date = 2018;
-    newstory2.cover = ""
+    newstory2.cover = "";
     newstory2.language = "English";
     newstory2.shortDescription = "Description of \"Celebrating Shuby the Shy Sheep\"";
     newstory2.medium = 'device';

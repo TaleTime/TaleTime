@@ -1,13 +1,13 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {Component} from "@angular/core";
+import {IonicPage, NavController, NavParams} from "ionic-angular";
 
-import { StoryInformation } from "../../datamodels/storyInformation";
-import { StoryProvider } from "../../providers/story/story";
+import {StoryInformation} from "../../datamodels/storyInformation";
+import {StoryProvider} from "../../providers/story/story";
 
-import { PlayerPage } from "../player/player";
-import { STORY_DIR } from "../../app/constants";
-import { SaveGameProvider } from "../../providers/savegame/savegame"
-import { PublicStoryHelperProvider } from "../../providers/public-story-helper/public-story-helper";
+import {PlayerPage} from "../player/player";
+import {STORY_DIR} from "../../app/constants";
+import {SaveGameProvider} from "../../providers/savegame/savegame"
+import {PublicStoryHelperProvider} from "../../providers/public-story-helper/public-story-helper";
 
 /**
  * Generated class for the StoryDetailsPage page.
@@ -27,19 +27,19 @@ export class StoryDetailsPage {
   imgPath: string = 'dummy.png';
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    public storyProvider: StoryProvider,
-    private savegameProvider: SaveGameProvider,
-    private publicStoryHelper: PublicStoryHelperProvider) {
+              public navParams: NavParams,
+              public storyProvider: StoryProvider,
+              private savegameProvider: SaveGameProvider,
+              private publicStoryHelper: PublicStoryHelperProvider) {
     this.selectedStory = navParams.get("selectedStory");
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
-    
-    if(this.selectedStory.medium === "cloud"){
+
+    if (this.selectedStory.medium === "cloud") {
       this.imgPath = this.publicStoryHelper.getThumbnailPathForStory(this.selectedStory);
-    }else{
+    } else {
       this.imgPath = STORY_DIR + this.selectedStory.id + '/icon.png';
     }
-    console.log("ImgPath:",this.imgPath)
+    console.log("ImgPath:", this.imgPath)
     this.selectedReader = this.savegameProvider.loadSavegame(this.selectedStory.id).reader;
   }
 
