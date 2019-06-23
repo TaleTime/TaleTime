@@ -6,7 +6,7 @@
 
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from "@angular/common/http";
 
 import { PredefinedTexts } from "../../datamodels/predefinedTexts";
 import { FILETYPE_JSON, TTS_RES } from "../../app/constants";
@@ -14,12 +14,13 @@ import { LoggerProvider } from "../logger/logger";
 
 @Injectable()
 export class LanguageFileProvider {
-
   private _preDefinedTexts: PredefinedTexts;
 
   constructor(public http: HttpClient, private logger: LoggerProvider) {
     this.logger.log("Language file service instantiated");
-    this.loadLanguageFile().subscribe(() => this.logger.log("Language file subscription ok"));
+    this.loadLanguageFile().subscribe(() =>
+      this.logger.log("Language file subscription ok")
+    );
   }
 
   get preDefinedTexts(): PredefinedTexts {
@@ -30,21 +31,18 @@ export class LanguageFileProvider {
     this._preDefinedTexts = value;
   }
 
-  public loadLanguageFile(language: string = 'de-DE') {
-    return Observable.create(
-      (observer) => {
-        this.http.get(TTS_RES + language + FILETYPE_JSON).subscribe(
-          (texts: PredefinedTexts) => {
-            this.logger.log("Loaded language file for <" + language + ">");
-            this.preDefinedTexts = texts;
-            this.logger.log("Loaded language file is:");
-            this.logger.log(texts);
-            observer.next(true);
-            observer.complete();
-          }
-        );
-      }
-    );
+  public loadLanguageFile(language: string = "de-DE") {
+    return Observable.create((observer) => {
+      this.http
+        .get(TTS_RES + language + FILETYPE_JSON)
+        .subscribe((texts: PredefinedTexts) => {
+          this.logger.log("Loaded language file for <" + language + ">");
+          this.preDefinedTexts = texts;
+          this.logger.log("Loaded language file is:");
+          this.logger.log(texts);
+          observer.next(true);
+          observer.complete();
+        });
+    });
   }
-
 }

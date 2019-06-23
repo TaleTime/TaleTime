@@ -7,17 +7,23 @@ import { Injectable } from "@angular/core";
 
 import { MtgaNextStoryNode } from "../../datamodels/story/story";
 import { LanguageFileProvider } from "./languageFile";
-import { ANSWER_CHAPTER_BACKWARDS, ANSWER_CHAPTER_REPEAT } from "../../app/constants";
+import {
+  ANSWER_CHAPTER_BACKWARDS,
+  ANSWER_CHAPTER_REPEAT
+} from "../../app/constants";
 import { LoggerProvider } from "../logger/logger";
 
 @Injectable()
 export class AnswerMatchingProvider {
+  constructor(
+    private languageFileProvider: LanguageFileProvider,
+    private logger: LoggerProvider
+  ) {}
 
-  constructor(private languageFileProvider: LanguageFileProvider, private logger: LoggerProvider) {
-  }
-
-  public match(result: string[], answers: MtgaNextStoryNode[]): MtgaNextStoryNode | string | null {
-
+  public match(
+    result: string[],
+    answers: MtgaNextStoryNode[]
+  ): MtgaNextStoryNode | string | null {
     if (answers.length != 1) {
       // find exact math considering the hierachy
       for (let i = 0; i < result.length; i++) {
@@ -45,7 +51,7 @@ export class AnswerMatchingProvider {
     for (let i = 0; i < result.length; i++) {
       for (let e of this.languageFileProvider.preDefinedTexts.enum) {
         if (AnswerMatchingProvider.checkContent(e.value, result[i])) {
-          return answers[e.index - 1]
+          return answers[e.index - 1];
         }
       }
     }
@@ -72,7 +78,9 @@ export class AnswerMatchingProvider {
     for (let i = 0; i < result.length; i++) {
       for (let e of this.languageFileProvider.preDefinedTexts.doNotCare) {
         if (AnswerMatchingProvider.checkContent(e.value, result[i])) {
-          return answers[AnswerMatchingProvider.createRandomNumber(answers.length)];
+          return answers[
+            AnswerMatchingProvider.createRandomNumber(answers.length)
+          ];
         }
       }
     }
@@ -82,12 +90,18 @@ export class AnswerMatchingProvider {
 
   private static checkContent(search: string, containedIn: string) {
     search = AnswerMatchingProvider.removeSpecialCharacters(search);
-    console.log("Checking if <" + containedIn.toLowerCase() + "> contains <" + search.toLowerCase() + ">");
+    console.log(
+      "Checking if <" +
+        containedIn.toLowerCase() +
+        "> contains <" +
+        search.toLowerCase() +
+        ">"
+    );
     return containedIn.toLowerCase().indexOf(search.toLowerCase()) > -1;
   }
 
   private static removeSpecialCharacters(s: string) {
-    return s.replace(/[^a-zA-Z0-9\s]/g, '');
+    return s.replace(/[^a-zA-Z0-9\s]/g, "");
   }
 
   private static createRandomNumber(max: number): number {

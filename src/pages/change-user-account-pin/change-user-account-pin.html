@@ -5,13 +5,11 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Change pin</ion-title> <!-- TODO i18n Tobi -->
+    <ion-title>Change pin</ion-title>
+    <!-- TODO i18n Tobi -->
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <form (ngSubmit)="changePin()" #changePinForm="ngForm">
@@ -19,26 +17,52 @@
       <ion-col>
         <ion-list inset>
           <ion-item>
-            <ion-label floating>Type your current pin</ion-label> <!-- TODO i18n Tobi -->
-            <ion-input type="password" name="old-pin" [(ngModel)]="credentials.oldPin" required></ion-input>
+            <ion-label floating>Type your current pin</ion-label>
+            <!-- TODO i18n Tobi -->
+            <ion-input
+              type="password"
+              name="old-pin"
+              [(ngModel)]="credentials.oldPin"
+              required
+            ></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label floating>Type your new pin</ion-label> <!-- TODO i18n Tobi -->
-            <ion-input type="password" name="pin" [(ngModel)]="credentials.pin" required></ion-input>
+            <ion-label floating>Type your new pin</ion-label>
+            <!-- TODO i18n Tobi -->
+            <ion-input
+              type="password"
+              name="pin"
+              [(ngModel)]="credentials.pin"
+              required
+            ></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label floating>Retype your new pin</ion-label> <!-- TODO i18n Tobi -->
-            <ion-input type="password" name="retype-pin" [(ngModel)]="credentials.retypePin" required></ion-input>
+            <ion-label floating>Retype your new pin</ion-label>
+            <!-- TODO i18n Tobi -->
+            <ion-input
+              type="password"
+              name="retype-pin"
+              [(ngModel)]="credentials.retypePin"
+              required
+            ></ion-input>
           </ion-item>
-
         </ion-list>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button ion-button class="submit-btn" full type="submit" [disabled]="!changePinForm.form.valid">Save</button> <!-- TODO i18n Tobi -->
+        <button
+          ion-button
+          class="submit-btn"
+          full
+          type="submit"
+          [disabled]="!changePinForm.form.valid"
+        >
+          Save
+        </button>
+        <!-- TODO i18n Tobi -->
       </ion-col>
     </ion-row>
   </form>

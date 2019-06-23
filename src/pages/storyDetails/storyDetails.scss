@@ -1,16 +1,16 @@
-page-story-details {}
+page-story-details {
+}
 
 .storydetails {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .detailButton {
-    background-color: transparent;
-    text-align: center;
+  background-color: transparent;
+  text-align: center;
 }
 
 .buttonDetails {
-    width: 75%; 
-    background-color: map-get($colors , oldrose );
-
+  width: 75%;
+  background-color: map-get($colors, oldrose);
 }

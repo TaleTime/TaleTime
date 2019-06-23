@@ -1,4 +1,5 @@
-export class StoryInformation { // TODO tobi des todes!
+export class StoryInformation {
+  // TODO tobi des todes!
   public id: string;
   public title: string;
   public author: string[];

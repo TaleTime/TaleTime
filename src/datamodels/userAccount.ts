@@ -14,7 +14,12 @@ export class UserAccount {
   public userProfiles: Map<string, UserProfile>;
   public activeUserProfile: UserProfile;
 
-  constructor(name: string, email: string, hash?: string, userProfiles?: Map<string, UserProfile>) {
+  constructor(
+    name: string,
+    email: string,
+    hash?: string,
+    userProfiles?: Map<string, UserProfile>
+  ) {
     this.name = name;
     this.email = email;
     this.hash = hash || "";
@@ -26,7 +31,7 @@ export class UserAccount {
   }
 
   public checkPin(pin: string) {
-    return (sha256(pin) === this.hash);
+    return sha256(pin) === this.hash;
   }
 
   public checkCredentials(email: string, pin: string) {

@@ -1,13 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HTTP } from '@ionic-native/http/ngx';
-import { MyApp } from './app.component';
+import { BrowserModule } from "@angular/platform-browser";
+import { ErrorHandler, NgModule } from "@angular/core";
+import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
+import { HTTP } from "@ionic-native/http/ngx";
+import { MyApp } from "./app.component";
 
 /** Pages import */
-import { TabsPage } from '../pages/tabs/tabs';
+import { TabsPage } from "../pages/tabs/tabs";
 
-import { StartPage } from "../pages/start/start"
+import { StartPage } from "../pages/start/start";
 import { StoryMenuPage } from "../pages/storyMenu/storyMenu";
 
 import { UserAccountPage } from "../pages/userAccount/userAccount";
@@ -22,8 +22,8 @@ import { InfoPage } from "../pages/info/info";
 import { PlayerPage } from "../pages/player/player";
 import { ChangeUserAccountPinPage } from "../pages/change-user-account-pin/change-user-account-pin";
 
-import {CreditsPage} from "../pages/credits/credits";
-import {ImpressumPage} from "../pages/impressum/impressum";
+import { CreditsPage } from "../pages/credits/credits";
+import { ImpressumPage } from "../pages/impressum/impressum";
 
 /** Providers import */
 import { AlertProvider } from "../providers/alert/alert";
@@ -34,33 +34,32 @@ import { LanguageFileProvider } from "../providers/speechRecognition/languageFil
 import { TtsTextProvider } from "../providers/speechRecognition/ttsText";
 import { StorageProvider } from "../providers/common/storage";
 import { AudioProvider } from "../providers/audio/audio";
-import { AuthProvider } from '../providers/auth/auth';
-
+import { AuthProvider } from "../providers/auth/auth";
 
 /** Ionic framework imports */
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { IonicStorageModule } from "@ionic/storage";
 import { TextToSpeech } from "@ionic-native/text-to-speech/ngx";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { NativeAudio } from "@ionic-native/native-audio/ngx";
 import { Globalization } from "@ionic-native/globalization/ngx";
 import { File } from "@ionic-native/file/ngx";
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { SaveGameProvider } from '../providers/savegame/savegame';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-import { Zip } from '@ionic-native/zip/ngx';
-import { PublicStoryHelperProvider } from '../providers/public-story-helper/public-story-helper';
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { SaveGameProvider } from "../providers/savegame/savegame";
+import { FileTransfer } from "@ionic-native/file-transfer/ngx";
+import { Zip } from "@ionic-native/zip/ngx";
+import { PublicStoryHelperProvider } from "../providers/public-story-helper/public-story-helper";
 //installed version 4.0.0 instead of latest, latest requires cordova-plugin-file@6.0.0 but file-transfer plugin requires cordova-plugin-file@5.0.0
-import { Media } from '@ionic-native/media/ngx';
-import { SimpleToastProvider } from '../providers/simple-toast/simple-toast';
-import { LoggerProvider } from '../providers/logger/logger';
-import { PlatformBridgeProvider } from '../providers/platform-bridge/platform-bridge';
+import { Media } from "@ionic-native/media/ngx";
+import { SimpleToastProvider } from "../providers/simple-toast/simple-toast";
+import { LoggerProvider } from "../providers/logger/logger";
+import { PlatformBridgeProvider } from "../providers/platform-bridge/platform-bridge";
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
@@ -86,14 +85,14 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
-      name: '__taletimedb',
-      driverOrder: ['indexeddb', 'sqlite', 'websql']
+      name: "__taletimedb",
+      driverOrder: ["indexeddb", "sqlite", "websql"]
     }),
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
     })
@@ -146,4 +145,4 @@ export function createTranslateLoader(http: HttpClient) {
     PlatformBridgeProvider
   ]
 })
-export class AppModule { }
+export class AppModule {}

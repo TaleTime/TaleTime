@@ -3,45 +3,59 @@
  * @author Matthias Kiefer
  * @date 2017-11-19
  */
-import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { Component } from "@angular/core";
+import {
+  NavController,
+  AlertController,
+  LoadingController,
+  Loading
+} from "ionic-angular";
 
-import { SelectUserProfilePage } from '../selectUserProfile/selectUserProfile';
+import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile";
 
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from "../../providers/auth/auth";
 
 @Component({
-  selector: 'page-createUserAccount',
-  templateUrl: 'createUserAccount.html'
+  selector: "page-createUserAccount",
+  templateUrl: "createUserAccount.html"
 })
-
 export class CreateUserAccountPage {
   createSuccess = false;
   loading: Loading;
-  registerCredentials = { name: '', email: '', pin: '' };
+  registerCredentials = { name: "", email: "", pin: "" };
 
-  constructor(private navCtrl: NavController, private authProvider: AuthProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
+  constructor(
+    private navCtrl: NavController,
+    private authProvider: AuthProvider,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
+  ) {}
 
   public register() {
     this.showLoading();
 
-    this.authProvider.register(this.registerCredentials).subscribe(success => {
-      if (success) {
-        this.createSuccess = true;
+    this.authProvider.register(this.registerCredentials).subscribe(
+      (success) => {
+        if (success) {
+          this.createSuccess = true;
 
-        // automatic login user
-        this.authProvider.trySignIn(() => this.navCtrl.setRoot(SelectUserProfilePage));
-      } else {
-        this.showPopup("Error", "Problem creating account.");
+          // automatic login user
+          this.authProvider.trySignIn(() =>
+            this.navCtrl.setRoot(SelectUserProfilePage)
+          );
+        } else {
+          this.showPopup("Error", "Problem creating account.");
+        }
+      },
+      (error) => {
+        this.showPopup("Error", error);
       }
-    }, error => {
-      this.showPopup("Error", error);
-    });
+    );
   }
 
   showLoading() {
     this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
+      content: "Please wait...",
       dismissOnPageChange: true
     });
     this.loading.present();
@@ -51,9 +65,9 @@ export class CreateUserAccountPage {
     this.loading.dismiss();
 
     let alert = this.alertCtrl.create({
-      title: 'Fail',
+      title: "Fail",
       subTitle: text,
-      buttons: ['OK']
+      buttons: ["OK"]
     });
     alert.present();
   }
@@ -64,8 +78,8 @@ export class CreateUserAccountPage {
       subTitle: text,
       buttons: [
         {
-          text: 'OK',
-          handler: data => {
+          text: "OK",
+          handler: (data) => {
             if (this.createSuccess) {
               this.navCtrl.popToRoot();
             }
@@ -75,5 +89,4 @@ export class CreateUserAccountPage {
     });
     alert.present();
   }
-
 }

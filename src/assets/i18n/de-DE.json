@@ -75,13 +75,13 @@
   "USER_MANAGEMENT_DELETE_CURRENT": "Der aktive Benutzer kann nicht gelöscht werden!",
   "STORYMENU_ADD_SOME_STORIES": "Füge neue Geschichten hinzu",
   "STORYMENU_NO_STORIES_YET": "Du hast noch keine Geschichten hinzugefügt. Suche dir doch einige aus!",
-  "STORY_ALREADY_EXISTS_MSG" : "Diese Geschichte ist bereits installiert",
-  "STORY_ALREADY_EXISTS_TITLE":"Geschichte bereits installiert",
-  "STORY_DOWNLOAD_PROGRESS" : "Herunterladen von {{title}}: {{progress}}",
+  "STORY_ALREADY_EXISTS_MSG": "Diese Geschichte ist bereits installiert",
+  "STORY_ALREADY_EXISTS_TITLE": "Geschichte bereits installiert",
+  "STORY_DOWNLOAD_PROGRESS": "Herunterladen von {{title}}: {{progress}}",
   "STORY_UNPACKING_PROGRESS": "Entpacken von {{title}}: {{progress}}",
-  "STORY_ZIP_REMOVE_FAIL" : "Das Löschen der temporären Zip-Datei ist fehlgeschlagen",
+  "STORY_ZIP_REMOVE_FAIL": "Das Löschen der temporären Zip-Datei ist fehlgeschlagen",
   "STORY_ZIP_UNPACK_FAIL": "Die Geschichte konnte nicht entpackt werden",
   "STORY_DOWNLOAD_FAIL": "Die Geschichte konnte nicht heruntergeladen werden. Versuchen Sie es später erneut.",
-  "PERMISSION_FILE_NEEDED" : "Die Berechtigung zum Speichern von Dateien ist unerlässlig für den Gebrauch der App. Bitte erteilen sie die Berechtigung vor dem Fortfahren",
-  "ERR_NO_STORAGE_AVAILABLE" : "Keine Möglichkeit zur Speicherung gefunden. Bitte stellen Sie sicher, dass ihr Browser das Speichern lokaler Daten unterstützt"
+  "PERMISSION_FILE_NEEDED": "Die Berechtigung zum Speichern von Dateien ist unerlässlig für den Gebrauch der App. Bitte erteilen sie die Berechtigung vor dem Fortfahren",
+  "ERR_NO_STORAGE_AVAILABLE": "Keine Möglichkeit zur Speicherung gefunden. Bitte stellen Sie sicher, dass ihr Browser das Speichern lokaler Daten unterstützt"
 }

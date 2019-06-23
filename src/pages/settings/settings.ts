@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController } from "ionic-angular";
-import { TranslateService } from '@ngx-translate/core'; // added for translation 2017-11-14
+import { TranslateService } from "@ngx-translate/core"; // added for translation 2017-11-14
 import { SettingsProvider } from "../../providers/settings/settings";
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from "../../providers/auth/auth";
 import { UserAccountPage } from "../../pages/userAccount/userAccount";
 import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
-import {CreditsPage} from "../../pages/credits/credits";
-import {ImpressumPage} from "../../pages/impressum/impressum";
+import { CreditsPage } from "../../pages/credits/credits";
+import { ImpressumPage } from "../../pages/impressum/impressum";
 
 import {
   AVAILABLE_LANGUAGES,
@@ -26,23 +26,25 @@ import {
  */
 @IonicPage()
 @Component({
-  selector: 'page-settings',
-  templateUrl: 'settings.html',
+  selector: "page-settings",
+  templateUrl: "settings.html"
 })
 export class SettingsPage {
-
   languages = AVAILABLE_LANGUAGES;
   ttsRates = [TTS_RATE_SLOW, TTS_RATE_NORMAL, TTS_RATE_FAST];
   selectedLanguage;
   ttsRate;
 
-
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private settings: SettingsProvider,
     private translate: TranslateService,
     private authProvider: AuthProvider,
-    private toastProvider: SimpleToastProvider) {
-    this.selectedLanguage = SettingsPage.getLanguageFromCode(this.settings.language);
+    private toastProvider: SimpleToastProvider
+  ) {
+    this.selectedLanguage = SettingsPage.getLanguageFromCode(
+      this.settings.language
+    );
 
     switch (this.settings.ttsRate) {
       case TTS_RATE_SLOW_VALUE:
@@ -60,13 +62,15 @@ export class SettingsPage {
   }
 
   changeLanguage() {
-    console.log('Changing language to <' + this.selectedLanguage + '>');
+    console.log("Changing language to <" + this.selectedLanguage + ">");
     this.translate.use(SettingsPage.getCodeFromLanguage(this.selectedLanguage));
-    this.settings.language = SettingsPage.getCodeFromLanguage(this.selectedLanguage);
+    this.settings.language = SettingsPage.getCodeFromLanguage(
+      this.selectedLanguage
+    );
   }
 
   changeTtsRate() {
-    console.log('Changing TTS rate to <' + this.ttsRate + '>');
+    console.log("Changing TTS rate to <" + this.ttsRate + ">");
 
     switch (this.ttsRate) {
       case TTS_RATE_SLOW:
@@ -79,11 +83,10 @@ export class SettingsPage {
         this.settings.ttsRate = TTS_RATE_FAST_VALUE;
         break;
     }
-
   }
 
   public goToUserAccount(): void {
-    let alert = this.authProvider.presentPinPrompt(valid => {
+    let alert = this.authProvider.presentPinPrompt((valid) => {
       if (valid) {
         this.navCtrl.push(UserAccountPage);
       } else {
@@ -96,17 +99,17 @@ export class SettingsPage {
   }
 
   public goToCreditspage(): void {
-        this.navCtrl.push(CreditsPage);
+    this.navCtrl.push(CreditsPage);
   }
 
   public goToImpressumpage(): void {
     this.navCtrl.push(ImpressumPage);
-}
+  }
 
   private static getCodeFromLanguage(lang: string): string {
     for (let l of AVAILABLE_LANGUAGES) {
       if (l.name === lang) {
-        return l.code
+        return l.code;
       }
     }
     return null;
@@ -115,7 +118,7 @@ export class SettingsPage {
   private static getLanguageFromCode(code: string) {
     for (let l of AVAILABLE_LANGUAGES) {
       if (l.code === code) {
-        return l.name
+        return l.name;
       }
     }
     return null;

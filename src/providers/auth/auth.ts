@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Injectable } from "@angular/core";
+import { Storage } from "@ionic/storage";
+import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/map";
 import { AlertController } from "ionic-angular";
 import { UserAccount } from "../../datamodels/userAccount";
 import { UserProfile } from "../../datamodels/userProfile";
-import { LoggerProvider } from '../logger/logger';
+import { LoggerProvider } from "../logger/logger";
 
 /*
   Generated class for the AuthProvider provider.
@@ -15,15 +15,19 @@ import { LoggerProvider } from '../logger/logger';
 */
 @Injectable()
 export class AuthProvider {
-  static USER_ACCOUNT_KEY: string = 'userAccount';
+  static USER_ACCOUNT_KEY: string = "userAccount";
   private currentUser: UserAccount;
-  constructor(private storage: Storage, private alertCtrl: AlertController,private logger: LoggerProvider) { }
+  constructor(
+    private storage: Storage,
+    private alertCtrl: AlertController,
+    private logger: LoggerProvider
+  ) {}
 
   public trySignIn(callback: () => any) {
-    this.storage.ready().then(
-      () => this.storage.get(AuthProvider.USER_ACCOUNT_KEY)
-    ).then(
-      (userAccountData) => {
+    this.storage
+      .ready()
+      .then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY))
+      .then((userAccountData) => {
         if (userAccountData) {
           this.currentUser = new UserAccount(
             userAccountData.name,
@@ -33,54 +37,71 @@ export class AuthProvider {
           );
           callback();
         }
-      }
-    );
+      });
   }
 
   public addTestUser() {
     console.log("Test");
     let userAccount = new UserAccount("Test", "test@mail.com", "1234");
     this.storage.set(AuthProvider.USER_ACCOUNT_KEY, userAccount);
-    this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
-      console.log(val);
-    }));
+    this.storage.ready().then(() =>
+      this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+        console.log(val);
+      })
+    );
   }
 
-  public register(credentials: { name: any; email: any; pin: any; }) {
-    if (credentials.email === null || credentials.name === null || credentials.pin === null) {
+  public register(credentials: { name: any; email: any; pin: any }) {
+    if (
+      credentials.email === null ||
+      credentials.name === null ||
+      credentials.pin === null
+    ) {
       return Observable.throw("Please insert credentials");
     } else {
       let userAccount = new UserAccount(credentials.name, credentials.email);
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
 
-      return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
-        observer.next(true);
-        observer.complete();
-      });
+      return Observable.create(
+        (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
+          observer.next(true);
+          observer.complete();
+        }
+      );
     }
   }
 
-  public createUserProfile(credentials: { name: any; avatarId: any; child: any; }) {
+  public createUserProfile(credentials: {
+    name: any;
+    avatarId: any;
+    child: any;
+  }) {
     if (credentials.name === null) {
       return Observable.throw("Please insert credentials");
     } else {
       // TODO At this point store the credentials to your backend!
-      let userProfile = new UserProfile(credentials.name, credentials.avatarId, credentials.child);
+      let userProfile = new UserProfile(
+        credentials.name,
+        credentials.avatarId,
+        credentials.child
+      );
       this.currentUserAccount.addUserProfile(userProfile);
       this.save();
 
-      return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
-        observer.next(true);
-        observer.complete();
-      });
+      return Observable.create(
+        (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
+          observer.next(true);
+          observer.complete();
+        }
+      );
     }
   }
 
   public changePin(oldPin: any, newPin: any, retypePin: any) {
     let response = {
       success: true,
-      reason: ''
+      reason: ""
     };
 
     if (this.currentUserAccount.checkPin(oldPin)) {
@@ -89,37 +110,46 @@ export class AuthProvider {
         this.save();
       } else {
         response.success = false;
-        response.reason = 'New pin do not match' // TODO Tobi i18n
+        response.reason = "New pin do not match"; // TODO Tobi i18n
       }
     } else {
       response.success = false;
-      response.reason = 'Old pin do not match' // TODO Tobi i18n
+      response.reason = "Old pin do not match"; // TODO Tobi i18n
     }
 
-    return Observable.create((observer: { next: (arg0: { success: boolean; reason: string; }) => void; complete: () => void; }) => {
-      observer.next(response);
-      observer.complete();
-    });
+    return Observable.create(
+      (observer: {
+        next: (arg0: { success: boolean; reason: string }) => void;
+        complete: () => void;
+      }) => {
+        observer.next(response);
+        observer.complete();
+      }
+    );
   }
 
   public deleteUserProfile(userProfileId: string) {
     this.currentUserAccount.removeUserProfile(userProfileId);
     this.save();
 
-    return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
-      observer.next(true);
-      observer.complete();
-    });
+    return Observable.create(
+      (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
+        observer.next(true);
+        observer.complete();
+      }
+    );
   }
 
   public setActiveUserProfile(userProfileId: string) {
     this.currentUserAccount.setActiveUserProfile(userProfileId);
     this.save();
 
-    return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
-      observer.next(true);
-      observer.complete();
-    });
+    return Observable.create(
+      (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
+        observer.next(true);
+        observer.complete();
+      }
+    );
   }
 
   public getActiveUserProfile() {
@@ -136,39 +166,52 @@ export class AuthProvider {
     if (credentials.email === null || credentials.pin === null) {
       return Observable.throw("Please insert credentials");
     } else {
-      return Observable.create(observer => {
+      return Observable.create((observer) => {
         // TODO At this point make a request to your backend to make a real check!
         let access = false;
-        this.storage.ready().then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
-          console.log(val);
-          if (val) {
-            let storageUser = new UserAccount(val.name, val.email, val.pin, val.userProfiles);
-            access = (storageUser.checkCredentials(credentials.email, credentials.pin)); // TODO workaround because pin is store as pin (later in hash). Must be check via UserAccount and checkPin()
-            if (access) {
-              this.currentUser = storageUser;
+        this.storage.ready().then(() =>
+          this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+            console.log(val);
+            if (val) {
+              let storageUser = new UserAccount(
+                val.name,
+                val.email,
+                val.pin,
+                val.userProfiles
+              );
+              access = storageUser.checkCredentials(
+                credentials.email,
+                credentials.pin
+              ); // TODO workaround because pin is store as pin (later in hash). Must be check via UserAccount and checkPin()
+              if (access) {
+                this.currentUser = storageUser;
+              }
             }
-          }
 
-          observer.next(access);
-          observer.complete();
-        }));
+            observer.next(access);
+            observer.complete();
+          })
+        );
       });
-
     }
   }
 
-
   public logout() {
-    return Observable.create((observer: { next: (arg0: boolean) => void; complete: () => void; }) => {
-      this.currentUser = null;
-      this.storage.remove(AuthProvider.USER_ACCOUNT_KEY);
-      observer.next(true);
-      observer.complete();
-    });
+    return Observable.create(
+      (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
+        this.currentUser = null;
+        this.storage.remove(AuthProvider.USER_ACCOUNT_KEY);
+        observer.next(true);
+        observer.complete();
+      }
+    );
   }
 
   private save(userAccount?: UserAccount) {
-    this.storage.set(AuthProvider.USER_ACCOUNT_KEY, (userAccount || this.currentUserAccount));
+    this.storage.set(
+      AuthProvider.USER_ACCOUNT_KEY,
+      userAccount || this.currentUserAccount
+    );
   }
 
   get currentUserAccount(): UserAccount {
@@ -182,39 +225,37 @@ export class AuthProvider {
   /*** UI ***/
   public presentPinPrompt(validFn: Function, cancelFn?: Function) {
     return this.alertCtrl.create({
-      title: 'PIN-Eingabe', // TODO tobi i18
+      title: "PIN-Eingabe", // TODO tobi i18
       inputs: [
         {
-          name: 'pin',
-          placeholder: 'Pin', // TODO tobi i18
-          type: 'password'
+          name: "pin",
+          placeholder: "Pin", // TODO tobi i18
+          type: "password"
         }
       ],
       buttons: [
         {
-          text: 'Cancel', // TODO tobi i18
-          role: 'cancel',
-          handler: data => {
+          text: "Cancel", // TODO tobi i18
+          role: "cancel",
+          handler: (data) => {
             if (cancelFn) {
               cancelFn(data);
             } else {
-              this.logger.log('Cancel clicked');
+              this.logger.log("Cancel clicked");
             }
           }
         },
         {
-          text: 'Ok', // TODO tobi i18
-          handler: data => {
+          text: "Ok", // TODO tobi i18
+          handler: (data) => {
             if (validFn) {
               validFn(this.currentUserAccount.checkPin(data.pin));
             } else {
-              this.logger.log('Ok clicked');
+              this.logger.log("Ok clicked");
             }
-
           }
         }
       ]
     });
   }
-
 }
