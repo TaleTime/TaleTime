@@ -10,16 +10,25 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-
   <ion-item>
     <ion-thumbnail item-start>
-      <ion-icon *ngIf="!selectedStory.cover" item-start name="book" style="font-size: 64px;"></ion-icon>
-      <ion-img *ngIf="selectedStory.cover"
-               item-start
-               src='assets/stories/{{selectedStory.id}}/{{selectedStory.cover}}'>
+      <ion-icon
+        *ngIf="!selectedStory.cover"
+        item-start
+        name="book"
+        style="font-size: 64px;"
+      ></ion-icon>
+      <ion-img
+        *ngIf="selectedStory.cover"
+        item-start
+        src="assets/stories/{{selectedStory.id}}/{{selectedStory.cover}}"
+      >
       </ion-img>
     </ion-thumbnail>
-    <p>{{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(', ')}}</p>
+    <p>
+      {{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(',
+      ')}}
+    </p>
     <p>{{'STORYDETAILS_DATE' | translate }}: {{selectedStory.date}}</p>
     <p>{{'STORYDETAILS_LANGUAGE' | translate }}: {{selectedStory.language}}</p>
   </ion-item>
@@ -38,10 +47,18 @@
       <ion-radio value="{{reader.name}}" (click)="saveReader()"></ion-radio>
     </ion-item>
   </ion-list>
-  <button ion-button block
-          (click)="goToPlayerPageNew(selectedStory.id)">{{'STORYDETAILS_START_OVER' | translate}}</button>
-  <button ion-button block
-          (click)="goToPlayerPageContinue(selectedStory.id)">{{'STORYDETAILS_CONTINUE' | translate}}</button>
-  <button ion-button block color="danger"
-          (click)="deleteStory(selectedStory.id)">{{'STORYDETAILS_DELETE' | translate}}</button>
+  <button ion-button block (click)="goToPlayerPageNew(selectedStory.id)">
+    {{'STORYDETAILS_START_OVER' | translate}}
+  </button>
+  <button ion-button block (click)="goToPlayerPageContinue(selectedStory.id)">
+    {{'STORYDETAILS_CONTINUE' | translate}}
+  </button>
+  <button
+    ion-button
+    block
+    color="danger"
+    (click)="deleteStory(selectedStory.id)"
+  >
+    {{'STORYDETAILS_DELETE' | translate}}
+  </button>
 </ion-content>

@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {IonicPage, NavController, NavParams} from "ionic-angular";
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
-import {StoryInformation} from "../../datamodels/storyInformation";
-import {StoryProvider} from "../../providers/story/story";
+import { StoryInformation } from "../../datamodels/storyInformation";
+import { StoryProvider } from "../../providers/story/story";
 
-import {PlayerPage} from "../player/player";
-import {STORY_DIR} from "../../app/constants";
-import {SaveGameProvider} from "../../providers/savegame/savegame"
-import {PublicStoryHelperProvider} from "../../providers/public-story-helper/public-story-helper";
+import { PlayerPage } from "../player/player";
+import { STORY_DIR } from "../../app/constants";
+import { SaveGameProvider } from "../../providers/savegame/savegame";
+import { PublicStoryHelperProvider } from "../../providers/public-story-helper/public-story-helper";
 
 /**
  * Generated class for the StoryDetailsPage page.
@@ -17,30 +17,35 @@ import {PublicStoryHelperProvider} from "../../providers/public-story-helper/pub
  */
 @IonicPage()
 @Component({
-  selector: 'page-storyDetails',
-  templateUrl: 'storyDetails.html',
+  selector: "page-storyDetails",
+  templateUrl: "storyDetails.html"
 })
 export class StoryDetailsPage {
-
   selectedStory: StoryInformation;
   selectedReader: string;
-  imgPath: string = 'dummy.png';
+  imgPath: string = "dummy.png";
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public storyProvider: StoryProvider,
-              private savegameProvider: SaveGameProvider,
-              private publicStoryHelper: PublicStoryHelperProvider) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public storyProvider: StoryProvider,
+    private savegameProvider: SaveGameProvider,
+    private publicStoryHelper: PublicStoryHelperProvider
+  ) {
     this.selectedStory = navParams.get("selectedStory");
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
 
     if (this.selectedStory.medium === "cloud") {
-      this.imgPath = this.publicStoryHelper.getThumbnailPathForStory(this.selectedStory);
+      this.imgPath = this.publicStoryHelper.getThumbnailPathForStory(
+        this.selectedStory
+      );
     } else {
-      this.imgPath = STORY_DIR + this.selectedStory.id + '/icon.png';
+      this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
     }
-    console.log("ImgPath:", this.imgPath)
-    this.selectedReader = this.savegameProvider.loadSavegame(this.selectedStory.id).reader;
+    console.log("ImgPath:", this.imgPath);
+    this.selectedReader = this.savegameProvider.loadSavegame(
+      this.selectedStory.id
+    ).reader;
   }
 
   //Muss noch implementiert werden
@@ -58,7 +63,7 @@ export class StoryDetailsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StoryDetailsPage');
+    console.log("ionViewDidLoad StoryDetailsPage");
   }
 
   goToPlayerPageNew(storyId: string) {
@@ -71,10 +76,9 @@ export class StoryDetailsPage {
 
   goToPlayerPageContinue(storyId: string) {
     console.log("StoryId: " + storyId);
-    this.navCtrl.push(PlayerPage,
-      {
-        storyId: storyId,
-        mode: "continue"
-      });
+    this.navCtrl.push(PlayerPage, {
+      storyId: storyId,
+      mode: "continue"
+    });
   }
 }

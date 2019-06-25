@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Savegame } from '../../datamodels/savegame';
-import { Storage } from '@ionic/storage';
-import { AuthProvider } from '../../providers/auth/auth';
+import { Injectable } from "@angular/core";
+import { Savegame } from "../../datamodels/savegame";
+import { Storage } from "@ionic/storage";
+import { AuthProvider } from "../../providers/auth/auth";
 
 /*
   Generated class for the SaveGameProvider provider.
@@ -15,11 +15,14 @@ export class SaveGameProvider {
   //Stores a Map, that maps profile ids to a story-id/savegame map
   private savegames: Map<string, Map<string, Savegame>> = new Map();
   constructor(private storage: Storage, private authProvider: AuthProvider) {
-    this.storage.ready().then((storage) => {
-      this.loadSavegames();
-    }).catch(error => {
-      console.error("Could not load savegames at all!");
-    });
+    this.storage
+      .ready()
+      .then((storage) => {
+        this.loadSavegames();
+      })
+      .catch((error) => {
+        console.error("Could not load savegames at all!");
+      });
   }
 
   private loadSavegames() {
@@ -34,7 +37,9 @@ export class SaveGameProvider {
     let emptySave = new Savegame();
     emptySave.storyId = storyId;
     emptySave.chosenPath = new Array<number>();
-    let userSaves = this.savegames.get(this.authProvider.getActiveUserProfile().id);
+    let userSaves = this.savegames.get(
+      this.authProvider.getActiveUserProfile().id
+    );
     if (userSaves == null) {
       return emptySave;
     } else {
@@ -61,11 +66,17 @@ export class SaveGameProvider {
   }
 
   private save() {
-    this.storage.set(this.SAVEGAME_KEY, this.savegames).then((value) => {
-      console.log("SaveGameProvider: Saved savegames!");
-    }, (reason) => {
-      console.error("SaveGameProvider: Could not save savegames. Error: " + JSON.stringify(reason));
-    });
+    this.storage.set(this.SAVEGAME_KEY, this.savegames).then(
+      (value) => {
+        console.log("SaveGameProvider: Saved savegames!");
+      },
+      (reason) => {
+        console.error(
+          "SaveGameProvider: Could not save savegames. Error: " +
+            JSON.stringify(reason)
+        );
+      }
+    );
   }
 
   public updateSavegame(savegame: Savegame) {
@@ -73,5 +84,4 @@ export class SaveGameProvider {
     profileSaves.set(savegame.storyId, savegame);
     this.save();
   }
-
 }

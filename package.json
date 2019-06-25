@@ -9,7 +9,8 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "prettier-watch": "onchange '**/*.js' -- prettier --write {{changed}}"
   },
   "dependencies": {
     "@angular-devkit/core": "^7.3.8",
@@ -63,6 +64,7 @@
     "ionicons": "^4.5.6",
     "js-sha256": "^0.9.0",
     "jszip": "^3.1.5",
+    "onchange": "^6.0.0",
     "rxjs": "^6.5.1",
     "rxjs-compat": "^6.5.1",
     "shelljs": "^0.5.3",
@@ -72,6 +74,9 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.7",
+    "husky": "^2.4.1",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
     "typescript": "^3.1.1"
   },
   "description": "An Ionic project",
@@ -98,5 +103,10 @@
       "browser",
       "ios"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

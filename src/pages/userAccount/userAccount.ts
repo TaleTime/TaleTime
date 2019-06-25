@@ -3,29 +3,31 @@
  * @author Matthias Kiefer
  * @date 2017-11-20
  */
-import { Component } from '@angular/core';
-import { App, NavController, Platform } from 'ionic-angular';
-import { StartPage } from '../../pages/start/start'
+import { Component } from "@angular/core";
+import { App, NavController, Platform } from "ionic-angular";
+import { StartPage } from "../../pages/start/start";
 import { ChangeUserAccountPinPage } from "../../pages/change-user-account-pin/change-user-account-pin";
 
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from "../../providers/auth/auth";
 
-import { UserAccount } from '../../datamodels/userAccount';
+import { UserAccount } from "../../datamodels/userAccount";
 
 @Component({
-  selector: 'page-userAccount',
-  templateUrl: 'userAccount.html'
+  selector: "page-userAccount",
+  templateUrl: "userAccount.html"
 })
 export class UserAccountPage {
-
   private userAccount: UserAccount;
 
-  constructor(private app: App, private navCtrl: NavController, private platform: Platform, private authProvider: AuthProvider) {
-    this.platform.ready().then(
-      () => {
-        this.userAccount = this.authProvider.currentUserAccount;
-      }
-    )
+  constructor(
+    private app: App,
+    private navCtrl: NavController,
+    private platform: Platform,
+    private authProvider: AuthProvider
+  ) {
+    this.platform.ready().then(() => {
+      this.userAccount = this.authProvider.currentUserAccount;
+    });
   }
 
   public changePin() {
@@ -33,7 +35,7 @@ export class UserAccountPage {
   }
 
   public logout() {
-    this.authProvider.logout().subscribe(success => {
+    this.authProvider.logout().subscribe((success) => {
       // TODO is this pretty?
       this.app.getRootNav().setRoot(StartPage);
     });

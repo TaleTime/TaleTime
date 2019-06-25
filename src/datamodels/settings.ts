@@ -5,13 +5,11 @@ import { TTS_RATE_NORMAL_VALUE } from "../app/constants";
  */
 
 export class Settings {
-
   public autoPlay: boolean = true;
-  public language: string = 'de-DE';
+  public language: string = "de-DE";
   public speechRecognition: boolean = false;
   public interaction: boolean = false;
   public ttsRate: number = TTS_RATE_NORMAL_VALUE;
 
   // TODO font size needs to be added
-
 }

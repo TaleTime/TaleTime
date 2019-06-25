@@ -1,8 +1,8 @@
 export interface Story {
   "mtga-story": {
-    attributes: StoryMetaData,
+    attributes: StoryMetaData;
     "mtga-story-node": any;
-  }
+  };
 }
 
 export class StoryMetaData {
@@ -16,13 +16,13 @@ export class StoryMetaData {
 }
 
 export interface MtgaStoryNode {
-  attributes: ChapterAttributes,
+  attributes: ChapterAttributes;
   "mtga-nodeText": {
-    value: string,
+    value: string;
     attributes: {
-      textStyle: string
-    }
-  },
+      textStyle: string;
+    };
+  };
   "mtga-nextStoryNode": any;
 }
 
@@ -37,6 +37,6 @@ export class ChapterAttributes {
 export class MtgaNextStoryNode {
   value: string;
   attributes: {
-    id: string
-  }
+    id: string;
+  };
 }

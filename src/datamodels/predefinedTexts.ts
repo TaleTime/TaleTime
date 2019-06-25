@@ -5,26 +5,26 @@
 
 export interface PredefinedTexts {
   answers: {
-    multiple: PredefinedText[],
-    single: PredefinedText[],
-    help: PredefinedText[]
-  },
+    multiple: PredefinedText[];
+    single: PredefinedText[];
+    help: PredefinedText[];
+  };
   linking: {
-    or: PredefinedText[],
-    and: PredefinedText[]
-  },
-  repeat: PredefinedText[],
-  agree: PredefinedText[],
-  decline: PredefinedText[],
-  enum: PredefinedEnums[],
-  backwards: PredefinedEnums[],
-  repeatChapter: PredefinedEnums[],
-  doNotCare: PredefinedEnums[],
+    or: PredefinedText[];
+    and: PredefinedText[];
+  };
+  repeat: PredefinedText[];
+  agree: PredefinedText[];
+  decline: PredefinedText[];
+  enum: PredefinedEnums[];
+  backwards: PredefinedEnums[];
+  repeatChapter: PredefinedEnums[];
+  doNotCare: PredefinedEnums[];
 }
 
 export interface PredefinedText {
-  id: number,
-  value: string
+  id: number;
+  value: string;
 }
 
 export interface PredefinedEnums extends PredefinedText {

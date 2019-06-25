@@ -2,28 +2,34 @@ import { Component } from "@angular/core";
 import { MenuController, NavController, Platform } from "ionic-angular";
 import { Reader, StoryInformation } from "../../datamodels/storyInformation";
 import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile";
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from "../../providers/auth/auth";
 import { StoryDetailsPage } from "../storyDetails/storyDetails";
 import { StoryProvider } from "../../providers/story/story";
 import { PlayerPage } from "../player/player";
 import { App } from "ionic-angular/components/app/app";
 
 @Component({
-  selector: 'page-storyMenu',
-  templateUrl: 'storyMenu.html'
+  selector: "page-storyMenu",
+  templateUrl: "storyMenu.html"
 })
 export class StoryMenuPage {
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
 
-  constructor(public platform: Platform, public app: App, public navCtrl: NavController, public menuCtrl: MenuController, private authProvider: AuthProvider, public storyProvider: StoryProvider) {
+  constructor(
+    public platform: Platform,
+    public app: App,
+    public navCtrl: NavController,
+    public menuCtrl: MenuController,
+    private authProvider: AuthProvider,
+    public storyProvider: StoryProvider
+  ) {
     const activeUserProfile = this.authProvider.getActiveUserProfile();
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
     }
   }
-
 
   public get stories(): Array<StoryInformation> {
     return this.storyProvider.stories;
@@ -44,11 +50,10 @@ export class StoryMenuPage {
   }
 
   goToPlayerPage(storyId: string) {
-    this.navCtrl.push(PlayerPage,
-      {
-        storyId: storyId,
-        mode: "continue"
-      });
+    this.navCtrl.push(PlayerPage, {
+      storyId: storyId,
+      mode: "continue"
+    });
   }
 
   goToAvailableStories() {
@@ -56,6 +61,6 @@ export class StoryMenuPage {
   }
 
   getSubtitle(r: Reader) {
-    return ' ' + r.name;
+    return " " + r.name;
   }
 }

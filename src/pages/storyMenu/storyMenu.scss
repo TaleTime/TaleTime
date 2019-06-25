@@ -1,20 +1,25 @@
-page-menu {}
+page-menu {
+}
 
 .content {
-    //background-color: map-get($colors, pale-aqua-blue);         //Gets the pale-aqua-blue color out of ../theme/variables.scss - $colors
-    //linear-gradient background from ruddypink to pale-aqua-blue
-    background: linear-gradient(to bottom, map-get($colors, ruddypink) -30%, map-get($colors, pale-aqua-blue) 100%);
+  //background-color: map-get($colors, pale-aqua-blue);         //Gets the pale-aqua-blue color out of ../theme/variables.scss - $colors
+  //linear-gradient background from ruddypink to pale-aqua-blue
+  background: linear-gradient(
+    to bottom,
+    map-get($colors, ruddypink) -30%,
+    map-get($colors, pale-aqua-blue) 100%
+  );
 }
 
 .menu-item-background {
-    background-color: map-get($colors, oldrose);
+  background-color: map-get($colors, oldrose);
 }
 
 .story-menu-description {
-    //background-color: map-get($colors, oldrose);
-    background-color: transparent;
+  //background-color: map-get($colors, oldrose);
+  background-color: transparent;
 }
 
 .child-button {
-    height: 20px !important;
+  height: 20px !important;
 }

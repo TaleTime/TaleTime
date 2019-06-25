@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular/platform/platform';
-import { WWW } from '../../app/constants';
-import { File } from '@ionic-native/file/ngx';
+import { Injectable } from "@angular/core";
+import { Platform } from "ionic-angular/platform/platform";
+import { WWW } from "../../app/constants";
+import { File } from "@ionic-native/file/ngx";
 
 /*
   Generated class for the PlatformBridgeProvider provider.
@@ -15,19 +15,14 @@ import { File } from '@ionic-native/file/ngx';
  * @class PlatformBridgeProvider
  */
 @Injectable()
-
 export class PlatformBridgeProvider {
-
-  constructor(
-    private platform: Platform,
-    private file: File
-  ) {}
+  constructor(private platform: Platform, private file: File) {}
 
   /**
    * Tells if the app runs in a browser (mobile or desktop)
    */
-  public platformIsBrowser() : boolean {
-    return (this.platform.is('core') || this.platform.is('mobileweb'));
+  public platformIsBrowser(): boolean {
+    return this.platform.is("core") || this.platform.is("mobileweb");
   }
 
   /**
@@ -43,11 +38,10 @@ export class PlatformBridgeProvider {
   public getAppDirectory(): string {
     if (this.platformIsBrowser()) {
       //Browser needs the relative path
-      return '';
+      return "";
     } else {
       //Native platforms need an absolute path
       return this.file.applicationDirectory + WWW + "/";
     }
   }
-
 }

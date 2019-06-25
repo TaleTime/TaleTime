@@ -75,12 +75,13 @@
   "USER_MANAGEMENT_DELETE_CURRENT": "The currently active user can not be deleted!",
   "STORYMENU_ADD_SOME_STORIES": "Add new stories",
   "STORYMENU_NO_STORIES_YET": "You do not have any stories here yet! Go ahead and add some",
-  "STORY_ALREADY_EXISTS_MSG":"This story is already installed",
-  "STORY_ALREADY_EXISTS_TITLE":"Story already installed",
-  "STORY_DOWNLOAD_PROGRESS" : "Downloading {{title}}: {{progress}}",
-  "STORY_UNPACKING_PROGRESS": "Unpacking {{title}}: {{progress}}", "STORY_ZIP_REMOVE_FAIL" : "Deleting the temporary Zip file failed",
+  "STORY_ALREADY_EXISTS_MSG": "This story is already installed",
+  "STORY_ALREADY_EXISTS_TITLE": "Story already installed",
+  "STORY_DOWNLOAD_PROGRESS": "Downloading {{title}}: {{progress}}",
+  "STORY_UNPACKING_PROGRESS": "Unpacking {{title}}: {{progress}}",
+  "STORY_ZIP_REMOVE_FAIL": "Deleting the temporary Zip file failed",
   "STORY_ZIP_UNPACK_FAIL": "Could not unpack the story",
   "STORY_DOWNLOAD_FAIL": "The story could not be downloaded. Please try again later.",
-  "PERMISSION_FILE_NEEDED" : "The file permission is essential to use the app. Please permit access to the device storage",
-  "ERR_NO_STORAGE_AVAILABLE" : "No storage is available. Please make sure your browser supports local data storage"
+  "PERMISSION_FILE_NEEDED": "The file permission is essential to use the app. Please permit access to the device storage",
+  "ERR_NO_STORAGE_AVAILABLE": "No storage is available. Please make sure your browser supports local data storage"
 }

@@ -1,13 +1,9 @@
-import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { ImpressumPage } from './impressum';
+import { NgModule } from "@angular/core";
+import { IonicPageModule } from "ionic-angular";
+import { ImpressumPage } from "./impressum";
 
 @NgModule({
-  declarations: [
-    ImpressumPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(ImpressumPage),
-  ],
+  declarations: [ImpressumPage],
+  imports: [IonicPageModule.forChild(ImpressumPage)]
 })
 export class ImpressumPageModule {}

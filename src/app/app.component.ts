@@ -1,26 +1,26 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { Component, ViewChild } from "@angular/core";
+import { Nav, Platform } from "ionic-angular";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 
 import { AVAILABLE_LANGUAGES, DEFAULT_LANG } from "./constants"; // added 2017-11-14
 import { Globalization } from "@ionic-native/globalization/ngx"; // added 2017-11-14
 import { SettingsProvider } from "../providers/settings/settings"; // added 2017-11-14
 import { Subscription } from "rxjs/Subscription"; // added 2017-11-14
-import { TranslateService } from '@ngx-translate/core'; // added for translation 2017-11-14
+import { TranslateService } from "@ngx-translate/core"; // added for translation 2017-11-14
 
-import { StartPage } from '../pages/start/start';
-import { LoggerProvider } from '../providers/logger/logger';
+import { StartPage } from "../pages/start/start";
+import { LoggerProvider } from "../providers/logger/logger";
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: "app.html"
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = StartPage;
 
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string; component: any }>;
 
   private settingsSubscription: Subscription;
 
@@ -31,10 +31,9 @@ export class MyApp {
     private settings: SettingsProvider,
     private translate: TranslateService,
     private logger: LoggerProvider,
-    private globalization: Globalization) {
-
+    private globalization: Globalization
+  ) {
     this.initializeApp();
-
   }
 
   initializeApp() {
@@ -47,22 +46,22 @@ export class MyApp {
 
       this.translate.setDefaultLang(DEFAULT_LANG);
 
-      this.settingsSubscription = this.settings.onSettingsLoaded().subscribe(
-        () => {
+      this.settingsSubscription = this.settings
+        .onSettingsLoaded()
+        .subscribe(() => {
           if (this.settings.language == null) {
-            this.globalization.getPreferredLanguage().then(
-              (result) => {
-                this.logger.log("Preferred language of this device is " + result.value);
-                let language = this.getSuitableLanguage(result.value);
-                this.translate.use(language);
-                this.settings.language = language;
-              }
-            );
+            this.globalization.getPreferredLanguage().then((result) => {
+              this.logger.log(
+                "Preferred language of this device is " + result.value
+              );
+              let language = this.getSuitableLanguage(result.value);
+              this.translate.use(language);
+              this.settings.language = language;
+            });
           } else {
             this.translate.use(this.settings.language);
           }
-        }
-      );
+        });
     });
   }
 
@@ -79,6 +78,8 @@ export class MyApp {
 
   getSuitableLanguage(language) {
     language = language.substring(0, 2).toLowerCase();
-    return AVAILABLE_LANGUAGES.some(x => x.code == language) ? language : DEFAULT_LANG;
+    return AVAILABLE_LANGUAGES.some((x) => x.code == language)
+      ? language
+      : DEFAULT_LANG;
   }
 }

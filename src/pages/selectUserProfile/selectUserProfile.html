@@ -4,29 +4,37 @@
 
     <ion-buttons end>
       <button *ngIf="isShowingOptionsButton" (click)="showOptions()" ion-button>
-            <ion-label>{{showingOptionsLabel}}</ion-label>
-        </button>
+        <ion-label>{{showingOptionsLabel}}</ion-label>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-list>
-
-    <ion-item (click)="select($event, userProfile.id)" *ngFor="let userProfile of this.authProvider.userProfiles">
+    <ion-item
+      (click)="select($event, userProfile.id)"
+      *ngFor="let userProfile of this.authProvider.userProfiles"
+    >
       <ion-avatar item-start>
-        <img src='assets/imgs/profile/{{userProfile.avatar.name}}'>
+        <img src="assets/imgs/profile/{{userProfile.avatar.name}}" />
       </ion-avatar>
       <h2>{{userProfile.name}}</h2>
 
-      <button *ngIf="isShowingOptions" (click)="delete($event, userProfile.id)" ion-button clear item-end>{{ 'COMMON_DELETE' | translate }}</button>
+      <button
+        *ngIf="isShowingOptions"
+        (click)="delete($event, userProfile.id)"
+        ion-button
+        clear
+        item-end
+      >
+        {{ 'COMMON_DELETE' | translate }}
+      </button>
     </ion-item>
-
 
     <ion-item (click)="create()">
       <ion-icon name="add-circle" item-start></ion-icon>
       <h2>{{ 'USER_MANAGEMENT_CREATE_PROFILE' | translate }}</h2>
     </ion-item>
   </ion-list>
-
 </ion-content>

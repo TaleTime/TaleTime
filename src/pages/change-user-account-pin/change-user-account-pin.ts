@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from "../../providers/auth/auth";
 /**
  * Generated class for the ChangeUserAccountPinPage page.
  *
@@ -11,31 +11,47 @@ import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
-  selector: 'page-change-user-account-pin',
-  templateUrl: 'change-user-account-pin.html',
+  selector: "page-change-user-account-pin",
+  templateUrl: "change-user-account-pin.html"
 })
 export class ChangeUserAccountPinPage {
   createSuccess: boolean = false;
-  credentials = { oldPin: '', pin: '', retypePin: '' };
+  credentials = { oldPin: "", pin: "", retypePin: "" };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authProvider: AuthProvider) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private authProvider: AuthProvider
+  ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChangeUserAccountPinPage');
+    console.log("ionViewDidLoad ChangeUserAccountPinPage");
   }
 
   changePin() {
-    this.authProvider.changePin(this.credentials.oldPin, this.credentials.pin, this.credentials.retypePin).subscribe(response => {
-      if (response.success) {
-        this.navCtrl.pop();
-      } else {
-        // TODO popup with info
-        console.log(response.reason);
-      }
-    }, error => {
-      console.log("ChangeUserAccountPinPage-changePin(): " + error.prototype.toString() + ":" + JSON.stringify(error));
-    });
+    this.authProvider
+      .changePin(
+        this.credentials.oldPin,
+        this.credentials.pin,
+        this.credentials.retypePin
+      )
+      .subscribe(
+        (response) => {
+          if (response.success) {
+            this.navCtrl.pop();
+          } else {
+            // TODO popup with info
+            console.log(response.reason);
+          }
+        },
+        (error) => {
+          console.log(
+            "ChangeUserAccountPinPage-changePin(): " +
+              error.prototype.toString() +
+              ":" +
+              JSON.stringify(error)
+          );
+        }
+      );
   }
-
 }

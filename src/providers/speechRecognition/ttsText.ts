@@ -10,24 +10,34 @@ import { LoggerProvider } from "../logger/logger";
 
 @Injectable()
 export class TtsTextProvider {
-
-  constructor(private languageFileProvider: LanguageFileProvider, private logger: LoggerProvider) { }
+  constructor(
+    private languageFileProvider: LanguageFileProvider,
+    private logger: LoggerProvider
+  ) {}
 
   public createAnswersText(answers: MtgaNextStoryNode[]): string {
     let text: string;
 
-    this.logger.log("Reading answers out for these possible answers: " + JSON.stringify(answers));
+    this.logger.log(
+      "Reading answers out for these possible answers: " +
+        JSON.stringify(answers)
+    );
 
     if (answers.length == 1) {
       // only one possible answer
       this.logger.log("There's only one possible answer");
-      let i = this.generateRandomNumber(this.languageFileProvider.preDefinedTexts.answers.single.length);
+      let i = this.generateRandomNumber(
+        this.languageFileProvider.preDefinedTexts.answers.single.length
+      );
       text = this.languageFileProvider.preDefinedTexts.answers.single[i].value;
     } else {
       // multiple possible answers
       this.logger.log("There are multiple possible answers");
-      let i = this.generateRandomNumber(this.languageFileProvider.preDefinedTexts.answers.single.length);
-      text = this.languageFileProvider.preDefinedTexts.answers.multiple[i].value;
+      let i = this.generateRandomNumber(
+        this.languageFileProvider.preDefinedTexts.answers.single.length
+      );
+      text = this.languageFileProvider.preDefinedTexts.answers.multiple[i]
+        .value;
       for (let i = 0; i < answers.length; i++) {
         if (i != answers.length - 1) {
           text = text + " " + answers[i].value;
@@ -35,8 +45,16 @@ export class TtsTextProvider {
             text = text + ",";
           }
         } else {
-          let j = this.generateRandomNumber(this.languageFileProvider.preDefinedTexts.linking.or.length);
-          text = text + " " + this.languageFileProvider.preDefinedTexts.linking.or[j].value + " " + answers[i].value + "?";
+          let j = this.generateRandomNumber(
+            this.languageFileProvider.preDefinedTexts.linking.or.length
+          );
+          text =
+            text +
+            " " +
+            this.languageFileProvider.preDefinedTexts.linking.or[j].value +
+            " " +
+            answers[i].value +
+            "?";
         }
       }
     }
@@ -51,12 +69,16 @@ export class TtsTextProvider {
   }
 
   public createRepeatText(): string {
-    let i = this.generateRandomNumber(this.languageFileProvider.preDefinedTexts.repeat.length);
+    let i = this.generateRandomNumber(
+      this.languageFileProvider.preDefinedTexts.repeat.length
+    );
     return this.languageFileProvider.preDefinedTexts.repeat[i].value;
   }
 
   createAnswerHelp(): string {
-    let i = this.generateRandomNumber(this.languageFileProvider.preDefinedTexts.answers.help.length);
+    let i = this.generateRandomNumber(
+      this.languageFileProvider.preDefinedTexts.answers.help.length
+    );
     return this.languageFileProvider.preDefinedTexts.answers.help[i].value;
   }
 }
