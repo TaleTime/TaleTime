@@ -13,7 +13,7 @@ const routes: Routes = [
           {
             path: "",
             loadChildren: () =>
-              import("../tab1/tab1.module").then(m => m.Tab1PageModule)
+              import("../pages/story-menu/story-menu.module").then(m => m.StoryMenuPageModule)
           }
         ]
       },
@@ -23,7 +23,7 @@ const routes: Routes = [
           {
             path: "",
             loadChildren: () =>
-              import("../tab2/tab2.module").then(m => m.Tab2PageModule)
+              import("../pages/available-stories/available-stories.module").then(m => m.AvailableStoriesPageModule)
           }
         ]
       },
@@ -33,7 +33,7 @@ const routes: Routes = [
           {
             path: "",
             loadChildren: () =>
-              import("../settings/settings.module").then(m => m.SettingsPageModule)
+              import("../pages/settings/settings.module").then(m => m.SettingsPageModule)
           }
         ]
       },

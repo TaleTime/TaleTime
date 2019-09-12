@@ -12,7 +12,7 @@ import {LoggerService} from "../logger/logger.service";
 export class AuthService {
 
   static USER_ACCOUNT_KEY = "userAccount";
-  private currentUser: UserAccount;
+  private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
 
   constructor(
     private storage: Storage,

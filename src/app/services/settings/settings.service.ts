@@ -6,6 +6,7 @@ import {LanguageFileService} from "../speech-recognition/language-file/language-
 import {LoggerService} from "../logger/logger.service";
 import {Settings} from "../../models/settings";
 import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
+import {Storage} from "@ionic/storage";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +14,7 @@ import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
 export class SettingsService {
 
   private readonly SETTINGS_KEY = "SETTINGS";
-  private settings: Settings;
+  private settings: Settings = new Settings();  // TODO: initializing Settings this way was not necessary before
 
   private languageSubject: Subject<string> = new Subject();
   private settingsLoaded: Subject<boolean> = new Subject();
@@ -41,7 +42,10 @@ export class SettingsService {
         this.logger.log(
           "Read settings from storage: " + JSON.stringify(settings)
         );
+        console.log("1: ", this.settings);
         this.settings = settings;
+        console.log("2: ", this.settings);
+
         this.reloadLanguageFile();
         this.settingsLoaded.next(true);
       })
@@ -63,6 +67,7 @@ export class SettingsService {
   }
 
   get language(): string {
+    console.log(this.settings);
     return this.settings.language;
   }
 

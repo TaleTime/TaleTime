@@ -9,7 +9,6 @@
   "COMMON_ABORT": "Abort",
   "COMMON_EDIT": "Edit",
   "COMMON_DELETE": "Delete",
-
   "APP_USER": "User",
   "APP_NEW_STORIES": "New stories",
   "APP_MY_STORIES": "My stories",
@@ -17,14 +16,12 @@
   "APP_USER_MANAGEMENT": "User management",
   "APP_SETTINGS": "Settings",
   "APP_INFO": "Info",
-
   "START_WELCOME": "Welcome at",
   "START_DESCRIPTION": "The interactive storytelling application for fun with the whole family.",
   "START_ACCOUNT": "Connect a Google account or create a local account",
   "START_GOOGLE_ACCOUNT": "Use Google account",
   "START_LOCAL_ACCOUNT": "Create local account",
   "START_CONTINUE": "Continue",
-
   "STORYMENU_HEADER": "Select a story",
   "USER_MANAGEMENT_DELETE_HEADER": "Delete user?",
   "USER_MANAGEMENT_DELETE_DETAIL": "Are you sure that you want to delete this user?",
@@ -32,7 +29,6 @@
   "USER_MANAGMENT_USERNAME_CONSTRAINTS": "The username must contain at least 3 charackters",
   "USER_MANAGEMENT_LOGOUT": "Logout",
   "USER_MANAGEMENT_MY_ACCOUNT": "My account",
-
   "USER_MANAGEMENT_CREATE_ACCOUNT": "Create user account",
   "USER_MANAGEMENT_CREATE": "Create",
   "USER_MANAGEMENT_NAME": "Name",
@@ -42,9 +38,7 @@
   "USER_MANAGEMENT_CREATE_PROFILE": "Add profile",
   "USER_MANAGEMENT_CREATE_PROFILE_SUBTITLE": "Add a profile for another Taletime user.",
   "USER_MANAGEMENT_SELECT_PROFILE": "Who is listening?",
-
   "USER_CHOICE_TITLE": "Change user",
-
   "SETTINGS_INTERACTION": "Interaction",
   "SETTINGS_VOICE_CONTROL": "Voice recognition",
   "SETTINGS_AUTO_PLAY": "Autoplay",
@@ -52,7 +46,6 @@
   "SETTINGS_FONT_SIZE": "Font size",
   "SETTINGS_TTS_RATE": "TTS speaking rate",
   "SETTINGS_GO_TO_ACCOUNT": "My account",
-
   "TTS_SLOW": "slow",
   "TTS_NORMAL": "normal",
   "TTS_FAST": "fast",

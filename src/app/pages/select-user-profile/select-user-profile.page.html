@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'USER_MANAGEMENT_SELECT_PROFILE' | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button *ngIf="isShowingOptionsButton" (click)="showOptions()">
+        <ion-label>{{showingOptionsLabel}}</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item
+        (click)="select($event, userProfile.id)"
+        *ngFor="let userProfile of this.authService.userProfiles"
+    >
+      <ion-avatar slot="start">
+        <img src="assets/imgs/profile/{{userProfile.avatar.name}}"/>
+      </ion-avatar>
+      <h2>{{userProfile.name}}</h2>
+
+      <ion-button
+          *ngIf="isShowingOptions"
+          (click)="delete($event, userProfile.id)"
+          fill="clear"
+          slot="end"
+      >
+        {{ 'COMMON_DELETE' | translate }}
+      </ion-button>
+    </ion-item>
+
+    <ion-item (click)="create()">
+      <ion-icon name="add-circle" slot="start"></ion-icon>
+      <h2>{{ 'USER_MANAGEMENT_CREATE_PROFILE' | translate }}</h2>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -40,14 +40,14 @@ export const TTS_RATE_FAST_VALUE = 1;
 
 /** Language */
 export const AVAILABLE_LANGUAGES = [
-    {
-        code: "en-US",
-        name: "English"
-    },
-    {
-        code: "de-DE",
-        name: "Deutsch"
-    }
+  {
+    code: "en-US",
+    name: "English"
+  },
+  {
+    code: "de-DE",
+    name: "Deutsch"
+  }
 ];
 
 export const DEFAULT_LANG = "en-US";
