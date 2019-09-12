@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
 import {Platform} from "@ionic/angular";
 import {File} from "@ionic-native/file/ngx";
-import {APP_NAME, READER_DIR, FILETYPE_MP4} from "../constants/constants";
+import {APP_NAME, READER_DIR, FILETYPE_MP4} from "../../constants/constants";
 import {
     StoryInformationWithUrl,
     StoryInformation
-} from "../models/storyInformation";
-import {SettingsService} from "./settings.service";
+} from "../../models/storyInformation";
+import {SettingsService} from "../settings/settings.service";
 
 @Injectable({
     providedIn: "root"

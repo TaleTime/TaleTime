@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Platform} from "@ionic/angular";
-import {WWW} from "../constants/constants";
+import {WWW} from "../../constants/constants";
 import {File} from "@ionic-native/file/ngx";
 
 @Injectable({

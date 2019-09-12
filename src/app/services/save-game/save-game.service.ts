@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {SaveGame} from "../models/saveGame";
+import {SaveGame} from "../../models/saveGame";
 import {Storage} from "@ionic/storage";
-import {AuthService} from "./auth.service";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable({
     providedIn: "root"

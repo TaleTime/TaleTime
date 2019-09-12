@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {File} from "@ionic-native/file/ngx";
-import {APP_NAME} from "../constants/constants";
-import {LoggerService} from "./logger.service";
+import {APP_NAME} from "../../constants/constants";
+import {LoggerService} from "../logger/logger.service";
 
 @Injectable({
   providedIn: "root"

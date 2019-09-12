@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Observable, Subject} from "rxjs";
 import {Platform} from "@ionic/angular";
-import {AlertService} from "./alert.service";
-import {LanguageFileService} from "./speech-recognition/language-file.service";
-import {LoggerService} from "./logger.service";
-import {Settings} from "../models/settings";
+import {AlertService} from "../alert/alert.service";
+import {LanguageFileService} from "../speech-recognition/language-file/language-file.service";
+import {LoggerService} from "../logger/logger.service";
+import {Settings} from "../../models/settings";
 import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
 
 @Injectable({

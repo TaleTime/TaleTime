@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {Storage} from "@ionic/storage";
 import {Observable} from "rxjs";
 import {AlertController} from "@ionic/angular";
-import {UserAccount} from "../models/userAccount";
-import {UserProfile} from "../models/userProfile";
-import {LoggerService} from "./logger.service";
+import {UserAccount} from "../../models/userAccount";
+import {UserProfile} from "../../models/userProfile";
+import {LoggerService} from "../logger/logger.service";
 
 @Injectable({
   providedIn: "root"

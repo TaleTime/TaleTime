@@ -1,16 +1,16 @@
 import {Injectable} from "@angular/core";
 import {Platform} from "@ionic/angular";
-import {StoryInformation} from "../models/storyInformation";
-import {DEFAULT_READER, SINGLE_STORY_FILE_NAME} from "../constants/constants";
+import {StoryInformation} from "../../models/storyInformation";
+import {DEFAULT_READER, SINGLE_STORY_FILE_NAME} from "../../constants/constants";
 import {HttpClient} from "@angular/common/http";
-import {ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData} from "../models/story/story";
+import {ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData} from "../../models/story/story";
 import {Observable} from "rxjs";
-import {SettingsService} from "./settings.service";
+import {SettingsService} from "../settings/settings.service";
 import {Storage} from "@ionic/storage";
 import {File} from "@ionic-native/file/ngx";
-import {SaveGameService} from "./save-game.service";
-import {PublicStoryHelperService} from "./public-story-helper.service";
-import {LoggerService} from "./logger.service";
+import {SaveGameService} from "../save-game/save-game.service";
+import {PublicStoryHelperService} from "../public-story-helper/public-story-helper.service";
+import {LoggerService} from "../logger/logger.service";
 
 @Injectable({
   providedIn: "root"
