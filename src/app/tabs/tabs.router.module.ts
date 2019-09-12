@@ -8,7 +8,7 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: "tab1",
+        path: "story-menu",
         children: [
           {
             path: "",
@@ -18,7 +18,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: "tab2",
+        path: "available-stories",
         children: [
           {
             path: "",
@@ -39,14 +39,14 @@ const routes: Routes = [
       },
       {
         path: "",
-        redirectTo: "/tabs/tab1",
+        redirectTo: "/tabs/story-menu",
         pathMatch: "full"
       }
     ]
   },
   {
     path: "",
-    redirectTo: "/tabs/tab1",
+    redirectTo: "/tabs/story-menu",
     pathMatch: "full"
   }
 ];
