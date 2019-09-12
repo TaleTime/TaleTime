@@ -58,31 +58,23 @@
     "ordered-imports": false,
     "quotemark": [
       true,
-      "single"
+      "double"
     ],
     "trailing-comma": false,
     "no-output-on-prefix": true,
-    "no-inputs-metadata-property": true,
-    "no-host-metadata-property": true,
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
     "no-input-rename": true,
     "no-output-rename": true,
-    "use-lifecycle-interface": true,
+    "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "one-variable-per-declaration": false,
-    "component-class-suffix": [true, "Page", "Component"],
-    "directive-class-suffix": true,
-    "directive-selector": [
+    "component-class-suffix": [
       true,
-      "attribute",
-      "app",
-      "camelCase"
+      "Page",
+      "Component"
     ],
-    "component-selector": [
-      true,
-      "element",
-      "app",
-      "page",
-      "kebab-case"
-    ]
+    "directive-class-suffix": true
   }
 }
