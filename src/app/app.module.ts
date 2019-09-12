@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,9 @@ import { IonicStorageModule } from '@ionic/storage';
       BrowserModule,
       IonicModule.forRoot(),
       IonicStorageModule.forRoot(),
-      AppRoutingModule],
+      AppRoutingModule,
+      TranslateModule.forRoot()
+  ],
   providers: [
     StatusBar,
     SplashScreen,
