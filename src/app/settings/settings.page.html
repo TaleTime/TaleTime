@@ -4,6 +4,93 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+
+  <ion-list>
+
+    <ion-list-header>
+      {{'SETTINGS_INTERFACE' | translate}}
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon slot="start" name="hand"></ion-icon>
+      <ion-label>{{'SETTINGS_INTERACTION' | translate}}</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+      <!--      <ion-toggle color="oldrose" [(ngModel)]="settings.interaction">-->
+      <!--      </ion-toggle>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="play-circle"></ion-icon>
+      <ion-label>{{'SETTINGS_AUTO_PLAY' | translate}}</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+      <!--      <ion-toggle color="oldrose" [(ngModel)]="settings.autoPlay"></ion-toggle>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="globe"></ion-icon>
+      <ion-label>{{'SETTINGS_LANGUAGE' | translate}}</ion-label>
+      <!--      <ion-select-->
+      <!--          [(ngModel)]="selectedLanguage"-->
+      <!--          (ngModelChange)="changeLanguage()"-->
+      <!--      >-->
+      <!--        <ion-select-option *ngFor="let lang of languages">{{lang.name}}</ion-select-option>-->
+      <!--      </ion-select>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="resize"></ion-icon>
+      <ion-label>{{'SETTINGS_FONT_SIZE' | translate}}</ion-label>
+      <ion-select value="pixel12" okText='COMMON_OK' cancelText='COMMON_ABORT'>
+        <ion-select-option value="pixel12">12px</ion-select-option>
+        <ion-select-option value="pixel14">14px</ion-select-option>
+        <ion-select-option value="pixel16">16px</ion-select-option>
+        <ion-select-option value="pixel18">18px</ion-select-option>
+      </ion-select>
+      <!--      <ion-select [(ngModel)]="fonts" interface="action-sheet">-->
+      <!--      </ion-select>-->
+    </ion-item>
+
+
+  </ion-list>
+
+  <ion-list>
+
+    <ion-list-header>
+      {{'SETTINGS_VOICE' | translate}}
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon slot="start" name="recording"></ion-icon>
+      <ion-label>{{'SETTINGS_VOICE_CONTROL' | translate}}</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+
+      <!--      <ion-toggle color="oldrose" [(ngModel)]="settings.speechRecognition">-->
+      <!--      </ion-toggle>-->
+    </ion-item>
+
+    <ion-item>
+      <ion-icon slot="start" name="speedometer"></ion-icon>
+      <ion-label>{{'SETTINGS_TTS_RATE' | translate}}</ion-label>
+      <!--      <ion-select [(ngModel)]="ttsRate" (ngModelChange)="changeTtsRate()">-->
+      <!--        <ion-select-option *ngFor="let rate of ttsRates" [value]="rate"-->
+      <!--        >{{rate | translate}}</ion-select-option-->
+      <!--        >-->
+      <!--      </ion-select>-->
+    </ion-item>
+
+
+    <!--    <ion-item (click)="goToUserAccount()">-->
+    <!--      <ion-label>{{'SETTINGS_GO_TO_ACCOUNT' | translate}}</ion-label>-->
+    <!--    </ion-item>-->
+
+    <!--    <ion-item (click)="goToCreditsPage()">-->
+    <!--      <ion-label>Credits</ion-label>-->
+    <!--    </ion-item>-->
+
+    <!--    <ion-item (click)="goToLegalInformationPage()">-->
+    <!--      <ion-label>Legal Information</ion-label>-->
+    <!--    </ion-item>-->
+  </ion-list>
 
 </ion-content>
