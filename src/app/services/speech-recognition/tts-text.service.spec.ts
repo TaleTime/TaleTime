@@ -1,12 +1,12 @@
 import {TestBed} from "@angular/core/testing";
 
-import {SettingsService} from "./settings.service";
+import {TtsTextService} from "./tts-text.service";
 
-describe("SettingsService", () => {
+describe("TtsTextService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {
-    const service: SettingsService = TestBed.get(SettingsService);
+    const service: TtsTextService = TestBed.get(TtsTextService);
     expect(service).toBeTruthy();
   });
 });

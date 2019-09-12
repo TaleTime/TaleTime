@@ -1,12 +1,12 @@
 import {TestBed} from "@angular/core/testing";
 
-import {SettingsService} from "./settings.service";
+import {LanguageFileService} from "./language-file.service";
 
-describe("SettingsService", () => {
+describe("LanguageFileService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {
-    const service: SettingsService = TestBed.get(SettingsService);
+    const service: LanguageFileService = TestBed.get(LanguageFileService);
     expect(service).toBeTruthy();
   });
 });

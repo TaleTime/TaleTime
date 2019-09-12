@@ -1,12 +1,12 @@
 import {TestBed} from "@angular/core/testing";
 
-import {SettingsService} from "./settings.service";
+import {SimpleToastService} from "./simple-toast.service";
 
-describe("SettingsService", () => {
+describe("SimpleToastService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {
-    const service: SettingsService = TestBed.get(SettingsService);
+    const service: SimpleToastService = TestBed.get(SimpleToastService);
     expect(service).toBeTruthy();
   });
 });

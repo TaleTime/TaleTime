@@ -46,6 +46,8 @@
   "SETTINGS_FONT_SIZE": "Schriftgröße",
   "SETTINGS_TTS_RATE": "TTS Sprechgeschwindigkeit",
   "SETTINGS_GO_TO_ACCOUNT": "Mein Account",
+  "SETTINGS_INTERFACE": "Aussehen",
+  "SETTINGS_VOICE": "Sprache",
   "TTS_SLOW": "langsam",
   "TTS_NORMAL": "normal",
   "TTS_FAST": "schnell",

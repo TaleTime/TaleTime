@@ -1,12 +1,12 @@
 import {TestBed} from "@angular/core/testing";
 
-import {SettingsService} from "./settings.service";
+import {AudioService} from "./audio.service";
 
-describe("SettingsService", () => {
+describe("AudioService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {
-    const service: SettingsService = TestBed.get(SettingsService);
+    const service: AudioService = TestBed.get(AudioService);
     expect(service).toBeTruthy();
   });
 });
