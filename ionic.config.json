@@ -1,7 +1,5 @@
 {
-  "name": "taletime",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
+  "name": "TaleTimeI4",
+  "integrations": {},
+  "type": "angular"
 }
