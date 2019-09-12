@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {Platform} from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+import {Injectable} from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
+import {Platform} from "@ionic/angular";
+import {Storage} from "@ionic/storage";
 
 
-const LNG_KEY = 'SELECTED_LANGUAGE';
+const LNG_KEY = "SELECTED_LANGUAGE";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LanguageService {
 
-  selected = '';
+  selected = "";
 
-  constructor(private translate: TranslateService, private storage: Storage, private plt: Platform) { }
+  constructor(private translate: TranslateService, private storage: Storage, private plt: Platform) {
+  }
 
   setInitialAppLanguage() {
     const language = this.translate.getBrowserLang();

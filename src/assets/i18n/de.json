@@ -9,7 +9,6 @@
   "COMMON_ABORT": "Abbrechen",
   "COMMON_EDIT": "Bearbeiten",
   "COMMON_DELETE": "Löschen",
-
   "APP_USER": "Benutzer",
   "APP_NEW_STORIES": "Neue Geschichten",
   "APP_MY_STORIES": "Meine Geschichten",
@@ -17,20 +16,17 @@
   "APP_USER_MANAGEMENT": "Benutzerverwaltung",
   "APP_SETTINGS": "Einstellungen",
   "APP_INFO": "Info",
-
   "START_WELCOME": "Willkommen bei",
   "START_DESCRIPTION": "Das interaktive, cloudfähige, geschichtenerzählende Vorlesetool für Spaß mit der ganzen Familie.",
   "START_ACCOUNT": "Möchten Sie ein Google-Konto verknüpfen oder ein lokales Konto anlegen?",
   "START_GOOGLE_ACCOUNT": "Google-Konto verknüpfen",
   "START_LOCAL_ACCOUNT": "Lokales Konto erstellen",
   "START_CONTINUE": "Weiter",
-
   "STORYMENU_HEADER": "Wähle eine Geschichte",
   "USER_MANAGEMENT_DELETE_HEADER": "Benutzer löschen?",
   "USER_MANAGEMENT_DELETE_DETAIL": "Willst du diesen Benutzer wirklich löschen?",
   "USER_MANAGMENT_WRONG_USERNAME": "Ungültiger Benutzername",
   "USER_MANAGMENT_USERNAME_CONSTRAINTS": "Der Benutzername muss aus mindestens 3 Zeichen bestehen",
-
   "USER_MANAGEMENT_CREATE_ACCOUNT": "Account erstellen",
   "USER_MANAGEMENT_CREATE": "Erstellen",
   "USER_MANAGEMENT_NAME": "Name",
@@ -42,9 +38,7 @@
   "USER_MANAGEMENT_CREATE_PROFILE": "Profil hinzufügen",
   "USER_MANAGEMENT_CREATE_PROFILE_SUBTITLE": "Profil für einen weiteren Taletime-Nutzer hinzufügen.",
   "USER_MANAGEMENT_SELECT_PROFILE": "Wer hört gerade?",
-
   "USER_CHOICE_TITLE": "Benutzer wechseln",
-
   "SETTINGS_INTERACTION": "Interaktion",
   "SETTINGS_VOICE_CONTROL": "Spracherkennung",
   "SETTINGS_AUTO_PLAY": "Autoplay",
@@ -52,7 +46,6 @@
   "SETTINGS_FONT_SIZE": "Schriftgröße",
   "SETTINGS_TTS_RATE": "TTS Sprechgeschwindigkeit",
   "SETTINGS_GO_TO_ACCOUNT": "Mein Account",
-
   "TTS_SLOW": "langsam",
   "TTS_NORMAL": "normal",
   "TTS_FAST": "schnell",

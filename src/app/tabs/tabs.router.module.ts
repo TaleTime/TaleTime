@@ -1,54 +1,53 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
-import {SettingsPageModule} from '../settings/settings.module';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
+import {TabsPage} from "./tabs.page";
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: "tabs",
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: "tab1",
         children: [
           {
-            path: '',
+            path: "",
             loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+              import("../tab1/tab1.module").then(m => m.Tab1PageModule)
           }
         ]
       },
       {
-        path: 'tab2',
+        path: "tab2",
         children: [
           {
-            path: '',
+            path: "",
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import("../tab2/tab2.module").then(m => m.Tab2PageModule)
           }
         ]
       },
       {
-        path: 'settings',
+        path: "settings",
         children: [
           {
-            path: '',
+            path: "",
             loadChildren: () =>
-                import('../settings/settings.module').then(m => m.SettingsPageModule)
+              import("../settings/settings.module").then(m => m.SettingsPageModule)
           }
         ]
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
+        path: "",
+        redirectTo: "/tabs/tab1",
+        pathMatch: "full"
       }
     ]
   },
   {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
+    path: "",
+    redirectTo: "/tabs/tab1",
+    pathMatch: "full"
   }
 ];
 
@@ -56,4 +55,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule {
+}
