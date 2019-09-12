@@ -9,7 +9,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +25,14 @@ import { TranslateModule } from '@ngx-translate/core';
       IonicModule.forRoot(),
       IonicStorageModule.forRoot(),
       AppRoutingModule,
-      TranslateModule.forRoot()
+      HttpClientModule,
+      TranslateModule.forRoot({
+          loader: {
+              provide: TranslateLoader,
+              useFactory: (createTranslateLoader),
+              deps: [HttpClient]
+          }
+      })
   ],
   providers: [
     StatusBar,
