@@ -41,7 +41,10 @@
     <ion-item>
       <ion-icon slot="start" name="resize"></ion-icon>
       <ion-label>{{'SETTINGS_FONT_SIZE' | translate}}</ion-label>
-      <ion-select value="pixel12" okText='COMMON_OK' cancelText='COMMON_ABORT'>
+      <ion-select value="pixel12"
+                  okText="{{ 'COMMON_OK' | translate }}"
+                  cancelText="{{'COMMON_ABORT' | translate }}"
+      >
         <ion-select-option value="pixel12">12px</ion-select-option>
         <ion-select-option value="pixel14">14px</ion-select-option>
         <ion-select-option value="pixel16">16px</ion-select-option>

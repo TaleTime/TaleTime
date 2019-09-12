@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: "app-settings",
@@ -8,10 +7,9 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class SettingsPage implements OnInit {
 
-  constructor(translate: TranslateService) {
-
-
+  constructor() {
   }
+
 
   ngOnInit() {
   }
