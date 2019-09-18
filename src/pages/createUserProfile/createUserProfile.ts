@@ -5,7 +5,7 @@
  */
 import { Component } from "@angular/core";
 import { NavController } from "ionic-angular";
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 import { UserProfile } from "../../datamodels/userProfile"; // for avatars
 
 @Component({
@@ -19,7 +19,7 @@ export class CreateUserProfilePage {
 
   constructor(
     private navCtrl: NavController,
-    private authProvider: AuthProvider
+    private authService: AuthService
   ) {
     this.profileAvatars = UserProfile.avatars();
     this.selectAvatar(null, 0);
@@ -36,7 +36,7 @@ export class CreateUserProfilePage {
   public create() {
     this.profileCredentials.avatarId = this.activeAvatarId;
 
-    this.authProvider.createUserProfile(this.profileCredentials).subscribe(
+    this.authService.createUserProfile(this.profileCredentials).subscribe(
       (success) => {
         if (success) {
           this.close();
