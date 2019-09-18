@@ -1,20 +1,20 @@
 import { Injectable } from "@angular/core";
 import { Savegame } from "../../datamodels/savegame";
 import { Storage } from "@ionic/storage";
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 
 /*
-  Generated class for the SaveGameProvider provider.
+  Generated class for the SaveGameService service.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
 @Injectable()
-export class SaveGameProvider {
+export class SaveGameService {
   private readonly SAVEGAME_KEY = "SAVEGAMES";
   //Stores a Map, that maps profile ids to a story-id/savegame map
   private savegames: Map<string, Map<string, Savegame>> = new Map();
-  constructor(private storage: Storage, private authProvider: AuthProvider) {
+  constructor(private storage: Storage, private authService: AuthService) {
     this.storage
       .ready()
       .then((storage) => {
@@ -38,7 +38,7 @@ export class SaveGameProvider {
     emptySave.storyId = storyId;
     emptySave.chosenPath = new Array<number>();
     let userSaves = this.savegames.get(
-      this.authProvider.getActiveUserProfile().id
+      this.authService.getActiveUserProfile().id
     );
     if (userSaves == null) {
       return emptySave;
@@ -56,7 +56,7 @@ export class SaveGameProvider {
   }
 
   private getProfileSaves(): Map<string, Savegame> {
-    let profileId = this.authProvider.getActiveUserProfile().id;
+    let profileId = this.autService.getActiveUserProfile().id;
     let profileSaves = this.savegames.get(profileId);
     if (profileSaves == null) {
       profileSaves = new Map<string, Savegame>();
@@ -68,11 +68,11 @@ export class SaveGameProvider {
   private save() {
     this.storage.set(this.SAVEGAME_KEY, this.savegames).then(
       (value) => {
-        console.log("SaveGameProvider: Saved savegames!");
+        console.log("SaveGameService: Saved savegames!");
       },
       (reason) => {
         console.error(
-          "SaveGameProvider: Could not save savegames. Error: " +
+          "SaveGameService: Could not save savegames. Error: " +
             JSON.stringify(reason)
         );
       }
