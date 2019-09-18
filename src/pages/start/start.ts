@@ -4,45 +4,47 @@ import { NavController } from "ionic-angular";
 import { CreateUserAccountPage } from "../../pages/createUserAccount/createUserAccount";
 import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile";
 
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 
 //import { SpeechRecognition } from "@ionic-native/speech-recognition";
 import { Platform } from "ionic-angular/platform/platform";
-import { StorageProvider } from "../../providers/common/storage";
-import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
+import { StorageService } from "../../providers/common/storage";
+import { SimpleToastService } from "../../providers/simple-toast/simple-toast";
 import { TranslateService } from "@ngx-translate/core";
-import { PlatformBridgeProvider } from "../../providers/platform-bridge/platform-bridge";
+import { PlatformBridgeService } from "../../providers/platform-bridge/platform-bridge";
+import {LoggerService} from "../../providers/logger/logger";
 
 @Component({
   selector: "page-start",
   templateUrl: "start.html"
 })
 export class StartPage {
+  private app: any;
   // load settings provider to make sure an instance is created on startup,
   // actually only necessary because settings page uses settings provider directly as datamodel
   constructor(
     public navCtrl: NavController,
-    private storageProvider: StorageProvider,
-    private authProvider: AuthProvider,
+    private storageService: StorageService,
+    private authService: AuthService,
     //private speechRecognition: SpeechRecognition,
     private platform: Platform,
-    private toastProvider: SimpleToastProvider,
+    private toastService: SimpleToastService,
     private translate: TranslateService,
-    private platformBridge: PlatformBridgeProvider
+    private platformBridge: PlatformBridgeService
   ) {
     this.platform.ready().then(() => {
       /*this.speechRecognition.requestPermission().then(
         () => {
           console.log("Permission granted - everything OK!");
-          /* To get the file permission needed for downloads, we have to check/create a file or folder 
+          /* To get the file permission needed for downloads, we have to check/create a file or folder
           this.requestFilePermission(this.storageProvider);
         }
       );*/
-      this.requestFilePermission(this.storageProvider);
+      this.requestFilePermission(this.storageService);
     });
   }
 
-  private requestFilePermission(storage: StorageProvider) {
+  private requestFilePermission(storage: StorageService) {
     storage
       .createAppDirOnExtRoot()
       .then(() => {
@@ -50,14 +52,14 @@ export class StartPage {
       })
       .catch(() => {
         this.translate.get("PERMISSION_FILE_NEEDED").subscribe((msg) => {
-          this.toastProvider.displayToast(msg, null, true, () => {
+          this.toastService.displayToast(msg, null, true, () => {
             //this.requestFilePermission(storage);
           });
         });
       });
     if (this.platformBridge.platformIsBrowser()) {
-      this.authProvider.addTestUser();
-      this.authProvider
+      this.authService.addTestUser();
+      this.authService
         .login({ name: "Test", email: "test@mail.com", pin: "1234" })
         .subscribe((allowed) => {
           if (allowed) {
@@ -70,7 +72,7 @@ export class StartPage {
 
   private signIn() {
     let self = this;
-    this.authProvider.trySignIn(() => {
+    this.authService.trySignIn(() => {
       console.log("Signed in");
       self.navCtrl.setRoot(SelectUserProfilePage);
     });
@@ -78,5 +80,10 @@ export class StartPage {
 
   goToCreateAccount() {
     this.navCtrl.push(CreateUserAccountPage);
+  }
+
+  logout(){
+    const root = this.app.getRootNav();
+    root.pop.ToRoot();
   }
 }
