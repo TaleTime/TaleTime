@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, AlertController, NavParams } from "ionic-angular";
 
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 /**
  * Generated class for the ChangeUserAccountPinPage page.
  *
@@ -20,8 +20,9 @@ export class ChangeUserAccountPinPage {
 
   constructor(
     public navCtrl: NavController,
+    private alertCtrl: AlertController,
     public navParams: NavParams,
-    private authProvider: AuthProvider
+    private authService: AuthService
   ) {}
 
   ionViewDidLoad() {
@@ -29,29 +30,45 @@ export class ChangeUserAccountPinPage {
   }
 
   changePin() {
-    this.authProvider
+    this.authService
       .changePin(
         this.credentials.oldPin,
         this.credentials.pin,
-        this.credentials.retypePin
-      )
+        this.credentials.retypePin)
       .subscribe(
         (response) => {
           if (response.success) {
             this.navCtrl.pop();
           } else {
             // TODO popup with info
+            this.showPopup("Error", "Problem changing pin.");
             console.log(response.reason);
           }
         },
         (error) => {
           console.log(
-            "ChangeUserAccountPinPage-changePin(): " +
-              error.prototype.toString() +
-              ":" +
-              JSON.stringify(error)
+            "Change-user-account-pin-changePin(): " +
+              error.prototype.toString() + ":" + JSON.stringify(error)
           );
         }
       );
+  }
+
+  showPopup(title, text) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: [
+        {
+          text: "OK",
+          handler: (data) => {
+            if (this.createSuccess) {
+              this.navCtrl.popToRoot();
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }
