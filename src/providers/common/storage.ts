@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
+impmport { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file/ngx";
 import { APP_NAME } from "../../app/constants";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 
 @Injectable()
-export class StorageProvider {
-  constructor(private file: File, private logger: LoggerProvider) {}
+export class StorageService {
+  constructor(private file: File, private logger: LoggerService) {}
 
   /**
    * Check if the taletime directory on the external root dir exists
