@@ -8,7 +8,7 @@ import { App, NavController, Platform } from "ionic-angular";
 import { StartPage } from "../../pages/start/start";
 import { ChangeUserAccountPinPage } from "../../pages/change-user-account-pin/change-user-account-pin";
 
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 
 import { UserAccount } from "../../datamodels/userAccount";
 
@@ -23,10 +23,10 @@ export class UserAccountPage {
     private app: App,
     private navCtrl: NavController,
     private platform: Platform,
-    private authProvider: AuthProvider
+    private authService: AuthService
   ) {
     this.platform.ready().then(() => {
-      this.userAccount = this.authProvider.currentUserAccount;
+      this.userAccount = this.authService.currentUserAccount;
     });
   }
 
@@ -35,9 +35,10 @@ export class UserAccountPage {
   }
 
   public logout() {
-    this.authProvider.logout().subscribe((success) => {
+    this.authService.logout().subscribe((success) => {
       // TODO is this pretty?
-      this.app.getRootNav().setRoot(StartPage);
+      this.navCtrl.setRoot(StartPage);
+      this.navCtrl.popToRoot();
     });
   }
 }
