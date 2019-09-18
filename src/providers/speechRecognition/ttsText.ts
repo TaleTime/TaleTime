@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 
-import { LanguageFileProvider } from "./languageFile";
+import { LanguageFileService } from "./languageFile";
 import { MtgaNextStoryNode } from "../../datamodels/story/story";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 /**
  * Created by Kevin on 24.06.2017.
  * Creates texts for reading out the answers
  */
 
 @Injectable()
-export class TtsTextProvider {
+export class TtsTextService {
   constructor(
-    private languageFileProvider: LanguageFileProvider,
-    private logger: LoggerProvider
+    private languageFileService: LanguageFileService,
+    private logger: LoggerService
   ) {}
 
   public createAnswersText(answers: MtgaNextStoryNode[]): string {
@@ -27,16 +27,16 @@ export class TtsTextProvider {
       // only one possible answer
       this.logger.log("There's only one possible answer");
       let i = this.generateRandomNumber(
-        this.languageFileProvider.preDefinedTexts.answers.single.length
+        this.languageFileService.preDefinedTexts.answers.single.length
       );
-      text = this.languageFileProvider.preDefinedTexts.answers.single[i].value;
+      text = this.languageFileService.preDefinedTexts.answers.single[i].value;
     } else {
       // multiple possible answers
       this.logger.log("There are multiple possible answers");
       let i = this.generateRandomNumber(
-        this.languageFileProvider.preDefinedTexts.answers.single.length
+        this.languageFileService.preDefinedTexts.answers.single.length
       );
-      text = this.languageFileProvider.preDefinedTexts.answers.multiple[i]
+      text = this.languageFileService.preDefinedTexts.answers.multiple[i]
         .value;
       for (let i = 0; i < answers.length; i++) {
         if (i != answers.length - 1) {
@@ -46,12 +46,12 @@ export class TtsTextProvider {
           }
         } else {
           let j = this.generateRandomNumber(
-            this.languageFileProvider.preDefinedTexts.linking.or.length
+            this.languageFileService.preDefinedTexts.linking.or.length
           );
           text =
             text +
             " " +
-            this.languageFileProvider.preDefinedTexts.linking.or[j].value +
+            this.languageFileService.preDefinedTexts.linking.or[j].value +
             " " +
             answers[i].value +
             "?";
@@ -70,15 +70,15 @@ export class TtsTextProvider {
 
   public createRepeatText(): string {
     let i = this.generateRandomNumber(
-      this.languageFileProvider.preDefinedTexts.repeat.length
+      this.languageFileService.preDefinedTexts.repeat.length
     );
-    return this.languageFileProvider.preDefinedTexts.repeat[i].value;
+    return this.languageFileService.preDefinedTexts.repeat[i].value;
   }
 
   createAnswerHelp(): string {
     let i = this.generateRandomNumber(
-      this.languageFileProvider.preDefinedTexts.answers.help.length
+      this.languageFileService.preDefinedTexts.answers.help.length
     );
-    return this.languageFileProvider.preDefinedTexts.answers.help[i].value;
+    return this.languageFileService.preDefinedTexts.answers.help[i].value;
   }
 }
