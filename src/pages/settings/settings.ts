@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController } from "ionic-angular";
 import { TranslateService } from "@ngx-translate/core"; // added for translation 2017-11-14
-import { SettingsProvider } from "../../providers/settings/settings";
-import { AuthProvider } from "../../providers/auth/auth";
+import { SettingsService } from "../../providers/settings/settings";
+import { AuthService } from "../../providers/auth/auth";
 import { UserAccountPage } from "../../pages/userAccount/userAccount";
-import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
+import { SimpleToastService } from "../../providers/simple-toast/simple-toast";
 import { CreditsPage } from "../../pages/credits/credits";
 import { ImpressumPage } from "../../pages/impressum/impressum";
 
@@ -37,10 +37,10 @@ export class SettingsPage {
 
   constructor(
     public navCtrl: NavController,
-    private settings: SettingsProvider,
+    private settings: SettingsService,
     private translate: TranslateService,
-    private authProvider: AuthProvider,
-    private toastProvider: SimpleToastProvider
+    private authService: AuthService,
+    private toastService: SimpleToastService
   ) {
     this.selectedLanguage = SettingsPage.getLanguageFromCode(
       this.settings.language
@@ -86,11 +86,11 @@ export class SettingsPage {
   }
 
   public goToUserAccount(): void {
-    let alert = this.authProvider.presentPinPrompt((valid) => {
+    let alert = this.authService.presentPinPrompt((valid) => {
       if (valid) {
         this.navCtrl.push(UserAccountPage);
       } else {
-        this.toastProvider.displayToast("Wrong pin."); // TODO tobi i18
+        this.toastService.displayToast("Wrong pin."); // TODO tobi i18
         return false;
       }
     });
