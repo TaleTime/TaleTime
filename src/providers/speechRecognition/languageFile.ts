@@ -10,13 +10,13 @@ import { HttpClient } from "@angular/common/http";
 
 import { PredefinedTexts } from "../../datamodels/predefinedTexts";
 import { FILETYPE_JSON, TTS_RES } from "../../app/constants";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 
 @Injectable()
-export class LanguageFileProvider {
+export class LanguageFileService {
   private _preDefinedTexts: PredefinedTexts;
 
-  constructor(public http: HttpClient, private logger: LoggerProvider) {
+  constructor(public http: HttpClient, private logger: LoggerService) {
     this.logger.log("Language file service instantiated");
     this.loadLanguageFile().subscribe(() =>
       this.logger.log("Language file subscription ok")
