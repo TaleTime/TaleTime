@@ -1,16 +1,16 @@
-import { Component, ViewChild } from "@angular/core";
+iimport { Component, ViewChild } from "@angular/core";
 import { Nav, Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 
 import { AVAILABLE_LANGUAGES, DEFAULT_LANG } from "./constants"; // added 2017-11-14
 import { Globalization } from "@ionic-native/globalization/ngx"; // added 2017-11-14
-import { SettingsProvider } from "../providers/settings/settings"; // added 2017-11-14
+import { SettingsService } from "../providers/settings/settings"; // added 2017-11-14
 import { Subscription } from "rxjs/Subscription"; // added 2017-11-14
 import { TranslateService } from "@ngx-translate/core"; // added for translation 2017-11-14
 
 import { StartPage } from "../pages/start/start";
-import { LoggerProvider } from "../providers/logger/logger";
+import { LoggerService} from "../providers/logger/logger";
 
 @Component({
   templateUrl: "app.html"
@@ -28,9 +28,9 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    private settings: SettingsProvider,
+    private settings: SettingsService,
     private translate: TranslateService,
-    private logger: LoggerProvider,
+    private logger: LoggerService,
     private globalization: Globalization
   ) {
     this.initializeApp();
