@@ -6,18 +6,18 @@
 import { Injectable } from "@angular/core";
 
 import { MtgaNextStoryNode } from "../../datamodels/story/story";
-import { LanguageFileProvider } from "./languageFile";
+import { LanguageFileService } from "./languageFile";
 import {
   ANSWER_CHAPTER_BACKWARDS,
   ANSWER_CHAPTER_REPEAT
 } from "../../app/constants";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 
 @Injectable()
-export class AnswerMatchingProvider {
+export class AnswerMatchingService {
   constructor(
-    private languageFileProvider: LanguageFileProvider,
-    private logger: LoggerProvider
+    private languageFileService: LanguageFileService,
+    private logger: LoggerService
   ) {}
 
   public match(
@@ -28,7 +28,7 @@ export class AnswerMatchingProvider {
       // find exact math considering the hierachy
       for (let i = 0; i < result.length; i++) {
         for (let answer of answers) {
-          if (AnswerMatchingProvider.checkContent(answer.value, result[i])) {
+          if (AnswerMatchingService.checkContent(answer.value, result[i])) {
             this.logger.log(answer.value + " matched to answer");
             return answer;
           }
@@ -38,8 +38,8 @@ export class AnswerMatchingProvider {
       // only one answer possible, the system asks if the user wants to continue
       // therefore check if user agrees
       for (let i = 0; i < result.length; i++) {
-        for (let a of this.languageFileProvider.preDefinedTexts.agree) {
-          if (AnswerMatchingProvider.checkContent(a.value, result[i])) {
+        for (let a of this.languageFileService.preDefinedTexts.agree) {
+          if (AnswerMatchingService.checkContent(a.value, result[i])) {
             this.logger.log(a.value + " matched to answer");
             return answers[0]; // it is only one possible here
           }
@@ -49,8 +49,8 @@ export class AnswerMatchingProvider {
 
     // nothing found so far, check for numbers
     for (let i = 0; i < result.length; i++) {
-      for (let e of this.languageFileProvider.preDefinedTexts.enum) {
-        if (AnswerMatchingProvider.checkContent(e.value, result[i])) {
+      for (let e of this.languageFileService.preDefinedTexts.enum) {
+        if (AnswerMatchingService.checkContent(e.value, result[i])) {
           return answers[e.index - 1];
         }
       }
@@ -58,8 +58,8 @@ export class AnswerMatchingProvider {
 
     // navigate backwards
     for (let i = 0; i < result.length; i++) {
-      for (let e of this.languageFileProvider.preDefinedTexts.backwards) {
-        if (AnswerMatchingProvider.checkContent(e.value, result[i])) {
+      for (let e of this.languageFileService.preDefinedTexts.backwards) {
+        if (AnswerMatchingService.checkContent(e.value, result[i])) {
           return ANSWER_CHAPTER_BACKWARDS;
         }
       }
@@ -67,8 +67,8 @@ export class AnswerMatchingProvider {
 
     // repeat current chapter
     for (let i = 0; i < result.length; i++) {
-      for (let e of this.languageFileProvider.preDefinedTexts.repeatChapter) {
-        if (AnswerMatchingProvider.checkContent(e.value, result[i])) {
+      for (let e of this.languageFileService.preDefinedTexts.repeatChapter) {
+        if (AnswerMatchingService.checkContent(e.value, result[i])) {
           return ANSWER_CHAPTER_REPEAT;
         }
       }
@@ -76,10 +76,10 @@ export class AnswerMatchingProvider {
 
     // does not matter
     for (let i = 0; i < result.length; i++) {
-      for (let e of this.languageFileProvider.preDefinedTexts.doNotCare) {
-        if (AnswerMatchingProvider.checkContent(e.value, result[i])) {
+      for (let e of this.languageFileService.preDefinedTexts.doNotCare) {
+        if (AnswerMatchingService.checkContent(e.value, result[i])) {
           return answers[
-            AnswerMatchingProvider.createRandomNumber(answers.length)
+            AnswerMatchingService.createRandomNumber(answers.length)
           ];
         }
       }
@@ -89,7 +89,7 @@ export class AnswerMatchingProvider {
   }
 
   private static checkContent(search: string, containedIn: string) {
-    search = AnswerMatchingProvider.removeSpecialCharacters(search);
+    search = AnswerMatchingService.removeSpecialCharacters(search);
     console.log(
       "Checking if <" +
         containedIn.toLowerCase() +
