@@ -3,7 +3,7 @@ import { ToastController } from "ionic-angular/components/toast/toast-controller
 import { TranslateService } from "@ngx-translate/core";
 
 /*
-  Generated class for the SimpleToastProvider provider.
+  Generated class for the SimpleToastService service.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
