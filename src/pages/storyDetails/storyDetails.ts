@@ -1,13 +1,17 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { ToastController } from "ionic-angular/components/toast/toast-controller";
+import { AlertController } from "ionic-angular";
+
 
 import { StoryInformation } from "../../datamodels/storyInformation";
-import { StoryProvider } from "../../providers/story/story";
+import { StoryService } from "../../providers/story/story";
 
 import { PlayerPage } from "../player/player";
 import { STORY_DIR } from "../../app/constants";
-import { SaveGameProvider } from "../../providers/savegame/savegame";
-import { PublicStoryHelperProvider } from "../../providers/public-story-helper/public-story-helper";
+import { SaveGameService } from "../../providers/savegame/savegame";
+import { PublicStoryHelperService } from "../../providers/public-story-helper/public-story-helper";
+import deleteProperty = Reflect.deleteProperty;
 
 /**
  * Generated class for the StoryDetailsPage page.
@@ -20,7 +24,7 @@ import { PublicStoryHelperProvider } from "../../providers/public-story-helper/p
   selector: "page-storyDetails",
   templateUrl: "storyDetails.html"
 })
-export class StoryDetailsPage {
+export class StoryDetailsPage{
   selectedStory: StoryInformation;
   selectedReader: string;
   imgPath: string = "dummy.png";
@@ -28,11 +32,13 @@ export class StoryDetailsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public storyProvider: StoryProvider,
-    private savegameProvider: SaveGameProvider,
-    private publicStoryHelper: PublicStoryHelperProvider
+    public storyService: StoryService,
+    private savegameService: SaveGameService,
+    private publicStoryHelper: PublicStoryHelperService,
+    private toastCtrl: ToastController,
+    private alertctrl: AlertController,
   ) {
-    this.selectedStory = navParams.get("selectedStory");
+    this.selectedStory = this.navParams.get("selectedStory");
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
 
     if (this.selectedStory.medium === "cloud") {
@@ -43,23 +49,52 @@ export class StoryDetailsPage {
       this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
     }
     console.log("ImgPath:", this.imgPath);
-    this.selectedReader = this.savegameProvider.loadSavegame(
+    this.selectedReader = this.savegameService.loadSavegame(
       this.selectedStory.id
     ).reader;
   }
 
   //Muss noch implementiert werden
   saveReader() {
-    let sg = this.savegameProvider.loadSavegame(this.selectedStory.id);
+    let sg = this.savegameService.loadSavegame(this.selectedStory.id);
     sg.reader = this.selectedReader;
-    this.savegameProvider.updateSavegame(sg);
+    this.savegameService.updateSavegame(sg);
   }
 
   deleteStory(id: string) {
-    this.storyProvider.deleteStory(id);
+    let alert = this.alertctrl.create({
+      title:"Löschen?",
+      message: "Möchten Sie die Geschichte löschen?",
+      buttons: [{
+        text: "Abbrechen",
+        role: "abbrechen",
+        handler: () => {
+          console.log("abgebrochen");
+        }
+      }, {
+        text: "Löschen",
+        handler: () => {
+          //Ask if he wants to delete?!
+          this.storyService.deleteStory(id);
+          this.navCtrl.pop().then(() =>{
+            let toast = this.toastCtrl.create({
+              message: "Geschichte wurde gelöscht",
+              duration: 3000,
+              position: "buttom"
+            })
+            toast.present();
+          })
+        }
+      }]
+    });
+    alert.present();
+    //console.log("delete: " + id);
+
+    //this.storyService.deleteStory(id);
     //Muss noch implementiert werden
+
     //deleteSaveGame();
-    this.navCtrl.pop();
+    //this.navCtrl.pop();
   }
 
   ionViewDidLoad() {
