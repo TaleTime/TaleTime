@@ -5,8 +5,8 @@ import {
   StoryInformation,
   StoryInformationWithUrl
 } from "../../datamodels/storyInformation";
-import { StoryProvider } from "../../providers/story/story";
-import { AlertProvider } from "../../providers/alert/alert";
+import { StoryService} from "../../providers/story/story";
+import { AlertService } from "../../providers/alert/alert";
 import { TranslateService } from "@ngx-translate/core";
 import {
   FileTransfer,
@@ -19,7 +19,8 @@ import { LoadingController } from "ionic-angular/components/loading/loading-cont
 import { LoadingOptions } from "ionic-angular/components/loading/loading-options";
 import { Loading } from "ionic-angular/components/loading/loading";
 import { NgZone } from "@angular/core";
-import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
+import { SimpleToastService} from "../../providers/simple-toast/simple-toast";
+import * as JSZip from "jszip";
 
 @Component({
   selector: "page-availableStories",
@@ -39,14 +40,14 @@ export class AvailableStoriesPage {
     public navCtrl: NavController,
     private http: HTTP,
     private translate: TranslateService,
-    private storyProvider: StoryProvider,
-    private alert: AlertProvider,
+    private storyService: StoryService,
+    private alert: AlertService,
     private platform: Platform,
     private transfer: FileTransfer,
     private file: File,
     private zip: Zip,
     private loadingCntrl: LoadingController,
-    private toastProvider: SimpleToastProvider
+    private toastService: SimpleToastService
   ) {
     this.loadDeviceDefaultStories();
     this.platform.ready().then(() => {
@@ -93,12 +94,12 @@ export class AvailableStoriesPage {
     if (story.medium === "cloud" && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(<StoryInformationWithUrl>story);
-    } else if (this.storyProvider.exists(story.id)) {
+    } else if (this.storyService.exists(story.id)) {
       //story already exists
       this.alertStoryAlreadyExists(story.title);
     } else {
       //add new (non cloud) story
-      this.storyProvider.addStory(story);
+      this.storyService.addStory(story);
       this.alertStoryAddedSucessfully(story.title);
     }
   }
@@ -151,8 +152,8 @@ export class AvailableStoriesPage {
   private unpackingProgressStr(
     title: string,
     loaded: number,
-    total: number
-  ): string {
+    total: number):
+    string {
     return this.translate.instant("STORY_UNPACKING_PROGRESS", {
       title: title,
       progress: Math.round((loaded / total) * 100) + "%"
@@ -176,7 +177,7 @@ export class AvailableStoriesPage {
    * @param story Story to download and install
    */
   public installPublicStory(story: StoryInformationWithUrl) {
-    if (this.storyProvider.exists(story.id)) {
+    if (this.storyService.exists(story.id)) {
       this.alertStoryAlreadyExists(story.title);
     } else {
       let url = story.url;
@@ -218,20 +219,20 @@ export class AvailableStoriesPage {
                 this.file
                   .removeFile(targetFolderForZip, zipFileName)
                   .then((removeRes) => {
-                    this.storyProvider.addStory(story);
+                    this.storyService.addStory(story);
                     loading.dismiss();
                     this.alertStoryAddedSucessfully(story.title);
                   })
                   .catch((error) => {
                     loading.dismiss();
-                    this.toastProvider.displayToast(
+                    this.toastService.displayToast(
                       this.translate.instant("STORY_ZIP_REMOVE_FAIL")
                     );
                     console.log("Could not remove downloaded Zip!");
                   });
               } else if (result === -1) {
                 console.log("Unzipping the file failed!");
-                this.toastProvider.displayToast(
+                this.toastService.displayToast(
                   this.translate.instant("STORY_ZIP_UNPACK_FAIL")
                 );
               }
@@ -239,7 +240,7 @@ export class AvailableStoriesPage {
         },
         (error) => {
           loading.dismiss();
-          this.toastProvider.displayToast(
+          this.toastService.displayToast(
             this.translate.instant("STORY_DOWNLOAD_FAIL")
           );
           console.error(
