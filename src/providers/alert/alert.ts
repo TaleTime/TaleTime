@@ -1,16 +1,16 @@
-import { Injectable } from "@angular/core";
+mport { Injectable } from "@angular/core";
 import "rxjs/add/operator/map";
 
 import { AlertController } from "ionic-angular";
 import { AlertButton } from "ionic-angular/components/alert/alert-options";
 /*
-Generated class for the AlertProvider provider.
+Generated class for the AlertService service.
 
 See https://angular.io/docs/ts/latest/guide/dependency-injection.html
 for more info on providers and Angular 2 DI.
 */
 @Injectable()
-export class AlertProvider {
+export class AlertService {
   constructor(public alertCtrl: AlertController) {}
 
   createAlert(
