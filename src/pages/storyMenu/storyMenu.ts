@@ -2,9 +2,9 @@ import { Component } from "@angular/core";
 import { MenuController, NavController, Platform } from "ionic-angular";
 import { Reader, StoryInformation } from "../../datamodels/storyInformation";
 import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile";
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 import { StoryDetailsPage } from "../storyDetails/storyDetails";
-import { StoryProvider } from "../../providers/story/story";
+import { StoryService } from "../../providers/story/story";
 import { PlayerPage } from "../player/player";
 import { App } from "ionic-angular/components/app/app";
 
@@ -21,10 +21,10 @@ export class StoryMenuPage {
     public app: App,
     public navCtrl: NavController,
     public menuCtrl: MenuController,
-    private authProvider: AuthProvider,
-    public storyProvider: StoryProvider
+    private authService: AuthService,
+    public storyService: StoryService
   ) {
-    const activeUserProfile = this.authProvider.getActiveUserProfile();
+    const activeUserProfile = this.authService.getActiveUserProfile();
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
@@ -32,7 +32,7 @@ export class StoryMenuPage {
   }
 
   public get stories(): Array<StoryInformation> {
-    return this.storyProvider.stories;
+    return this.storyService.stories;
   }
 
   goToSelectUserProfilePage() {
@@ -46,7 +46,7 @@ export class StoryMenuPage {
   }
 
   deleteStory(story: StoryInformation) {
-    this.storyProvider.deleteStory(story.id);
+    this.storyService.deleteStory(story.id);
   }
 
   goToPlayerPage(storyId: string) {
