@@ -5,7 +5,7 @@ import "rxjs/add/operator/map";
 import { AlertController } from "ionic-angular";
 import { UserAccount } from "../../datamodels/userAccount";
 import { UserProfile } from "../../datamodels/userProfile";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 
 /*
   Generated class for the AuthProvider provider.
@@ -14,19 +14,19 @@ import { LoggerProvider } from "../logger/logger";
   and Angular DI.
 */
 @Injectable()
-export class AuthProvider {
+export class AuthService {
   static USER_ACCOUNT_KEY: string = "userAccount";
   private currentUser: UserAccount;
   constructor(
     private storage: Storage,
     private alertCtrl: AlertController,
-    private logger: LoggerProvider
+    private logger: LoggerService
   ) {}
 
   public trySignIn(callback: () => any) {
     this.storage
       .ready()
-      .then(() => this.storage.get(AuthProvider.USER_ACCOUNT_KEY))
+      .then(() => this.storage.get(AuthService.USER_ACCOUNT_KEY))
       .then((userAccountData) => {
         if (userAccountData) {
           this.currentUser = new UserAccount(
@@ -43,9 +43,9 @@ export class AuthProvider {
   public addTestUser() {
     console.log("Test");
     let userAccount = new UserAccount("Test", "test@mail.com", "1234");
-    this.storage.set(AuthProvider.USER_ACCOUNT_KEY, userAccount);
+    this.storage.set(AuthService.USER_ACCOUNT_KEY, userAccount);
     this.storage.ready().then(() =>
-      this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+      this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
         console.log(val);
       })
     );
@@ -170,7 +170,7 @@ export class AuthProvider {
         // TODO At this point make a request to your backend to make a real check!
         let access = false;
         this.storage.ready().then(() =>
-          this.storage.get(AuthProvider.USER_ACCOUNT_KEY).then((val) => {
+          this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
             console.log(val);
             if (val) {
               let storageUser = new UserAccount(
@@ -200,7 +200,7 @@ export class AuthProvider {
     return Observable.create(
       (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
         this.currentUser = null;
-        this.storage.remove(AuthProvider.USER_ACCOUNT_KEY);
+        this.storage.remove(AuthService.USER_ACCOUNT_KEY);
         observer.next(true);
         observer.complete();
       }
@@ -209,7 +209,7 @@ export class AuthProvider {
 
   private save(userAccount?: UserAccount) {
     this.storage.set(
-      AuthProvider.USER_ACCOUNT_KEY,
+      AuthService.USER_ACCOUNT_KEY,
       userAccount || this.currentUserAccount
     );
   }
