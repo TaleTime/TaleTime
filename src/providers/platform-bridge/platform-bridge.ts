@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { Platform } from "ionic-angular/platform/platform";
 import { WWW } from "../../app/constants";
 import { File } from "@ionic-native/file/ngx";
+import {LoggerService} from "../logger/logger";
 
 /*
-  Generated class for the PlatformBridgeProvider provider.
+  Generated class for the PlatformBridgeService service.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
@@ -15,7 +16,7 @@ import { File } from "@ionic-native/file/ngx";
  * @class PlatformBridgeProvider
  */
 @Injectable()
-export class PlatformBridgeProvider {
+export class PlatformBridgeService {
   constructor(private platform: Platform, private file: File) {}
 
   /**
