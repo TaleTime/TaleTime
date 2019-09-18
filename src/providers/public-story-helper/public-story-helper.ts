@@ -6,18 +6,19 @@ import {
   StoryInformationWithUrl,
   StoryInformation
 } from "../../datamodels/storyInformation";
-import { SettingsProvider } from "../../providers/settings/settings";
+import { SettingsService } from "../../providers/settings/settings";
+import {LoggerService} from "../logger/logger";
 /**
  * Helper class to access file/folder paths of downloaded (public) stories
  * @Author Max Weiler
  */
 @Injectable()
-export class PublicStoryHelperProvider {
+export class PublicStoryHelperService {
   private publicStoryBasePath: string;
   constructor(
     private platform: Platform,
     private file: File,
-    private settings: SettingsProvider
+    private settings: SettingsService
   ) {
     this.platform.ready().then((platform) => {
       this.publicStoryBasePath =
