@@ -2,11 +2,11 @@ import { ApplicationRef, Component, OnDestroy } from "@angular/core";
 import { NavController, NavParams, Platform } from "ionic-angular";
 
 //Provider
-import { StoryProvider } from "../../providers/story/story";
-import { AudioProvider } from "../../providers/audio/audio";
-import { AnswerMatchingProvider } from "../../providers/speechRecognition/answerMatching";
-import { SettingsProvider } from "../../providers/settings/settings";
-import { TtsTextProvider } from "../../providers/speechRecognition/ttsText";
+import { StoryService} from "../../providers/story/story";
+import { AudioService} from "../../providers/audio/audio";
+import { AnswerMatchingService } from "../../providers/speechRecognition/answerMatching";
+import { SettingsService } from "../../providers/settings/settings";
+import { TtsTextService } from "../../providers/speechRecognition/ttsText";
 
 //Plugins
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
@@ -30,9 +30,9 @@ import {
 import { Savegame } from "../../datamodels/savegame";
 
 import { StoryMenuPage } from "../storyMenu/storyMenu";
-import { SaveGameProvider } from "../../providers/savegame/savegame";
-import { PublicStoryHelperProvider } from "../../providers/public-story-helper/public-story-helper";
-import { PlatformBridgeProvider } from "../../providers/platform-bridge/platform-bridge";
+import { SaveGameService } from "../../providers/savegame/savegame";
+import { PublicStoryHelperService } from "../../providers/public-story-helper/public-story-helper";
+import { PlatformBridgeService } from "../../providers/platform-bridge/platform-bridge";
 
 //import Stack from "ts-data.stack";
 /**
@@ -75,18 +75,18 @@ export class PlayerPage implements OnDestroy {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private savegameProvider: SaveGameProvider,
-    private audioProvider: AudioProvider,
+    private savegameService: SaveGameService,
+    private audioService: AudioService,
     private platform: Platform,
-    private story: StoryProvider,
+    private story: StoryService,
     private appRef: ApplicationRef,
     private speechRecognition: SpeechRecognition,
-    private ttsTexts: TtsTextProvider,
+    private ttsTexts: TtsTextService,
     private tts: TextToSpeech,
-    private matching: AnswerMatchingProvider,
-    private settings: SettingsProvider,
-    private publicStoryHelper: PublicStoryHelperProvider,
-    private platformBridge: PlatformBridgeProvider
+    private matching: AnswerMatchingService,
+    private settings: SettingsService,
+    private publicStoryHelper: PublicStoryHelperService,
+    private platformBridge: PlatformBridgeService
   ) {
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
@@ -139,7 +139,7 @@ export class PlayerPage implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log("Destroy Player");
-    this.audioProvider.stop();
+    this.audioService.stop();
   }
 
   onBackKeyDown() {
@@ -263,7 +263,7 @@ export class PlayerPage implements OnDestroy {
         }
         resolve();
       } else {
-        this.audioProvider.play().then(() => {
+        this.audioService.play().then(() => {
           this.playing = true;
           this.appRef.tick();
           resolve();
@@ -296,7 +296,7 @@ export class PlayerPage implements OnDestroy {
           resolve();
         }
       } else {
-        this.audioProvider.pause().then(() => {
+        this.audioService.pause().then(() => {
           this.playing = false;
           this.stopped = true;
           resolve();
@@ -331,7 +331,7 @@ export class PlayerPage implements OnDestroy {
    * if no savegame exists for that user a new one will be created
    */
   private loadSavegame() {
-    this.savegame = this.savegameProvider.loadSavegame(this.storyId);
+    this.savegame = this.savegameService.loadSavegame(this.storyId);
     console.log("Current savegame:");
     console.log(JSON.stringify(this.savegame));
     //Check if Savegame exists or if a new one has to be created
@@ -346,14 +346,14 @@ export class PlayerPage implements OnDestroy {
   private createNewSavegame() {
     this.savegame.storyId = this.storyId;
     this.savegame.chosenPath.push(FIRST_NODE);
-    this.savegameProvider.addSavegame(this.savegame);
+    this.savegameService.addSavegame(this.savegame);
   }
 
   /**
    * Updates Savegame, so that Users progress in Story is written to the Users File
    */
   private updateSavegame() {
-    this.savegameProvider.updateSavegame(this.savegame);
+    this.savegameService.updateSavegame(this.savegame);
     console.log("Savegame successfully updated!");
     console.log(JSON.stringify(this.savegame));
   }
@@ -420,7 +420,7 @@ export class PlayerPage implements OnDestroy {
     let nodeAudioFileName = this.story.getCurrentAudioSrc();
     let audioPath = this.getAudioPath(nodeAudioFileName);
     console.log("Audio-Path:", audioPath);
-    this.audioProvider.loadAudio(
+    this.audioService.loadAudio(
       audioPath,
       () => {
         console.log("Audio finished");
