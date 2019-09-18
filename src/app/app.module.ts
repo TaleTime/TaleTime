@@ -26,15 +26,15 @@ import { CreditsPage } from "../pages/credits/credits";
 import { ImpressumPage } from "../pages/impressum/impressum";
 
 /** Providers import */
-import { AlertProvider } from "../providers/alert/alert";
-import { StoryProvider } from "../providers/story/story";
-import { SettingsProvider } from "../providers/settings/settings";
-import { AnswerMatchingProvider } from "../providers/speechRecognition/answerMatching";
-import { LanguageFileProvider } from "../providers/speechRecognition/languageFile";
-import { TtsTextProvider } from "../providers/speechRecognition/ttsText";
-import { StorageProvider } from "../providers/common/storage";
-import { AudioProvider } from "../providers/audio/audio";
-import { AuthProvider } from "../providers/auth/auth";
+import { AlertService } from "../providers/alert/alert";
+import { StoryService} from "../providers/story/story";
+import { SettingsService } from "../providers/settings/settings";
+import { AnswerMatchingService } from "../providers/speechRecognition/answerMatching";
+import { LanguageFileService } from "../providers/speechRecognition/languageFile";
+import { TtsTextService} from "../providers/speechRecognition/ttsText";
+import { StorageService } from "../providers/common/storage";
+import { AudioService} from "../providers/audio/audio";
+import { AuthService } from "../providers/auth/auth";
 
 /** Ionic framework imports */
 import { HttpClientModule, HttpClient } from "@angular/common/http";
@@ -48,15 +48,15 @@ import { Globalization } from "@ionic-native/globalization/ngx";
 import { File } from "@ionic-native/file/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { SaveGameProvider } from "../providers/savegame/savegame";
+import { SaveGameService } from "../providers/savegame/savegame";
 import { FileTransfer } from "@ionic-native/file-transfer/ngx";
 import { Zip } from "@ionic-native/zip/ngx";
-import { PublicStoryHelperProvider } from "../providers/public-story-helper/public-story-helper";
+import { PublicStoryHelperService } from "../providers/public-story-helper/public-story-helper";
 //installed version 4.0.0 instead of latest, latest requires cordova-plugin-file@6.0.0 but file-transfer plugin requires cordova-plugin-file@5.0.0
 import { Media } from "@ionic-native/media/ngx";
-import { SimpleToastProvider } from "../providers/simple-toast/simple-toast";
-import { LoggerProvider } from "../providers/logger/logger";
-import { PlatformBridgeProvider } from "../providers/platform-bridge/platform-bridge";
+import { SimpleToastService} from "../providers/simple-toast/simple-toast";
+import { LoggerService } from "../providers/logger/logger";
+import { PlatformBridgeService } from "../providers/platform-bridge/platform-bridge";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -120,29 +120,29 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AlertProvider,
+    AlertService,
     HTTP,
-    StoryProvider,
-    LoggerProvider,
-    SettingsProvider,
-    AnswerMatchingProvider,
-    LanguageFileProvider,
-    TtsTextProvider,
+    StoryService,
+    LoggerService,
+    SettingsService,
+    AnswerMatchingService,
+    LanguageFileService,
+    TtsTextService,
     File,
     Zip,
     FileTransfer,
     NativeAudio,
     TextToSpeech,
     SpeechRecognition,
-    StorageProvider,
-    AudioProvider,
+    StorageService,
+    AudioService,
     Globalization,
-    SaveGameProvider,
-    AuthProvider,
-    PublicStoryHelperProvider,
+    SaveGameService,
+    AuthService,
+    PublicStoryHelperService,
     Media,
-    SimpleToastProvider,
-    PlatformBridgeProvider
+    SimpleToastService,
+    PlatformBridgeService
   ]
 })
 export class AppModule {}
