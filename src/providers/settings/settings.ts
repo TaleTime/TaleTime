@@ -7,16 +7,16 @@ import { Injectable } from "@angular/core";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
-import { LanguageFileProvider } from "../speechRecognition/languageFile";
-import { AlertProvider } from "../alert/alert";
+import { LanguageFileService } from "../speechRecognition/languageFile";
+import { AlertService } from "../alert/alert";
 import { Settings } from "../../datamodels/settings";
 import { Storage } from "@ionic/storage";
 import { Platform } from "ionic-angular/platform/platform";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 
 @Injectable()
-export class SettingsProvider {
-  // private logger : LoggerProvider;
+export class SettingsService {
+  // private logger : LoggerService;
   private readonly SETTINGS_KEY = "SETTINGS";
   private settings: Settings;
 
@@ -25,11 +25,11 @@ export class SettingsProvider {
 
   constructor(
     private platform: Platform,
-    private languageFile: LanguageFileProvider,
+    private languageFile: LanguageFileService,
     private storage: Storage,
-    private speechRecognitionProvider: SpeechRecognition,
-    private logger: LoggerProvider,
-    private alert: AlertProvider
+    private speechRecognitionService: SpeechRecognition,
+    private logger: LoggerService,
+    private alert: AlertService
   ) {
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
@@ -83,12 +83,12 @@ export class SettingsProvider {
   set speechRecognition(value: boolean) {
     // make sure the user gave the permission to use the microphone
     if (value) {
-      this.speechRecognitionProvider.hasPermission().then(
+      this.speechRecognitionService.hasPermission().then(
         (hasPermission: boolean) => {
           if (hasPermission) {
             this.updateAndSaveSpeechRecognitionValue(value);
           } else {
-            this.speechRecognitionProvider.requestPermission().then(
+            this.speechRecognitionServiceProvider.requestPermission().then(
               () => this.updateAndSaveSpeechRecognitionValue(value),
               () => {
                 this.alert
