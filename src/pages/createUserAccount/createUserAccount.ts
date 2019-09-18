@@ -13,7 +13,7 @@ import {
 
 import { SelectUserProfilePage } from "../selectUserProfile/selectUserProfile";
 
-import { AuthProvider } from "../../providers/auth/auth";
+import { AuthService } from "../../providers/auth/auth";
 
 @Component({
   selector: "page-createUserAccount",
@@ -26,7 +26,7 @@ export class CreateUserAccountPage {
 
   constructor(
     private navCtrl: NavController,
-    private authProvider: AuthProvider,
+    private authService: AuthService,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
   ) {}
@@ -34,13 +34,13 @@ export class CreateUserAccountPage {
   public register() {
     this.showLoading();
 
-    this.authProvider.register(this.registerCredentials).subscribe(
+    this.authService.register(this.registerCredentials).subscribe(
       (success) => {
         if (success) {
           this.createSuccess = true;
 
           // automatic login user
-          this.authProvider.trySignIn(() =>
+          this.authService.trySignIn(() =>
             this.navCtrl.setRoot(SelectUserProfilePage)
           );
         } else {
