@@ -1,18 +1,18 @@
 import { Injectable } from "@angular/core";
 import { Media, MediaObject } from "@ionic-native/media/ngx";
 import { EventEmitter } from "events";
-import { LoggerProvider } from "../logger/logger";
+import { LoggerService } from "../logger/logger";
 
 /**
  * @author Markus Altmeyer
  */
 
 @Injectable()
-export class AudioProvider {
+export class AudioService {
   private mediaObject: MediaObject;
   private emitter: EventEmitter;
   private isPlaying: Boolean = false;
-  constructor(private media: Media, private logger: LoggerProvider) {}
+  constructor(private media: Media, private logger: LoggerService) {}
 
   /**
    * Loads an audio file. After this the file can be played, stopped etc
