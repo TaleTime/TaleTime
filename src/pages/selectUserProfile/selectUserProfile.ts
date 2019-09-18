@@ -13,8 +13,8 @@ import { NavController, ModalController } from "ionic-angular";
 import { TabsPage } from "../tabs/tabs";
 import { CreateUserProfilePage } from "../createUserProfile/createUserProfile";
 
-import { AuthProvider } from "../../providers/auth/auth";
-import { SimpleToastProvider } from "../../providers/simple-toast/simple-toast";
+import { AuthService } from "../../providers/auth/auth";
+import { SimpleToastService} from "../../providers/simple-toast/simple-toast";
 
 @Component({
   selector: "page-selectUserProfile",
@@ -28,9 +28,9 @@ export class SelectUserProfilePage {
   constructor(
     private navCtrl: NavController,
     private translate: TranslateService,
-    private authProvider: AuthProvider,
+    private authService: AuthService,
     public modalCtrl: ModalController,
-    private toastProvider: SimpleToastProvider
+    private toastService: SimpleToastService
   ) {
     this.isShowingOptions = false;
     this.translate.get("COMMON_EDIT").subscribe((value) => {
@@ -38,7 +38,7 @@ export class SelectUserProfilePage {
       this.showingOptionsLabel = value;
     });
 
-    const activeUserProfile = this.authProvider.getActiveUserProfile();
+    const activeUserProfile = this.authService.getActiveUserProfile();
     if (activeUserProfile && !activeUserProfile.child) {
       this.isShowingOptionsButton = true;
     }
@@ -47,7 +47,7 @@ export class SelectUserProfilePage {
   public select(event, userProfileId: string) {
     event.stopPropagation(); // TODO read desc in file header
 
-    this.authProvider.setActiveUserProfile(userProfileId).subscribe(
+    this.authService.setActiveUserProfile(userProfileId).subscribe(
       (success) => {
         if (success) {
           // this.navCtrl.push(TabsPage);
@@ -66,10 +66,12 @@ export class SelectUserProfilePage {
   }
 
   public delete(event, userProfileId: string) {
-    event.stopPropagation(); // TODO read desc in file header
+    console.log(event.stopPropagation()); // TODO read desc in file header
 
     console.log("delete: " + userProfileId);
-    this.authProvider.deleteUserProfile(userProfileId);
+   // console.log(this.authService.deleteUserProfile(userProfileId)
+     // .subscribe(() => console.log('User wurde gelöscht'),
+       // (error) => console.log(error));
   }
 
   public create() {
@@ -79,12 +81,12 @@ export class SelectUserProfilePage {
 
   public showOptions() {
     if (!this.isShowingOptions) {
-      let alert = this.authProvider.presentPinPrompt((valid) => {
+      let alert = this.authService.presentPinPrompt((valid) => {
         if (valid) {
           this.isShowingOptions = true;
           this.showingOptionsLabel = this.translate.instant("COMMON_DONE");
         } else {
-          this.toastProvider.displayToast("Wrong pin."); // TODO tobi i18
+          this.toastService.displayToast("Wrong pin."); // TODO tobi i18
           return false;
         }
       });
