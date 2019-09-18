@@ -11,15 +11,15 @@ import {
   StoryMetaData
 } from "../../datamodels/story/story";
 import { Observable } from "rxjs/Observable";
-import { SettingsProvider } from "../settings/settings";
+import { SettingsService } from "../settings/settings";
 import { Storage } from "@ionic/storage";
 import { File } from "@ionic-native/file/ngx";
-import { SaveGameProvider } from "../savegame/savegame";
-import { PublicStoryHelperProvider } from "../public-story-helper/public-story-helper";
-import { LoggerProvider } from "../logger/logger";
+import { SaveGameService } from "../savegame/savegame";
+import { PublicStoryHelperService } from "../public-story-helper/public-story-helper";
+import { LoggerService } from "../logger/logger";
 
 @Injectable()
-export class StoryProvider {
+export class StoryService {
   private readonly STORY_INFO_KEY = "STORY_INFO";
   private storyIndices: Map<string, number> = new Map<string, number>();
   private _stories: Array<StoryInformation> = new Array<StoryInformation>();
@@ -28,13 +28,13 @@ export class StoryProvider {
 
   constructor(
     protected platform: Platform,
-    private logger: LoggerProvider,
+    private logger: LoggerService,
     private fileService: File,
     private storage: Storage,
     private http: HttpClient,
-    private settings: SettingsProvider,
-    private savegames: SaveGameProvider,
-    private publicStoryHelper: PublicStoryHelperProvider
+    private settings: SettingsService,
+    private savegames: SaveGameService,
+    private publicStoryHelper: PublicStoryHelperService
   ) {
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
