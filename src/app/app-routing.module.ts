@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { TabsPageModule } from "./tabs/tabs.module";
 
 const routes: Routes = [
   {
@@ -60,7 +61,7 @@ const routes: Routes = [
   },
   {
     path: "tabs",
-    loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
+    component: TabsPageModule
   },
   {
     path: "user-account",

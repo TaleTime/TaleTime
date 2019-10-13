@@ -22,7 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     TranslateModule
-
   ],
   declarations: [AvailableStoriesPage]
 })
