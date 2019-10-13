@@ -52,8 +52,7 @@ export class StoryMenuPage implements OnInit {
   }
 
   goToAvailableStories() {
-    // this.navCtrl.parent.select(1);
-    console.log("Feature to be implemented yet, go back to available stories"); // TODO
+    this.router.navigate(["/tabs/available-stories"]);
   }
 
   getSubtitle(r: Reader) {
