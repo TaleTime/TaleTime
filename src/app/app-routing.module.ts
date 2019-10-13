@@ -66,7 +66,11 @@ const routes: Routes = [
   {
     path: "user-account",
     loadChildren: () => import("./pages/user-account/user-account.module").then(module => module.UserAccountPageModule)
-  }
+  },
+  {
+    path: "**",
+    redirectTo: "tabs",
+  },
 ];
 
 @NgModule({
