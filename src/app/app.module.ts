@@ -37,7 +37,7 @@ import {FileTransfer} from "@ionic-native/file-transfer/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {Media} from "@ionic-native/media/ngx";
 
-// import {HTTP} from "@ionic-native/http/ngx";
+import {HTTP} from "@ionic-native/http/ngx";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -66,7 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
     SplashScreen,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     AlertService,
-    // HTTP,
+    HTTP,
     StoryService,
     LoggerService,
     SettingsService,

@@ -9,6 +9,7 @@ import {FileTransfer, FileTransferObject} from "@ionic-native/file-transfer/ngx"
 import {File} from "@ionic-native/file/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
+import { HttpClientModule } from "@angular/common/http";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
