@@ -7,3 +7,4 @@ typings/
 .sourcemaps
 package-lock.json
 .idea/
+log.txt
