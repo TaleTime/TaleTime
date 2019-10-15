@@ -20,11 +20,18 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-row padding *ngIf="this.stories.length < 1">
-    <p>{{ 'STORYMENU_NO_STORIES_YET' | translate }}</p>
-    <ion-button fill="full" (click)="goToAvailableStories()">
-      {{ 'STORYMENU_ADD_SOME_STORIES' | translate }}
-    </ion-button>
+  <ion-row class="ion-padding" *ngIf="this.stories.length < 1">
+    <ion-card class="card padding" style="width: 100%">
+      <ion-card-header>
+        <ion-card-title>{{ 'STORYMENU_NO_STORIES_HEADER' | translate }}</ion-card-title>
+        <ion-card-subtitle>{{ 'STORYMENU_NO_STORIES_YET' | translate }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="full" (click)="goToAvailableStories()">
+          {{ 'STORYMENU_ADD_SOME_STORIES' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
   </ion-row>
 
   <ion-card *ngFor="let story of this.stories">
@@ -32,25 +39,26 @@
       <ion-thumbnail slot="start">
         <ion-icon
             *ngIf="!story.cover"
-            slot="start"
             name="book"
             style="font-size: 64px;"
         ></ion-icon>
         <ion-img
             *ngIf="story.cover"
-            slot="start"
             src="assets/stories/{{story.id}}/{{story.cover}}"
         ></ion-img>
       </ion-thumbnail>
-      <h1>
-        <ion-icon
-            name="cloud-download"
-            *ngIf="story.medium === 'cloud'"
-        ></ion-icon>
-        {{story.title}}
-      </h1>
-      <h2>{{story.author.join(', ')}}</h2>
-      <p>{{story.date}}</p>
+      <ion-label>
+        <h1>
+          <ion-icon
+              name="cloud-download"
+              *ngIf="story.medium === 'cloud'"
+          ></ion-icon>
+          {{story.title}}
+        </h1>
+        <h2>{{story.author.join(', ')}}</h2>
+        <p>{{story.date}}</p>
+      </ion-label>
+
     </ion-item>
 
     <ion-card-content>
@@ -61,13 +69,12 @@
       <ion-row justify-content-end>
         <ion-col>
           <ion-button
-              color="secondary"
-              slot="icon-only"
+              color="success"
               (click)="goToPlayerPage(story.id)"
           >
             <ion-icon name="play"></ion-icon>
           </ion-button>
-          <ion-button slot="icon-only" (click)="showDetails(story)">
+          <ion-button (click)="showDetails(story)">
             <ion-icon name="information-circle"></ion-icon>
           </ion-button>
           <ion-button

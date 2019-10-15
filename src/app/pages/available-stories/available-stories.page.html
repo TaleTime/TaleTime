@@ -10,25 +10,26 @@
       <ion-thumbnail slot="start">
         <ion-icon
             *ngIf="!story.cover"
-            slot="start"
             name="book"
             style="font-size: 64px;"
         ></ion-icon>
         <ion-img
             *ngIf="story.cover"
-            slot="start"
             src="assets/stories/{{story.id}}/{{story.cover}}"
         ></ion-img>
       </ion-thumbnail>
-      <h1>
-        <ion-icon
-            name="cloud-download"
-            *ngIf="story.medium === 'cloud'"
-        ></ion-icon>
-        {{story.title}}
-      </h1>
-      <h2>{{story.author.join(', ')}}</h2>
-      <p>{{story.date}}</p>
+      <ion-label>
+        <h1>
+          <ion-icon
+              name="cloud-download"
+              *ngIf="story.medium === 'cloud'"
+          ></ion-icon>
+          {{story.title}}
+        </h1>
+        <h2>{{story.author.join(', ')}}</h2>
+        <p>{{story.date}}</p>
+      </ion-label>
+
     </ion-item>
 
     <ion-card-content>

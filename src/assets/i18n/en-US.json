@@ -68,6 +68,7 @@
   "USER_MANAGEMENT_DELETE_CURRENT": "The currently active user can not be deleted!",
   "STORYMENU_ADD_SOME_STORIES": "Add new stories",
   "STORYMENU_NO_STORIES_YET": "You do not have any stories here yet! Go ahead and add some",
+  "STORYMENU_NO_STORIES_HEADER": "No Stories found",
   "STORY_ALREADY_EXISTS_MSG": "This story is already installed",
   "STORY_ALREADY_EXISTS_TITLE": "Story already installed",
   "STORY_DOWNLOAD_PROGRESS": "Downloading {{title}}: {{progress}}",
