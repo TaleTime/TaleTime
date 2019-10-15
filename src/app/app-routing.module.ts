@@ -1,16 +1,16 @@
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { TabsPageModule } from "./tabs/tabs.module";
+import {NgModule} from "@angular/core";
+import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
+import {TabsPageModule} from "./tabs/tabs.module";
 
 const routes: Routes = [
   {
     path: "",
     loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
   },
-  {
-    path: "available-stories",
-    loadChildren: () => import("./pages/available-stories/available-stories.module").then(module => module.AvailableStoriesPageModule)
-  },
+  // {
+  //   path: "available-stories",
+  //   loadChildren: () => import("./pages/available-stories/available-stories.module").then(module => module.AvailableStoriesPageModule)
+  // },
   {
     path: "change-user-account-pin",
     loadChildren: () => import("./pages/change-user-account-pin/change-user-account-pin.module").then(module => module.ChangeUserAccountPinPageModule)
@@ -43,10 +43,10 @@ const routes: Routes = [
     path: "select-user-profile",
     loadChildren: () => import("./pages/select-user-profile/select-user-profile.module").then(module => module.SelectUserProfilePageModule)
   },
-  {
-    path: "settings",
-    loadChildren: () => import("./pages/settings/settings.module").then(module => module.SettingsPageModule)
-  },
+  // {
+  //   path: "settings",
+  //   loadChildren: () => import("./pages/settings/settings.module").then(module => module.SettingsPageModule)
+  // },
   {
     path: "start",
     loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
@@ -55,10 +55,10 @@ const routes: Routes = [
     path: "story-details",
     loadChildren: () => import("./pages/story-details/story-details.module").then(module => module.StoryDetailsPageModule)
   },
-  {
-    path: "story-menu",
-    loadChildren: () => import("./pages/story-menu/story-menu.module").then(module => module.StoryMenuPageModule)
-  },
+  // {
+  //   path: "story-menu",
+  //   loadChildren: () => import("./pages/story-menu/story-menu.module").then(module => module.StoryMenuPageModule)
+  // },
   {
     path: "tabs",
     component: TabsPageModule
@@ -75,7 +75,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
   ],
   exports: [RouterModule]
 })
