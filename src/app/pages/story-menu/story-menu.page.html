@@ -8,11 +8,11 @@
     <ion-buttons slot="end">
       <ion-button color="dark" (click)="goToSelectUserProfilePage()">
         <!-- <ion-icon name="person"></ion-icon><ion-label>{{activeUserProfileName}}</ion-label> -->
-<!--        <ion-img-->
-<!--            width="40px"-->
-<!--            height="40px"-->
-<!--            src="assets/imgs/profile/{{activeUserProfileAvatarName}}"-->
-<!--        />-->
+        <!--        <ion-img-->
+        <!--            width="40px"-->
+        <!--            height="40px"-->
+        <!--            src="assets/imgs/profile/{{activeUserProfileAvatarName}}"-->
+        <!--        />-->
         <!-- TODO remove static width and height of image -->
       </ion-button>
     </ion-buttons>
@@ -38,20 +38,20 @@
     <ion-item>
       <ion-thumbnail slot="start">
         <ion-icon
-            *ngIf="!story.cover"
-            name="book"
-            style="font-size: 64px;"
+          *ngIf="!story.cover"
+          name="book"
+          style="font-size: 64px;"
         ></ion-icon>
         <ion-img
-            *ngIf="story.cover"
-            src="assets/stories/{{story.id}}/{{story.cover}}"
+          *ngIf="story.cover"
+          src="assets/stories/{{story.id}}/{{story.cover}}"
         ></ion-img>
       </ion-thumbnail>
       <ion-label>
         <h1>
           <ion-icon
-              name="cloud-download"
-              *ngIf="story.medium === 'cloud'"
+            name="cloud-download"
+            *ngIf="story.medium === 'cloud'"
           ></ion-icon>
           {{story.title}}
         </h1>
@@ -69,8 +69,8 @@
       <ion-row justify-content-end>
         <ion-col>
           <ion-button
-              color="success"
-              (click)="goToPlayerPage(story.id)"
+            color="success"
+            (click)="goToPlayerPage(story.id)"
           >
             <ion-icon name="play"></ion-icon>
           </ion-button>
@@ -78,9 +78,9 @@
             <ion-icon name="information-circle"></ion-icon>
           </ion-button>
           <ion-button
-              color="danger"
-              shape="icon-only"
-              (click)="deleteStory(story)"
+            color="danger"
+            shape="icon-only"
+            (click)="deleteStory(story)"
           >
             <ion-icon name="trash"></ion-icon>
           </ion-button>
