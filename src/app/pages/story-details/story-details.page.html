@@ -13,21 +13,20 @@
   <ion-item>
     <ion-thumbnail slot="start">
       <ion-icon
-          *ngIf="!selectedStory.cover"
-          slot="start"
-          name="book"
-          style="font-size: 64px;"
+        *ngIf="!selectedStory.cover"
+        slot="start"
+        name="book"
+        style="font-size: 64px;"
       ></ion-icon>
       <ion-img
-          *ngIf="selectedStory.cover"
-          slot="start"
-          src="assets/stories/{{selectedStory.id}}/{{selectedStory.cover}}"
+        *ngIf="selectedStory.cover"
+        slot="start"
+        src="assets/stories/{{selectedStory.id}}/{{selectedStory.cover}}"
       >
       </ion-img>
     </ion-thumbnail>
     <p>
-      {{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(',
-        ')}}
+      {{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(',')}}
     </p>
     <p>{{'STORYDETAILS_DATE' | translate }}: {{selectedStory.date}}</p>
     <p>{{'STORYDETAILS_LANGUAGE' | translate }}: {{selectedStory.language}}</p>
@@ -56,9 +55,9 @@
     {{'STORYDETAILS_CONTINUE' | translate}}
   </ion-button>
   <ion-button
-      expand="block"
-      color="danger"
-      (click)="deleteStory(selectedStory.id)"
+    expand="block"
+    color="danger"
+    (click)="deleteStory(selectedStory.id)"
   >
     {{'STORYDETAILS_DELETE' | translate}}
   </ion-button>
