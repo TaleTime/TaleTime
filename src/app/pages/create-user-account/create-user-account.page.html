@@ -15,10 +15,10 @@
               >{{'USER_MANAGEMENT_NAME' | translate }}</ion-label
               >
               <ion-input
-                  type="text"
-                  name="name"
-                  [(ngModel)]="registerCredentials.name"
-                  required
+                type="text"
+                name="name"
+                [(ngModel)]="registerCredentials.name"
+                required
               ></ion-input>
             </ion-item>
 
@@ -27,10 +27,10 @@
               >{{'USER_MANAGEMENT_EMAIL' | translate }}</ion-label
               >
               <ion-input
-                  type="email"
-                  name="email"
-                  [(ngModel)]="registerCredentials.email"
-                  required
+                type="email"
+                name="email"
+                [(ngModel)]="registerCredentials.email"
+                required
               ></ion-input>
             </ion-item>
 
@@ -39,10 +39,10 @@
               >{{'USER_MANAGEMENT_PIN' | translate }}</ion-label
               >
               <ion-input
-                  type="password"
-                  name="pin"
-                  [(ngModel)]="registerCredentials.pin"
-                  required
+                type="password"
+                name="pin"
+                [(ngModel)]="registerCredentials.pin"
+                required
               ></ion-input>
             </ion-item>
           </ion-list>
@@ -51,10 +51,10 @@
       <ion-row>
         <ion-col>
           <ion-button
-              class="submit-btn"
-              expand="full"
-              type="submit"
-              [disabled]="!registerForm.form.valid"
+            class="submit-btn"
+            expand="full"
+            type="submit"
+            [disabled]="!registerForm.form.valid"
           >
             {{'USER_MANAGEMENT_CREATE' | translate }}
           </ion-button>

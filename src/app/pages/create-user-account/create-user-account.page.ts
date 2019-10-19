@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {AlertController, LoadingController, NavController,} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 import {AuthService} from "../../services/auth/auth.service";
 
@@ -13,7 +14,8 @@ export class CreateUserAccountPage implements OnInit {
   createSuccess = false;
   registerCredentials = {name: "", email: "", pin: ""};
 
-  constructor(private navCtrl: NavController,
+  constructor(public router: Router,
+              private navCtrl: NavController,
               private authService: AuthService,
               private alertCtrl: AlertController,
               private loadingCtrl: LoadingController
@@ -24,6 +26,7 @@ export class CreateUserAccountPage implements OnInit {
   }
 
   public register() {
+    //debugger;
     this.showLoading();
 
     this.authService.register(this.registerCredentials).subscribe(
@@ -33,7 +36,8 @@ export class CreateUserAccountPage implements OnInit {
 
           // automatic login user
           this.authService.trySignIn(() =>
-            this.navCtrl.navigateRoot("/select-user-profile")
+              this.navCtrl.navigateRoot("/select-user-profile")
+            //this.router.navigate(["/select-user-profile"])
           );
         } else {
           this.showPopup("Error", "Problem creating account.");

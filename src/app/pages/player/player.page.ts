@@ -27,6 +27,7 @@ import {SaveGameService} from "../../services/save-game/save-game.service";
 import {PublicStoryHelperService} from "../../services/public-story-helper/public-story-helper.service";
 import {PlatformBridgeService} from "../../services/platform-bridge/platform-bridge.service";
 import {Routes} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
 
 // import Stack from "ts-data.stack";
 /**
@@ -73,7 +74,8 @@ export class PlayerPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
+    //public navParams: NavParams,
+    private activatedRoute: ActivatedRoute,
     private saveGameService: SaveGameService,
     private audioService: AudioService,
     private platform: Platform,
@@ -89,14 +91,19 @@ export class PlayerPage implements OnInit {
   ) {
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
-      this.storyId = this.navParams.get("storyId");
+      //this.storyId = this.navParams.get("storyId");
+      //this.storyId = this.activatedRoute.snapshot.paramMap.get('storieId');
+      this.storyId = "Der_verlorene_Ball";
       console.log("storyId:", this.storyId);
 
       this.loadSaveGame();
 
       // DEFAULT_READER if new savegame
       this.selectedReader = this.saveGame.reader;
-      this.mode = this.navParams.get("mode"); // differentiate between starting story over or continuing from savegame
+      //this.selectedReader = DEFAULT_READER;
+      //TODO Pass mode
+      //this.mode = this.navParams.get("mode"); // differentiate between starting story over or continuing from savegame
+      this.mode = BEGIN;
       console.log("storyId:" + this.storyId);
       console.log("reader:" + this.selectedReader);
       console.log("mode: " + this.mode);

@@ -48,7 +48,8 @@ export class StoryMenuPage implements OnInit {
   }
 
   goToPlayerPage(storyId: string) {
-    this.router.navigate(["/player", {storyId, mode: "continue"}]);
+    //debugger;
+    this.router.navigate(["/player", {storyId, mode: "begin"}]);
   }
 
   goToAvailableStories() {

@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
 import {TabsPageModule} from "./tabs/tabs.module";
-
 const routes: Routes = [
   {
     path: "",
@@ -39,6 +38,7 @@ const routes: Routes = [
     path: "player",
     loadChildren: () => import("./pages/player/player.module").then(module => module.PlayerPageModule)
   },
+  //{path: "player:storieId", loadChildren: './pages/player/player.module'},
   {
     path: "select-user-profile",
     loadChildren: () => import("./pages/select-user-profile/select-user-profile.module").then(module => module.SelectUserProfilePageModule)
