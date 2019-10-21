@@ -336,7 +336,12 @@ export class PlayerPage implements OnInit {
    * if no savegame exists for that user a new one will be created
    */
   private loadSaveGame() {
-    this.saveGame = this.saveGameService.loadSavegame(this.storyId);
+    //TODO Uncomment and remove next 3 lines if accounts are functional
+    //this.saveGame = this.saveGameService.loadSavegame(this.storyId);
+    this.saveGame = new SaveGame();
+    this.saveGame.storyId = this.storyId;
+    this.saveGame.chosenPath = new Array<number>();
+
     console.log("Current savegame:");
     console.log(JSON.stringify(this.saveGame));
     // Check if Savegame exists or if a new one has to be created
@@ -351,7 +356,8 @@ export class PlayerPage implements OnInit {
   private createNewSaveGame() {
     this.saveGame.storyId = this.storyId;
     this.saveGame.chosenPath.push(FIRST_NODE);
-    this.saveGameService.addSavegame(this.saveGame);
+    //TODO Uncomment if accounts are functional
+    //this.saveGameService.addSavegame(this.saveGame);
   }
 
   /**
