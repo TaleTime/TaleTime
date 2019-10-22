@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^5.2.1",
     "@angular/common": "^8.2.10",
     "@angular/compiler": "^8.2.10",
     "@angular/core": "^8.2.10",
@@ -40,6 +41,7 @@
     "cordova-ios": "^5.0.1",
     "cordova-sqlite-storage": "^3.4.0",
     "core-js": "^3.2.1",
+    "ionic-tooltips": "^3.1.0",
     "js-sha256": "^0.9.0",
     "rxjs": "^6.5.3",
     "tslib": "^1.9.0",

@@ -23,13 +23,19 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-list>
-    <ion-button (click)="changePin()">
-      <ion-item>
-        <h2>Change pin</h2>
-        <p>Choose a unique pin</p>
-        <!-- TODO looks not really nice in app -->
-      </ion-item>
-    </ion-button>
-  </ion-list>
+  <ion-button (click)="changePin()">
+    <ion-item>
+      <table>
+        <tr>
+          <label>Change pin</label>
+        </tr>
+        <tr>
+          <label class="change-pin-button-information">
+            Choose a unique pin
+          </label>
+        </tr>
+      </table>
+    </ion-item>
+    <!-- TODO looks not really nice in app -->
+  </ion-button>
 </ion-content>
