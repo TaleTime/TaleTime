@@ -1,6 +1,6 @@
+import {Observable, throwError as observableThrowError} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {Storage} from "@ionic/storage";
-import {Observable} from "rxjs";
 import {AlertController} from "@ionic/angular";
 import {UserAccount} from "../../models/userAccount";
 import {UserProfile} from "../../models/userProfile";
@@ -13,6 +13,7 @@ export class AuthService {
 
   static USER_ACCOUNT_KEY = "userAccount";
   private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
+  //private currentUser: UserAccount;
 
   constructor(
     private storage: Storage,
@@ -55,18 +56,16 @@ export class AuthService {
       credentials.name === null ||
       credentials.pin === null
     ) {
-      return Observable.throw("Please insert credentials");
+      return observableThrowError("Please insert credentials");
     } else {
       const userAccount = new UserAccount(credentials.name, credentials.email);
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
 
-      return Observable.create(
-        (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
-          observer.next(true);
-          observer.complete();
-        }
-      );
+      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        subscriber.next(true);
+        subscriber.complete();
+      })
     }
   }
 
@@ -77,7 +76,7 @@ export class AuthService {
   }) {
     console.log("if been here");
     if (credentials.name === null) {
-      return Observable.throw("Please insert credentials");
+      return observableThrowError("Please insert credentials");
     } else {
       // TODO At this point store the credentials to your backend!
       const userProfile = new UserProfile(
@@ -86,14 +85,12 @@ export class AuthService {
         credentials.child
       );
       this.currentUserAccount.addUserProfile(userProfile);
-      this.save();
+      this.save(this.currentUserAccount);
 
-      return Observable.create(
-        (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
-          observer.next(true);
-          observer.complete();
-        }
-      );
+      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        subscriber.next(true);
+        subscriber.complete();
+      })
     }
   }
 
@@ -116,39 +113,31 @@ export class AuthService {
       response.reason = "Old pin do not match"; // TODO Tobi i18n
     }
 
-    return Observable.create(
-      (observer: {
-        next: (arg0: { success: boolean; reason: string }) => void;
-        complete: () => void;
-      }) => {
-        observer.next(response);
-        observer.complete();
-      }
-    );
+    return new Observable((subscriber: { next: (arg0: { success: boolean; reason: string }) => void;
+      complete: () => void; }) => {
+      subscriber.next(response);
+      subscriber.complete();
+    });
   }
 
   public deleteUserProfile(userProfileId: string) {
     this.currentUserAccount.removeUserProfile(userProfileId);
     this.save();
 
-    return Observable.create(
-      (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
-        observer.next(true);
-        observer.complete();
-      }
-    );
+    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+      subscriber.next(true);
+      subscriber.complete();
+    });
   }
 
   public setActiveUserProfile(userProfileId: string) {
     this.currentUserAccount.setActiveUserProfile(userProfileId);
     this.save();
 
-    return Observable.create(
-      (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
-        observer.next(true);
-        observer.complete();
-      }
-    );
+    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+      subscriber.next(true);
+      subscriber.complete();
+    });
   }
 
   public getActiveUserProfile() {
@@ -163,10 +152,10 @@ export class AuthService {
   public login(credentials) {
     console.log(credentials);
     if (credentials.email === null || credentials.pin === null) {
-      return Observable.throw("Please insert credentials");
+      return observableThrowError("Please insert credentials");
     } else {
-      return Observable.create((observer) => {
-        // TODO At this point make a request to your backend to make a real check!
+
+      return new Observable((subscriber) => {
         let access = false;
         this.storage.ready().then(() =>
           this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
@@ -187,8 +176,8 @@ export class AuthService {
               }
             }
 
-            observer.next(access);
-            observer.complete();
+            subscriber.next(access);
+            subscriber.complete();
           })
         );
       });
@@ -196,14 +185,12 @@ export class AuthService {
   }
 
   public logout() {
-    return Observable.create(
-      (observer: { next: (arg0: boolean) => void; complete: () => void }) => {
-        this.currentUser = null;
-        this.storage.remove(AuthService.USER_ACCOUNT_KEY);
-        observer.next(true);
-        observer.complete();
-      }
-    );
+    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+      this.currentUser = null;
+      this.storage.remove(AuthService.USER_ACCOUNT_KEY);
+      subscriber.next(true);
+      subscriber.complete();
+    });
   }
 
   private save(userAccount?: UserAccount) {
@@ -214,10 +201,15 @@ export class AuthService {
   }
 
   get currentUserAccount(): UserAccount {
+    this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
+      this.currentUser = val;
+    });
+
     return this.currentUser;
   }
 
   get userProfiles() {
+
     return Array.from(this.currentUserAccount.userProfiles.values());
   }
 

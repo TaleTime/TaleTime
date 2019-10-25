@@ -92,8 +92,8 @@ export class PlayerPage implements OnInit {
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
       //this.storyId = this.navParams.get("storyId");
-      //this.storyId = this.activatedRoute.snapshot.paramMap.get('storieId');
-      this.storyId = "Der_verlorene_Ball";
+      this.storyId = this.activatedRoute.snapshot.paramMap.get('storieId');
+      //this.storyId = "Der_verlorene_Ball";
       console.log("storyId:", this.storyId);
 
       this.loadSaveGame();
