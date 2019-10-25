@@ -113,8 +113,10 @@ export class AuthService {
       response.reason = "Old pin do not match"; // TODO Tobi i18n
     }
 
-    return new Observable((subscriber: { next: (arg0: { success: boolean; reason: string }) => void;
-      complete: () => void; }) => {
+    return new Observable((subscriber: {
+      next: (arg0: { success: boolean; reason: string }) => void;
+      complete: () => void;
+    }) => {
       subscriber.next(response);
       subscriber.complete();
     });

@@ -40,7 +40,7 @@ export class CreateUserAccountPage implements OnInit {
                 this.navCtrl.navigateRoot("/select-user-profile")
               //this.router.navigate(["/select-user-profile"])
             );
-          } catch (ex){
+          } catch (ex) {
             this.showPopup("Error", ex.message);
           }
 
