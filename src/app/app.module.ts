@@ -38,6 +38,8 @@ import {Zip} from "@ionic-native/zip/ngx";
 import {Media} from "@ionic-native/media/ngx";
 
 import {HTTP} from "@ionic-native/http/ngx";
+import {PlayerParamsService} from "./services/player-parmas/player-params.service";
+import {PlayerParams} from "./models/player/player-params";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -63,6 +65,8 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     StatusBar,
+    PlayerParamsService,
+    PlayerParams,
     SplashScreen,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     AlertService,
