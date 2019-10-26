@@ -7,7 +7,13 @@ import {StoryService} from "../../services/story/story.service";
 import {STORY_DIR} from "../../constants/constants";
 import {SaveGameService} from "../../services/save-game/save-game.service";
 import {PublicStoryHelperService} from "../../services/public-story-helper/public-story-helper.service";
-import {Router} from "@angular/router";
+import {Router, Routes} from "@angular/router";
+import {StoryInformationService} from "../../services/story-information/story-information.service";
+import {StoryMenuPage} from "../story-menu/story-menu.page";
+
+const routes: Routes = [
+  {path: "storyMenu", component: StoryMenuPage},
+];
 
 @Component({
   selector: "app-story-details",
@@ -23,12 +29,12 @@ export class StoryDetailsPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public router: Router,
-    public navParams: NavParams,
+    public storyInformationService : StoryInformationService,
     public storyService: StoryService,
     private saveGameService: SaveGameService,
     private publicStoryHelper: PublicStoryHelperService
   ) {
-    this.selectedStory = navParams.get("selectedStory");
+    this.selectedStory = this.storyInformationService.storyInformation;
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
 
     if (this.selectedStory.medium === "cloud") {
