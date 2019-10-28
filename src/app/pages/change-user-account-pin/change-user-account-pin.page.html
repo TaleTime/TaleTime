@@ -7,7 +7,6 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{ 'SETTINGS_CHANGE_PIN' | translate}}</ion-title>
-    <!-- TODO i18n Tobi -->
   </ion-toolbar>
 </ion-header>
 
@@ -17,8 +16,7 @@
       <ion-col>
         <ion-list inset>
           <ion-item>
-            <ion-label position="floating">Type your current pin</ion-label>
-            <!-- TODO i18n Tobi -->
+            <ion-label position="floating"> {{'SETTINGS_TYPE_CURRENT_PIN' | translate}} </ion-label>
             <ion-input
               type="password"
               name="old-pin"
@@ -28,8 +26,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Type your new pin</ion-label>
-            <!-- TODO i18n Tobi -->
+            <ion-label position="floating">{{'SETTINGS_NEW_PIN' | translate}}</ion-label>
             <ion-input
               type="password"
               name="pin"
@@ -39,8 +36,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Retype your new pin</ion-label>
-            <!-- TODO i18n Tobi -->
+            <ion-label position="floating">{{'SETTINGS_RETYPE_PIN' | translate}}</ion-label>
             <ion-input
               type="password"
               name="retype-pin"
@@ -59,9 +55,8 @@
           type="submit"
           [disabled]="!changePinForm.form.valid"
         >
-          Save
+          {{'SETTINGS_SAVE' | translate}}
         </ion-button>
-        <!-- TODO i18n Tobi -->
       </ion-col>
     </ion-row>
   </form>
