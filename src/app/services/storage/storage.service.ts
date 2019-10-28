@@ -59,6 +59,7 @@ export class StorageService {
    * @param path app folder path on the external root dir
    */
   private getPermission(path: string): Promise<boolean> {
+    debugger;
     const promise = new Promise<boolean>((resolve, reject) => {
       this.file
         .createFile(path, "0", true)

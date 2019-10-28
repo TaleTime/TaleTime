@@ -35,10 +35,15 @@ export class CreateUserAccountPage implements OnInit {
           this.createSuccess = true;
 
           // automatic login user
-          this.authService.trySignIn(() =>
-              this.navCtrl.navigateRoot("/select-user-profile")
-            //this.router.navigate(["/select-user-profile"])
-          );
+          try {
+            this.authService.trySignIn(() =>
+                this.navCtrl.navigateRoot("/select-user-profile")
+              //this.router.navigate(["/select-user-profile"])
+            );
+          } catch (ex) {
+            this.showPopup("Error", ex.message);
+          }
+
         } else {
           this.showPopup("Error", "Problem creating account.");
         }

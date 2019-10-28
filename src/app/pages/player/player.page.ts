@@ -28,6 +28,7 @@ import {PublicStoryHelperService} from "../../services/public-story-helper/publi
 import {PlatformBridgeService} from "../../services/platform-bridge/platform-bridge.service";
 import {Routes} from "@angular/router";
 import {ActivatedRoute} from '@angular/router';
+import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
 
 // import Stack from "ts-data.stack";
 /**
@@ -75,6 +76,7 @@ export class PlayerPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     //public navParams: NavParams,
+    public playerParamsService: PlayerParamsService,
     private activatedRoute: ActivatedRoute,
     private saveGameService: SaveGameService,
     private audioService: AudioService,
@@ -91,9 +93,7 @@ export class PlayerPage implements OnInit {
   ) {
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
-      //this.storyId = this.navParams.get("storyId");
-      //this.storyId = this.activatedRoute.snapshot.paramMap.get('storieId');
-      this.storyId = "Der_verlorene_Ball";
+      this.storyId = this.playerParamsService.getPlayerParams().storyId;
       console.log("storyId:", this.storyId);
 
       this.loadSaveGame();
