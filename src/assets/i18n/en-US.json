@@ -43,9 +43,13 @@
   "SETTINGS_VOICE_CONTROL": "Voice recognition",
   "SETTINGS_AUTO_PLAY": "Autoplay",
   "SETTINGS_LANGUAGE": "Language",
+  "SETTINGS_CREDITS": "Credits",
   "SETTINGS_FONT_SIZE": "Font size",
   "SETTINGS_TTS_RATE": "TTS speaking rate",
   "SETTINGS_GO_TO_ACCOUNT": "My account",
+  "SETTINGS_LEGAL_INFORMATION": "Legal notice",
+  "SETTINGS_CHOOSE_UNIQUE_PIN": "Choose a unique PIN",
+  "SETTINGS_DELETE_ACCOUNT": "Delete account",
   "TTS_SLOW": "slow",
   "TTS_NORMAL": "normal",
   "TTS_FAST": "fast",
@@ -77,5 +81,6 @@
   "STORY_ZIP_UNPACK_FAIL": "Could not unpack the story",
   "STORY_DOWNLOAD_FAIL": "The story could not be downloaded. Please try again later.",
   "PERMISSION_FILE_NEEDED": "The file permission is essential to use the app. Please permit access to the device storage",
-  "ERR_NO_STORAGE_AVAILABLE": "No storage is available. Please make sure your browser supports local data storage"
+  "ERR_NO_STORAGE_AVAILABLE": "No storage is available. Please make sure your browser supports local data storage",
+  "SETTINGS_CHANGE_PIN": "Change PIN"
 }

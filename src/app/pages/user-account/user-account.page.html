@@ -17,8 +17,7 @@
         {{userAccount.pin}}
       </p>
       <p>
-        <ion-button (click)="logout()">Delete account</ion-button>
-        <!-- TODO i18n Tobi -->
+        <ion-button (click)="logout()">{{'SETTINGS_DELETE_ACCOUNT' | translate}}</ion-button>
       </p>
     </ion-card-content>
   </ion-card>
@@ -27,15 +26,14 @@
     <ion-item>
       <table>
         <tr>
-          <label>Change pin</label>
+          <label>{{'SETTINGS_CHANGE_PIN' | translate}}</label>
         </tr>
         <tr>
           <label class="change-pin-button-information">
-            Choose a unique pin
+            {{'SETTINGS_CHOOSE_UNIQUE_PIN' | translate}}
           </label>
         </tr>
       </table>
     </ion-item>
-    <!-- TODO looks not really nice in app -->
   </ion-button>
 </ion-content>

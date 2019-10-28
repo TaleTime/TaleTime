@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Change pin</ion-title>
+    <ion-title>{{ 'SETTINGS_CHANGE_PIN' | translate}}</ion-title>
     <!-- TODO i18n Tobi -->
   </ion-toolbar>
 </ion-header>
@@ -20,10 +20,10 @@
             <ion-label position="floating">Type your current pin</ion-label>
             <!-- TODO i18n Tobi -->
             <ion-input
-                type="password"
-                name="old-pin"
-                [(ngModel)]="credentials.oldPin"
-                required
+              type="password"
+              name="old-pin"
+              [(ngModel)]="credentials.oldPin"
+              required
             ></ion-input>
           </ion-item>
 
@@ -31,10 +31,10 @@
             <ion-label position="floating">Type your new pin</ion-label>
             <!-- TODO i18n Tobi -->
             <ion-input
-                type="password"
-                name="pin"
-                [(ngModel)]="credentials.pin"
-                required
+              type="password"
+              name="pin"
+              [(ngModel)]="credentials.pin"
+              required
             ></ion-input>
           </ion-item>
 
@@ -42,10 +42,10 @@
             <ion-label position="floating">Retype your new pin</ion-label>
             <!-- TODO i18n Tobi -->
             <ion-input
-                type="password"
-                name="retype-pin"
-                [(ngModel)]="credentials.retypePin"
-                required
+              type="password"
+              name="retype-pin"
+              [(ngModel)]="credentials.retypePin"
+              required
             ></ion-input>
           </ion-item>
         </ion-list>
@@ -54,10 +54,10 @@
     <ion-row>
       <ion-col>
         <ion-button
-            class="submit-btn"
-            expand="full"
-            type="submit"
-            [disabled]="!changePinForm.form.valid"
+          class="submit-btn"
+          expand="full"
+          type="submit"
+          [disabled]="!changePinForm.form.valid"
         >
           Save
         </ion-button>

@@ -49,7 +49,10 @@
   "SETTINGS_INTERFACE": "Aussehen",
   "SETTINGS_VOICE": "Sprache",
   "SETTINGS_CREDITS": "Mitwirkende",
-  "SETTINGS_LEGAL_INFORMATION":  "Impressum",
+  "SETTINGS_CHOOSE_UNIQUE_PIN": "Wählen Sie einen eindeutigen PIN",
+  "SETTINGS_CHANGE_PIN": "PIN ändern",
+  "SETTINGS_LEGAL_INFORMATION": "Impressum",
+  "SETTINGS_DELETE_ACCOUNT": "Konto Löschen",
   "SETTINGS_USER": "Nutzer",
   "SETTINGS_INFO": "Informationen",
   "TTS_SLOW": "langsam",
@@ -74,7 +77,7 @@
   "USER_MANAGEMENT_DELETE_CURRENT": "Der aktive Benutzer kann nicht gelöscht werden!",
   "STORYMENU_ADD_SOME_STORIES": "Füge neue Geschichten hinzu",
   "STORYMENU_NO_STORIES_YET": "Du hast noch keine Geschichten hinzugefügt. Suche dir doch einige aus!",
-  "STORYMENU_NO_STORIES_HEADER" : "Keine Geschichten gefunden.",
+  "STORYMENU_NO_STORIES_HEADER": "Keine Geschichten gefunden.",
   "STORY_ALREADY_EXISTS_MSG": "Diese Geschichte ist bereits installiert",
   "STORY_ALREADY_EXISTS_TITLE": "Geschichte bereits installiert",
   "STORY_DOWNLOAD_PROGRESS": "Herunterladen von {{title}}: {{progress}}",
@@ -87,4 +90,5 @@
   "CREDITS": "Mitwirkende",
   "CREDITS_PROGRAMMERS": "Programmierer (htw saar)",
   "CREDITS_ARTISTS_STORIES": "Künstler & Geschichten (HBKsaar)"
+
 }

@@ -27,12 +27,12 @@
     <ion-item>
       <ion-icon slot="start" name="globe"></ion-icon>
       <ion-label>{{'SETTINGS_LANGUAGE' | translate}}</ion-label>
-            <ion-select
-                [(ngModel)]="selectedLanguage"
-                (ngModelChange)="changeLanguage()"
-            >
-              <ion-select-option *ngFor="let lang of languages">{{lang.name}}</ion-select-option>
-            </ion-select>
+      <ion-select
+        [(ngModel)]="selectedLanguage"
+        (ngModelChange)="changeLanguage()"
+      >
+        <ion-select-option *ngFor="let lang of languages">{{lang.name}}</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
