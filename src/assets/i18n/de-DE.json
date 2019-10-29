@@ -92,5 +92,6 @@
   "PERMISSION_FILE_NEEDED": "Die Berechtigung zum Speichern von Dateien ist unerlässlig für den Gebrauch der App. Bitte erteilen sie die Berechtigung vor dem Fortfahren",
   "ERR_NO_STORAGE_AVAILABLE": "Keine Möglichkeit zur Speicherung gefunden. Bitte stellen Sie sicher, dass ihr Browser das Speichern lokaler Daten unterstützt",
   "CREDITS_PROGRAMMERS": "Programmierer (htw saar)",
-  "CREDITS_ARTISTS_STORIES": "Künstler & Geschichten (HBKsaar)"
+  "CREDITS_ARTISTS_STORIES": "Künstler & Geschichten (HBKsaar)",
+  "CREDITS": "Mitwirkende"
 }

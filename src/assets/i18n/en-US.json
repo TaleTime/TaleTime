@@ -44,7 +44,7 @@
   "SETTINGS_AUTO_PLAY": "Autoplay",
   "SETTINGS_LANGUAGE": "Language",
   "SETTINGS_GENERAL": "General",
-  "SETTINGS_CREDITS": "Credits",
+  "SETTINGS_CREDITS": "Contributors",
   "SETTINGS_FONT_SIZE": "Font size",
   "SETTINGS_VOICE": "Voice",
   "SETTINGS_USER": "User",
@@ -92,5 +92,6 @@
   "PERMISSION_FILE_NEEDED": "The file permission is essential to use the app. Please permit access to the device storage",
   "ERR_NO_STORAGE_AVAILABLE": "No storage is available. Please make sure your browser supports local data storage",
   "CREDITS_PROGRAMMERS": "Programmers (htw saar)",
-  "CREDITS_ARTISTS_STORIES": "Artists & Stories (HBKsaar)"
+  "CREDITS_ARTISTS_STORIES": "Artists & Stories (HBKsaar)",
+  "CREDITS": "Contributors"
 }
