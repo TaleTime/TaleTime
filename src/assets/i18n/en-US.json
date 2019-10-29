@@ -33,7 +33,7 @@
   "USER_MANAGEMENT_CREATE": "Create",
   "USER_MANAGEMENT_NAME": "Name",
   "USER_MANAGEMENT_EMAIL": "Email",
-  "USER_MANAGEMENT_PIN": "Pin",
+  "USER_MANAGEMENT_PIN": "PIN",
   "USER_MANAGEMENT_PROBLEM_CREATING_ACCOUNT": "Problem creating account.",
   "USER_MANAGEMENT_CREATE_PROFILE": "Add profile",
   "USER_MANAGEMENT_CREATE_PROFILE_SUBTITLE": "Add a profile for another Taletime user.",
@@ -51,7 +51,7 @@
   "SETTINGS_INFO": "Information",
   "SETTINGS_TTS_RATE": "TTS speaking rate",
   "SETTINGS_GO_TO_ACCOUNT": "My account",
-  "SETTINGS_LEGAL_INFORMATION": "Legal notice",
+  "SETTINGS_LEGAL_INFORMATION": "Legal Notice",
   "SETTINGS_CHOOSE_UNIQUE_PIN": "Choose a unique PIN",
   "SETTINGS_DELETE_ACCOUNT": "Delete account",
   "SETTINGS_TYPE_CURRENT_PIN": "Type your current PIN",
@@ -90,5 +90,7 @@
   "STORY_ZIP_UNPACK_FAIL": "Could not unpack the story",
   "STORY_DOWNLOAD_FAIL": "The story could not be downloaded. Please try again later.",
   "PERMISSION_FILE_NEEDED": "The file permission is essential to use the app. Please permit access to the device storage",
-  "ERR_NO_STORAGE_AVAILABLE": "No storage is available. Please make sure your browser supports local data storage"
+  "ERR_NO_STORAGE_AVAILABLE": "No storage is available. Please make sure your browser supports local data storage",
+  "CREDITS_PROGRAMMERS": "Programmers (htw saar)",
+  "CREDITS_ARTISTS_STORIES": "Artists & Stories (HBKsaar)"
 }
