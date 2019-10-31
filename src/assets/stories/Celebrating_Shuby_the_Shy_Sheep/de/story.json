@@ -1,0 +1,412 @@
+{
+  "mtga-story": {
+    "attributes": {
+      "id": "Celebrating_Shuby_the_Shy_Sheep",
+      "title": "Celebrating Shuby the Shy Sheep",
+      "imgCover": "",
+      "lang": "EN",
+      "desc": "",
+      "creator": "André Miede, Sebastian Barth"
+    },
+    "mtga-story-node": {
+      "0": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "Intro",
+          "nodeTyp": "0",
+          "storyNodeId": "1"
+        },
+        "mtga-nodeText": {
+          "value": "It was a bright, sunny day in June. Shuby the Shy Sheep was a little, fluffy sheep living happily in her small but comfortable home. Next week would be Shuby’s birthday and she was looking forward to celebrating with her best friends.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "2"
+            }
+          }
+        }
+      },
+      "1": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "1",
+          "storyNodeId": "2"
+        },
+        "mtga-nodeText": {
+          "value": "Shuby’s home is very small, so she cannot invite all of her friends at once. Now she has to decide which friends to invite for her birthday party next week. Could you help Shuby with the invitations?",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Invite George the Grumpy Gorilla and Paula the Posing Poodle.",
+            "attributes": {
+              "Id": "3"
+            }
+          },
+          "1": {
+            "value": "Invite Baxter the Bully Bulldog and Steve the Stinky Skunk.",
+            "attributes": {
+              "Id": "4"
+            }
+          },
+          "2": {
+            "value": "Invite Elke the Extroverted Elk and Pete the Picky Pig.",
+            "attributes": {
+              "Id": "5"
+            }
+          },
+          "3": {
+            "value": "Skip the party this year and fly to Bermuda instead.",
+            "attributes": {
+              "Id": "6"
+            }
+          }
+        }
+      },
+      "2": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "Invite George the Grumpy Gorilla and Paula the Posing Poodle.",
+          "nodeTyp": "0",
+          "storyNodeId": "3"
+        },
+        "mtga-nodeText": {
+          "value": "Shuby carefully prepares the invitations for George and Paula in bright colors. Before mailing them, she adds a fresh Banana to George’s letter, so he will be a little less grumpy. She will invite her other friends for another big party at a later time so everyone will be happy. With a smile on her little sheep face, Shuby drops the letters into the mailbox next to her home.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "7"
+            }
+          }
+        }
+      },
+      "3": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "Invite Baxter the Bully Bulldog and Steve the Stinky Skunk.",
+          "nodeTyp": "1",
+          "storyNodeId": "4"
+        },
+        "mtga-nodeText": {
+          "value": "“Naaaa!”, Shuby squeals. Steve is a stinking skunk with really bad breath and Baxter is a little rascal always looking for trouble. “I would rather invite some nicer and better-smelling friends this time.” Do you want to know what barking Baxter might be thinking at the moment? ",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Yes",
+            "attributes": {
+              "Id": "8"
+            }
+          },
+          "1": {
+            "value": "No",
+            "attributes": {
+              "Id": "9"
+            }
+          }
+        }
+      },
+      "4": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "Invite Elke the Extroverted Elk and Pete the Picky Pig.",
+          "nodeTyp": "0",
+          "storyNodeId": "5"
+        },
+        "mtga-nodeText": {
+          "value": "Shuby carefully prepares the invitations for Elke and Pete with lots of glitter and stickers. Before mailing them, she adds some beautiful flowers to Elke’s letter, which she will love to put on her fur. She will invite her other friends for another big party at a later time so everyone will be happy. Singing and dancing to a funny tune in her head, Shuby drops the letters into the mailbox next to her home.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "10"
+            }
+          }
+        }
+      },
+      "5": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "Skip the party this year and fly to Bermuda instead.",
+          "nodeTyp": "2",
+          "storyNodeId": "6"
+        },
+        "mtga-nodeText": {
+          "value": "Shuby sighs. Organizing a big party for all her friends will be very exhausting and she needs a vacation. So, she calls the travel agency and there is a last-minute-offer for a relaxing trip to Bermuda. Eagerly, Shuby books the trip, packs her little pink suitcase, and off she goes. “Bermuda!”, she shouts when she enters the taxi and heads for the airport. What adventures will wait for Shuby in Bermuda? But this is another story for another time.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "attributes": {
+            "Id": ""
+          }
+        }
+      },
+      "6": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "7"
+        },
+        "mtga-nodeText": {
+          "value": "A few days later, Shuby has some yellow letters in her mailbox. George and Paula replied that they are happy to join Shuby’s birthday party. George even returned the banana peel, that grumpy gorilla! Eagerly, she awaits her big day and the party.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "11"
+            }
+          }
+        }
+      },
+      "7": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "8"
+        },
+        "mtga-nodeText": {
+          "value": "Meanwhile at Baxter’s kennel: The whole morning, Baxter, the Burly Bulldog, circled around his mailbox sniffing every corner. But as hard as he sniffed, his nose couldn’t track neither a postcard nor a letter from Shuby, the sheep. The bulldog always belie- ved Shuby was his friend. He was sure she would like to spent her birthday with him. But the empty mailbox proved him wrong. “Is she mad at me?” Baxter thought. “I didn’t do anything to her.” Ok, yes, he was a little jealous of George, the grumpy Gorilla. Baxter snapped at him a couple of times. But that was just for kicks. And he was sorry. But Shuby said, “Baxter, cut the crap. Stop bullying the others. Or we don’t wanna hang out with you anymore.” Baxter believed it was a joke but Shuby was dead serious. The bulldog trotted back to his dog house, his ears flapping sadly. “Maybe Shuby didn’t have a stamp for the invitation card.” Baxter tried to convince himself. “Or maybe she forgot to drop the invitation in the mailbox.” Nothing seemed to make sense to him. Yes, he was mad. . . mad. . . mad. . . mad. Even chewing on his favorite toy bone couldn’t cheer him up. The bone tasted like cardboard. Baxter couldn’t help it. He started growling at everyone passing by his kennel. The idea of Elke, George and Paula shoving in this sugary sponge cake made him furious while he was gnawing on this tasteless rubber thing. “That’s not fair,” Baxter thought and yapped in his most scary voice. “I should call Shuby, just to wish her happy birthday” Baxter thought. “Maybe she will feel guilty and ask me to come over.” How sad, but this is another story for another time.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "continue",
+            "attributes": {
+              "Id": "9"
+            }
+          }
+        }
+      },
+      "8": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "1",
+          "storyNodeId": "9"
+        },
+        "mtga-nodeText": {
+          "value": "Could you help Shuby with the invitations?",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Skip the party this year and fly to Bermuda instead.",
+            "attributes": {
+              "Id": "6"
+            }
+          },
+          "1": {
+            "value": "Invite Elke the Extroverted Elk and Pete the Picky Pig.",
+            "attributes": {
+              "Id": "5"
+            }
+          },
+          "2": {
+            "value": "Invite George the Grumpy Gorilla and Paula the Posing Poodle.",
+            "attributes": {
+              "Id": "3"
+            }
+          }
+        }
+      },
+      "9": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "10"
+        },
+        "mtga-nodeText": {
+          "value": "A few days later, Shuby has some mail in her mailbox. Elke and Pete replied that they are looking forward to joining Shuby’s birthday party, Elke also added a funny photo of her carrying the beautiful flowers in her shiny fur. Eagerly, Shuby awaits her big day and the party.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "13"
+            }
+          }
+        }
+      },
+      "10": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "11"
+        },
+        "mtga-nodeText": {
+          "value": "Today is Shuby’s birthday and her big party. All day, she is very excited about the presents she will get from her friends. What nice things will George and Paula bring with them? Before the party starts, Shuby picks up her birthday cake at Barney’s bakery, who makes the best birthday cakes in town. All of Barney’s cakes taste delicious and have colorful frostings. Yummy! As the doorbell rings, Shuby rushes to the door to greet George and Paula. “Hello and welcome to my party”, Shuby shouts, opening the door. George is even wearing a white tie to the party, which matches his black fur per- fectly. Paula is posing with a pink bow on her voluminous poodle fur. Everyone is happy to be here. “We have a little present for you, Shuby.”, George grumples, handing Shuby a tiny package wrapped in black and white paper. Paula stops posing for a second and says “Happy Birthday, Shuby!” Gladly, Shuby takes the present, tears the wrapping away, and finds a beautiful golden ring which matches her hoofs perfectly. “Wow, thank you very much! This is a wonderful present. I always wished for a nice golden ring.” “You are welcome. But don’t talk too much and let’s have some cake, I can smell Barney’s masterpiece from here!”, George grunts and turns towards the table. ",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "12"
+            }
+          }
+        }
+      },
+      "11": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "12"
+        },
+        "mtga-nodeText": {
+          "value": "Shuby and Paula follow George to the birthday table. On top is the delicious and colorful birthday cake with many burning candles. “Let’s blow out the candles and cut the cake, I need some sugar!”, George says, inhaling deeply. “Pffffffffffffffffffffffffffffffffh”, makes George and blows towards the candles, which go out at once. However, George’s blowing is so powerful that the whole cakes is blown against the wall behind the table, with pieces of dough, frosting, and sugar splashing everywhere. All are stunned. “Oooops!”, says George into the silence.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Try again",
+            "attributes": {
+              "Id": "1"
+            }
+          }
+        }
+      },
+      "12": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "13"
+        },
+        "mtga-nodeText": {
+          "value": "Today is Shuby’s birthday and her big party. All day, she is very excited about the presents she will get from her friends. What stunning things will Elke and Pete bring? Before the party starts, Shuby picks up her birthday cake at Barney’s bakery, who makes the best birthday cakes in town. All of Barney’s cakes taste delicious and have colorful frostings. Yummy! As the doorbell rings, Shuby rushes to the door to greet Elke and Pete. “Welcome to my party, my dear friends”, Shuby shouts, opening the door. Elke has her shiny fur perfectly cleaned for the party and Pete is wearing a blue bow tie around his strong pig neck. Everyone is happy to be here. “Happy Birthday, Shuby!”, Pete squeaks, sniffing in a picky way at a rose in a vase. “Look, what we brought for you, Shuby.”, Elke smiles, handing Shuby a huge box wrapped in paper with bright stripes. Gladly, Shuby takes the present, tears the wrapping away, and finds a gigantic, inflated beach ball in red and green. “That is so nice of you, thank you very much! I always wanted such a soft ball.” “We are happy you love our present. What cake do you have? I am really hungry.”, Pete squeaks and turns towards the table",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "14"
+            }
+          }
+        }
+      },
+      "13": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "14"
+        },
+        "mtga-nodeText": {
+          "value": "Shuby and Elke follow Pete to the birthday table. On top is the delicious and colorful birthday cake with many burning candles. “I want the first piece, I want the first piece, I want the first piece!”, Pete squeals, increasing his running speed. “Pete, be careful, you are going too fast.”, warns Elke, but too late. Pete is already too close to the table. He cannot stop and crashes head-first with his little pink pig snout into the table. The whole cake takes off and splashes against the wall behind the table, with pieces of dough, frosting, and sugar everywhere. All are stunned into silence and Elke stands there like an Elk in headlights. “What a mess!”, she finally says.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "15"
+            }
+          }
+        }
+      },
+      "14": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "0",
+          "storyNodeId": "15"
+        },
+        "mtga-nodeText": {
+          "value": "After some moments of silence, Shuby starts laughing. “Eating cake at a table is boring anyway. Come on, we eat sitting on the floor!” She starts picking up some cake crumbs and stuffs them into her mouth. “Yummy!” Feeling relieved, the other guest join her on the floor and together they finish the whole cake in no time. Afterwards, they sing “Mary has a little lamb”, play “I spy with my little eye”, and have a blast. The party lasts until deep into the night and when they are exhausted from all the joy, everybody goes happily home. Later that night Shuby lies smiling and sleeping in her little sheep bed, dreaming about her wonderful birthday party. What might have happened differently if she had invited other friends? Who knows?",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "0": {
+            "value": "Continue",
+            "attributes": {
+              "Id": "16"
+            }
+          }
+        }
+      },
+      "15": {
+        "attributes": {
+          "audioSrc": "",
+          "color": "#333111",
+          "name": "",
+          "nodeTyp": "2",
+          "storyNodeId": "16"
+        },
+        "mtga-nodeText": {
+          "value": "This is the end of Shuby’s first adventure and everybody had a good time. Are you sure you already tried all the different paths Shuby might have taken? We are looking forward to enjoying many more stories with you and Shuby. Stay tuned for the party sequel “Shuby the Shit-faced Sheep” featuring Stinky and Baxter.",
+          "attributes": {
+            "textStyle": ""
+          }
+        },
+        "mtga-nextStoryNode": {
+          "attributes": {
+            "Id": ""
+          }
+        }
+      }
+    }
+  }
+}

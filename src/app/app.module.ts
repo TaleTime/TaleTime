@@ -40,6 +40,10 @@ import {Media} from "@ionic-native/media/ngx";
 import {HTTP} from "@ionic-native/http/ngx";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {PlayerParamsService} from "./services/player-parmas/player-params.service";
+import {PlayerParams} from "./models/player/player-params";
+import {StoryInformationService} from "./services/story-information/story-information.service";
+import {StoryInformation} from "./models/storyInformation";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -66,6 +70,10 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     StatusBar,
+    PlayerParamsService,
+    PlayerParams,
+    StoryInformationService,
+    StoryInformation,
     SplashScreen,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     AlertService,

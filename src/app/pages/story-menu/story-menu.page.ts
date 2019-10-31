@@ -4,6 +4,9 @@ import {Reader, StoryInformation} from "../../models/storyInformation";
 import {AuthService} from "../../services/auth/auth.service";
 import {StoryService} from "../../services/story/story.service";
 import {Router} from "@angular/router";
+import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
+import {PlayerParams} from "../../models/player/player-params";
+import {StoryInformationService} from "../../services/story-information/story-information.service";
 
 @Component({
   selector: "app-story-menu",
@@ -19,6 +22,8 @@ export class StoryMenuPage implements OnInit {
     public platform: Platform,
     // public app: App,
     public router: Router,
+    public playerParamsService: PlayerParamsService,
+    public storyInformationService: StoryInformationService,
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     private authService: AuthService,
@@ -40,7 +45,8 @@ export class StoryMenuPage implements OnInit {
   }
 
   showDetails(story: StoryInformation) {
-    this.router.navigate(["/story-details", {selectedStory: story}]);
+    this.storyInformationService.storyInformation = story;
+    this.router.navigate(["/story-details"]);
   }
 
   deleteStory(story: StoryInformation) {
@@ -48,8 +54,12 @@ export class StoryMenuPage implements OnInit {
   }
 
   goToPlayerPage(storyId: string) {
-    //debugger;
-    this.router.navigate(["/player", {storyId, mode: "begin"}]);
+    let playerParams = new PlayerParams();
+    playerParams.storyId = storyId;
+    playerParams.mode = "begin";
+
+    this.playerParamsService.setPlayerParams(playerParams);
+    this.router.navigate(["/player"]);
   }
 
   goToAvailableStories() {

@@ -17,19 +17,23 @@
         {{userAccount.hash}} <!-- TODO: this was "pin" before -->
       </p>
       <p>
-        <ion-button (click)="logout()">Delete account</ion-button>
-        <!-- TODO i18n Tobi -->
+        <ion-button (click)="logout()">{{'SETTINGS_DELETE_ACCOUNT' | translate}}</ion-button>
       </p>
     </ion-card-content>
   </ion-card>
 
-  <ion-list>
-    <ion-button (click)="changePin()">
-      <ion-item>
-        <h2>Change pin</h2>
-        <p>Choose a unique pin</p>
-        <!-- TODO looks not really nice in app -->
-      </ion-item>
-    </ion-button>
-  </ion-list>
+  <ion-button (click)="changePin()">
+    <ion-item>
+      <table>
+        <tr>
+          <label>{{'SETTINGS_CHANGE_PIN' | translate}}</label>
+        </tr>
+        <tr>
+          <label class="change-pin-button-information">
+            {{'SETTINGS_CHOOSE_UNIQUE_PIN' | translate}}
+          </label>
+        </tr>
+      </table>
+    </ion-item>
+  </ion-button>
 </ion-content>
