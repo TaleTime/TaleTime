@@ -14,7 +14,7 @@
         {{userAccount.email}}
       </p>
       <p>
-        {{userAccount.pin}}
+        {{userAccount.hash}} <!-- TODO: this was "pin" before -->
       </p>
       <p>
         <ion-button (click)="logout()">{{'SETTINGS_DELETE_ACCOUNT' | translate}}</ion-button>

@@ -21,7 +21,7 @@ export class SelectUserProfilePage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private translate: TranslateService,
-    private authService: AuthService,
+    public authService: AuthService,
     public modalCtrl: ModalController,
     private toastService: SimpleToastService
   ) {

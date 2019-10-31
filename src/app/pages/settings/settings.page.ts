@@ -32,7 +32,7 @@ export class SettingsPage {
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
-    private settings: SettingsService,
+    public settings: SettingsService,
     private translate: TranslateService,
     private authService: AuthService,
     private toastService: SimpleToastService,

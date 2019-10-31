@@ -52,7 +52,7 @@ const routes: Routes = [
   styleUrls: ["./player.page.scss"],
 })
 export class PlayerPage implements OnInit {
-  private playing = false;
+  public playing = false;
   private selectedReader: string;
 
   // True, if reader is DEFAULT_READER. Use tts and don't try to load audio file
@@ -60,14 +60,14 @@ export class PlayerPage implements OnInit {
   // if an audio file is not available, audio changes to tts for this audiofile
   private temporaryTTS = false;
 
-  private metadata: StoryMetaData = new StoryMetaData();
-  private answers: MtgaNextStoryNode[];
-  private text: string;
+  public metadata: StoryMetaData = new StoryMetaData();
+  public answers: MtgaNextStoryNode[];
+  public text: string;
   private attr: ChapterAttributes;
   private storyId: string;
   private mode: string;
   private saveGame: SaveGame;
-  private pulseClass: string;
+  public pulseClass: string;
   private stopped: boolean;
 
   // While tts is reading answers out or while speechrecognition is listening, block playPause-Button
@@ -75,7 +75,6 @@ export class PlayerPage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    //public navParams: NavParams,
     public playerParamsService: PlayerParamsService,
     private activatedRoute: ActivatedRoute,
     private saveGameService: SaveGameService,
@@ -100,9 +99,9 @@ export class PlayerPage implements OnInit {
 
       // DEFAULT_READER if new savegame
       this.selectedReader = this.saveGame.reader;
-      //this.selectedReader = DEFAULT_READER;
-      //TODO Pass mode
-      //this.mode = this.navParams.get("mode"); // differentiate between starting story over or continuing from savegame
+      // this.selectedReader = DEFAULT_READER;
+      // TODO Pass mode
+      // this.mode = this.navParams.get("mode"); // differentiate between starting story over or continuing from savegame
       this.mode = BEGIN;
       console.log("storyId:" + this.storyId);
       console.log("reader:" + this.selectedReader);

@@ -38,6 +38,8 @@ import {Zip} from "@ionic-native/zip/ngx";
 import {Media} from "@ionic-native/media/ngx";
 
 import {HTTP} from "@ionic-native/http/ngx";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import {PlayerParamsService} from "./services/player-parmas/player-params.service";
 import {PlayerParams} from "./models/player/player-params";
 import {StoryInformationService} from "./services/story-information/story-information.service";
@@ -63,7 +65,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

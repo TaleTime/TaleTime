@@ -12,7 +12,7 @@ import {UserAccount} from "../../models/userAccount";
 })
 export class UserAccountPage implements OnInit {
 
-  private userAccount: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
+  public userAccount: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
 
   constructor(
     private navCtrl: NavController,
