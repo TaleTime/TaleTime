@@ -1,8 +1,10 @@
 import {Component, OnInit} from "@angular/core";
 import {AlertController, LoadingController, NavController,} from "@ionic/angular";
 import {Router} from "@angular/router";
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 
 import {AuthService} from "../../services/auth/auth.service";
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: "app-create-user-account",
@@ -14,7 +16,8 @@ export class CreateUserAccountPage implements OnInit {
   createSuccess = false;
   registerCredentials = {name: "", email: "", pin: ""};
 
-  constructor(public router: Router,
+  constructor(private firebaseAuthentication: FirebaseAuthentication,
+              public router: Router,
               private navCtrl: NavController,
               private authService: AuthService,
               private alertCtrl: AlertController,
@@ -24,6 +27,15 @@ export class CreateUserAccountPage implements OnInit {
 
   ngOnInit() {
   }
+
+
+  doGoogleLogin(){
+    this.firebaseAuthentication.createUserWithEmailAndPassword('test@gmail.com', '123')
+      .then((res: any) => console.log(res))
+      .catch((error: any) => console.error(error));
+  }
+
+
 
   public register() {
     //debugger;

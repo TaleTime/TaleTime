@@ -4,7 +4,8 @@ import {TabsPageModule} from "./tabs/tabs.module";
 const routes: Routes = [
   {
     path: "",
-    loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
+    //loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
+    loadChildren: () => import("./pages/create-user-account/create-user-account.module").then(module => module.CreateUserAccountPageModule)
   },
   // {
   //   path: "available-stories",

@@ -44,6 +44,7 @@ import {PlayerParamsService} from "./services/player-parmas/player-params.servic
 import {PlayerParams} from "./models/player/player-params";
 import {StoryInformationService} from "./services/story-information/story-information.service";
 import {StoryInformation} from "./models/storyInformation";
+import {FirebaseAuthentication} from "@ionic-native/firebase-authentication/ngx";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -69,6 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    FirebaseAuthentication,
     StatusBar,
     PlayerParamsService,
     PlayerParams,

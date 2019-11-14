@@ -4,7 +4,10 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content class="login-content" padding>
+  <ion-button expand="block" color="danger" (click)="doGoogleLogin()">Google Login</ion-button>
+
   <div class="login-box">
     <form (ngSubmit)="register()" #registerForm="ngForm">
       <ion-row>
