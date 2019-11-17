@@ -14,6 +14,8 @@ import {PlatformBridgeService} from "../../services/platform-bridge/platform-bri
   styleUrls: ["./start.page.scss"],
 })
 export class StartPage implements OnInit {
+  public email: string;
+  public pin: string;
 
   // load settings Service to make sure an instance is created on startup,
   // actually only necessary because settings page uses settings Service directly as datamodel
@@ -52,17 +54,27 @@ export class StartPage implements OnInit {
           });
         });
       });
-    if (this.platformBridge.platformIsBrowser()) {
-      this.authService.addTestUser();
-      this.authService
-        .login({name: "Test", email: "test@mail.com", pin: "1234"})
-        .subscribe((allowed) => {
-          if (allowed) {
-            this.navCtrl.navigateRoot("/select-user-profile");
-          }
-        });
-      this.signIn();
-    }
+    // if (this.platformBridge.platformIsBrowser()) {
+    //   //this.authService.addTestUser();
+    //   this.authService
+    //     .login({name: "Test", email: "test@mail.com", pin: "1234"})
+    //     .subscribe((allowed) => {
+    //       if (allowed) {
+    //         this.navCtrl.navigateRoot("/select-user-profile");
+    //       }
+    //     });
+    //   this.signIn();
+    // }
+  }
+
+  public login(){
+    this.authService
+      .login({name: "Placeholder", email: this.email, pin: this.pin})
+      .subscribe((allowed) => {
+        if (allowed) {
+          this.navCtrl.navigateForward("/select-user-profile");
+        }
+      });
   }
 
   private signIn() {

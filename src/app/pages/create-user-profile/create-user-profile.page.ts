@@ -50,6 +50,6 @@ export class CreateUserProfilePage implements OnInit {
   }
 
   public close() {
-    this.navCtrl.pop();
+    this.navCtrl.back();
   }
 }

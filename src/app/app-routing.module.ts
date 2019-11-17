@@ -5,6 +5,7 @@ const routes: Routes = [
   {
     path: "",
     loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
+    //loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
   },
   // {
   //   path: "available-stories",

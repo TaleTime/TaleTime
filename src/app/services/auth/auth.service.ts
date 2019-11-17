@@ -5,6 +5,7 @@ import {AlertController} from "@ionic/angular";
 import {UserAccount} from "../../models/userAccount";
 import {UserProfile} from "../../models/userProfile";
 import {LoggerService} from "../logger/logger.service";
+import {sha256} from "js-sha256";
 
 @Injectable({
   providedIn: "root"
@@ -58,6 +59,7 @@ export class AuthService {
     ) {
       return observableThrowError("Please insert credentials");
     } else {
+      debugger;
       const userAccount = new UserAccount(credentials.name, credentials.email);
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
@@ -84,8 +86,18 @@ export class AuthService {
         credentials.avatarId,
         credentials.child
       );
-      this.currentUserAccount.addUserProfile(userProfile);
-      this.save(this.currentUserAccount);
+      debugger;
+      this.storage.get('mail@mail.de').then((val) => {
+        debugger;
+        let userAccountTmp: UserAccount;
+        userAccountTmp = val;
+        let userAccount: UserAccount = new UserAccount(userAccountTmp.name, userAccountTmp.email, userAccountTmp.hash,
+          userAccountTmp.userProfiles);
+        userAccount.addUserProfile(userProfile);
+        this.save(userAccount);
+      });
+      // this.currentUserAccount.addUserProfile(userProfile);
+      // this.save(this.currentUserAccount);
 
       return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
         subscriber.next(true);
@@ -160,24 +172,23 @@ export class AuthService {
       return new Observable((subscriber) => {
         let access = false;
         this.storage.ready().then(() =>
-          this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
+          this.storage.get(credentials.email).then((val) => {
             console.log(val);
             if (val) {
               const storageUser = new UserAccount(
                 val.name,
                 val.email,
-                val.pin,
+                val.hash,
                 val.userProfiles
               );
               access = storageUser.checkCredentials(
                 credentials.email,
                 credentials.pin
-              ); // TODO workaround because pin is store as pin (later in hash). Must be check via UserAccount and checkPin()
+              );
               if (access) {
                 this.currentUser = storageUser;
               }
             }
-
             subscriber.next(access);
             subscriber.complete();
           })
@@ -196,9 +207,14 @@ export class AuthService {
   }
 
   private save(userAccount?: UserAccount) {
+    // this.storage.set(
+    //   AuthService.USER_ACCOUNT_KEY,
+    //   userAccount || this.currentUserAccount
+    // );
+
     this.storage.set(
-      AuthService.USER_ACCOUNT_KEY,
-      userAccount || this.currentUserAccount
+      userAccount.email,
+      userAccount
     );
   }
 
@@ -207,6 +223,7 @@ export class AuthService {
       this.currentUser = val;
     });
 
+    console.log('ProfileObject: ', this.currentUser);
     return this.currentUser;
   }
 

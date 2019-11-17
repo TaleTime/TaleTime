@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
 import {PlayerParams} from "../../models/player/player-params";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
+import {Storage} from "@ionic/storage";
 
 @Component({
   selector: "app-story-menu",
@@ -19,6 +20,7 @@ export class StoryMenuPage implements OnInit {
   activeUserProfileAvatarName: string;
 
   constructor(
+    private storage: Storage,
     public platform: Platform,
     // public app: App,
     public router: Router,
@@ -30,6 +32,9 @@ export class StoryMenuPage implements OnInit {
     public storyService: StoryService
   ) {
     const activeUserProfile = this.authService.getActiveUserProfile();
+    this.storage.get("mail@mail.de").then((val) => {
+      console.log('USER_ACCOUNT_TEST', val);
+    });
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
