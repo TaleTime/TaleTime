@@ -9,6 +9,7 @@ import {SimpleToastService} from "../../services/simple-toast/simple-toast.servi
 import {TranslateService} from "@ngx-translate/core";
 import {PlatformBridgeService} from "../../services/platform-bridge/platform-bridge.service";
 
+
 @Component({
   selector: "app-start",
   templateUrl: "./start.page.html",
@@ -47,7 +48,7 @@ export class StartPage implements OnInit {
     storage
       .createAppDirOnExtRoot()
       .then(() => {
-        this.signIn();
+        //this.signIn();
       })
       .catch(() => {
         this.translate.get("PERMISSION_FILE_NEEDED").subscribe((msg) => {
@@ -76,17 +77,17 @@ export class StartPage implements OnInit {
         if (allowed) {
           //this.navCtrl.navigateForward("/select-user-profile");
           this.router.navigate(["/select-user-profile"]);
-        }
+        } else (this.toastService.displayToast("Wrong user or password!"))
       });
   }
 
-  private signIn() {
-    const self = this;
-    this.authService.trySignIn(() => {
-      console.log("Signed in");
-      self.navCtrl.navigateRoot("/select-user-profile");
-    });
-  }
+  // private signIn() {
+  //   const self = this;
+  //   this.authService.trySignIn(() => {
+  //     console.log("Signed in");
+  //     self.navCtrl.navigateRoot("/select-user-profile");
+  //   });
+  // }
 
   goToCreateAccount() {
     this.navCtrl.navigateForward("/create-user-account");

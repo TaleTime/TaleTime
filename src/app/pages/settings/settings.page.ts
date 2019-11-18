@@ -5,6 +5,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {TranslateService} from "@ngx-translate/core";
 import {SettingsService} from "../../services/settings/settings.service";
 import {Storage} from "@ionic/storage";
+import {Router} from "@angular/router";
 
 import {
   AVAILABLE_LANGUAGES,
@@ -32,6 +33,7 @@ export class SettingsPage {
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
+    private router: Router,
     public settings: SettingsService,
     private translate: TranslateService,
     private authService: AuthService,
@@ -101,10 +103,8 @@ export class SettingsPage {
 
   public async goToUserAccount() {
     const alert = await this.authService.presentPinPrompt((valid) => {
-      valid = true; // TODO silly hack (obviously)
-
       if (valid) {
-        this.navCtrl.navigateForward("/user-account");
+        this.router.navigate(["/user-account"]);
       } else {
         this.toastService.displayToast("Wrong pin."); // TODO tobi i18
         return false;

@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import{Router} from "@angular/router";
 import {TranslateService} from "@ngx-translate/core";
 import {ModalController, NavController} from "@ionic/angular";
 
@@ -20,6 +21,7 @@ export class SelectUserProfilePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
+    private router: Router,
     private translate: TranslateService,
     public authService: AuthService,
     public modalCtrl: ModalController,
@@ -42,7 +44,7 @@ export class SelectUserProfilePage implements OnInit {
       (success) => {
         if (success) {
           // this.navCtrl.push(TabsPage);
-          this.navCtrl.navigateRoot("/tabs");
+          this.navCtrl.navigateRoot("/tabs/story-menu");
         }
       },
       (error) => {
@@ -63,9 +65,13 @@ export class SelectUserProfilePage implements OnInit {
     this.authService.deleteUserProfile(userProfileId);
   }
 
-  public async create() {
-    const userProfileModal = await this.modalCtrl.create({component: CreateUserProfilePage});
-    await userProfileModal.present();
+  // public async create() {
+  //   const userProfileModal = await this.modalCtrl.create({component: CreateUserProfilePage});
+  //   await userProfileModal.present();
+  // }
+
+  public create(){
+    this.router.navigate(["create-user-profile"]);
   }
 
   public async showOptions() {

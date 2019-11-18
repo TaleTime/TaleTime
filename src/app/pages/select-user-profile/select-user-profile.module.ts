@@ -30,7 +30,7 @@ const routes: Routes = [
     SelectUserProfilePage
   ],
   entryComponents: [
-    // CreateUserProfilePage
+    //CreateUserProfilePage
   ]
 })
 export class SelectUserProfilePageModule {

@@ -13,8 +13,8 @@ import {sha256} from "js-sha256";
 export class AuthService {
 
   static USER_ACCOUNT_KEY = "userAccount";
-  private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
-  //private currentUser: UserAccount;
+  //private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
+  private currentUser: UserAccount;
 
   constructor(
     private storage: Storage,
@@ -23,10 +23,10 @@ export class AuthService {
   ) {
   }
 
-  public trySignIn(callback: () => any) {
+  public trySignIn(userAccount: UserAccount,callback: () => any) {
     this.storage
       .ready()
-      .then(() => this.storage.get(AuthService.USER_ACCOUNT_KEY))
+      .then(() => this.storage.get(userAccount.email))
       .then((userAccountData) => {
         if (userAccountData) {
           this.currentUser = new UserAccount(
@@ -59,7 +59,6 @@ export class AuthService {
     ) {
       return observableThrowError("Please insert credentials");
     } else {
-      debugger;
       const userAccount = new UserAccount(credentials.name, credentials.email);
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
@@ -86,12 +85,13 @@ export class AuthService {
         credentials.avatarId,
         credentials.child
       );
-      this.storage.get('mail@mail.de').then((val) => {
+      this.storage.get(this.currentUser.email).then((val) => {
         let userAccountTmp: UserAccount;
         userAccountTmp = val;
         let userAccount: UserAccount = new UserAccount(userAccountTmp.name, userAccountTmp.email, userAccountTmp.hash,
           userAccountTmp.userProfiles);
         userAccount.addUserProfile(userProfile);
+        this.currentUser = userAccount;
         this.save(userAccount);
       });
       // this.currentUserAccount.addUserProfile(userProfile);
@@ -113,7 +113,7 @@ export class AuthService {
     if (this.currentUserAccount.checkPin(oldPin)) {
       if (newPin === retypePin) {
         this.currentUserAccount.updatePin(newPin);
-        this.save();
+        this.save(this.currentUserAccount);
       } else {
         response.success = false;
         response.reason = "New pin do not match"; // TODO Tobi i18n
@@ -134,7 +134,7 @@ export class AuthService {
 
   public deleteUserProfile(userProfileId: string) {
     this.currentUserAccount.removeUserProfile(userProfileId);
-    this.save();
+    this.save(this.currentUserAccount);
 
     return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
       subscriber.next(true);
@@ -144,7 +144,7 @@ export class AuthService {
 
   public setActiveUserProfile(userProfileId: string) {
     this.currentUserAccount.setActiveUserProfile(userProfileId);
-    this.save();
+    this.save(this.currentUser);
 
     return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
       subscriber.next(true);
@@ -162,7 +162,7 @@ export class AuthService {
    * @param credentials
    */
   public login(credentials) {
-    console.log(credentials);
+    //console.log(credentials);
     if (credentials.email === null || credentials.pin === null) {
       return observableThrowError("Please insert credentials");
     } else {
@@ -195,16 +195,24 @@ export class AuthService {
     }
   }
 
-  public logout() {
+  public logout(){
     return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
       this.currentUser = null;
-      this.storage.remove(AuthService.USER_ACCOUNT_KEY);
       subscriber.next(true);
       subscriber.complete();
     });
   }
 
-  private save(userAccount?: UserAccount) {
+  public deleteAccount() {
+    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+      this.storage.remove(this.currentUser.email);
+      this.currentUser = null;
+      subscriber.next(true);
+      subscriber.complete();
+    });
+  }
+
+  private save(userAccount: UserAccount) {
     // this.storage.set(
     //   AuthService.USER_ACCOUNT_KEY,
     //   userAccount || this.currentUserAccount
@@ -221,7 +229,7 @@ export class AuthService {
     //   this.currentUser = val;
     // });
 
-    console.log('ProfileObject: ', this.currentUser);
+    //console.log('ProfileObject: ', this.currentUser);
     return this.currentUser;
   }
 

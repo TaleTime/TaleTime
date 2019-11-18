@@ -7,17 +7,21 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-      {{userAccount.name}}
+      {{this.authService.currentUserAccount.name}}
     </ion-card-header>
     <ion-card-content>
       <p>
-        {{userAccount.email}}
+        {{this.authService.currentUserAccount.email}}
       </p>
       <p>
-        {{userAccount.hash}} <!-- TODO: this was "pin" before -->
+        {{this.authService.currentUserAccount.hash}}
       </p>
       <p>
-        <ion-button (click)="logout()">{{'SETTINGS_DELETE_ACCOUNT' | translate}}</ion-button>
+        <ion-button (click)="deleteAccount()">{{'SETTINGS_DELETE_ACCOUNT' | translate}}</ion-button>
+      </p>
+      <p>
+        <!--  TODO i18n      -->
+        <ion-button (click)="logout()">{{'Logout' | translate}}</ion-button>
       </p>
     </ion-card-content>
   </ion-card>

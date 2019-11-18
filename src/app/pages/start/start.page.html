@@ -19,7 +19,7 @@
     </ion-button>
   </div>
 
-  <div>
+  <div class="ion-text-center">
     <form (ngSubmit)="login()">
       <ion-row>
         <ion-col>
@@ -44,7 +44,7 @@
               <!--              TODO i18n-->
               <ion-label position="floating">{{'Pin'}}</ion-label>
               <ion-input
-                type="pin"
+                type="password"
                 name="pin"
                 [(ngModel)]="pin"
                 required
@@ -57,7 +57,7 @@
         <ion-col>
           <ion-button
             class="submit-btn"
-            expand="full"
+
             type="submit"
           >
             {{'Login'}}

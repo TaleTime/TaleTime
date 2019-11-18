@@ -29,6 +29,8 @@ import {PlatformBridgeService} from "../../services/platform-bridge/platform-bri
 import {Routes} from "@angular/router";
 import {ActivatedRoute} from '@angular/router';
 import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {Router} from "@angular/router";
 
 // import Stack from "ts-data.stack";
 /**
@@ -76,6 +78,8 @@ export class PlayerPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public playerParamsService: PlayerParamsService,
+    private authService: AuthService,
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private saveGameService: SaveGameService,
     private audioService: AudioService,
@@ -90,6 +94,9 @@ export class PlayerPage implements OnInit {
     private publicStoryHelper: PublicStoryHelperService,
     private platformBridge: PlatformBridgeService
   ) {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
       this.storyId = this.playerParamsService.getPlayerParams().storyId;

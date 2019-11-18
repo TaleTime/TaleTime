@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 import {NavController} from "@ionic/angular";
 import {AuthService} from "../../services/auth/auth.service";
 import {UserProfile} from "../../models/userProfile"; // for avatars
@@ -15,8 +16,12 @@ export class CreateUserProfilePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
+    private router: Router,
     private authService: AuthService
   ) {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
     this.profileAvatars = UserProfile.avatars();
     this.selectAvatar(null, 0);
   }
@@ -36,7 +41,6 @@ export class CreateUserProfilePage implements OnInit {
     this.profileCredentials.avatarId = this.activeAvatarId;
 
     console.log("Create user profile");
-
     this.authService.createUserProfile(this.profileCredentials).subscribe(
       (success) => {
         if (success) {
@@ -50,6 +54,6 @@ export class CreateUserProfilePage implements OnInit {
   }
 
   public close() {
-    this.navCtrl.back();
+    this.router.navigate(["select-user-profile"]);
   }
 }

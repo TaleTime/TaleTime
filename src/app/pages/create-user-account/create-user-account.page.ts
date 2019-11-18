@@ -3,6 +3,7 @@ import {AlertController, LoadingController, NavController,} from "@ionic/angular
 import {Router} from "@angular/router";
 
 import {AuthService} from "../../services/auth/auth.service";
+import {UserAccount} from "../../models/userAccount";
 
 @Component({
   selector: "app-create-user-account",
@@ -26,19 +27,18 @@ export class CreateUserAccountPage implements OnInit {
   }
 
   public register() {
-    //debugger;
     this.showLoading();
 
     this.authService.register(this.registerCredentials).subscribe(
       (success) => {
         if (success) {
           this.createSuccess = true;
-
           // automatic login user
           try {
-            this.authService.trySignIn(() =>
-                this.navCtrl.navigateRoot("/select-user-profile")
-              //this.router.navigate(["/select-user-profile"])
+            let userAccount: UserAccount = new UserAccount(this.registerCredentials.name,
+              this.registerCredentials.email, this.registerCredentials.pin);
+            this.authService.trySignIn(userAccount,() =>
+              this.router.navigate(["/select-user-profile"])
             );
           } catch (ex) {
             this.showPopup("Error", ex.message);

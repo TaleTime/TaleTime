@@ -31,10 +31,11 @@ export class StoryMenuPage implements OnInit {
     private authService: AuthService,
     public storyService: StoryService
   ) {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
     const activeUserProfile = this.authService.getActiveUserProfile();
-    this.storage.get("mail@mail.de").then((val) => {
-      console.log('USER_ACCOUNT_TEST', val);
-    });
+    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;

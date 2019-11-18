@@ -9,6 +9,8 @@ import {FileTransfer, FileTransferObject} from "@ionic-native/file-transfer/ngx"
 import {File} from "@ionic-native/file/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {Router} from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 
 /**
@@ -27,7 +29,10 @@ export class AvailableStoriesPage implements OnInit {
 
   constructor(
     private zone: NgZone,
+    private authService: AuthService,
+
     public navCtrl: NavController,
+    private router: Router,
     private http: HTTP,
     private translate: TranslateService,
     private storyService: StoryService,
@@ -39,6 +44,9 @@ export class AvailableStoriesPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastService: SimpleToastService
   ) {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
     this.loadDeviceDefaultStories();
     this.platform.ready().then(() => {
       this.loadPublicStories();
