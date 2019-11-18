@@ -107,9 +107,7 @@ export class PlayerPage implements OnInit {
       // DEFAULT_READER if new savegame
       this.selectedReader = this.saveGame.reader;
       // this.selectedReader = DEFAULT_READER;
-      // TODO Pass mode
-      // this.mode = this.navParams.get("mode"); // differentiate between starting story over or continuing from savegame
-      this.mode = BEGIN;
+      this.mode = this.playerParamsService.getPlayerParams().mode; // differentiate between starting story over or continuing from savegame
       console.log("storyId:" + this.storyId);
       console.log("reader:" + this.selectedReader);
       console.log("mode: " + this.mode);
