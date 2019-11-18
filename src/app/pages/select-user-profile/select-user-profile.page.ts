@@ -27,7 +27,7 @@ export class SelectUserProfilePage implements OnInit {
     public modalCtrl: ModalController,
     private toastService: SimpleToastService
   ) {
-    this.isShowingOptions = false;
+    this.isShowingOptions = true;
     this.translate.get("COMMON_EDIT").subscribe((value) => {
       // value is our translated string
       this.showingOptionsLabel = value;
