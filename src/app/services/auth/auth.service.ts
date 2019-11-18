@@ -86,9 +86,7 @@ export class AuthService {
         credentials.avatarId,
         credentials.child
       );
-      debugger;
       this.storage.get('mail@mail.de').then((val) => {
-        debugger;
         let userAccountTmp: UserAccount;
         userAccountTmp = val;
         let userAccount: UserAccount = new UserAccount(userAccountTmp.name, userAccountTmp.email, userAccountTmp.hash,
@@ -219,9 +217,9 @@ export class AuthService {
   }
 
   get currentUserAccount(): UserAccount {
-    this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
-      this.currentUser = val;
-    });
+    // this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
+    //   this.currentUser = val;
+    // });
 
     console.log('ProfileObject: ', this.currentUser);
     return this.currentUser;

@@ -44,7 +44,6 @@ import {PlayerParamsService} from "./services/player-parmas/player-params.servic
 import {PlayerParams} from "./models/player/player-params";
 import {StoryInformationService} from "./services/story-information/story-information.service";
 import {StoryInformation} from "./models/storyInformation";
-import {TabsPageModule} from "./tabs/tabs.module";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -53,7 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [ ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -70,7 +69,6 @@ export function createTranslateLoader(http: HttpClient) {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    TabsPageModule,
     StatusBar,
     PlayerParamsService,
     PlayerParams,

@@ -24,13 +24,13 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     TranslateModule,
-    CreateUserProfilePageModule
+    //CreateUserProfilePageModule
   ],
   declarations: [
     SelectUserProfilePage
   ],
   entryComponents: [
-    CreateUserProfilePage
+    // CreateUserProfilePage
   ]
 })
 export class SelectUserProfilePageModule {

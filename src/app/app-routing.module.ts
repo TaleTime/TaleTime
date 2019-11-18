@@ -1,11 +1,13 @@
 import {NgModule} from "@angular/core";
 import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
 import {TabsPageModule} from "./tabs/tabs.module";
+import {TabsPage} from "./tabs/tabs.page";
+
 const routes: Routes = [
   {
     path: "",
-    loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
-    //loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
+    //loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
+    loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
   },
   // {
   //   path: "available-stories",
@@ -62,7 +64,8 @@ const routes: Routes = [
   // },
   {
     path: "tabs",
-    component: TabsPageModule
+    //component: TabsPage
+    loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
   },
   {
     path: "user-account",

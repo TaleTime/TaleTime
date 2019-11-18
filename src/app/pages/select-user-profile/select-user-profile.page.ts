@@ -30,7 +30,6 @@ export class SelectUserProfilePage implements OnInit {
       // value is our translated string
       this.showingOptionsLabel = value;
     });
-
     const activeUserProfile = this.authService.getActiveUserProfile();
     if (activeUserProfile && !activeUserProfile.child) {
       this.isShowingOptionsButton = true;
@@ -39,7 +38,6 @@ export class SelectUserProfilePage implements OnInit {
 
   public select(event, userProfileId: string) {
     event.stopPropagation(); // TODO read desc in file header
-
     this.authService.setActiveUserProfile(userProfileId).subscribe(
       (success) => {
         if (success) {

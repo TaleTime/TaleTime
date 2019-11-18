@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {NavController, Platform} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 import {AuthService} from "../../services/auth/auth.service";
 
@@ -21,6 +22,7 @@ export class StartPage implements OnInit {
   // actually only necessary because settings page uses settings Service directly as datamodel
   constructor(
     public navCtrl: NavController,
+    public router: Router,
     private storageService: StorageService,
     private authService: AuthService,
     // private speechRecognition: SpeechRecognition,
@@ -72,7 +74,8 @@ export class StartPage implements OnInit {
       .login({name: "Placeholder", email: this.email, pin: this.pin})
       .subscribe((allowed) => {
         if (allowed) {
-          this.navCtrl.navigateForward("/select-user-profile");
+          //this.navCtrl.navigateForward("/select-user-profile");
+          this.router.navigate(["/select-user-profile"]);
         }
       });
   }

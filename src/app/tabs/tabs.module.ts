@@ -7,9 +7,11 @@ import {TabsPageRoutingModule} from "./tabs.router.module";
 
 import {TabsPage} from "./tabs.page";
 import {TranslateModule} from "@ngx-translate/core";
+import {StoryMenuPageModule} from "../pages/story-menu/story-menu.module";
 
 @NgModule({
   imports: [
+    StoryMenuPageModule,
     IonicModule,
     CommonModule,
     FormsModule,
