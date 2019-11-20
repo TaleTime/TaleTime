@@ -8,6 +8,8 @@ import {PlayerParamsService} from "../../services/player-parmas/player-params.se
 import {PlayerParams} from "../../models/player/player-params";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
 import {Storage} from "@ionic/storage";
+import {AlertController} from "@ionic/angular";
+import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 
 @Component({
   selector: "app-story-menu",
@@ -21,6 +23,8 @@ export class StoryMenuPage implements OnInit {
 
   constructor(
     private storage: Storage,
+    private alertCtrl: AlertController,
+    private toastService: SimpleToastService,
     public platform: Platform,
     // public app: App,
     public router: Router,
@@ -59,13 +63,69 @@ export class StoryMenuPage implements OnInit {
     this.storyService.deleteStory(story.id);
   }
 
-  goToPlayerPage(storyId: string) {
+  async goToPlayerPage(storyId: string) {
     let playerParams = new PlayerParams();
     playerParams.storyId = storyId;
-    playerParams.mode = "begin";
 
-    this.playerParamsService.setPlayerParams(playerParams);
-    this.router.navigate(["/player"]);
+    const alert = await this.showResumeOrRestartDialog((valid) => {
+      if (valid === "begin") {
+        debugger;
+        playerParams.mode = "begin"; //TODO i18n
+        this.playerParamsService.setPlayerParams(playerParams);
+        this.router.navigate(["/player"]);
+      } else {
+        debugger;
+        playerParams.mode = "continue";
+        this.playerParamsService.setPlayerParams(playerParams);
+        this.router.navigate(["/player"]);
+      }
+    });
+
+    await alert.present();
+  }
+
+  public showResumeOrRestartDialog(modeFn: (arg) => void, cancelFn?: (arg) => void){
+    return this.alertCtrl.create({
+      header: "Resume or Restart", // TODO i18n
+      inputs: [
+
+      ],
+      buttons: [
+        {
+          text: "Resume",
+          role: "resume",
+          handler: (data) => {
+            modeFn("continue");
+          }
+        },
+        {
+          text: "Restart",
+          role: "restart",
+          handler: (data) => {
+            modeFn("begin");
+          }
+        },
+        {
+          text: "Cancel", // TODO i18n
+          role: "cancel",
+          handler: (data) => {
+            if (cancelFn) {
+              cancelFn(data);
+            } else {
+              console.log("Cancel clicked"); //TODO i18n
+            }
+          }
+        },
+        // {
+        //   text: "Ok", // TODO i18
+        //   handler: (data) => {
+        //     this.authService.changePin(data.oldPin, data.newPin, data.newPinRe).subscribe(result => {
+        //       validFn(result.success);
+        //     });
+        //   }
+        // }
+      ]
+    });
   }
 
   goToAvailableStories() {
