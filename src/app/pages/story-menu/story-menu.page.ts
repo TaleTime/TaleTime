@@ -69,12 +69,10 @@ export class StoryMenuPage implements OnInit {
 
     const alert = await this.showResumeOrRestartDialog((valid) => {
       if (valid === "begin") {
-        debugger;
         playerParams.mode = "begin"; //TODO i18n
         this.playerParamsService.setPlayerParams(playerParams);
         this.router.navigate(["/player"]);
       } else {
-        debugger;
         playerParams.mode = "continue";
         this.playerParamsService.setPlayerParams(playerParams);
         this.router.navigate(["/player"]);

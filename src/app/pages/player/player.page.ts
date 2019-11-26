@@ -340,11 +340,7 @@ export class PlayerPage implements OnInit {
    * if no savegame exists for that user a new one will be created
    */
   private loadSaveGame() {
-    //TODO Uncomment and remove next 3 lines if accounts are functional
-    //this.saveGame = this.saveGameService.loadSavegame(this.storyId);
-    this.saveGame = new SaveGame();
-    this.saveGame.storyId = this.storyId;
-    this.saveGame.chosenPath = new Array<number>();
+    this.saveGame = this.saveGameService.loadSavegame(this.storyId);
 
     console.log("Current savegame:");
     console.log(JSON.stringify(this.saveGame));
