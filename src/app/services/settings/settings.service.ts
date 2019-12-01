@@ -7,6 +7,7 @@ import {LoggerService} from "../logger/logger.service";
 import {Settings} from "../../models/settings";
 import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
 import {Storage} from "@ionic/storage";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: "root"
@@ -20,6 +21,7 @@ export class SettingsService {
   private settingsLoaded: Subject<boolean> = new Subject();
 
   constructor(
+    private authService: AuthService,
     private platform: Platform,
     private languageFile: LanguageFileService,
     private storage: Storage,
@@ -37,7 +39,7 @@ export class SettingsService {
 
   loadSettings() {
     this.storage
-      .get(this.SETTINGS_KEY)
+      .get(this.SETTINGS_KEY + this.authService.getActiveUserProfile().id)
       .then((settings: Settings) => {
         this.logger.log(
           "Read settings from storage: " + JSON.stringify(settings)
@@ -155,7 +157,7 @@ export class SettingsService {
    */
   private save() {
     this.storage
-      .set(this.SETTINGS_KEY, this.settings)
+      .set(this.SETTINGS_KEY + this.authService.getActiveUserProfile().id, this.settings)
       .then(() =>
         this.logger.log("Settings written: " + JSON.stringify(this.settings))
       )

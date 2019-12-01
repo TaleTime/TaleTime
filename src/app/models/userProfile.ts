@@ -3,6 +3,8 @@
  * @author Matthias Kiefer
  * @date 20.11.2017
  */
+import {Settings} from "./settings";
+
 export class UserProfile {
   private static AVATARS = [
     {
@@ -36,6 +38,7 @@ export class UserProfile {
   public name: string;
   public avatar;
   public child: boolean;
+  public settings: Settings;
 
   constructor(name: string, avatarId: number, child: boolean) {
     this.id = Math.random()
