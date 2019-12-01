@@ -10,6 +10,8 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {Storage} from "@ionic/storage";
 import {AlertController} from "@ionic/angular";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
+import {forEach} from "@angular-devkit/schematics";
+import {SettingsService} from "../../services/settings/settings.service";
 
 @Component({
   selector: "app-story-menu",
@@ -25,6 +27,7 @@ export class StoryMenuPage implements OnInit {
     private storage: Storage,
     private alertCtrl: AlertController,
     private toastService: SimpleToastService,
+    private settings: SettingsService,
     public platform: Platform,
     // public app: App,
     public router: Router,
@@ -47,7 +50,43 @@ export class StoryMenuPage implements OnInit {
   }
 
   public get stories(): Array<StoryInformation> {
-    return this.storyService.stories;
+    let storyInformation: Array<StoryInformation> = new Array<StoryInformation>();
+    for(let story of this.storyService.stories){
+      if(this.checkLanguage(story)){
+        storyInformation.push(story);
+      }
+    }
+
+    return storyInformation;
+  }
+
+  /**
+   * Checks if the story is available in the current language
+   *
+   * @param storyInformation Story to check language
+   * @return True if story available in the current language, else false
+   */
+  private checkLanguage(storyInformation: StoryInformation){
+    if(this.settings.language === this.storyLanguageToSystemLanguage(storyInformation.language)){
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Converts the Story-language-format (English, Deutsch, etc.) to
+   * System-language-format (en-US, de-DE, etc.)
+   *
+   * @param storyLanguage Language in Story-format
+   * @return Language in Story-format
+   */
+  private storyLanguageToSystemLanguage(storyLanguage: string){
+    //TODO Find better place for the languageMap
+    let languageMap = new Map();
+    languageMap.set("English", "en-US");
+    languageMap.set("Deutsch", "de-DE");
+
+    return languageMap.get(storyLanguage);
   }
 
   goToSelectUserProfilePage() {
