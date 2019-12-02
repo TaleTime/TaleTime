@@ -82,6 +82,6 @@
   "STORY_ZIP_REMOVE_FAIL": "Das Löschen der temporären Zip-Datei ist fehlgeschlagen",
   "STORY_ZIP_UNPACK_FAIL": "Die Geschichte konnte nicht entpackt werden",
   "STORY_DOWNLOAD_FAIL": "Die Geschichte konnte nicht heruntergeladen werden. Versuchen Sie es später erneut.",
-  "PERMISSION_FILE_NEEDED": "Die Berechtigung zum Speichern von Dateien ist unerlässlig für den Gebrauch der App. Bitte erteilen sie die Berechtigung vor dem Fortfahren",
+  "PERMISSION_FILE_NEEDED": "Die Berechtigung zum Speichern von Dateien ist unerlässlich für den Gebrauch der App. Bitte erteilen sie die Berechtigung vor dem Fortfahren",
   "ERR_NO_STORAGE_AVAILABLE": "Keine Möglichkeit zur Speicherung gefunden. Bitte stellen Sie sicher, dass ihr Browser das Speichern lokaler Daten unterstützt"
 }
