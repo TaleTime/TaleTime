@@ -7,14 +7,13 @@
 </ion-header>
 
 <ion-content padding>
-  <h1 text-center>
+<!--  <h1 text-center>
     Placeholder
-    <!--    {{attr.name}}-->
-  </h1>
-
-  <p class="chapterText">
+    &lt;!&ndash;    {{attr.name}}&ndash;&gt;
+  </h1>-->
+  <ion-text [ngStyle]="{fontSize: this.fontSizePx}">
     {{text}}
-  </p>
+  </ion-text>
 
   <ion-list>
     <ion-button

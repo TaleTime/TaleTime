@@ -41,6 +41,8 @@
       <ion-select value="pixel12"
                   okText="{{ 'COMMON_OK' | translate }}"
                   cancelText="{{'COMMON_ABORT' | translate }}"
+                  [(ngModel)]="selectedFontSize"
+                  (ngModelChange)="changeFontSize()"
       >
         <ion-select-option value="pixel12">12px</ion-select-option>
         <ion-select-option value="pixel14">14px</ion-select-option>

@@ -37,6 +37,15 @@ export const TTS_RATE_FAST = "TTS_FAST";
 export const TTS_RATE_SLOW_VALUE = 0.5;
 export const TTS_RATE_NORMAL_VALUE = 0.75;
 export const TTS_RATE_FAST_VALUE = 1;
+export const FONT_SIZE_12_LABEL = "pixel12";
+export const FONT_SIZE_14_LABEL = "pixel14";
+export const FONT_SIZE_16_LABEL = "pixel16";
+export const FONT_SIZE_18_LABEL = "pixel18";
+export const FONT_SIZE_12_VALUE = 12;
+export const FONT_SIZE_14_VALUE = 14;
+export const FONT_SIZE_16_VALUE = 16;
+export const FONT_SIZE_18_VALUE = 18;
+
 
 /** Language */
 export const AVAILABLE_LANGUAGES = [

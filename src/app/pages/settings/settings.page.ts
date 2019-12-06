@@ -9,6 +9,11 @@ import {Router} from "@angular/router";
 
 import {
   AVAILABLE_LANGUAGES,
+  FONT_SIZE_12_LABEL,
+  FONT_SIZE_12_VALUE,
+  FONT_SIZE_14_LABEL,
+  FONT_SIZE_14_VALUE,
+  FONT_SIZE_16_LABEL, FONT_SIZE_16_VALUE, FONT_SIZE_18_LABEL, FONT_SIZE_18_VALUE,
   TTS_RATE_FAST,
   TTS_RATE_FAST_VALUE,
   TTS_RATE_NORMAL,
@@ -28,6 +33,7 @@ export class SettingsPage {
   languages = AVAILABLE_LANGUAGES;
   ttsRates = [TTS_RATE_SLOW, TTS_RATE_NORMAL, TTS_RATE_FAST];
   selectedLanguage;
+  selectedFontSize;
   ttsRate;
 
   constructor(
@@ -57,6 +63,21 @@ export class SettingsPage {
       default:
         this.ttsRate = TTS_RATE_NORMAL;
     }
+
+    switch (this.settings.fontSize){
+      case FONT_SIZE_12_VALUE:
+        this.selectedFontSize = FONT_SIZE_12_LABEL;
+        break;
+      case FONT_SIZE_14_VALUE:
+        this.selectedFontSize = FONT_SIZE_14_LABEL;
+        break;
+      case FONT_SIZE_16_VALUE:
+        this.selectedFontSize = FONT_SIZE_16_LABEL;
+        break;
+      case FONT_SIZE_18_VALUE:
+        this.selectedFontSize = FONT_SIZE_18_LABEL;
+        break;
+    }
   }
 
   private static getCodeFromLanguage(lang: string): string {
@@ -83,6 +104,24 @@ export class SettingsPage {
     this.settings.language = SettingsPage.getCodeFromLanguage(
       this.selectedLanguage
     );
+  }
+
+  changeFontSize(){
+    console.log("Changing font size to <" + this.selectedFontSize + ">");
+    switch (this.selectedFontSize){
+      case FONT_SIZE_12_LABEL:
+        this.settings.fontSize = FONT_SIZE_12_VALUE;
+        break;
+      case FONT_SIZE_14_LABEL:
+        this.settings.fontSize = FONT_SIZE_14_VALUE;
+        break;
+      case FONT_SIZE_16_LABEL:
+        this.settings.fontSize = FONT_SIZE_16_VALUE;
+        break;
+      case FONT_SIZE_18_LABEL:
+        this.settings.fontSize = FONT_SIZE_18_VALUE;
+        break;
+    }
   }
 
   changeTtsRate() {

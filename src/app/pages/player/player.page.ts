@@ -71,6 +71,7 @@ export class PlayerPage implements OnInit {
   private saveGame: SaveGame;
   public pulseClass: string;
   private stopped: boolean;
+  private fontSizePx: string;
 
   // While tts is reading answers out or while speechrecognition is listening, block playPause-Button
   private isPlayPauseBlocked = false;
@@ -97,6 +98,7 @@ export class PlayerPage implements OnInit {
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);
     }
+    this.fontSizePx = this.settings.fontSize.toString() + "px";
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
       this.storyId = this.playerParamsService.getPlayerParams().storyId;

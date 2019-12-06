@@ -137,6 +137,15 @@ export class SettingsService {
     this.save();
   }
 
+  set fontSize(value: number){
+    this.settings.fontSize = value;
+    this.save();
+  }
+
+  get fontSize(): number {
+    return this.settings.fontSize;
+  }
+
   public onLanguageChanged(): Observable<string> {
     return this.languageSubject.asObservable();
   }
