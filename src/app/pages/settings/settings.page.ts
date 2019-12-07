@@ -36,6 +36,9 @@ export class SettingsPage {
   selectedFontSize;
   ttsRate;
 
+  activeUserProfileName: string;
+  activeUserProfileAvatarName: string;
+
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
@@ -45,6 +48,21 @@ export class SettingsPage {
     private authService: AuthService,
     private toastService: SimpleToastService,
   ) {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
+  }
+
+  ngOnInit() {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
+    const activeUserProfile = this.authService.getActiveUserProfile();
+    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
+    if (activeUserProfile) {
+      this.activeUserProfileName = activeUserProfile.name;
+      this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
+    }
 
     this.selectedLanguage = SettingsPage.getLanguageFromCode(
       this.settings.language
@@ -151,6 +169,10 @@ export class SettingsPage {
     });
 
     await alert.present();
+  }
+
+  goToSelectUserProfile(){
+    this.router.navigate(["/select-user-profile"]);
   }
 
   public goToCreditsPage(): void {

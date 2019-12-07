@@ -7,6 +7,7 @@ import {CreateUserProfilePage} from "../create-user-profile/create-user-profile.
 
 import {AuthService} from "../../services/auth/auth.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
+import {SettingsService} from "../../services/settings/settings.service";
 
 @Component({
   selector: "app-select-user-profile",
@@ -21,6 +22,7 @@ export class SelectUserProfilePage implements OnInit {
 
   constructor(
     private navCtrl: NavController,
+    private settingsService: SettingsService,
     private router: Router,
     private translate: TranslateService,
     public authService: AuthService,
@@ -44,7 +46,8 @@ export class SelectUserProfilePage implements OnInit {
       (success) => {
         if (success) {
           // this.navCtrl.push(TabsPage);
-          this.navCtrl.navigateRoot("/tabs/story-menu");
+          this.settingsService.loadSettings();
+          this.router.navigate(["/tabs/story-menu"]);
         }
       },
       (error) => {

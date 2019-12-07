@@ -22,6 +22,8 @@ import { HttpClientModule } from "@angular/common/http";
   styleUrls: ["./available-stories.page.scss"],
 })
 export class AvailableStoriesPage implements OnInit {
+  activeUserProfileName: string;
+  activeUserProfileAvatarName: string;
 
   public availableStories: Array<StoryInformationWithUrl> = [];
   public readonly PUBLIC_STORY_URL: string =
@@ -54,6 +56,15 @@ export class AvailableStoriesPage implements OnInit {
   }
 
   ngOnInit() {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
+    const activeUserProfile = this.authService.getActiveUserProfile();
+    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
+    if (activeUserProfile) {
+      this.activeUserProfileName = activeUserProfile.name;
+      this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
+    }
   }
 
 
@@ -90,6 +101,10 @@ export class AvailableStoriesPage implements OnInit {
     newStory2.medium = "device";
     newStory2.readers = [];
     this.availableStories.push(newStory2 as StoryInformationWithUrl);
+  }
+
+  goToSelectUserProfile(){
+    this.router.navigate(["/select-user-profile"]);
   }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {

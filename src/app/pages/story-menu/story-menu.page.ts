@@ -41,6 +41,12 @@ export class StoryMenuPage implements OnInit {
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);
     }
+  }
+
+  ngOnInit() {
+    if(this.authService.currentUserAccount == null){
+      this.router.navigate(["/start"]);
+    }
     const activeUserProfile = this.authService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
@@ -165,6 +171,10 @@ export class StoryMenuPage implements OnInit {
     });
   }
 
+  goToSelectUserProfile(){
+    this.router.navigate(["/select-user-profile"]);
+  }
+
   goToAvailableStories() {
     this.router.navigate(["/tabs/available-stories"]);
   }
@@ -172,8 +182,4 @@ export class StoryMenuPage implements OnInit {
   getSubtitle(r: Reader) {
     return " " + r.name;
   }
-
-  ngOnInit() {
-  }
-
 }

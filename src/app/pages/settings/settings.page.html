@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{'APP_SETTINGS' | translate}}</ion-title>
+    <ion-buttons slot="end">
+      <img src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"
+           height="128" width="128" align="right"/>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
