@@ -21,7 +21,8 @@ export class UserAccountPage implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private platform: Platform,
-    private authService: AuthService
+    //must be public for the aot compilation
+    public authService: AuthService
   ) {
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);

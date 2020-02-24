@@ -71,7 +71,8 @@ export class PlayerPage implements OnInit {
   private saveGame: SaveGame;
   public pulseClass: string;
   private stopped: boolean;
-  private fontSizePx: string;
+  //must be public for the aot compilation
+  public fontSizePx: string;
 
   // While tts is reading answers out or while speechrecognition is listening, block playPause-Button
   private isPlayPauseBlocked = false;

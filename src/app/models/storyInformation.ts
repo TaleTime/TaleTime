@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class StoryInformation {
   // TODO tobi des todes!
   public id: string;
