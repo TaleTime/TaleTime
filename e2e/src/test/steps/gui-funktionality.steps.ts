@@ -1,36 +1,41 @@
 import { Before, Given, Then, When } from 'cucumber';
 
-Given('folgende User Login Daten:', function (dataTable) {
+Given('are the following values:', function (dataTable) {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-When('diese Daten eingetragen werden', function () {
+
+When('these data are entered', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-When('auf Erstellen geklickt wird', function () {
+
+When('The button Create was clicked', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-Then('soll ein neuer User existieren.', function () {
+Then('a new user should exist.', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-Given('ein eingeloggter User', function () {
+Given('a logged-in user', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-When('ein neues Profil mit dem Namen {string} erstellt wird', function (string) {
+
+When('a new profile called {string} is created', function (string) {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 
-Then('soll ein neues Profil zu Verfügung stehen', function () {
+
+Then('a new profile should be available', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
+

@@ -1,10 +1,9 @@
-# language: de
+# language: en
 
-  Funktionalität: Diese Szenarien dienen zur Fachlichen Überprüfung der Funktionalität.
+  Feature: These scenarios are used to check the functionality from a business perspective.
 
-  Szenario: Dieses Szenario dient dazu, die erreichbarkeit der Webseite zu überprüfen.
-    Gegeben sei die URL "https://tale-time.web.app".
-    Wenn die URL im Browser eingetragen wird,
-    Dann soll die TaleTime Startpage erscheinen.
-
+  Scenario: This scenario is used to check the availability of the Web site.
+    Given is the URL "https://tale-time.web.app".
+    When the URL is entered in the browser,
+    Then the TaleTime startpage should appear.
 

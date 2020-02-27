@@ -1,23 +1,23 @@
-# language: de
-  Funktionalität: Diese .ferature-Datei überprüft die Funktionalität der Graphischen Öberfläche der TaleTime Applikation.
+# language: en
+  Feature: This .ferature file checks the functionality of the graphical user interface of the TaleTime application.
 
-    Szenario: Überprüfung, der Erreichbarkeit der URL.
-    Gegeben sei die URL "https://tale-time.web.app".
-      Wenn die URL im Browser eingetragen wird,
-      Dann soll die TaleTime Startpage erscheinen.
+    Scenario: Check the accessibility of the TaleTime URL.
+      Given is the URL "https://tale-time.web.app".
+      When the URL is entered in the browser,
+      Then the TaleTime startpage should appear.
 
-    Szenario: Überprüfung, ob ein Account angelegt werden kann.
-      Gegeben seien folgende User Login Daten:
-      |Bezeichnung :      | Wert:                 |
+    Scenario: Check if an account can be created
+      Given are the following values:
+      |Designation :      | Value:                |
       |Name               | Karl Tester           |
       |E-Mail             | Karl@htwsaarTest.de   |
       |PIN                | 1234                  |
-      Wenn diese Daten eingetragen werden
-      Und auf Erstellen geklickt wird
-      Dann soll ein neuer User existieren.
+      When these data are entered
+      And The button Create was clicked
+      Then a new user should exist.
 
-    Szenario: Überprüfung, ob ein neues Profil innerhalb eines Account angelegt werden kann.
-      Gegeben sei ein eingeloggter User
-      Wenn ein neues Profil mit dem Namen "Test Kind" erstellt wird
-      Dann soll ein neues Profil zu Verfügung stehen
+    Scenario: Check if a new profile can be created within an account.
+      Given  a logged-in user
+      When a new profile called "Test Child" is created
+      Then a new profile should be available
 
