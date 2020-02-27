@@ -1,6 +1,9 @@
-import { Before, Given, Then, When, AfterAll, After, Status } from 'cucumber';
+import {Given, Status, Then, When} from 'cucumber';
+
 const { Builder, By, Capabilities, Key } = require('selenium-webdriver');
 const { expect } = require('chai');
+
+require("chromedriver");
 
 const capabilities = Capabilities.chrome();
 capabilities.set('chromeOptions', { "w3c": false });
@@ -10,18 +13,19 @@ const driver = new Builder().withCapabilities(capabilities).build();
 Given('is the URL {string}.', async function (string) {
   // Write code here that turns the phrase above into concrete actions
   await driver.get(string);
-  return Status.PENDING;
 });
 
 
-When('the URL is entered in the browser,', function () {
+When('the URL is entered in the browser,', async function () {
   // Write code here that turns the phrase above into concrete actions
-  return Status.PENDING;
 });
 
 
 
-Then('the TaleTime startpage should appear.', function () {
+Then('the TaleTime startpage should appear.', async function () {
   // Write code here that turns the phrase above into concrete actions
-  return Status.PENDING;
+  if(await driver.findElement(By.id("startPageHeading")).isDisplayed()){
+    return Status.PASSED;
+  }
+  return Status.FAILED;
 });
