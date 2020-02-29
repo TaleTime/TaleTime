@@ -98,7 +98,7 @@ export class SettingsPage {
     }
   }
 
-  private static getCodeFromLanguage(lang: string): string {
+  static getCodeFromLanguage(lang: string): string {
     for (const l of AVAILABLE_LANGUAGES) {
       if (l.name === lang) {
         return l.code;
