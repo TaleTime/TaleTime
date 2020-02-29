@@ -1,4 +1,4 @@
-import {Given, TableDefinition, Then, When} from 'cucumber';
+import {Given, Status, TableDefinition, Then, When} from 'cucumber';
 
 const {Builder, By, Capabilities, Key} = require('selenium-webdriver');
 const {expect} = require('chai');
@@ -9,12 +9,12 @@ const capabilities = Capabilities.chrome();
 capabilities.set('chromeOptions', {"w3c": false});
 const driver = new Builder().withCapabilities(capabilities).build();
 
-var tableelements;
+var tableElements;
 
 
 Given('are the following values:', async (table: TableDefinition) => {
   await table.rows().forEach(element => {
-    tableelements = element;
+    tableElements += element;
   })
 
 });
@@ -24,16 +24,16 @@ When('these data are entered', function () {
 
   openURL(driver, "create-user-account");
 
-  if(driver.findElement(By.id("createUserButton")).isDisplayed())
-  {
-    driver.findElement(By.id("createAccountNameInput")).sendKeys(tableelements[1][1]);
-    driver.findElement(By.id("createAccountMailInput")).sendKeys(tableelements[2][2]);
-    driver.findElement(By.id("createAccountPINInput")).sendKeys(tableelements[3][3]);
+  if (driver.findElement(By.id("createUserButton")).isDisplayed()) {
+    try {
+      driver.findElement(By.id("createAccountNameInput")).sendKeys(tableElements[1][1].toString());
+      driver.findElement(By.id("createAccountMailInput")).sendKeys(tableElements[2][2].toString());
+      driver.findElement(By.id("createAccountPINInput")).sendKeys(tableElements[3][3].toString());
+      return Status.PASSED;
+    } catch {
+      return Status.FAILED;
+    }
   }
-
-
-
-  return 'pending';
 });
 
 
@@ -65,8 +65,8 @@ Then('a new profile should be available', function () {
   return 'pending';
 });
 
-function openURL(driver, url){
-  driver.get("http://localhost:8100/"+url);
+async function openURL(driver, url) {
+  await driver.get("http://localhost:8100/" + url);
 }
 
 function closeWebsite(driver) {
