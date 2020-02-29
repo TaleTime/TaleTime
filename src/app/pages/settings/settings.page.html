@@ -46,7 +46,7 @@
                   okText="{{ 'COMMON_OK' | translate }}"
                   cancelText="{{'COMMON_ABORT' | translate }}"
                   [(ngModel)]="selectedFontSize"
-                  (ngModelChange)="changeFontSize()"
+                  (ngModelChange)="changeFontSize(selectedFontSize)"
       >
         <ion-select-option value="pixel12">12px</ion-select-option>
         <ion-select-option value="pixel14">14px</ion-select-option>
@@ -76,7 +76,7 @@
       <ion-icon slot="start" name="speedometer"></ion-icon>
       <ion-label>{{'SETTINGS_TTS_RATE' | translate}}</ion-label>
       <ion-select [(ngModel)]="ttsRate"
-                  (ngModelChange)="changeTtsRate()"
+                  (ngModelChange)="changeTtsRate(ttsRate)"
                   okText="{{ 'COMMON_OK' | translate }}"
                   cancelText="{{'COMMON_ABORT' | translate }}">
         <ion-select-option *ngFor="let rate of ttsRates" [value]="rate"

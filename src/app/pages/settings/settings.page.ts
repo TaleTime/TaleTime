@@ -130,9 +130,9 @@ export class SettingsPage {
     this.settings.language = SettingsPage.getCodeFromLanguage(selectedLanguage);
   }
 
-  changeFontSize(){
-    console.log("Changing font size to <" + this.selectedFontSize + ">");
-    switch (this.selectedFontSize){
+  changeFontSize(selectedFontSize){
+    console.log("Changing font size to <" + selectedFontSize + ">");
+    switch (selectedFontSize){
       case FONT_SIZE_12_LABEL:
         this.settings.fontSize = FONT_SIZE_12_VALUE;
         break;
@@ -148,10 +148,10 @@ export class SettingsPage {
     }
   }
 
-  changeTtsRate() {
-    console.log("Changing TTS rate to <" + this.ttsRate + ">");
+  changeTtsRate(ttsRate) {
+    console.log("Changing TTS rate to <" + ttsRate + ">");
 
-    switch (this.ttsRate) {
+    switch (ttsRate) {
       case TTS_RATE_SLOW:
         this.settings.ttsRate = TTS_RATE_SLOW_VALUE;
         break;
