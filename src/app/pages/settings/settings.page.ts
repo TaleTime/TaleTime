@@ -107,7 +107,7 @@ export class SettingsPage {
     return null;
   }
 
-  private static getLanguageFromCode(code: string) {
+  static getLanguageFromCode(code: string) {
     for (const l of AVAILABLE_LANGUAGES) {
       if (l.code === code) {
         return l.name;
@@ -116,17 +116,23 @@ export class SettingsPage {
     return null;
   }
 
-  changeLanguage() {
-    console.log("Changing language to <" + this.selectedLanguage + ">");
-    this.translate.use(SettingsPage.getCodeFromLanguage(this.selectedLanguage));
-    this.settings.language = SettingsPage.getCodeFromLanguage(
-      this.selectedLanguage
-    );
+  // public  changeLanguage() {
+  //   console.log("Changing language to <" + this.selectedLanguage + ">");
+  //   this.translate.use(SettingsPage.getCodeFromLanguage(this.selectedLanguage));
+  //   this.settings.language = SettingsPage.getCodeFromLanguage(
+  //     this.selectedLanguage
+  //   );
+  // }
+
+  public changeLanguage(selectedLanguage) {
+    console.log("Changing language to <" + selectedLanguage + ">");
+    this.translate.use(SettingsPage.getCodeFromLanguage(selectedLanguage));
+    this.settings.language = SettingsPage.getCodeFromLanguage(selectedLanguage);
   }
 
-  changeFontSize(){
-    console.log("Changing font size to <" + this.selectedFontSize + ">");
-    switch (this.selectedFontSize){
+  changeFontSize(selectedFontSize){
+    console.log("Changing font size to <" + selectedFontSize + ">");
+    switch (selectedFontSize){
       case FONT_SIZE_12_LABEL:
         this.settings.fontSize = FONT_SIZE_12_VALUE;
         break;
@@ -142,10 +148,10 @@ export class SettingsPage {
     }
   }
 
-  changeTtsRate() {
-    console.log("Changing TTS rate to <" + this.ttsRate + ">");
+  changeTtsRate(ttsRate) {
+    console.log("Changing TTS rate to <" + ttsRate + ">");
 
-    switch (this.ttsRate) {
+    switch (ttsRate) {
       case TTS_RATE_SLOW:
         this.settings.ttsRate = TTS_RATE_SLOW_VALUE;
         break;
