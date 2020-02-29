@@ -26,7 +26,7 @@ When('these data are entered', function () {
 
   if (driver.findElement(By.id("createUserButton")).isDisplayed()) {
     try {
-      driver.findElement(By.id("createAccountNameInput")).sendKeys(tableElements[1][1].toString());
+      driver.findElement(By.id("createAccountNameInput")).sendKeys("TEST");
       driver.findElement(By.id("createAccountMailInput")).sendKeys(tableElements[2][2].toString());
       driver.findElement(By.id("createAccountPINInput")).sendKeys(tableElements[3][3].toString());
       return Status.PASSED;

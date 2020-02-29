@@ -16,6 +16,10 @@ exports.config = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   cucumberOpts: {
+    compiler: "ts:ts-node/register",
+    monochrome: true,
+    strict: true,
+    plugin: ["pretty"],
     require: ['./src/test/steps/**/*.steps.ts'],
   },
 
