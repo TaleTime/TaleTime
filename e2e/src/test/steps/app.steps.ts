@@ -39,7 +39,7 @@ When('the user clicks on Registration-Button', function () {
   return Status.PASSED;
 });
 
-Then('the Registration-Form opens', function () {
+Then('the Registration-Form should open', function () {
   if(driver.findElement(By.id("registrationPageHeading")).isDisplayed()){
     return Status.PASSED;
   }
