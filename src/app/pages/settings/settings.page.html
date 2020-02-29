@@ -33,7 +33,7 @@
       <ion-label>{{'SETTINGS_LANGUAGE' | translate}}</ion-label>
       <ion-select
         [(ngModel)]="selectedLanguage"
-        (ngModelChange)="changeLanguage()"
+        (ngModelChange)="changeLanguage(selectedLanguage)"
       >
         <ion-select-option *ngFor="let lang of languages">{{lang.name}}</ion-select-option>
       </ion-select>

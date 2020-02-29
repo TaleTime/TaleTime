@@ -107,7 +107,7 @@ export class SettingsPage {
     return null;
   }
 
-  private static getLanguageFromCode(code: string) {
+  static getLanguageFromCode(code: string) {
     for (const l of AVAILABLE_LANGUAGES) {
       if (l.code === code) {
         return l.name;
@@ -116,12 +116,18 @@ export class SettingsPage {
     return null;
   }
 
-  changeLanguage() {
-    console.log("Changing language to <" + this.selectedLanguage + ">");
-    this.translate.use(SettingsPage.getCodeFromLanguage(this.selectedLanguage));
-    this.settings.language = SettingsPage.getCodeFromLanguage(
-      this.selectedLanguage
-    );
+  // public  changeLanguage() {
+  //   console.log("Changing language to <" + this.selectedLanguage + ">");
+  //   this.translate.use(SettingsPage.getCodeFromLanguage(this.selectedLanguage));
+  //   this.settings.language = SettingsPage.getCodeFromLanguage(
+  //     this.selectedLanguage
+  //   );
+  // }
+
+  public changeLanguage(selectedLanguage) {
+    console.log("Changing language to <" + selectedLanguage + ">");
+    this.translate.use(SettingsPage.getCodeFromLanguage(selectedLanguage));
+    this.settings.language = SettingsPage.getCodeFromLanguage(selectedLanguage);
   }
 
   changeFontSize(){
