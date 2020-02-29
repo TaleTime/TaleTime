@@ -14,7 +14,7 @@
               <ion-label position="floating"
               >{{'USER_MANAGEMENT_NAME' | translate }}</ion-label
               >
-              <ion-input
+              <ion-input id="createAccountNameInput"
                 type="text"
                 name="name"
                 [(ngModel)]="registerCredentials.name"
@@ -26,7 +26,7 @@
               <ion-label position="floating"
               >{{'USER_MANAGEMENT_EMAIL' | translate }}</ion-label
               >
-              <ion-input
+              <ion-input id="createAccountMailInput"
                 type="email"
                 name="email"
                 [(ngModel)]="registerCredentials.email"
@@ -38,7 +38,7 @@
               <ion-label position="floating"
               >{{'USER_MANAGEMENT_PIN' | translate }}</ion-label
               >
-              <ion-input
+              <ion-input id="createAccountPINInput"
                 type="password"
                 name="pin"
                 [(ngModel)]="registerCredentials.pin"
@@ -50,7 +50,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button
+          <ion-button id="createUserButton"
             class="submit-btn"
             expand="full"
             type="submit"

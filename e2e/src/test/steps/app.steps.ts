@@ -1,5 +1,4 @@
 import {Given, Status, Then, When} from 'cucumber';
-import Keys = Chai.Keys;
 
 const { Builder, By, Capabilities, Key } = require('selenium-webdriver');
 const { expect } = require('chai');
@@ -23,6 +22,7 @@ Then('the TaleTime startpage should appear.', async function () {
   // Write code here that turns the phrase above into concrete actions
   if(await driver.findElement(By.id("startPageHeading")).isDisplayed()){
     return Status.PASSED;
+    driver.close();
   }
   return Status.FAILED;
 });
@@ -34,14 +34,37 @@ Given('the start page {string} is opened', function (string) {
 });
 
 When('the user clicks on Registration-Button', function () {
-  driver.findElement(By.id("registrationButton")).click();
+  var button = driver.findElement(By.id("registrationButton"));
+  try {
+    button.click();
+    return Status.PASSED;
+  }
+  catch{
+    return Status.FAILED
+  }
 
-  return Status.PASSED;
 });
 
 Then('the Registration-Form should open', function () {
   if(driver.findElement(By.id("registrationPageHeading")).isDisplayed()){
     return Status.PASSED;
+    driver.close();
   }
   return Status.FAILED;
+});
+
+
+Given('User is logged in and on the Settings-Page', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+When('User changes Font-Size to 14px', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+Then('Font size is 14px', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
 });
