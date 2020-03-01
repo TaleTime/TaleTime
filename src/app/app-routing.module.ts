@@ -3,7 +3,7 @@ import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
 import {TabsPageModule} from "./tabs/tabs.module";
 import {TabsPage} from "./tabs/tabs.page";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: "",
     //loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)

@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import {Settings} from "../../app/models/settings";
+import {UserAccount} from "../../app/models/userAccount";
+import {UserProfile} from "../../app/models/userProfile";
 
 
 @Injectable()
@@ -17,7 +19,6 @@ export class MockedRouter{
   navigate(){
 
   }
-
 }
 
 @Injectable()
@@ -83,7 +84,28 @@ export class MockedTranslateService{
 
 @Injectable()
 export class MockedAuthService{
-  //TODO Simulate user
+  private _currentUser: UserAccount;
+  private _activeUserProfile : UserProfile;
+
+  get currentUser(): UserAccount {
+    return this._currentUser;
+  }
+
+  set currentUser(value: UserAccount) {
+    this._currentUser = value;
+  }
+
+  get activeUserProfile(): UserProfile {
+    return this._activeUserProfile;
+  }
+
+  set activeUserProfile(value: UserProfile) {
+    this._activeUserProfile = value;
+  }
+
+  getActiveUserProfile(): UserProfile{
+    return this.activeUserProfile
+  }
 }
 
 @Injectable()

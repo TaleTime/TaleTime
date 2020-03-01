@@ -1,5 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {
   MockedAuthService,
   MockedNavController,
@@ -12,7 +12,6 @@ import {
 import {SettingsPage} from "./settings.page";
 import {NavController} from "@ionic/angular";
 import {Storage} from "@ionic/storage";
-import {Router} from "@angular/router";
 import {SettingsService} from "../../services/settings/settings.service";
 import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../services/auth/auth.service";
@@ -32,16 +31,30 @@ import {
   TTS_RATE_SLOW,
   TTS_RATE_SLOW_VALUE
 } from "../../constants/constants";
+import {RouterTestingModule} from "@angular/router/testing";
+import {Location} from "@angular/common";
+import {Router} from "@angular/router";
+import {AppRoutingModule, routes} from "../../app-routing.module";
+import {UserAccount} from "../../models/userAccount";
+import {UserProfile} from "../../models/userProfile";
 
+
+let navController;
+let storage;
+let router : Router;
+let location : Location;
+let settingsService;
+let translateService;
+let authService;
+let toastService;
 
 TestBed.configureTestingModule({
+  imports: [RouterTestingModule.withRoutes(routes)],
   declarations: [
-
   ],
   providers: [
     {provide: NavController, useClass: MockedNavController},
     {provide: Storage, useClass: MockedStorage},
-    {provide: Router, useClass: MockedRouter},
     {provide: SettingsService, useClass: MockedSettingsService},
     {provide: TranslateService, useClass: MockedTranslateService},
     {provide: AuthService, useClass: MockedAuthService},
@@ -49,13 +62,14 @@ TestBed.configureTestingModule({
   ]
 });
 
-let navController = TestBed.get(NavController);
-let storage = TestBed.get(Storage);
-let router = TestBed.get(Router);
-let settingsService = TestBed.get(SettingsService);
-let translateService = TestBed.get(TranslateService);
-let authService = TestBed.get(AuthService);
-let toastService = TestBed.get(SimpleToastService);
+navController = TestBed.get(NavController);
+storage = TestBed.get(Storage);
+router = TestBed.get(Router);
+location = TestBed.get(Location)
+settingsService = TestBed.get(SettingsService);
+translateService = TestBed.get(TranslateService);
+authService = TestBed.get(AuthService);
+toastService = TestBed.get(SimpleToastService);
 
 
 /*
@@ -102,6 +116,7 @@ describe('Change language', () =>{
   let settingsPage
 
   beforeEach(() => {
+    router.initialNavigation()
     settingsPage =  new SettingsPage(navController, storage, router, settingsService, translateService, authService,
       toastService);
     settingsPage.settings.language = null
@@ -136,6 +151,7 @@ describe('Change TTS rate', () =>{
   let settingsPage
 
   beforeEach(() => {
+    router.initialNavigation()
     settingsPage =  new SettingsPage(navController, storage, router, settingsService, translateService, authService,
       toastService);
     settingsPage.settings.ttsRate = null;
@@ -175,6 +191,7 @@ describe('Change Font size', () =>{
   let settingsPage
 
   beforeEach(() => {
+    router.initialNavigation()
     settingsPage =  new SettingsPage(navController, storage, router, settingsService, translateService, authService,
       toastService);
     settingsPage.settings.fontSize = null;
@@ -209,6 +226,26 @@ describe('Change Font size', () =>{
     expect(settingsPage.settings.fontSize)
       .toBeNull()
   })
+})
+
+describe('Testing navigation', () =>{
+  let settingsPage
+
+  beforeEach(() => {
+    router.initialNavigation()
+    let userAccount = new UserAccount("TestUser", "test@test.de", null)
+    authService.currentUser = userAccount
+    let userProfile = new UserProfile("Profil1", 1, false)
+    authService.currentUser.addUserProfile(userProfile)
+    authService.currentUser.setActiveUserProfile(userProfile)
+    settingsPage =  new SettingsPage(navController, storage, router, settingsService, translateService, authService,
+      toastService);
+  });
+  it('Testing navigation of goToSelectUserProfile-function', fakeAsync(() => {
+    settingsPage.goToSelectUserProfile()
+    tick()
+    expect(location.path()).toBe('/select-user-profile');
+  }));
 })
 
 
