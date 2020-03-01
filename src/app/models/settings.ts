@@ -12,6 +12,4 @@ export class Settings {
   public interaction = false;
   public ttsRate: number = TTS_RATE_NORMAL_VALUE;
   public fontSize: number = FONT_SIZE_12_VALUE;
-
-  // TODO font size needs to be added
 }

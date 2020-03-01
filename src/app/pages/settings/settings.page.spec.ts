@@ -1,8 +1,15 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import {
+  MockedAuthService,
+  MockedNavController,
+  MockedRouter,
+  MockedSettingsService,
+  MockedStorage, MockedToastService,
+  MockedTranslateService
+} from "src/utils/karma/mocks"
 
 import {SettingsPage} from "./settings.page";
-import {StartPage} from "../start/start.page";
 import {NavController} from "@ionic/angular";
 import {Storage} from "@ionic/storage";
 import {Router} from "@angular/router";
@@ -26,61 +33,6 @@ import {
   TTS_RATE_SLOW_VALUE
 } from "../../constants/constants";
 
-// describe("SettingsPage", () => {
-//   let component: SettingsPage;
-//   let fixture: ComponentFixture<SettingsPage>;
-//
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       declarations: [SettingsPage],
-//       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-//     })
-//       .compileComponents();
-//   }));
-//
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(SettingsPage);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-//
-//   it("should create", () => {
-//     expect(component).toBeTruthy();
-//   });
-// });
-
-class MockedNavController{
-
-}
-
-class MockedStorage{
-  //TODO Store and get method's
-}
-
-class MockedRouter{
-  navigate(){
-
-  }
-
-}
-
-class MockedSettingsService{
-
-}
-
-class MockedTranslateService{
-  use(lang){
-
-  }
-}
-
-class MockedAuthService{
-  //TODO Simulate user
-}
-
-class MockedToastService{
-
-}
 
 TestBed.configureTestingModule({
   declarations: [
@@ -142,7 +94,6 @@ describe('Get language from code', () =>{
       .toBeNull()
   });
 })
-
 
 /*
  * Change language
@@ -259,3 +210,27 @@ describe('Change Font size', () =>{
       .toBeNull()
   })
 })
+
+
+// describe("SettingsPage", () => {
+//   let component: SettingsPage;
+//   let fixture: ComponentFixture<SettingsPage>;
+//
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [SettingsPage],
+//       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+//     })
+//       .compileComponents();
+//   }));
+//
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(SettingsPage);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
+//
+//   it("should create", () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
