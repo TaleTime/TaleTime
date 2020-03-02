@@ -26,9 +26,9 @@ When('these data are entered', function () {
 
   if (driver.findElement(By.id("createUserButton")).isDisplayed()) {
     try {
-      driver.findElement(By.id("createAccountNameInput")).sendKeys("TEST");
-      driver.findElement(By.id("createAccountMailInput")).sendKeys(tableElements[2][2].toString());
-      driver.findElement(By.id("createAccountPINInput")).sendKeys(tableElements[3][3].toString());
+      driver.findElement(By.css('ion-input[name="name"], input')).sendKeys("TEST");
+      driver.findElement(By.css('ion-input[name="email"], input')).sendKeys(tableElements[2][2].toString());
+      driver.findElement(By.css('ion-input[name="pin"], input')).sendKeys(tableElements[3][3].toString());
       return Status.PASSED;
     } catch {
       return Status.FAILED;
@@ -90,13 +90,14 @@ Given('the start page {string} is opened', function (string) {
 
 When('the user clicks on Registration-Button', function () {
   var button = driver.findElement(By.id("registrationButton"));
+  button.click();
   return Status.PASSED;
 });
 
 Then('the Registration-Form should open', function () {
   if (driver.findElement(By.id("registrationPageHeading")).isDisplayed()) {
     return Status.PASSED;
-    driver.close();
+    driver.quit();
   }
   return Status.FAILED;
 });
