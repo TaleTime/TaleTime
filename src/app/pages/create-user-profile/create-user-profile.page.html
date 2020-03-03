@@ -22,7 +22,7 @@
               <ion-label position="floating"
               >{{'USER_MANAGEMENT_NAME' | translate }}</ion-label
               >
-              <ion-input
+              <ion-input id="createProfileInput"
                   type="text"
                   name="name"
                   [(ngModel)]="profileCredentials.name"
@@ -56,7 +56,7 @@
 
       <ion-row>
         <ion-col>
-          <ion-button
+          <ion-button id="createProfileButton"
               (click)="create()"
               expand="full"
               type="submit"
