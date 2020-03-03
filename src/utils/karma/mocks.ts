@@ -2,7 +2,17 @@ import { Injectable } from "@angular/core";
 import {Settings} from "../../app/models/settings";
 import {UserAccount} from "../../app/models/userAccount";
 import {UserProfile} from "../../app/models/userProfile";
-
+import {throwError as observableThrowError} from "rxjs/internal/observable/throwError";
+import {Observable} from "rxjs";
+import {AlertController, NavController} from "@ionic/angular";
+import {TestBed} from "@angular/core/testing";
+import {RouterTestingModule} from "@angular/router/testing";
+import {routes} from "../../app/app-routing.module";
+import {Storage} from "@ionic/storage";
+import {SettingsService} from "../../app/services/settings/settings.service";
+import {TranslateService} from "@ngx-translate/core";
+import {AuthService} from "../../app/services/auth/auth.service";
+import {SimpleToastService} from "../../app/services/simple-toast/simple-toast.service";
 
 @Injectable()
 export class MockedNavController{
@@ -106,9 +116,39 @@ export class MockedAuthService{
   getActiveUserProfile(): UserProfile{
     return this.activeUserProfile
   }
+
+  public register(credentials: { name: any; email: any; pin: any }) {
+    if (
+      credentials.email === null ||
+      credentials.name === null ||
+      credentials.pin === null
+    ) {
+      return observableThrowError("Please insert credentials");
+    } else {
+      const userAccount = new UserAccount(credentials.name, credentials.email);
+      userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
+      this._currentUser = userAccount;
+
+      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        subscriber.next(true);
+        subscriber.complete();
+      })
+    }
+  }
 }
 
 @Injectable()
 export class MockedToastService{
 
 }
+
+@Injectable()
+export class MockedAlertController{
+
+}
+
+@Injectable()
+export class MockedLoadingController{
+
+}
+
