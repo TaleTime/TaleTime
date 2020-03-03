@@ -60,6 +60,7 @@ export class CreateUserAccountPage implements OnInit {
       backdropDismiss: true
     });
     await loading.present().catch(() => this.showError(loading, ""));
+    await loading.dismiss();
   }
 
   async showError(loading, text) {
