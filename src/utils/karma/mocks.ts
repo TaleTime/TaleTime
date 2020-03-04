@@ -13,6 +13,7 @@ import {SettingsService} from "../../app/services/settings/settings.service";
 import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../app/services/auth/auth.service";
 import {SimpleToastService} from "../../app/services/simple-toast/simple-toast.service";
+import {AppComponent} from "../../app/app.component";
 
 @Injectable()
 export class MockedNavController{
@@ -149,6 +150,11 @@ export class MockedAlertController{
 
 @Injectable()
 export class MockedLoadingController{
+
+}
+
+@Injectable()
+export class MockedAppComponent{
 
 }
 

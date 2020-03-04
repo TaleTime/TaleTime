@@ -1,7 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick} from "@angular/core/testing";
 import {
-  MockedAlertController,
+  MockedAlertController, MockedAppComponent,
   MockedAuthService, MockedLoadingController,
   MockedNavController,
   MockedRouter,
@@ -39,6 +39,7 @@ import {UserAccount} from "../../models/userAccount";
 import {UserProfile} from "../../models/userProfile";
 import {SettingsPage} from "../settings/settings.page";
 import {CreateUserAccountPage} from "./create-user-account.page";
+import {AppComponent} from "../../app.component";
 
 let navController;
 let storage;
@@ -50,6 +51,7 @@ let authService;
 let toastService;
 let alertController;
 let loadingController;
+let appCompent;
 
 function renewTestbed(){
   TestBed.configureTestingModule({
@@ -64,7 +66,8 @@ function renewTestbed(){
       {provide: AuthService, useClass: MockedAuthService},
       {provide: SimpleToastService, useClass: MockedToastService},
       {provide: AlertController, useClass: MockedAlertController},
-      {provide: LoadingController, useClass: MockedLoadingController}
+      {provide: LoadingController, useClass: MockedLoadingController},
+      {provide: AppComponent, useClass: MockedAppComponent}
     ]
   });
 
@@ -78,6 +81,7 @@ function renewTestbed(){
   toastService = TestBed.get(SimpleToastService);
   alertController = TestBed.get(AlertController);
   loadingController = TestBed.get(LoadingController);
+  appCompent = TestBed.get(AppComponent)
 }
 
 /*
@@ -88,10 +92,12 @@ describe('Test registration', () =>{
 
   beforeEach(() => {
     renewTestbed()
-    createUserAccountPage =  new CreateUserAccountPage(router, navController, authService, alertController, loadingController);
+    createUserAccountPage =  new CreateUserAccountPage(router, navController, authService, alertController,
+      loadingController, translateService, appCompent);
     authService.currentUser = null
   });
 
+  //TODO Test for password-hash
   afterEach(() => {
     createUserAccountPage = null
   });
@@ -102,6 +108,22 @@ describe('Test registration', () =>{
       .toEqual("Test User 1")
     expect(authService.currentUser.email)
       .toEqual("testuser@testmail.org")
+  })
+  it('Testing Test User 2', () => {
+    createUserAccountPage.registerCredentials = {name: "Test User 2", email: "testuser234234@testmail.org", pin: "344456"}
+    createUserAccountPage.register()
+    expect(authService.currentUser.name)
+      .toEqual("Test User 2")
+    expect(authService.currentUser.email)
+      .toEqual("testuser234234@testmail.org")
+  })
+  it('Testing Test User 3', () => {
+    createUserAccountPage.registerCredentials = {name: "Test User 3", email: "blaasldk@gmail.com", pin: "password"}
+    createUserAccountPage.register()
+    expect(authService.currentUser.name)
+      .toEqual("Test User 3")
+    expect(authService.currentUser.email)
+      .toEqual("blaasldk@gmail.com")
   })
 })
 

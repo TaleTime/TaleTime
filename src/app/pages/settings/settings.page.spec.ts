@@ -48,6 +48,8 @@ let translateService;
 let authService;
 let toastService;
 
+//TODO USe SettingsRouterModules
+
 function renewTestbed(){
   TestBed.configureTestingModule({
     imports: [RouterTestingModule.withRoutes(routes)],
