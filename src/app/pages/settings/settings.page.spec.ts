@@ -192,7 +192,7 @@ describe('Change TTS rate', () =>{
  * Change Font size
  */
 describe('Change Font size', () =>{
-  let settingsPage
+  let settingsPage;
 
   beforeEach(() => {
     renewTestbed();
