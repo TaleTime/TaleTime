@@ -165,11 +165,7 @@ export class SettingsPage {
   }
 
   public async goToUserAccount() {
-    const alert = await this.authService.presentPinPrompt((valid) => {
-      this.router.navigate(["/user-account"]);
-    });
-
-    await alert.present();
+    this.router.navigate(["/user-account"]);
   }
 
   goToSelectUserProfile(){
