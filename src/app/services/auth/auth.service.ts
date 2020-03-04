@@ -15,12 +15,38 @@ export class AuthService {
   static USER_ACCOUNT_KEY = "userAccount";
   //private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
   private currentUser: UserAccount;
+  private registerCredentials  = {name: "", email: "", pin: ""}
 
   constructor(
     private storage: Storage,
     private alertCtrl: AlertController,
     private logger: LoggerService
   ) {
+  }
+
+  public googleSignIn(event,callback: () => any) {
+    this.storage.ready()
+      .then(() => this.storage.get(event.email))
+      .then((userAccountData) => {
+        if(userAccountData != null){
+          this.storage.set(event.email, new UserAccount(event.displayName, event.email));
+        }
+      });
+
+    this.storage
+      .ready()
+      .then(() => this.storage.get(event.email))
+      .then((userAccountData) => {
+        if (userAccountData) {
+          this.currentUser = new UserAccount(
+            event.displayName,
+            event.email,
+            "empty",
+            userAccountData.userProfiles
+          );
+          callback();
+        }
+      });
   }
 
   public trySignIn(userAccount: UserAccount,callback: () => any) {
