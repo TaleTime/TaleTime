@@ -10,6 +10,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {PlatformBridgeService} from "../../services/platform-bridge/platform-bridge.service";
 
 
+
 @Component({
   selector: "app-start",
   templateUrl: "./start.page.html",
@@ -70,7 +71,9 @@ export class StartPage implements OnInit {
     // }
   }
 
-  public login(){
+  public login(event){
+    console.log(event);
+    debugger;
     this.authService
       .login({name: "Placeholder", email: this.email, pin: this.pin})
       .subscribe((allowed) => {

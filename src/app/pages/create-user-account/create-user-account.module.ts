@@ -4,10 +4,9 @@ import {FormsModule} from "@angular/forms";
 import {RouterModule, Routes} from "@angular/router";
 
 import {IonicModule} from "@ionic/angular";
-
 import {CreateUserAccountPage} from "./create-user-account.page";
-
 import {TranslateModule} from "@ngx-translate/core";
+import {NgxAuthFirebaseUIModule} from 'ngx-auth-firebaseui';
 
 const routes: Routes = [
   {
@@ -22,7 +21,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule
+    TranslateModule,
+    NgxAuthFirebaseUIModule
   ],
   declarations: [CreateUserAccountPage]
 })

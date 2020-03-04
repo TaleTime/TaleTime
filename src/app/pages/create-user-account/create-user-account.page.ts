@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 
 import {AuthService} from "../../services/auth/auth.service";
 import {UserAccount} from "../../models/userAccount";
+import { TranslateService } from "@ngx-translate/core";
+import { AppComponent } from "../../app.component";
 
 @Component({
   selector: "app-create-user-account",
@@ -19,14 +21,34 @@ export class CreateUserAccountPage implements OnInit {
               private navCtrl: NavController,
               private authService: AuthService,
               private alertCtrl: AlertController,
-              private loadingCtrl: LoadingController
+              private loadingCtrl: LoadingController,
+              private translator: TranslateService,
+              private app: AppComponent
   ) {
   }
 
   ngOnInit() {
   }
 
-  public register() {
+  public error(event) {
+    let message: string;
+    switch (event.code) {
+      case 'auth/invalid-email': {
+        message = this.translator.instant('INVALID_EMAIL');
+        break;
+      } case 'auth/weak-password': {
+        message = this.translator.instant('WEAK_PASSWORD');
+        break;
+      }default : {
+        message = this.translator.instant('REGISTER_ERROR');
+      }
+    }
+    console.log(event);
+    this.app.openSnackBar(message, 'close');
+  }
+
+  public register(event) {
+    console.log(event);
     this.showLoading();
 
     this.authService.register(this.registerCredentials).subscribe(
@@ -91,5 +113,9 @@ export class CreateUserAccountPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  public goToLoginPage() {
+    this.navCtrl.navigateForward("/start");
   }
 }

@@ -7,6 +7,7 @@ import {IonicModule} from "@ionic/angular";
 import {StartPage} from "./start.page";
 
 import {TranslateModule} from "@ngx-translate/core";
+import {NgxAuthFirebaseUIModule} from 'ngx-auth-firebaseui';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {TranslateModule} from "@ngx-translate/core";
         component: StartPage
       }
     ]),
-    TranslateModule
+    TranslateModule,
+    NgxAuthFirebaseUIModule
   ],
   declarations: [StartPage]
 })

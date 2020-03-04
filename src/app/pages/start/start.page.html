@@ -3,7 +3,6 @@
     <ion-title>TaleTime</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="ion-padding">
 
   <div class="ion-text-center">
@@ -12,58 +11,71 @@
     <ion-img  style="width:100px; height: 100px" src="assets/icon/appicon.png"></ion-img>
 
     <h4>{{'START_DESCRIPTION' | translate }}</h4>
-
-    <ion-button id="registrationButton" (click)="goToCreateAccount()">
-      <!-- TODO i18n     -->
-      {{'Registrieren' | translate }}
-    </ion-button>
+<!--    <ngx-auth-firebaseui></ngx-auth-firebaseui>-->
+    <ngx-auth-firebaseui-login
+      (onCreateAccountRequested)="goToCreateAccount()"
+      (onSuccess)="login($event)"
+      [providers]="'google'"
+      [titleText]="'LOGIN_TITLE' | translate"
+      [emailText]="'EMAIL' | translate"
+      [passwordText]="'PASSWORD' | translate"
+      [loginButtonText]="'LOGIN' | translate"
+      [orLabelText]="'OR' | translate"
+      [forgotPasswordText]="'FORGOT_PASSWORD' | translate"
+      [dontHaveAnAccountText]="'CREATE_ACCOUNT_TEXT' | translate"
+      [createAccountButtonText]="'CREATE_ACCOUNT' | translate"
+    ></ngx-auth-firebaseui-login>
+<!--    <ion-button id="registrationButton" (click)="goToCreateAccount()">-->
+<!--      &lt;!&ndash; TODO i18n     &ndash;&gt;-->
+<!--      {{'Registrieren' | translate }}-->
+<!--    </ion-button>-->
   </div>
 
-  <div class="ion-text-center">
-    <form (ngSubmit)="login()">
-      <ion-row>
-        <ion-col>
-          <ion-list inset>
-            <ion-item>
-              <!--              TODO i18n-->
-              <ion-label position="floating">{{'E-Mail'}}</ion-label>
-              <ion-input
-                type="email"
-                name="email"
-                [(ngModel)]="email"
-                required
-              ></ion-input>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-list inset>
-            <ion-item>
-              <!--              TODO i18n-->
-              <ion-label position="floating">{{'Pin'}}</ion-label>
-              <ion-input
-                type="password"
-                name="pin"
-                [(ngModel)]="pin"
-                required
-              ></ion-input>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-button
-            class="submit-btn"
+<!--  <div class="ion-text-center">-->
+<!--    <form (ngSubmit)="login()">-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-list inset>-->
+<!--            <ion-item>-->
+<!--              &lt;!&ndash;              TODO i18n&ndash;&gt;-->
+<!--              <ion-label position="floating">{{'E-Mail'}}</ion-label>-->
+<!--              <ion-input-->
+<!--                type="email"-->
+<!--                name="email"-->
+<!--                [(ngModel)]="email"-->
+<!--                required-->
+<!--              ></ion-input>-->
+<!--            </ion-item>-->
+<!--          </ion-list>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-list inset>-->
+<!--            <ion-item>-->
+<!--              &lt;!&ndash;              TODO i18n&ndash;&gt;-->
+<!--              <ion-label position="floating">{{'Pin'}}</ion-label>-->
+<!--              <ion-input-->
+<!--                type="password"-->
+<!--                name="pin"-->
+<!--                [(ngModel)]="pin"-->
+<!--                required-->
+<!--              ></ion-input>-->
+<!--            </ion-item>-->
+<!--          </ion-list>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-button-->
+<!--            class="submit-btn"-->
 
-            type="submit"
-          >
-            {{'Login'}}
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </form>
-  </div>
+<!--            type="submit"-->
+<!--          >-->
+<!--            {{'Login'}}-->
+<!--          </ion-button>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--    </form>-->
+<!--  </div>-->
 </ion-content>

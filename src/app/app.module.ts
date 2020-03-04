@@ -44,7 +44,12 @@ import {PlayerParamsService} from "./services/player-parmas/player-params.servic
 import {PlayerParams} from "./models/player/player-params";
 import {StoryInformationService} from "./services/story-information/story-information.service";
 import {StoryInformation} from "./models/storyInformation";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+/** firebase */
+import {NgxAuthFirebaseUIModule} from "ngx-auth-firebaseui";
+import { MatButtonModule } from "@angular/material/button";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -55,10 +60,13 @@ export function createTranslateLoader(http: HttpClient) {
   entryComponents: [ ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    MatButtonModule,
+    MatSnackBarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -66,7 +74,8 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => 'test', environment.advancedFirebaseConfig),
   ],
   providers: [
     StatusBar,
