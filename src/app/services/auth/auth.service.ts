@@ -49,6 +49,31 @@ export class AuthService {
       });
   }
 
+  public googleSignIn(event,callback: () => any) {
+    this.storage.ready()
+      .then(() => this.storage.get(event.email))
+      .then((userAccountData) => {
+        if(userAccountData != null){
+          this.storage.set(event.email, new UserAccount(event.displayName, event.email));
+        }
+      });
+
+    this.storage
+      .ready()
+      .then(() => this.storage.get(event.email))
+      .then((userAccountData) => {
+        if (userAccountData) {
+          this.currentUser = new UserAccount(
+            event.displayName,
+            event.email,
+            "empty",
+            userAccountData.userProfiles
+          );
+          callback();
+        }
+      });
+  }
+
   public trySignIn(userAccount: UserAccount,callback: () => any) {
     this.storage
       .ready()
