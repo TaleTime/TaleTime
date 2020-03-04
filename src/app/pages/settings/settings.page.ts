@@ -166,12 +166,7 @@ export class SettingsPage {
 
   public async goToUserAccount() {
     const alert = await this.authService.presentPinPrompt((valid) => {
-      if (valid) {
-        this.router.navigate(["/user-account"]);
-      } else {
-        this.toastService.displayToast("Wrong pin."); // TODO tobi i18
-        return false;
-      }
+      this.router.navigate(["/user-account"]);
     });
 
     await alert.present();
