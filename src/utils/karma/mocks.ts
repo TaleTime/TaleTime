@@ -126,7 +126,7 @@ export class MockedAuthService{
     ) {
       return observableThrowError("Please insert credentials");
     } else {
-      const userAccount = new UserAccount(credentials.name, credentials.email);
+      const userAccount = new UserAccount(credentials.name, credentials.email, "12312jjkhkhkj");
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this._currentUser = userAccount;
 
@@ -136,6 +136,19 @@ export class MockedAuthService{
       })
     }
   }
+
+  public createUserProfile(credentials: {
+    name: any;
+    avatarId: any;
+    child: any;
+  }) {
+      this.activeUserProfile = new UserProfile(credentials.name, credentials.avatarId, credentials.child);
+
+      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+          subscriber.next(true);
+          subscriber.complete();
+      })
+    }
 }
 
 @Injectable()
