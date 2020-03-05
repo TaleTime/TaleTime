@@ -59,18 +59,18 @@ export class StartPage implements OnInit {
   }
 
   private requestFilePermission(storage: StorageService) {
-    storage
-      .createAppDirOnExtRoot()
-      .then(() => {
-        //this.signIn();
-      })
-      .catch(() => {
-        this.translate.get("PERMISSION_FILE_NEEDED").subscribe((msg) => {
-          this.toastService.displayToast(msg, null, true, () => {
-            // this.requestFilePermission(storage);
-          });
-        });
-      });
+    // storage
+    //   .createAppDirOnExtRoot()
+    //   .then(() => {
+    //     //this.signIn();
+    //   })
+    //   .catch(() => {
+    //     this.translate.get("PERMISSION_FILE_NEEDED").subscribe((msg) => {
+    //       this.toastService.displayToast(msg, null, true, () => {
+    //         // this.requestFilePermission(storage);
+    //       });
+    //     });
+    //   });
     // if (this.platformBridge.platformIsBrowser()) {
     //   //this.authService.addTestUser();
     //   this.authService
@@ -85,6 +85,8 @@ export class StartPage implements OnInit {
   }
 
   public login(user){
+    //console.log(user);
+    debugger;
     this.authService.signIn(user, () => {
       this.router.navigate(["/select-user-profile"]);
     });
