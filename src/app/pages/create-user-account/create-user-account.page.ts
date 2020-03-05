@@ -18,6 +18,7 @@ export class CreateUserAccountPage implements OnInit {
 
   createSuccess = false;
   registerCredentials = {name: "", email: "", pin: ""};
+  private checked:boolean = false;
 
   constructor(public router: Router,
               private navCtrl: NavController,
@@ -27,9 +28,41 @@ export class CreateUserAccountPage implements OnInit {
               private translator: TranslateService,
               private app: AppComponent
   ) {
+
+  }
+
+  onLoad() {
+    console.log(document.getElementById('createAccountButton').id = 'test');
+    console.log(document.getElementById('test'));
+  }
+
+  ngAfterViewChecked () {
+    //console.log(document.getElementById('createAccountButton').id = 'test');
+    // console.log(document.evaluate('//button[@id="createAccountButton" and @aria-label="CREATE AN ACCOUNT"]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue);
+    // let e = document.evaluate('//button[@id="createAccountButton" and @aria-label="CREATE AN ACCOUNT"]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    // console.log(document.getElementById('test'));
+    if (!this.checked) {
+      this.checked = true;
+      //console.log(document.getElementsByClassName('submit-button mat-raised-button mat-button-base mat-accent'));
+
+      let elements = document.getElementsByClassName('submit-button mat-raised-button mat-button-base mat-accent');
+      //console.log(elements);
+      for (let i = 0; i < elements.length; i++) {
+
+        let e = elements.item(i);
+        console.log(e.getAttribute('aria-label'));
+        if (e.getAttribute('aria-label') === 'CREATE AN ACCOUNT') {
+          e.id = 'registerAndCreateAccount';
+          //console.log(e);
+        }
+      }
+
+      console.log(document.getElementById('registerAndCreateAccount'));
+    }
   }
 
   ngOnInit() {
+
   }
 
   public error(event) {

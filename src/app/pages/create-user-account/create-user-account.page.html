@@ -21,9 +21,15 @@
     [passwordErrorMatchText]="'PASSWORD_MATCH' | translate"
     [alreadyHaveAccountText]="'ALREADY_HAVE_ACCOUNT' | translate"
     [titleText]="''"
+    (load)="onLoad()"
   ></ngx-auth-firebaseui-register>
 </ion-content>
-
+<script>
+  window.onload = function () {
+    console.log(document.getElementById('createAccountButton').id = 'test');
+    console.log(document.getElementById('test'));
+  }
+</script>
 <!--<ion-content class="login-content" padding>-->
 
 <!--  <div class="login-box">-->

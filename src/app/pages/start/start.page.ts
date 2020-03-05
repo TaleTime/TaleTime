@@ -85,8 +85,6 @@ export class StartPage implements OnInit {
   }
 
   public login(user){
-    //console.log(user);
-    debugger;
     this.authService.signIn(user, () => {
       this.router.navigate(["/select-user-profile"]);
     });
