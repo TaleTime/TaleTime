@@ -7,11 +7,11 @@
 
   <div class="ion-text-center">
     <h1 id="startPageHeading">{{'START_WELCOME' | translate }} TaleTime</h1>
-
-    <ion-img  style="width:100px; height: 100px" src="assets/icon/appicon.png"></ion-img>
+      <ion-img style="align-items: center; width: 100px !important;
+  height: 100px !important;
+  display: block !important;" src="assets/icon/appicon.png"></ion-img>
 
     <h4>{{'START_DESCRIPTION' | translate }}</h4>
-<!--    <ngx-auth-firebaseui></ngx-auth-firebaseui>-->
     <ngx-auth-firebaseui-login
       (onCreateAccountRequested)="goToCreateAccount()"
       (onSuccess)="login($event)"
@@ -24,6 +24,8 @@
       [forgotPasswordText]="'FORGOT_PASSWORD' | translate"
       [dontHaveAnAccountText]="'CREATE_ACCOUNT_TEXT' | translate"
       [createAccountButtonText]="'CREATE_ACCOUNT' | translate"
+      [emailErrorRequiredText]="'EMAIL_REQUIRED' | translate"
+      [passwordErrorRequiredText]="'PASSWORD_REQUIRED' | translate"
     ></ngx-auth-firebaseui-login>
 <!--    <ion-button id="registrationButton" (click)="goToCreateAccount()">-->
 <!--      &lt;!&ndash; TODO i18n     &ndash;&gt;-->

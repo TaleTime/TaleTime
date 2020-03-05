@@ -6,6 +6,8 @@ import {AuthService} from "../../services/auth/auth.service";
 import {UserAccount} from "../../models/userAccount";
 import { TranslateService } from "@ngx-translate/core";
 import { AppComponent } from "../../app.component";
+import { NgxAuthFirebaseuiLoginComponent, NgxAuthFirebaseUIModule } from "ngx-auth-firebaseui";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 
 @Component({
   selector: "app-create-user-account",
@@ -39,7 +41,10 @@ export class CreateUserAccountPage implements OnInit {
       } case 'auth/weak-password': {
         message = this.translator.instant('WEAK_PASSWORD');
         break;
-      }default : {
+      } case 'auth/email-already-in-use': {
+        message = this.translator.instant('EMAIL_ALREADY_IN_USE');
+        break;
+      } default : {
         message = this.translator.instant('REGISTER_ERROR');
       }
     }

@@ -99,6 +99,22 @@ export class UserAccountPage implements OnInit {
     });
   }
 
+  onUserEdited(event) {
+    console.log(event);
+  }
+
+  onSignOut(event) {
+    console.log(event);
+  }
+
+  onUserDelete() {
+    console.log('TTTTTTTTTTTTTTTTTTTTT');
+  }
+
+  onBackKeyDown() {
+    this.navCtrl.navigateForward("/settings", {});
+  }
+
   public logout() {
     this.authService.logout().subscribe((success) => {
       this.router.navigate(["/start"]);

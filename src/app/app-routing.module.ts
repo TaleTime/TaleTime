@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
 import {TabsPageModule} from "./tabs/tabs.module";
 import {TabsPage} from "./tabs/tabs.page";
+import {LoggedInGuard} from 'ngx-auth-firebaseui';
 
 export const routes: Routes = [
   {
@@ -15,7 +16,8 @@ export const routes: Routes = [
   // },
   {
     path: "change-user-account-pin",
-    loadChildren: () => import("./pages/change-user-account-pin/change-user-account-pin.module").then(module => module.ChangeUserAccountPinPageModule)
+    loadChildren: () => import("./pages/change-user-account-pin/change-user-account-pin.module").then(module => module.ChangeUserAccountPinPageModule),
+    canActivate: [LoggedInGuard]
   },
   {
     path: "create-user-account",
@@ -23,6 +25,7 @@ export const routes: Routes = [
   },
   {
     path: "create-user-profile",
+    canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/create-user-profile/create-user-profile.module").then(module => module.CreateUserProfilePageModule)
   },
   {
@@ -39,11 +42,13 @@ export const routes: Routes = [
   },
   {
     path: "player",
+    canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/player/player.module").then(module => module.PlayerPageModule)
   },
   //{path: "player:storieId", loadChildren: './pages/player/player.module'},
   {
     path: "select-user-profile",
+    canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/select-user-profile/select-user-profile.module").then(module => module.SelectUserProfilePageModule)
   },
   // {
@@ -52,10 +57,12 @@ export const routes: Routes = [
   // },
   {
     path: "start",
-    loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
+    // loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule),
+    loadChildren: './pages/start/start.module#StartPageModule',
   },
   {
     path: "story-details",
+    canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/story-details/story-details.module").then(module => module.StoryDetailsPageModule)
   },
   // {
@@ -64,15 +71,18 @@ export const routes: Routes = [
   // },
   {
     path: "tabs",
+    canActivate: [LoggedInGuard],
     //component: TabsPage
     loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
   },
   {
     path: "user-account",
+    canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/user-account/user-account.module").then(module => module.UserAccountPageModule)
   },
   {
     path: "**",
+    canActivate: [LoggedInGuard],
     redirectTo: "tabs",
   },
 ];

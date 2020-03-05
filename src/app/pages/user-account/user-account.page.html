@@ -1,10 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{'USER_MANAGEMENT_MY_ACCOUNT' | translate}}</ion-title>
+    <ion-buttons slot="end" (click)="onBackKeyDown()">
+      <ion-icon style="width: 60px; height: 60px" name="close"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content padding>
+  <ngx-auth-firebaseui-user
+    (onAccountEdited)="onUserEdited($event)"
+    (onSignOut)="onSignOut($event)"
+    (onAccountDeleted)="onUserDelete()"
+  ></ngx-auth-firebaseui-user>
   <ion-card>
     <ion-card-header>
       {{this.authService.currentUserAccount.name}}
@@ -26,18 +35,18 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button (click)="changePin()">
-    <ion-item>
-      <table>
-        <tr>
-          <label>{{'SETTINGS_CHANGE_PIN' | translate}}</label>
-        </tr>
-        <tr>
-          <label class="change-pin-button-information">
-            {{'SETTINGS_CHOOSE_UNIQUE_PIN' | translate}}
-          </label>
-        </tr>
-      </table>
-    </ion-item>
-  </ion-button>
+<!--  <ion-button (click)="changePin()">-->
+<!--    <ion-item>-->
+<!--      <table>-->
+<!--        <tr>-->
+<!--          <label>{{'SETTINGS_CHANGE_PIN' | translate}}</label>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <label class="change-pin-button-information">-->
+<!--            {{'SETTINGS_CHOOSE_UNIQUE_PIN' | translate}}-->
+<!--          </label>-->
+<!--        </tr>-->
+<!--      </table>-->
+<!--    </ion-item>-->
+<!--  </ion-button>-->
 </ion-content>

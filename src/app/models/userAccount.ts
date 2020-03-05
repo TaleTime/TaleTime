@@ -9,6 +9,7 @@ import {sha256} from "js-sha256";
 export class UserAccount {
   public name: string;
   public email: string;
+  public uid: string;
   public hash: string;
 
   public userProfiles: Map<string, UserProfile>;
@@ -17,11 +18,13 @@ export class UserAccount {
   constructor(
     name: string,
     email: string,
+    uid: string,
     hash?: string,
     userProfiles?: Map<string, UserProfile>
   ) {
     this.name = name;
     this.email = email;
+    this.uid = uid;
     this.hash = hash || "";
     this.userProfiles = userProfiles || new Map<string, UserProfile>();
   }

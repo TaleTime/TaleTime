@@ -112,5 +112,6 @@
   "ALREADY_HAVE_ACCOUNT" : "Already have an account?",
   "INVALID_EMAIL" : "Invalid Email!",
   "WEAK_PASSWORD" : "Password should be at least 8 characters!",
-  "REGISTER_ERROR" : "Error, Please try again later!"
+  "REGISTER_ERROR" : "Error, Please try again later!",
+  "EMAIL_ALREADY_IN_USE" : "Email already in use!",
 }

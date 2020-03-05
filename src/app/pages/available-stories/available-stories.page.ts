@@ -46,9 +46,9 @@ export class AvailableStoriesPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastService: SimpleToastService
   ) {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
+    // if(this.authService.currentUserAccount == null){
+    //   this.router.navigate(["/start"]);
+    // }
     this.loadDeviceDefaultStories();
     this.platform.ready().then(() => {
       this.loadPublicStories();
@@ -56,9 +56,9 @@ export class AvailableStoriesPage implements OnInit {
   }
 
   ngOnInit() {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
+    // if(this.authService.currentUserAccount == null){
+    //   this.router.navigate(["/start"]);
+    // }
     const activeUserProfile = this.authService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {

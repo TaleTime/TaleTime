@@ -75,7 +75,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => 'test', environment.advancedFirebaseConfig),
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => '', environment.advancedFirebaseConfig),
   ],
   providers: [
     StatusBar,

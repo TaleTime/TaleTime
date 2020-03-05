@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "",
+    apiKey: "AIzaSyDfzKI_45XqK7HG49LsyxsTCd55DWPKmuo",
     authDomain: "tale-time.firebaseapp.com",
     databaseURL: "https://tale-time.firebaseio.com",
     projectId: "tale-time",
@@ -19,7 +19,7 @@ export const environment = {
     toastMessageOnAuthSuccess: false, // whether to open/show a snackbar message on auth success - default : true
     toastMessageOnAuthError: false, // whether to open/show a snackbar message on auth error - default : true
     authGuardFallbackURL: '/start', // url for unauthenticated users - to use in combination with canActivate feature on a route
-    authGuardLoggedInURL: '/tabs', // url for authenticated users - to use in combination with canActivate feature on a route
+    authGuardLoggedInURL: '', // url for authenticated users - to use in combination with canActivate feature on a route
     passwordMaxLength: 60, // `min/max` input parameters in components should be within this range.
     passwordMinLength: 8, // Password length min/max in forms independently of each componenet min/max.
     // Same as password but for the name

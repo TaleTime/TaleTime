@@ -8,6 +8,8 @@ import {StorageService} from "../../services/storage/storage.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {TranslateService} from "@ngx-translate/core";
 import {PlatformBridgeService} from "../../services/platform-bridge/platform-bridge.service";
+import { AuthProcessService } from "ngx-auth-firebaseui";
+import { map } from "rxjs/operators";
 
 
 
@@ -27,12 +29,23 @@ export class StartPage implements OnInit {
     public router: Router,
     private storageService: StorageService,
     private authService: AuthService,
+    private t : AuthProcessService,
     // private speechRecognition: SpeechRecognition,
     private platform: Platform,
     private toastService: SimpleToastService,
     private translate: TranslateService,
     private platformBridge: PlatformBridgeService
   ) {
+    // if(this.authService.currentUserAccount == null){
+    //   this.router.navigate(["/tabs/story-menu"]);
+    // }
+    this.t.user$.subscribe(value => {
+      if (value != null) {
+        this.login(value);
+      }
+    });
+
+
     this.platform.ready().then(() => {
       // this.speechRecognition.requestPermission().then(
       //   () => {
@@ -71,17 +84,21 @@ export class StartPage implements OnInit {
     // }
   }
 
-  public login(event){
-    console.log(event);
+  public login(user){
+    //console.log(user);
     debugger;
-    this.authService
-      .login({name: "Placeholder", email: this.email, pin: this.pin})
-      .subscribe((allowed) => {
-        if (allowed) {
-          //this.navCtrl.navigateForward("/select-user-profile");
-          this.router.navigate(["/select-user-profile"]);
-        } else (this.toastService.displayToast("Wrong user or password!"))
-      });
+    this.authService.signIn(user, () => {
+      this.router.navigate(["/select-user-profile"]);
+    });
+
+    // this.authService
+    //   .login({name: "Placeholder", email: this.email, pin: this.pin})
+    //   .subscribe((allowed) => {
+    //     if (allowed) {
+    //       //this.navCtrl.navigateForward("/select-user-profile");
+    //       this.router.navigate(["/select-user-profile"]);
+    //     } else (this.toastService.displayToast("Wrong user or password!"))
+    //   });
   }
 
   // private signIn() {

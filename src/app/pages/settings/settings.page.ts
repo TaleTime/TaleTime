@@ -48,15 +48,9 @@ export class SettingsPage {
     private authService: AuthService,
     private toastService: SimpleToastService,
   ) {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
   }
 
   ngOnInit() {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
     const activeUserProfile = this.authService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {

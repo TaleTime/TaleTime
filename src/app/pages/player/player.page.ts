@@ -96,9 +96,9 @@ export class PlayerPage implements OnInit {
     private publicStoryHelper: PublicStoryHelperService,
     private platformBridge: PlatformBridgeService
   ) {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
+    // if(this.authService.currentUserAccount == null){
+    //   this.router.navigate(["/start"]);
+    // }
     this.fontSizePx = this.settings.fontSize.toString() + "px";
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
@@ -159,7 +159,7 @@ export class PlayerPage implements OnInit {
   }
 
   onBackKeyDown() {
-    this.navCtrl.navigateForward("/story-menu", {});
+    this.navCtrl.navigateForward("/settings", {});
   }
 
   /**

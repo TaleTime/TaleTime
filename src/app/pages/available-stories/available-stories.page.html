@@ -2,8 +2,7 @@
   <ion-toolbar>
     <ion-title>{{ 'APP_AVAILABLE_STORIES' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <img src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"
-           height="128" width="128" align="right"/>
+      <ion-img style="align-self: flex-end; width: 80px; height: 80px" src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

@@ -44,9 +44,9 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
+    // if(this.authService.currentUserAccount == null){
+    //   this.router.navigate(["/start"]);
+    // }
     const activeUserProfile = this.authService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {

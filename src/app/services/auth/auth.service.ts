@@ -15,7 +15,7 @@ export class AuthService {
   static USER_ACCOUNT_KEY = "userAccount";
   //private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
   private currentUser: UserAccount;
-  private registerCredentials  = {name: "", email: "", pin: ""}
+  private registerCredentials  = {name: "", email: "", pin: ""};
 
   constructor(
     private storage: Storage,
@@ -24,54 +24,48 @@ export class AuthService {
   ) {
   }
 
-  public googleSignIn(event,callback: () => any) {
+  /**
+   * This function checks whether the given account already exists or not.
+   * @param user
+   * @param callback
+   */
+  public signIn(user,callback: () => any) {
+
+    // this.storage.ready()
+    //   .then(() => this.storage.get(user.email))
+    //   .then((userAccountData) => {
+    //     if(userAccountData){
+    //       this.storage.set(user.email, new UserAccount(user.displayName, user.email, ''));
+    //     }
+    //   });
     this.storage.ready()
-      .then(() => this.storage.get(event.email))
+      .then(() => this.storage.get(user.email))
       .then((userAccountData) => {
-        if(userAccountData != null){
-          this.storage.set(event.email, new UserAccount(event.displayName, event.email));
+        //checks if a user in the local storage already exists
+        if (userAccountData != null) {
+          //user found
+          this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '', userAccountData.userProfiles);
+        } else {
+          //no user found
+          this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '');
         }
+        this.storage.set(user.email, this.currentUser);
+        callback();
       });
 
-    this.storage
-      .ready()
-      .then(() => this.storage.get(event.email))
-      .then((userAccountData) => {
-        if (userAccountData) {
-          this.currentUser = new UserAccount(
-            event.displayName,
-            event.email,
-            "empty",
-            userAccountData.userProfiles
-          );
-          callback();
-        }
-      });
-  }
-
-  public googleSignIn(event,callback: () => any) {
-    this.storage.ready()
-      .then(() => this.storage.get(event.email))
-      .then((userAccountData) => {
-        if(userAccountData != null){
-          this.storage.set(event.email, new UserAccount(event.displayName, event.email));
-        }
-      });
-
-    this.storage
-      .ready()
-      .then(() => this.storage.get(event.email))
-      .then((userAccountData) => {
-        if (userAccountData) {
-          this.currentUser = new UserAccount(
-            event.displayName,
-            event.email,
-            "empty",
-            userAccountData.userProfiles
-          );
-          callback();
-        }
-      });
+    // this.storage.ready()
+    //   .then(() => this.storage.get(user.email))
+    //   .then((userAccountData) => {
+    //     if (userAccountData) {
+    //       this.currentUser = new UserAccount(
+    //         user.displayName,
+    //         user.email,
+    //         "empty",
+    //         userAccountData.userProfiles
+    //       );
+    //       callback();
+    //     }
+    //   });
   }
 
   public trySignIn(userAccount: UserAccount,callback: () => any) {
@@ -91,16 +85,16 @@ export class AuthService {
       });
   }
 
-  public addTestUser() {
-    console.log("Test");
-    const userAccount = new UserAccount("Test", "test@mail.com", "1234");
-    this.storage.set(AuthService.USER_ACCOUNT_KEY, userAccount);
-    this.storage.ready().then(() =>
-      this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
-        console.log(val);
-      })
-    );
-  }
+  // public addTestUser() {
+  //   console.log("Test");
+  //   const userAccount = new UserAccount("Test", "test@mail.com", "1234");
+  //   this.storage.set(AuthService.USER_ACCOUNT_KEY, userAccount);
+  //   this.storage.ready().then(() =>
+  //     this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
+  //       console.log(val);
+  //     })
+  //   );
+  // }
 
   public register(credentials: { name: any; email: any; pin: any }) {
     if (
@@ -110,7 +104,7 @@ export class AuthService {
     ) {
       return observableThrowError("Please insert credentials");
     } else {
-      const userAccount = new UserAccount(credentials.name, credentials.email);
+      const userAccount = new UserAccount(credentials.name, credentials.email, '');
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
 
@@ -139,7 +133,7 @@ export class AuthService {
       this.storage.get(this.currentUser.email).then((val) => {
         let userAccountTmp: UserAccount;
         userAccountTmp = val;
-        let userAccount: UserAccount = new UserAccount(userAccountTmp.name, userAccountTmp.email, userAccountTmp.hash,
+        let userAccount: UserAccount = new UserAccount(userAccountTmp.name, userAccountTmp.email, '', userAccountTmp.hash,
           userAccountTmp.userProfiles);
         userAccount.addUserProfile(userProfile);
         this.currentUser = userAccount;
