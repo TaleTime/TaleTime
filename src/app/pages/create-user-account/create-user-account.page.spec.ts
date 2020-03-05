@@ -97,7 +97,6 @@ describe('Test registration', () =>{
     authService.currentUser = null
   });
 
-  //TODO Test for password-hash
   afterEach(() => {
     createUserAccountPage = null
   });

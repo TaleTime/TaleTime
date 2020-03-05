@@ -79,27 +79,44 @@ function renewTestbed(){
 /*
  * Test registration
  */
-// describe('Test registration', () =>{
-//   let createUserProfilePage
-//
-//   beforeEach(() => {
-//     renewTestbed()
-//     createUserProfilePage =  new CreateUserProfilePage(navController, router, authService);
-//     authService.currentUser.profile = null
-//   });
-//
-//   afterEach(() => {
-//     createUserProfilePage = null
-//   });
-//   it('Testing Test User 1', () => {
-//     createUserProfilePage.registerCredentials = {name: "Test User 1", email: "testuser@testmail.org", pin: "3456"}
-//     createUserProfilePage.register()
-//     expect(authService.currentUser.name)
-//       .toEqual("Test User 1")
-//     expect(authService.currentUser.email)
-//       .toEqual("testuser@testmail.org")
-//   })
-// })
+describe('Create user profile', () =>{
+  let createUserProfilePage
+
+  beforeEach(() => {
+    renewTestbed()
+    createUserProfilePage =  new CreateUserProfilePage(navController, router ,authService);
+    authService.currentUser = new UserAccount("Testuser", "test@testmail.com", "uid123")
+  });
+
+  afterEach(() => {
+    createUserProfilePage = null
+  });
+  it('Testing Test Profile 1', () => {
+    createUserProfilePage.profileCredentials = {name: "Test Profile 1", avatarId: 0, child: false}
+    createUserProfilePage.create()
+    expect(authService.activeUserProfile.name)
+      .toEqual("Test Profile 1")
+    expect(authService.activeUserProfile.child)
+      .toEqual(false)
+  })
+  it('Testing Test Profile 2', () => {
+    createUserProfilePage.profileCredentials = {name: "Test Profile 2", avatarId: 1, child: true}
+    createUserProfilePage.create()
+    expect(authService.activeUserProfile.name)
+      .toEqual("Test Profile 2")
+    expect(authService.activeUserProfile.child)
+      .toEqual(true)
+  })
+  it('Testing Test Profile 3', () => {
+    createUserProfilePage.profileCredentials = {name: "Test Profile 3", avatarId: 2, child: false}
+    createUserProfilePage.create()
+    expect(authService.activeUserProfile.name)
+      .toEqual("Test Profile 3")
+    expect(authService.activeUserProfile.child)
+      .toEqual(false)
+  })
+})
+
 
 // describe("CreateUserProfilePage", () => {
 //   let component: CreateUserProfilePage;
