@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouteReuseStrategy} from "@angular/router";
 
@@ -25,7 +25,7 @@ import {SaveGameService} from "./services/save-game/save-game.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {IonicStorageModule} from "@ionic/storage";
+import { IonicStorageModule, Storage } from "@ionic/storage";
 import {TextToSpeech} from "@ionic-native/text-to-speech/ngx";
 import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
 import {NativeAudio} from "@ionic-native/native-audio/ngx";
@@ -54,6 +54,11 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
+export function initAuthorization(appLoadService: AuthService) {
+  return () => appLoadService.ready();
+  // return () => {};
+}
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -104,10 +109,12 @@ export function createTranslateLoader(http: HttpClient) {
     Globalization,
     SaveGameService,
     AuthService,
+    { provide: APP_INITIALIZER, useFactory: initAuthorization, deps: [AuthService], multi: true },
     PublicStoryHelperService,
     Media,
     SimpleToastService,
-    PlatformBridgeService
+    PlatformBridgeService,
+
   ],
   bootstrap: [AppComponent]
 })

@@ -32,8 +32,7 @@ export class AuthService {
     //   }
     // });
   }
-
-  public ready() {
+  async ready(): Promise<any> {
     if (this.promise === null) {
       this.promise = new Promise((resolve, reject) => {
         if (this.currentUser === null) {
@@ -41,9 +40,12 @@ export class AuthService {
             if (user != null) {
               console.log(user);
               this.signIn(user, () => {
+                console.log("lel3");
                 this.router.navigate(["/select-user-profile"]);
                 resolve();
               });
+            } else {
+              resolve();
             }
           });
         } else {
@@ -59,21 +61,21 @@ export class AuthService {
    * @param user
    * @param callback
    */
-  public signIn(user,callback: () => any) {
+  async signIn(user,callback: () => any) {
     this.storage.ready()
       .then(() => this.storage.get(user.email))
-      .then((userAccountData) => {
-        //checks if a user in the local storage already exists
-        if (userAccountData != null) {
-          //user found
-          this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '', userAccountData.userProfiles);
-        } else {
-          //no user found
-          this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '');
-        }
-        this.storage.set(user.email, this.currentUser);
-        callback();
-      });
+        .then((userAccountData) => {
+          //checks if a user in the local storage already exists
+          if (userAccountData != null) {
+            //user found
+            this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '', userAccountData.userProfiles);
+          } else {
+            //no user found
+            this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '');
+          }
+          this.storage.set(user.email, this.currentUser);
+          callback();
+        });
   }
 
   public trySignIn(userAccount: UserAccount,callback: () => any) {
