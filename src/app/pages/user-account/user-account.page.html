@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ngx-auth-firebaseui-user
+  <ngx-auth-firebaseui-user ng-init="loaded()"
     (onAccountEdited)="onUserEdited($event)"
     (onSignOut)="onSignOut($event)"
     (onAccountDeleted)="onUserDelete()"

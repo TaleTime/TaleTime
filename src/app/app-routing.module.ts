@@ -5,11 +5,11 @@ import {TabsPage} from "./tabs/tabs.page";
 import {LoggedInGuard} from 'ngx-auth-firebaseui';
 
 export const routes: Routes = [
-  {
-    path: "",
-    //loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
-    loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
-  },
+  // {
+  //   path: "",
+  //   //loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
+  //   loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule)
+  // },
   // {
   //   path: "available-stories",
   //   loadChildren: () => import("./pages/available-stories/available-stories.module").then(module => module.AvailableStoriesPageModule)
@@ -56,9 +56,9 @@ export const routes: Routes = [
   //   loadChildren: () => import("./pages/settings/settings.module").then(module => module.SettingsPageModule)
   // },
   {
-    path: "start",
-    // loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule),
-    loadChildren: './pages/start/start.module#StartPageModule',
+    path: "",
+    loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule),
+    // loadChildren: './pages/start/start.module#StartPageModule',
   },
   {
     path: "story-details",
@@ -72,7 +72,6 @@ export const routes: Routes = [
   {
     path: "tabs",
     canActivate: [LoggedInGuard],
-    //component: TabsPage
     loadChildren: () => import("./tabs/tabs.module").then(module => module.TabsPageModule)
   },
   {

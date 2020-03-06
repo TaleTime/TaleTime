@@ -5,23 +5,53 @@ import {AlertController} from "@ionic/angular";
 import {UserAccount} from "../../models/userAccount";
 import {UserProfile} from "../../models/userProfile";
 import {LoggerService} from "../logger/logger.service";
-import {sha256} from "js-sha256";
+import { AuthProcessService } from "ngx-auth-firebaseui";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-
-  static USER_ACCOUNT_KEY = "userAccount";
+  // static USER_ACCOUNT_KEY = "userAccount";
   //private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
-  private currentUser: UserAccount;
-  private registerCredentials  = {name: "", email: "", pin: ""};
+  private currentUser: UserAccount = null;
+  // private registerCredentials  = {name: "", email: "", pin: ""};
+  private promise: Promise<any> = null;
 
   constructor(
     private storage: Storage,
     private alertCtrl: AlertController,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private router: Router,
+    private authProcessService : AuthProcessService
   ) {
+    // this.authProcessService.user$.subscribe(user => {
+    //   if (user != null) {
+    //     console.log(user);
+    //     this.signIn(user, () => {});
+    //   }
+    // });
+  }
+
+  public ready() {
+    if (this.promise === null) {
+      this.promise = new Promise((resolve, reject) => {
+        if (this.currentUser === null) {
+          this.authProcessService.user$.subscribe(user => {
+            if (user != null) {
+              console.log(user);
+              this.signIn(user, () => {
+                this.router.navigate(["/select-user-profile"]);
+                resolve();
+              });
+            }
+          });
+        } else {
+          resolve();
+        }
+      });
+    }
+    return this.promise;
   }
 
   /**
@@ -30,14 +60,6 @@ export class AuthService {
    * @param callback
    */
   public signIn(user,callback: () => any) {
-
-    // this.storage.ready()
-    //   .then(() => this.storage.get(user.email))
-    //   .then((userAccountData) => {
-    //     if(userAccountData){
-    //       this.storage.set(user.email, new UserAccount(user.displayName, user.email, ''));
-    //     }
-    //   });
     this.storage.ready()
       .then(() => this.storage.get(user.email))
       .then((userAccountData) => {
@@ -52,20 +74,6 @@ export class AuthService {
         this.storage.set(user.email, this.currentUser);
         callback();
       });
-
-    // this.storage.ready()
-    //   .then(() => this.storage.get(user.email))
-    //   .then((userAccountData) => {
-    //     if (userAccountData) {
-    //       this.currentUser = new UserAccount(
-    //         user.displayName,
-    //         user.email,
-    //         "empty",
-    //         userAccountData.userProfiles
-    //       );
-    //       callback();
-    //     }
-    //   });
   }
 
   public trySignIn(userAccount: UserAccount,callback: () => any) {
@@ -198,6 +206,9 @@ export class AuthService {
   }
 
   public getActiveUserProfile() {
+    if (this.currentUser.activeUserProfile === undefined) {
+      this.router.navigate(["/select-user-profile"]);
+    }
     return this.currentUserAccount.activeUserProfile;
   }
 
@@ -273,9 +284,19 @@ export class AuthService {
     // this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
     //   this.currentUser = val;
     // });
-
-    //console.log('ProfileObject: ', this.currentUser);
-    return this.currentUser;
+    // if (this.currentUser === undefined || this.currentUser === null) {
+    //   this.authProcessService.user$.subscribe(user => {
+    //     if (user != null) {
+    //       console.log(user);
+    //       this.signIn(user, () => {
+    //         return this.currentUser;
+    //       });
+    //     }
+    //   });
+    // } else {
+    //   //console.log('ProfileObject: ', this.currentUser);
+      return this.currentUser;
+    // }
   }
 
   get userProfiles() {

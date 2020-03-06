@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import {NavController, Platform} from "@ionic/angular";
 
 import {AuthService} from "../../services/auth/auth.service";
@@ -15,6 +15,8 @@ import {success} from "ionic/lib/color";
   styleUrls: ["./user-account.page.scss"],
 })
 export class UserAccountPage implements OnInit {
+  private checked:boolean = false;
+
   constructor(
     private navCtrl: NavController,
     private toastService: SimpleToastService,
@@ -27,6 +29,36 @@ export class UserAccountPage implements OnInit {
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);
     }
+
+    document.addEventListener("DOMContentLoaded", this.loaded);
+  }
+
+  ngAfterViewChecked () {
+    if (!this.checked) {
+      this.checked = true;
+      this.platform.ready().then(() => {
+        // debugger;
+        let elements = document.getElementsByClassName('mat-button mat-button-base mat-primary ng-star-inserted');
+        console.log(elements);
+        // let e = elements.item(0);
+        // e.id = 'logAccountOut';
+        // e.textContent
+        debugger;
+        for (let i = 0; i < elements.length; i++) {
+          let e = elements.item(i);
+          console.log(e);
+          if (e.textContent === 'Sign out') {
+            e.id = 'logAccountOut';
+          }
+        }
+        console.log(document.getElementById('logAccountOut'));
+      });
+    }
+  }
+
+  @HostListener('load')
+  loaded() {
+    debugger;
   }
 
   public deleteAccount(){
@@ -104,7 +136,8 @@ export class UserAccountPage implements OnInit {
   }
 
   onSignOut(event) {
-    console.log(event);
+    this.logout();
+    // console.log(event);
   }
 
   onUserDelete() {
@@ -117,11 +150,12 @@ export class UserAccountPage implements OnInit {
 
   public logout() {
     this.authService.logout().subscribe((success) => {
-      this.router.navigate(["/start"]);
+      this.router.navigate([""]);
     });
   }
 
   ngOnInit() {
+    debugger;
   }
 
 }

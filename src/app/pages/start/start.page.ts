@@ -36,14 +36,15 @@ export class StartPage implements OnInit {
     private translate: TranslateService,
     private platformBridge: PlatformBridgeService
   ) {
+    authService.ready();
     // if(this.authService.currentUserAccount == null){
     //   this.router.navigate(["/tabs/story-menu"]);
     // }
-    this.t.user$.subscribe(value => {
-      if (value != null) {
-        this.login(value);
-      }
-    });
+    // this.t.user$.subscribe(value => {
+    //   if (value != null) {
+    //     this.login(value);
+    //   }
+    // });
 
 
     this.platform.ready().then(() => {
@@ -86,7 +87,6 @@ export class StartPage implements OnInit {
 
   public login(user){
     //console.log(user);
-    debugger;
     this.authService.signIn(user, () => {
       this.router.navigate(["/select-user-profile"]);
     });

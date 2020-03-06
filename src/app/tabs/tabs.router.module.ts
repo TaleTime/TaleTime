@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: "",
-        redirectTo: "tabs/story-menu",
+        redirectTo: "story-menu",
         children: [
           {
             path: "",

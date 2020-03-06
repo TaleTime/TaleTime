@@ -1,6 +1,6 @@
 <ion-header id="createUserHeader">
   <ion-toolbar>
-    <ion-title>{{ 'USER_MANAGEMENT_SELECT_PROFILE' | translate }}</ion-title>
+    <ion-title id="selectUserTitle">{{ 'USER_MANAGEMENT_SELECT_PROFILE' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="isShowingOptionsButton" (click)="showOptions()">
         <ion-label>{{showingOptionsLabel}}</ion-label>

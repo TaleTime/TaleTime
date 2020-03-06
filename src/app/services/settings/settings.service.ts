@@ -31,7 +31,9 @@ export class SettingsService {
   ) {
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
-        this.loadSettings();
+        this.authService.ready().then( () => {
+          this.loadSettings();
+        });
       });
     });
 
