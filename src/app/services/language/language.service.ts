@@ -37,6 +37,8 @@ export class LanguageService {
   setLanguage(lng) {
     this.translate.use(lng);
     this.selected = lng;
-    this.storage.set(LNG_KEY, lng).then();
+    this.storage.ready().then(() => {
+      this.storage.set(LNG_KEY, lng).then();
+    });
   }
 }
