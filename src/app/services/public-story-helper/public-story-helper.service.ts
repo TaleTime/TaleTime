@@ -10,7 +10,7 @@ import {SettingsService} from "../settings/settings.service";
 })
 export class PublicStoryHelperService {
 
-  private publicStoryBasePath: string;
+  public publicStoryBasePath: string;
 
   constructor(
     private platform: Platform,

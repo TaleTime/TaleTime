@@ -23,7 +23,7 @@ export class SaveGameService {
       });
   }
 
-  private loadSavegames() {
+  public loadSavegames() {
     return this.storage.get(this.SAVEGAME_KEY).then((savegames) => {
       if (savegames != null) {
         this.savegames = savegames;

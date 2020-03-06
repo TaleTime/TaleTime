@@ -22,9 +22,26 @@ export class MockedNavController{
 
 @Injectable()
 export class MockedStorage{
-  set(key: string, value: any): Promise<any>{
+  public map = new Map()
+
+  public ready(): Promise<any>{
     let promise = new Promise((resolve, reject) => {
 
+    });
+    return promise
+  }
+
+  set(key: string, value: any): Promise<any>{
+    this.map.set(key, value)
+    let promise = new Promise((resolve, reject) => {
+
+    });
+    return promise;
+  }
+
+  get(key: string): Promise<any>{
+    let promise = new Promise((result) => {
+        result = this.map.get(key)
     });
     return promise;
   }
@@ -173,6 +190,21 @@ export class MockedLoadingController{
 
 @Injectable()
 export class MockedAppComponent{
+
+}
+
+@Injectable()
+export class MockedPlatform{
+  public ready(): Promise<any>{
+    let promise = new Promise((resolve, reject) => {
+
+    });
+    return promise
+  }
+}
+
+@Injectable()
+export class MockedFile{
 
 }
 
