@@ -4,16 +4,6 @@ import {UserAccount} from "../../app/models/userAccount";
 import {UserProfile} from "../../app/models/userProfile";
 import {throwError as observableThrowError} from "rxjs/internal/observable/throwError";
 import {Observable} from "rxjs";
-import {AlertController, NavController} from "@ionic/angular";
-import {TestBed} from "@angular/core/testing";
-import {RouterTestingModule} from "@angular/router/testing";
-import {routes} from "../../app/app-routing.module";
-import {Storage} from "@ionic/storage";
-import {SettingsService} from "../../app/services/settings/settings.service";
-import {TranslateService} from "@ngx-translate/core";
-import {AuthService} from "../../app/services/auth/auth.service";
-import {SimpleToastService} from "../../app/services/simple-toast/simple-toast.service";
-import {AppComponent} from "../../app/app.component";
 
 @Injectable()
 export class MockedNavController{
@@ -25,7 +15,7 @@ export class MockedStorage{
   public map = new Map()
 
   public ready(): Promise<any>{
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise(() => {
 
     });
     return promise
@@ -120,6 +110,13 @@ export class MockedAuthService{
   private _currentUser: UserAccount;
   private _activeUserProfile : UserProfile;
 
+  public ready(): Promise<any>{
+    let promise = new Promise((resolve, reject) => {
+
+    });
+    return promise
+  }
+
   get currentUser(): UserAccount {
     return this._currentUser;
   }
@@ -196,7 +193,7 @@ export class MockedAppComponent{
 @Injectable()
 export class MockedPlatform{
   public ready(): Promise<any>{
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise(() => {
 
     });
     return promise
@@ -207,4 +204,23 @@ export class MockedPlatform{
 export class MockedFile{
 
 }
+
+@Injectable()
+export class MockedLanguageFileService{
+
+}
+
+@Injectable()
+export class MockedSpeechRecognitionService{
+
+}
+
+@Injectable()
+export class MockedAlertService{
+
+}
+
+
+
+
 
