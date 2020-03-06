@@ -22,7 +22,7 @@ export class MockedNavController{
 
 @Injectable()
 export class MockedStorage{
-  public map = new Map()
+  public map = new Map();
 
   public ready(): Promise<any>{
     let promise = new Promise((resolve, reject) => {
