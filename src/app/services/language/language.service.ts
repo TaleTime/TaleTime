@@ -13,7 +13,9 @@ export class LanguageService {
 
   selected = "";
 
-  constructor(private translate: TranslateService, private storage: Storage, private plt: Platform) {
+  // constructor(private translate: TranslateService, private storage: Storage, private plt: Platform) {
+  // }
+  constructor(private translate: TranslateService, private storage: Storage) {
   }
 
   setInitialAppLanguage() {
@@ -37,8 +39,6 @@ export class LanguageService {
   setLanguage(lng) {
     this.translate.use(lng);
     this.selected = lng;
-    this.storage.ready().then(() => {
-      this.storage.set(LNG_KEY, lng).then();
-    });
+    this.storage.set(LNG_KEY, lng).then();
   }
 }

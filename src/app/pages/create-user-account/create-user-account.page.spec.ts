@@ -132,6 +132,7 @@ describe('Test create User', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = null;
   });
 
@@ -173,6 +174,7 @@ describe('Test update pin', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = new UserAccount("User 1", "bla@bla.de", "12341")
   });
 
@@ -202,6 +204,7 @@ describe('Test check pin', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = new UserAccount("User 1", "bla@bla.de", "12341")
   });
 
@@ -246,6 +249,7 @@ describe('Test check credentials', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = new UserAccount("User 1", "bla@bla.de", "12341")
   });
 
@@ -296,6 +300,7 @@ describe('Test add user profile', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = new UserAccount("User 1", "bla@bla.de", "12341")
   });
 
@@ -339,6 +344,7 @@ describe('Test remove user profile', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = new UserAccount("User 1", "bla@bla.de", "12341")
   });
 
@@ -397,6 +403,7 @@ describe('Test add user and set active user profile', () =>{
   let userAccount : UserAccount
 
   beforeEach(() => {
+    renewTestbed()
     userAccount = new UserAccount("User 1", "bla@bla.de", "12341")
   });
 
@@ -445,6 +452,7 @@ describe('Test create Profile', () =>{
   let userProfile : UserProfile
 
   beforeEach(() => {
+    renewTestbed()
     userProfile = null;
   });
 
@@ -455,7 +463,7 @@ describe('Test create Profile', () =>{
   it('Created Profile 2', () => {
     userProfile = new UserProfile("Profile 1", 2, true)
     expect(userProfile.name)
-      .toEqual(2)
+      .toEqual("Profile 1")
     expect(userProfile.child)
       .toBeTrue()
   });
