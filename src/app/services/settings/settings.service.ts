@@ -36,29 +36,30 @@ export class SettingsService {
         });
       });
     });
-
   }
 
   loadSettings() {
-    this.storage
-      .get(this.SETTINGS_KEY + this.authService.getActiveUserProfile().id)
-      .then((settings: Settings) => {
-        this.logger.log(
-          "Read settings from storage: " + JSON.stringify(settings)
-        );
-        console.log("1: ", this.settings);
-        this.settings = settings;
-        console.log("2: ", this.settings);
+    if (this.authService.getActiveUserProfile() !== undefined) {
+      this.storage
+        .get(this.SETTINGS_KEY + this.authService.getActiveUserProfile().id)
+        .then((settings: Settings) => {
+          this.logger.log(
+            "Read settings from storage: " + JSON.stringify(settings)
+          );
+          console.log("1: ", this.settings);
+          this.settings = settings;
+          console.log("2: ", this.settings);
 
-        this.reloadLanguageFile();
-        this.settingsLoaded.next(true);
-      })
-      .catch((error) => {
-        this.logger.log(error.message);
-        this.settings = new Settings();
-        this.save();
-        this.settingsLoaded.next(true);
-      });
+          this.reloadLanguageFile();
+          this.settingsLoaded.next(true);
+        })
+        .catch((error) => {
+          this.logger.log(error.message);
+          this.settings = new Settings();
+          this.save();
+          this.settingsLoaded.next(true);
+        });
+    }
   }
 
   get autoPlay(): boolean {

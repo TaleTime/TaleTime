@@ -8,6 +8,7 @@ import {SimpleToastService} from "../../services/simple-toast/simple-toast.servi
 import {UserAccount} from "../../models/userAccount";
 import {Router} from "@angular/router";
 import {success} from "ionic/lib/color";
+import { async } from 'rxjs/internal/scheduler/async';
 
 @Component({
   selector: "app-user-account",
@@ -26,11 +27,9 @@ export class UserAccountPage implements OnInit {
     //must be public for the aot compilation
     public authService: AuthService
   ) {
-    if(this.authService.currentUserAccount == null){
-      this.router.navigate(["/start"]);
-    }
-
-    document.addEventListener("DOMContentLoaded", this.loaded);
+    // if(this.authService.currentUserAccount == null){
+    //   this.router.navigate(["/start"]);
+    // }
   }
 
   ngAfterViewChecked () {
@@ -39,6 +38,14 @@ export class UserAccountPage implements OnInit {
       this.platform.ready().then(() => {
         // debugger;
         let elements = document.getElementsByClassName('mat-button mat-button-base mat-primary ng-star-inserted');
+
+        // if (elements.length < 1) {
+        //   setTimeout(() => {
+        //     this.checked = false;
+        //     return;
+        //     }, 1500);
+        // }
+
         console.log(elements);
         // let e = elements.item(0);
         // e.id = 'logAccountOut';
@@ -56,11 +63,6 @@ export class UserAccountPage implements OnInit {
     }
   }
 
-  @HostListener('load')
-  loaded() {
-    debugger;
-  }
-
   public deleteAccount(){
     //TODO Ask user if button was clicked accidentally?
     this.authService.deleteAccount().subscribe((success) => {
@@ -75,61 +77,61 @@ export class UserAccountPage implements OnInit {
   //     });
   // }
 
-  public async changePin() {
-    const alert = await this.showPinChangeDialog((valid) => {
-      if (valid) {
-        this.toastService.displayToast("Pin changed!"); //TODO i18n
-      } else {
-        this.toastService.displayToast("Error, please try again."); //TODO i18n
-      }
-    });
+  // public async changePin() {
+  //   const alert = await this.showPinChangeDialog((valid) => {
+  //     if (valid) {
+  //       this.toastService.displayToast("Pin changed!"); //TODO i18n
+  //     } else {
+  //       this.toastService.displayToast("Error, please try again."); //TODO i18n
+  //     }
+  //   });
+  //
+  //   await alert.present();
+  // }
 
-    await alert.present();
-  }
-
-  public showPinChangeDialog(validFn: (arg) => void, cancelFn?: (arg) => void){
-    return this.alertCtrl.create({
-      header: "Change Pin", // TODO i18n
-      inputs: [
-        {
-          name: "oldPin",
-          placeholder: "Old Pin", // TODO i18n
-          type: "password"
-        },
-        {
-          name: "newPin",
-          placeholder: "New Pin", // TODO i18n
-          type: "password"
-        },
-        {
-          name: "newPinRe",
-          placeholder: "New Pin", // TODO i18n
-          type: "password"
-        }
-      ],
-      buttons: [
-        {
-          text: "Cancel", // TODO i18n
-          role: "cancel",
-          handler: (data) => {
-            if (cancelFn) {
-              cancelFn(data);
-            } else {
-              console.log("Cancel clicked"); //TODO i18n
-            }
-          }
-        },
-        {
-          text: "Ok", // TODO i18
-          handler: (data) => {
-            this.authService.changePin(data.oldPin, data.newPin, data.newPinRe).subscribe(result => {
-              validFn(result.success);
-          });
-          }
-        }
-      ]
-    });
-  }
+  // public showPinChangeDialog(validFn: (arg) => void, cancelFn?: (arg) => void){
+  //   return this.alertCtrl.create({
+  //     header: "Change Pin", // TODO i18n
+  //     inputs: [
+  //       {
+  //         name: "oldPin",
+  //         placeholder: "Old Pin", // TODO i18n
+  //         type: "password"
+  //       },
+  //       {
+  //         name: "newPin",
+  //         placeholder: "New Pin", // TODO i18n
+  //         type: "password"
+  //       },
+  //       {
+  //         name: "newPinRe",
+  //         placeholder: "New Pin", // TODO i18n
+  //         type: "password"
+  //       }
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: "Cancel", // TODO i18n
+  //         role: "cancel",
+  //         handler: (data) => {
+  //           if (cancelFn) {
+  //             cancelFn(data);
+  //           } else {
+  //             console.log("Cancel clicked"); //TODO i18n
+  //           }
+  //         }
+  //       },
+  //       {
+  //         text: "Ok", // TODO i18
+  //         handler: (data) => {
+  //           this.authService.changePin(data.oldPin, data.newPin, data.newPinRe).subscribe(result => {
+  //             validFn(result.success);
+  //         });
+  //         }
+  //       }
+  //     ]
+  //   });
+  // }
 
   onUserEdited(event) {
     console.log(event);
@@ -137,7 +139,6 @@ export class UserAccountPage implements OnInit {
 
   onSignOut(event) {
     this.logout();
-    // console.log(event);
   }
 
   onUserDelete() {

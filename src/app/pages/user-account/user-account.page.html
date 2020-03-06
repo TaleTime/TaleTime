@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{'USER_MANAGEMENT_MY_ACCOUNT' | translate}}</ion-title>
+    <ion-title id="userPageTitle">{{'USER_MANAGEMENT_MY_ACCOUNT' | translate}}</ion-title>
     <ion-buttons slot="end" (click)="onBackKeyDown()">
       <ion-icon style="width: 60px; height: 60px" name="close"></ion-icon>
     </ion-buttons>
@@ -8,8 +8,8 @@
 
 </ion-header>
 
-<ion-content padding>
-  <ngx-auth-firebaseui-user ng-init="loaded()"
+<ion-content class="ion-padding">>
+  <ngx-auth-firebaseui-user
     (onAccountEdited)="onUserEdited($event)"
     (onSignOut)="onSignOut($event)"
     (onAccountDeleted)="onUserDelete()"

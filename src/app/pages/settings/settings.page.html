@@ -31,6 +31,7 @@
       <ion-icon slot="start" name="globe"></ion-icon>
       <ion-label>{{'SETTINGS_LANGUAGE' | translate}}</ion-label>
       <ion-select
+        id="settingsChangeLanguage"
         [(ngModel)]="selectedLanguage"
         (ngModelChange)="changeLanguage(selectedLanguage)"
       >
@@ -44,13 +45,14 @@
       <ion-select value="pixel12"
                   okText="{{ 'COMMON_OK' | translate }}"
                   cancelText="{{'COMMON_ABORT' | translate }}"
+                  id="settingsFontSize"
                   [(ngModel)]="selectedFontSize"
                   (ngModelChange)="changeFontSize(selectedFontSize)"
       >
-        <ion-select-option value="pixel12">12px</ion-select-option>
-        <ion-select-option value="pixel14">14px</ion-select-option>
-        <ion-select-option value="pixel16">16px</ion-select-option>
-        <ion-select-option value="pixel18">18px</ion-select-option>
+        <ion-select-option value="pixel12" id="settingsFontSize12px">12px</ion-select-option>
+        <ion-select-option value="pixel14" id="settingsFontSize14px">14px</ion-select-option>
+        <ion-select-option value="pixel16" id="settingsFontSize16px">16px</ion-select-option>
+        <ion-select-option value="pixel18" id="settingsFontSize18px">18px</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -59,7 +61,7 @@
 
   <ion-list>
 
-    <ion-list-header>
+    <ion-list-header id="settingPageTitle">
       {{'SETTINGS_VOICE' | translate}}
     </ion-list-header>
 
