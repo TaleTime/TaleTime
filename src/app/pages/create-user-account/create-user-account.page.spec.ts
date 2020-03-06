@@ -441,6 +441,40 @@ describe('Test add user and set active user profile', () =>{
   });
 })
 
+describe('Test create Profile', () =>{
+  let userProfile : UserProfile
+
+  beforeEach(() => {
+    userProfile = null;
+  });
+
+  afterEach(() => {
+    userProfile = null
+  });
+
+  it('Created Profile 2', () => {
+    userProfile = new UserProfile("Profile 1", 2, true)
+    expect(userProfile.name)
+      .toEqual(2)
+    expect(userProfile.child)
+      .toBeTrue()
+  });
+  it('Created Profile 3', () => {
+    userProfile = new UserProfile("Profile 2", 1, true)
+    expect(userProfile.name)
+      .toEqual("Profile 2")
+    expect(userProfile.child)
+      .toBeTrue()
+  });
+  it('Created Profile 1', () => {
+    userProfile = new UserProfile("Profile 3", 3, false)
+    expect(userProfile.name)
+      .toEqual("Profile 3")
+    expect(userProfile.child)
+      .toBeFalse()
+  });
+})
+
 
 // describe("CreateUserAccountPage", () => {
 //   let component: CreateUserAccountPage;
