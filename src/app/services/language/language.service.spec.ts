@@ -71,8 +71,8 @@ describe('Set language', () =>{
 
   beforeEach(() => {
     renewTestbed()
-    languageService = new LanguageService(translateService, storage)
-    languageService.selected = null
+    languageService = new LanguageService(translateService, storage);
+    languageService.selected = null;
   });
 
   afterEach(() => {

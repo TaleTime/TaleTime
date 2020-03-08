@@ -1,14 +1,12 @@
-import { Component, HostListener, OnInit } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {NavController, Platform} from "@ionic/angular";
 
 import {AuthService} from "../../services/auth/auth.service";
 import {AlertController} from "@ionic/angular";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 
-import {UserAccount} from "../../models/userAccount";
 import {Router} from "@angular/router";
-import {success} from "ionic/lib/color";
-import { async } from 'rxjs/internal/scheduler/async';
+
 
 @Component({
   selector: "app-user-account",
@@ -25,48 +23,56 @@ export class UserAccountPage implements OnInit {
     private router: Router,
     private platform: Platform,
     //must be public for the aot compilation
-    public authService: AuthService
+    public authService: AuthService,
   ) {
+
     // if(this.authService.currentUserAccount == null){
     //   this.router.navigate(["/start"]);
     // }
   }
 
-  ngAfterViewChecked () {
-    if (!this.checked) {
-      this.checked = true;
-      this.platform.ready().then(() => {
-        // debugger;
-        let elements = document.getElementsByClassName('mat-button mat-button-base mat-primary ng-star-inserted');
-
-        // if (elements.length < 1) {
-        //   setTimeout(() => {
-        //     this.checked = false;
-        //     return;
-        //     }, 1500);
-        // }
-
-        console.log(elements);
-        // let e = elements.item(0);
-        // e.id = 'logAccountOut';
-        // e.textContent
-        debugger;
-        for (let i = 0; i < elements.length; i++) {
-          let e = elements.item(i);
-          console.log(e);
-          if (e.textContent === 'Sign out') {
-            e.id = 'logAccountOut';
-          }
-        }
-        console.log(document.getElementById('logAccountOut'));
-      });
-    }
+  ngAfterViewInit () {
+    // if (!this.checked) {
+    //   this.checked = true;
+    //   this.platform.ready().then(() => {
+    //     // debugger;
+    //     let elements = document.getElementsByClassName('mat-button mat-button-base mat-warn ng-star-inserted');
+    //
+    //     // if (elements.length < 1) {
+    //     //   setTimeout(() => {
+    //     //     this.checked = false;
+    //     //     return;
+    //     //     }, 1500);
+    //     // }
+    //     if (elements.length < 1) {
+    //       debugger;
+    //       // console.log("uff");
+    //       // this.checked = false;
+    //       // return;
+    //     } else {
+    //       console.log(elements);
+    //       // let e = elements.item(0);
+    //       // e.id = 'logAccountOut';
+    //       // e.textContent
+    //       debugger;
+    //       for (let i = 0; i < elements.length; i++) {
+    //         let e = elements.item(i);
+    //
+    //         console.log(e);
+    //         if (e.textContent === 'Sign out') {
+    //           e.id = 'logAccountOut';
+    //         }
+    //       }
+    //       console.log(document.getElementById('logAccountOut'));
+    //     }
+    //   });
+    // }
   }
 
   public deleteAccount(){
     //TODO Ask user if button was clicked accidentally?
     this.authService.deleteAccount().subscribe((success) => {
-      this.router.navigate(["/start"]);
+      this.router.navigate(["/"]);
     });
   }
 
@@ -137,12 +143,43 @@ export class UserAccountPage implements OnInit {
     console.log(event);
   }
 
-  onSignOut(event) {
+  onSignOut() {
     this.logout();
   }
 
-  onUserDelete() {
-    console.log('TTTTTTTTTTTTTTTTTTTTT');
+  /**
+   * The framework has an extra parameter for a function that SHOULD be called after the user presses the delete Account
+   * Button. BUT its not called... therefore we listen to every click on the page and check if the user pressed the delete Account
+   * button.
+   * @param event contains the event information
+   */
+  onUserDelete(event) {
+    let elements = document.getElementsByClassName('mat-button mat-button-base mat-warn ng-star-inserted');
+    let deleteAccountButton;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements.item(i);
+      if (element.textContent === 'Delete account') {
+        deleteAccountButton = element;
+      }
+    }
+
+    if (event.target === deleteAccountButton) {
+      this.deleteAccount();
+    } else if (this.isDescendan(deleteAccountButton, event.target)) {
+      this.deleteAccount();
+    }
+  }
+
+  isDescendan(parent, child) {
+    let node = child.parentNode;
+    while (node != null) {
+      if (node == parent) {
+        return true;
+      }
+      node = node.parentNode;
+    }
+    return false;
   }
 
   onBackKeyDown() {
@@ -156,7 +193,7 @@ export class UserAccountPage implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
+    // debugger;
   }
 
 }

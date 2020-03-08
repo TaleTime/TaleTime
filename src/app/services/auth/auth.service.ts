@@ -33,6 +33,7 @@ export class AuthService {
     // });
   }
   async ready(): Promise<any> {
+    console.log("lol");
     if (this.promise === null) {
       this.promise = new Promise((resolve, reject) => {
         if (this.currentUser === null) {
@@ -40,15 +41,16 @@ export class AuthService {
             if (user != null) {
               console.log(user);
               this.signIn(user, () => {
-                console.log("lel3");
                 this.router.navigate(["/select-user-profile"]);
                 resolve();
               });
             } else {
+              this.router.navigate(["/"]);
               resolve();
             }
           });
         } else {
+          this.router.navigate(["/"]);
           resolve();
         }
       });
