@@ -33,7 +33,6 @@ export class AuthService {
     // });
   }
   async ready(): Promise<any> {
-    console.log("lol");
     if (this.promise === null) {
       this.promise = new Promise((resolve, reject) => {
         if (this.currentUser === null) {

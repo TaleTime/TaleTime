@@ -30,30 +30,6 @@ export class CreateUserAccountPage implements OnInit {
   ) {
 
   }
-
-  onLoad() {
-    console.log(document.getElementById('createAccountButton').id = 'test');
-    console.log(document.getElementById('test'));
-  }
-
-  ngAfterViewChecked () {
-    if (!this.checked) {
-      this.checked = true;
-
-      let elements = document.getElementsByClassName('submit-button mat-raised-button mat-button-base mat-accent');
-      for (let i = 0; i < elements.length; i++) {
-
-        let e = elements.item(i);
-        console.log(e.getAttribute('aria-label'));
-        if (e.getAttribute('aria-label') === 'CREATE AN ACCOUNT') {
-          e.id = 'registerAndCreateAccount';
-        }
-      }
-
-      console.log(document.getElementById('registerAndCreateAccount'));
-    }
-  }
-
   ngOnInit() {
 
   }

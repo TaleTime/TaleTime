@@ -56,7 +56,6 @@ export function createTranslateLoader(http: HttpClient) {
 }
 export function initAuthorization(appLoadService: AuthService) {
   return () => appLoadService.ready();
-  // return () => {};
 }
 
 
