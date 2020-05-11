@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@ionic4
+    - uses: actions/checkout@master
+  	with:
+    	  ref: ionic4
     - uses: actions/setup-node@master
       with:
         node-version: '10.x'
