@@ -18,6 +18,7 @@ jobs:
       with:
         node-version: '10.x'
     - run: npm install
+    - run: npm i -D -E @angular/cli
     - run: ionic build production
     - uses: w9jds/firebase-action@master
       with:
