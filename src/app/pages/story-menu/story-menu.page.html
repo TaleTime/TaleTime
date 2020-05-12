@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+<!--    <ion-button menuToggle slot="icon-only" color="dark">-->
+<!--      <ion-icon name="menu"></ion-icon>-->
+<!--    </ion-button>-->
+    <ion-title>{{'STORYMENU_HEADER' | translate}}</ion-title>
+
+    <ion-buttons slot="end">
+        <ion-img style="align-self: flex-end; width: 80px; height: 80px" src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <ion-row class="ion-padding" *ngIf="this.stories.length < 1">
+    <ion-card class="card padding" style="width: 100%">
+      <ion-card-header>
+        <ion-card-title>{{ 'STORYMENU_NO_STORIES_HEADER' | translate }}</ion-card-title>
+        <ion-card-subtitle>{{ 'STORYMENU_NO_STORIES_YET' | translate }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="full" (click)="goToAvailableStories()" id="storyMenuAddNewStory">
+          {{ 'STORYMENU_ADD_SOME_STORIES' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+
+  <ion-card *ngFor="let story of this.stories">
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <ion-icon
+          *ngIf="!story.cover"
+          name="book"
+          style="font-size: 64px;"
+        ></ion-icon>
+        <ion-img
+          *ngIf="story.cover"
+          src="assets/stories/{{story.id}}/{{story.cover}}"
+        ></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h1>
+          <ion-icon
+            name="cloud-download"
+            *ngIf="story.medium === 'cloud'"
+          ></ion-icon>
+          {{story.title}}
+        </h1>
+        <h2>{{story.author.join(', ')}}</h2>
+        <p>{{story.date}}</p>
+      </ion-label>
+
+    </ion-item>
+
+    <ion-card-content>
+      <p>{{story.readers.map(getSubtitle)}}</p>
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row justify-content-end>
+        <ion-col>
+          <ion-button
+            color="success"
+            (click)="goToPlayerPage(story.id)"
+          >
+            <ion-icon name="play"></ion-icon>
+          </ion-button>
+          <!-- Todo Show Button Functions on hover-->
+          <ion-button (click)="showDetails(story)">
+            <ion-icon name="information-circle"></ion-icon>
+          </ion-button>
+          <ion-button
+            color="danger"
+            shape="icon-only"
+            (click)="deleteStory(story)"
+          >
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>

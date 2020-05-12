@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{metadata.title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+<!--  <h1 text-center>
+    Placeholder
+    &lt;!&ndash;    {{attr.name}}&ndash;&gt;
+  </h1>-->
+  <ion-text [ngStyle]="{fontSize: this.fontSizePx}">
+    {{text}}
+  </ion-text>
+
+  <ion-list>
+    <ion-button
+      class="buttons"
+      *ngFor="let a of answers; index as i"
+      (click)="nextChapter(i)"
+      [ngClass]="pulseClass"
+    >
+      {{a.value}}
+    </ion-button>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row no-padding no-margin>
+        <ion-col size="4" align-self-center text-center>
+          <ion-button size="small" expand="block" slot="icon-only" (click)="previousChapter()">
+            <ion-icon name="arrow-round-back"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="4" align-self-center text-center>
+          <ion-button size="small" expand="block" slot="icon-only" (click)="playPause()">
+            <ion-icon *ngIf="!playing" name="play"></ion-icon>
+            <ion-icon *ngIf="playing" name="pause"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <!-- Intentionally empty to center the play button -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

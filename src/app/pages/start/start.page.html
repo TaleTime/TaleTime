@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>TaleTime</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <div class="ion-text-center">
+    <h1 id="startPageHeading">{{'START_WELCOME' | translate }} TaleTime</h1>
+      <ion-img style="align-items: center; width: 100px !important;
+  height: 100px !important;
+  display: block !important;" src="assets/icon/appicon.png"></ion-img>
+
+    <h4>{{'START_DESCRIPTION' | translate }}</h4>
+    <ngx-auth-firebaseui-login
+      (onCreateAccountRequested)="goToCreateAccount()"
+      (onSuccess)="login($event)"
+      [providers]="'google'"
+      [titleText]="'LOGIN_TITLE' | translate"
+      [emailText]="'EMAIL' | translate"
+      [passwordText]="'PASSWORD' | translate"
+      [loginButtonText]="'LOGIN' | translate"
+      [orLabelText]="'OR' | translate"
+      [forgotPasswordText]="'FORGOT_PASSWORD' | translate"
+      [dontHaveAnAccountText]="'CREATE_ACCOUNT_TEXT' | translate"
+      [createAccountButtonText]="'CREATE_ACCOUNT' | translate"
+      [emailErrorRequiredText]="'EMAIL_REQUIRED' | translate"
+      [passwordErrorRequiredText]="'PASSWORD_REQUIRED' | translate"
+    ></ngx-auth-firebaseui-login>
+<!--    <ion-button id="registrationButton" (click)="goToCreateAccount()">-->
+<!--      &lt;!&ndash; TODO i18n     &ndash;&gt;-->
+<!--      {{'Registrieren' | translate }}-->
+<!--    </ion-button>-->
+  </div>
+
+<!--  <div class="ion-text-center">-->
+<!--    <form (ngSubmit)="login()">-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-list inset>-->
+<!--            <ion-item>-->
+<!--              &lt;!&ndash;              TODO i18n&ndash;&gt;-->
+<!--              <ion-label position="floating">{{'E-Mail'}}</ion-label>-->
+<!--              <ion-input-->
+<!--                type="email"-->
+<!--                name="email"-->
+<!--                [(ngModel)]="email"-->
+<!--                required-->
+<!--              ></ion-input>-->
+<!--            </ion-item>-->
+<!--          </ion-list>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-list inset>-->
+<!--            <ion-item>-->
+<!--              &lt;!&ndash;              TODO i18n&ndash;&gt;-->
+<!--              <ion-label position="floating">{{'Pin'}}</ion-label>-->
+<!--              <ion-input-->
+<!--                type="password"-->
+<!--                name="pin"-->
+<!--                [(ngModel)]="pin"-->
+<!--                required-->
+<!--              ></ion-input>-->
+<!--            </ion-item>-->
+<!--          </ion-list>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--      <ion-row>-->
+<!--        <ion-col>-->
+<!--          <ion-button-->
+<!--            class="submit-btn"-->
+
+<!--            type="submit"-->
+<!--          >-->
+<!--            {{'Login'}}-->
+<!--          </ion-button>-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--    </form>-->
+<!--  </div>-->
+</ion-content>
