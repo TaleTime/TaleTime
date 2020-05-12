@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title id="registrationPageHeading">{{ 'USER_MANAGEMENT_CREATE_ACCOUNT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ngx-auth-firebaseui-register
+    (onLoginRequested)="goToLoginPage()"
+    (onSuccess)="register($event)"
+    (onError)="error($event)"
+    [passwordText]="'PASSWORD' |translate"
+    [emailText]="'EMAIL' | translate"
+    [passwordConfirmationText]="'PASSWORD_CONFIRMATION' | translate"
+    [passwordConfirmationErrorRequiredText]="'PASSWORD_CONFIRMATION_REQUIRED' | translate"
+    [passwordErrorRequiredText]="'PASSWORD_REQUIRED' | translate"
+    [createAccountButtonText]="'CREATE_ACCOUNT' | translate"
+    [loginButtonText]="'LOGIN' | translate"
+    [emailErrorRequiredText]="'EMAIL_REQUIRED' | translate"
+    [nameErrorRequiredText]="'NAME_REQUIRED' | translate"
+    [emailErrorPatternText]="'VALID_EMAIL' | translate"
+    [passwordErrorMatchText]="'PASSWORD_MATCH' | translate"
+    [alreadyHaveAccountText]="'ALREADY_HAVE_ACCOUNT' | translate"
+    [titleText]="''"
+  ></ngx-auth-firebaseui-register>
+</ion-content>
