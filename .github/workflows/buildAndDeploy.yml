@@ -1,0 +1,29 @@
+name: BuildAndDeploy
+
+on:
+  push:
+    branches:
+    - ionic4
+
+jobs:
+  firebase-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+      with:
+        ref: ionic4
+    - uses: actions/setup-node@master
+      with:
+        node-version: '10.x'
+    - run: npm install
+    - run: npm i -D -E @angular/cli
+    - run: npm install -g @ionic/cli
+    - run: ionic build production
+    - uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        FIREBASE_PROJECT: tale-time
