@@ -6,3 +6,5 @@ typings/
 .vscode/
 .sourcemaps
 package-lock.json
+.idea/
+log.txt
