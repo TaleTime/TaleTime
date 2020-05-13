@@ -7,6 +7,7 @@ import {IonicModule} from "@ionic/angular";
 
 import {StoryMenuPage} from "./story-menu.page";
 import {TranslateModule} from "@ngx-translate/core";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 const routes: Routes = [
   {
@@ -16,13 +17,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    TranslateModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        TranslateModule,
+        MatTooltipModule
+    ],
   declarations: [StoryMenuPage]
 })
 export class StoryMenuPageModule {
