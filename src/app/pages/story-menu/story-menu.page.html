@@ -63,17 +63,23 @@
           <ion-button
             color="success"
             (click)="goToPlayerPage(story.id)"
+            [matTooltip]="PLAY_BUTTON_TOOLTIP_LABEL"
+            matTooltipPosition="below"
+            matTooltipShowDelay="750"
           >
             <ion-icon name="play"></ion-icon>
           </ion-button>
-          <!-- Todo Show Button Functions on hover-->
-          <ion-button (click)="showDetails(story)">
+          <ion-button (click)="showDetails(story)" [matTooltip]="INFO_BUTTON_TOOLTIP_LABEL" matTooltipPosition="below" matTooltipShowDelay="750">
             <ion-icon name="information-circle"></ion-icon>
           </ion-button>
           <ion-button
             color="danger"
             shape="icon-only"
             (click)="deleteStory(story)"
+
+            [matTooltip]="CANCEL_BUTTON_TOOLTIP_LABEL"
+            matTooltipPosition="below"
+            matTooltipShowDelay="750"
           >
             <ion-icon name="trash"></ion-icon>
           </ion-button>
