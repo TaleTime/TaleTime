@@ -36,18 +36,26 @@
     <h2>{{'STORYDETAILS_SHORT_DESCRIPTION' | translate }}</h2>
     <p>{{selectedStory.shortDescription}}</p>
   </ion-item>
-  <ion-list [(ngModel)]="selectedReader">
-    <ion-radio-group>
-      <ion-item class="storydetails">
+
+
+  <ion-list>
+    <ion-list-header>
+      {{'CHOOSE_READER' | translate}}
+    </ion-list-header>
+
+    <ion-radio-group [(ngModel)]="selectedReader">
+      <ion-item class="storyDetails">
         <ion-label>Text-to-speech</ion-label>
         <ion-radio value="default" (click)="saveReader()"></ion-radio>
       </ion-item>
-      <ion-item class="storydetails" *ngFor="let reader of selectedStory.readers">
+
+      <ion-item class="storyDetails" *ngFor="let reader of selectedStory.readers">
         <ion-label>{{reader.name}}</ion-label>
         <ion-radio value="{{reader.name}}" (click)="saveReader()"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>
+
   <ion-button expand="block" (click)="goToPlayerPageNew(selectedStory.id)">
     {{'STORYDETAILS_START_OVER' | translate}}
   </ion-button>

@@ -10,7 +10,6 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {Storage} from "@ionic/storage";
 import {AlertController} from "@ionic/angular";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {forEach} from "@angular-devkit/schematics";
 import {SettingsService} from "../../services/settings/settings.service";
 import {TranslateService} from "@ngx-translate/core";
 

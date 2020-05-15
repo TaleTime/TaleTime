@@ -120,5 +120,6 @@
   "RESUME_OR_RESTART": "Fortsetzen oder Neustarten",
   "INFO_BUTTON_MOUSE_HOVER": "Geschichten Einstellungen ändern",
   "DELETE_BUTTON_MOUSE_HOVER": "Geschichte löschen",
-  "PLAY_BUTTON_MOUSE_HOVER": "Geschichte starten"
+  "PLAY_BUTTON_MOUSE_HOVER": "Geschichte starten",
+  "CHOOSE_READER": "Wähle einen Vorleser aus"
 }
