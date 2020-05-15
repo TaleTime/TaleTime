@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {NavController, NavParams} from "@ionic/angular";
 
 import {StoryInformation} from "../../models/storyInformation";
@@ -10,27 +10,31 @@ import {PublicStoryHelperService} from "../../services/public-story-helper/publi
 import {Router, Routes} from "@angular/router";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
 import {StoryMenuPage} from "../story-menu/story-menu.page";
+import {PlayerParams} from "../../models/player/player-params";
+import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
+import {getMatFormFieldPlaceholderConflictError} from "@angular/material/form-field";
 
 const routes: Routes = [
   {path: "storyMenu", component: StoryMenuPage},
 ];
 
 @Component({
-  selector: "app-story-details",
-  templateUrl: "./story-details.page.html",
-  styleUrls: ["./story-details.page.scss"],
+  selector: 'app-story-details',
+  templateUrl: './story-details.page.html',
+  styleUrls: ['./story-details.page.scss'],
 })
-export class StoryDetailsPage implements OnInit {
+export class StoryDetailsPage {
 
   selectedStory: StoryInformation;
-  selectedReader: string;
   imgPath = "dummy.png";
+  public selectedReader: string;
 
   constructor(
     public navCtrl: NavController,
     public router: Router,
     public storyInformationService : StoryInformationService,
     public storyService: StoryService,
+    public playerParamsService: PlayerParamsService,
     private saveGameService: SaveGameService,
     private publicStoryHelper: PublicStoryHelperService
   ) {
@@ -66,17 +70,21 @@ export class StoryDetailsPage implements OnInit {
 
   goToPlayerPageNew(storyId: string) {
     console.log("StoryId: " + storyId);
-    this.router.navigate(["/player", {storyId, mode: "begin"}]);
+    let playerParams = new PlayerParams();
+    playerParams.storyId = storyId;
+    playerParams.mode = "begin";
+    playerParams.reader = this.selectedReader;
+    this.playerParamsService.setPlayerParams(playerParams);
+    this.router.navigate(["/player"]);
   }
 
   goToPlayerPageContinue(storyId: string) {
     console.log("StoryId: " + storyId);
-    this.router.navigate(["/player", {storyId, mode: "continue"}]);
-
+    let playerParams = new PlayerParams();
+    playerParams.storyId = storyId;
+    playerParams.mode = "continue";
+    playerParams.reader = this.selectedReader;
+    this.playerParamsService.setPlayerParams(playerParams);
+    this.router.navigate(["/player"]);
   }
-
-  ngOnInit() {
-    console.log("ngOnInit StoryDetailsPage");
-  }
-
 }
