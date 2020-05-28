@@ -12,6 +12,7 @@ export const STORY_DIR = "assets/stories/";
 export const TTS_RES = "assets/tts/";
 export const READER_DIR = "/readers/";
 export const WWW = "www";
+export const CLOUD = "cloud";
 
 /** file names */
 export const SETTINGS_FILE_NAME = "settings.json";
@@ -19,7 +20,7 @@ export const STORY_FILE_NAME = "storyies.json";
 export const SINGLE_STORY_FILE_NAME = "story.json";
 export const USER_FILE_NAME = "users.json";
 
-/** for story data structure TODO names need to be defined properly */
+/** for story data structure */
 export const MTGA_STORY = "mtga-story";
 export const MTGA_NODE = "mtga-story-node";
 export const MTGA_NEXT_NODE = "mtga-nextStoryNode";

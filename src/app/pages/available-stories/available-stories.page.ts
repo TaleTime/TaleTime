@@ -12,6 +12,7 @@ import {SimpleToastService} from "../../services/simple-toast/simple-toast.servi
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
+import {CLOUD} from "../../constants/constants";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -70,7 +71,7 @@ export class AvailableStoriesPage implements OnInit {
 
   /**
    * Loads the (hardcoded) default stories into the availableStories array
-   * TODO this shouldn't be hardcorded of course
+   * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
   loadDeviceDefaultStories() {
     const newStory = new StoryInformation();
@@ -109,7 +110,7 @@ export class AvailableStoriesPage implements OnInit {
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
     console.log("addStory(): " + JSON.stringify(story));
-    if (story.medium === "cloud" && "url" in story) {
+    if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
     } else if (this.storyService.exists(story.id)) {
@@ -133,7 +134,7 @@ export class AvailableStoriesPage implements OnInit {
       .then((data) => {
         const content = (data = JSON.parse(data.data));
         for (let i = 0; i < content.length; i++) {
-          content[i].medium = "cloud"; // TODO const and object
+          content[i].medium = CLOUD;
           that.availableStories.push(content[i]);
         }
       })
@@ -244,7 +245,7 @@ export class AvailableStoriesPage implements OnInit {
                     this.toastService.displayToast(
                       this.translate.instant("STORY_ZIP_REMOVE_FAIL")
                     );
-                    console.log("Could not remove downloaded Zip!");
+                    console.log("Could not remove downloaded Zip!"); //TODO: Konstante(n) erstellen
                   });
               } else if (result === -1) {
                 console.log("Unzipping the file failed!");
