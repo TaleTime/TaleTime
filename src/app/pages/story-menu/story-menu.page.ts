@@ -29,6 +29,7 @@ export class StoryMenuPage implements OnInit {
 
   languageMap = new Map()
 
+
   constructor(
     private storage: Storage,
     private alertCtrl: AlertController,
