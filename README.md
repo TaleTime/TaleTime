@@ -1,12 +1,35 @@
 # TaleTime
-TaleTime is an interactive audiobook app for iOS and Android.
+TaleTime is an interactive audiobook app for iOS and Android based on the ionic framework v4.
 
 Repository Metrics:
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/TaleTime/TaleTime/BuildAndDeploy?label=automatical%20build%20process)
 
 
+## Get started
 
+clone the repository:
+```Shell
+git clone https://github.com/TaleTime/TaleTime.git
+cd TaleTime
+```
+
+install all dependencies using npm:
+```Shell
+  npm install
+```
+
+make sure you have angular and ionic cli installed:
+```Shell
+  npm i -D -E @angular/cli
+  npm install -g @ionic/cli
+```
+serve your local development server:
+```Shell
+  ionic serve
+```
+
+Start developing and watch your changes in realtime!
 
 
 TaleTime is an innovative app for Android and iOS, that lets children experience a new unique way of listening to audiobooks.
