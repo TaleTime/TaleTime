@@ -36,8 +36,7 @@ export class ChangeUserAccountPinPage implements OnInit {
           if (response.success) {
             this.nav.pop();
           } else {
-            // TODO popup with info
-            console.log(response.reason);
+            alert(response.reason);
           }
         },
         (error) => {
