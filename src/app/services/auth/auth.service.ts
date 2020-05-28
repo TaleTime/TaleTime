@@ -12,10 +12,7 @@ import { Router } from "@angular/router";
   providedIn: "root"
 })
 export class AuthService {
-  // static USER_ACCOUNT_KEY = "userAccount";
-  //private currentUser: UserAccount = new UserAccount("Test", "test@mail.com", "1234"); // TODO was not necessary before
   private currentUser: UserAccount = null;
-  // private registerCredentials  = {name: "", email: "", pin: ""};
   private promise: Promise<any> = null;
 
   constructor(
@@ -172,11 +169,11 @@ export class AuthService {
         this.save(this.currentUserAccount);
       } else {
         response.success = false;
-        response.reason = "New pin do not match"; // TODO Tobi i18n
+        response.reason = "New pin do not match"; // TODO i18n
       }
     } else {
       response.success = false;
-      response.reason = "Old pin do not match"; // TODO Tobi i18n
+      response.reason = "Old pin do not match"; // TODO i18n
     }
 
     return new Observable((subscriber: {
@@ -213,45 +210,6 @@ export class AuthService {
       this.router.navigate(["/select-user-profile"]);
     }
     return this.currentUserAccount.activeUserProfile;
-  }
-
-  /** This method has been removed in the latest merge from March;
-   * it is used in start.ts though. Removal was maybe done because of hashing PIN.
-   * TODO: Find out how to modify start.ts in order to remove this function here again.
-   * @param credentials
-   */
-  public login(credentials) {
-    //console.log(credentials);
-    if (credentials.email === null || credentials.pin === null) {
-      return observableThrowError("Please insert credentials");
-    } else {
-
-      return new Observable((subscriber) => {
-        let access = false;
-        this.storage.ready().then(() =>
-          this.storage.get(credentials.email).then((val) => {
-            console.log(val);
-            if (val) {
-              const storageUser = new UserAccount(
-                val.name,
-                val.email,
-                val.hash,
-                val.userProfiles
-              );
-              access = storageUser.checkCredentials(
-                credentials.email,
-                credentials.pin
-              );
-              if (access) {
-                this.currentUser = storageUser;
-              }
-            }
-            subscriber.next(access);
-            subscriber.complete();
-          })
-        );
-      });
-    }
   }
 
   public logout(){
@@ -310,17 +268,17 @@ export class AuthService {
   /*** UI ***/
   public presentPinPrompt(validFn: (arg) => void, cancelFn?: (arg) => void) {
     return this.alertCtrl.create({
-      header: "PIN-Eingabe", // TODO tobi i18
+      header: "PIN-Eingabe", // TODO i18
       inputs: [
         {
           name: "pin",
-          placeholder: "Pin", // TODO tobi i18
+          placeholder: "Pin", // TODO i18
           type: "password"
         }
       ],
       buttons: [
         {
-          text: "Cancel", // TODO tobi i18
+          text: "Cancel", // TODO i18
           role: "cancel",
           handler: (data) => {
             if (cancelFn) {
@@ -331,7 +289,7 @@ export class AuthService {
           }
         },
         {
-          text: "Ok", // TODO tobi i18
+          text: "Ok", // TODO i18
           handler: (data) => {
             if (validFn) {
               validFn(this.currentUserAccount.checkPin(data.pin));
