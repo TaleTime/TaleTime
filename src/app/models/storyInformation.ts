@@ -10,7 +10,7 @@ export class StoryInformation {
   public shortDescription: string;
   public readers: Reader[];
   public medium: string;
-  public cover: string; // TODO tobi evtl. base64
+  public cover: string; // TODO Base64 String für das Bild, zum darstellen des Covers
 }
 
 export class StoryInformationWithUrl extends StoryInformation {

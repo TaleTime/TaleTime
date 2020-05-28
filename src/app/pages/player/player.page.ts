@@ -108,8 +108,13 @@ export class PlayerPage implements OnInit {
       this.loadSaveGame();
 
       // DEFAULT_READER if new savegame
-      this.selectedReader = this.saveGame.reader;
+      // this.selectedReader = this.saveGame.reader;
       // this.selectedReader = DEFAULT_READER;
+      if(this.playerParamsService.getPlayerParams().reader === ''){
+        this.selectedReader = this.saveGame.reader;
+      } else {
+        this.selectedReader = this.playerParamsService.getPlayerParams().reader;
+      }
       this.mode = this.playerParamsService.getPlayerParams().mode; // differentiate between starting story over or continuing from savegame
       console.log("storyId:" + this.storyId);
       console.log("reader:" + this.selectedReader);
@@ -424,7 +429,7 @@ export class PlayerPage implements OnInit {
    * Set up the audio for the current Node
    */
   private setupAudioForNode() {
-    console.log("setupAudioForNode:");
+    console.log("setupAudioForNode");
 
     // Change back to audio if there was temporary tts
     this.temporaryTTS = false;
@@ -452,6 +457,7 @@ export class PlayerPage implements OnInit {
         }
       }
     );
+
   }
 
   /**

@@ -126,8 +126,6 @@ describe('Test registration', () =>{
   })
 })
 
-//TODO Move to own file
-
 describe('Test create User', () =>{
   let userAccount : UserAccount
 

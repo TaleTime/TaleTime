@@ -60,11 +60,6 @@ export const routes: Routes = [
     loadChildren: () => import("./pages/start/start.module").then(module => module.StartPageModule),
     // loadChildren: './pages/start/start.module#StartPageModule',
   },
-  {
-    path: "story-details",
-    canActivate: [LoggedInGuard],
-    loadChildren: () => import("./pages/story-details/story-details.module").then(module => module.StoryDetailsPageModule)
-  },
   // {
   //   path: "story-menu",
   //   loadChildren: () => import("./pages/story-menu/story-menu.module").then(module => module.StoryMenuPageModule)
@@ -80,10 +75,10 @@ export const routes: Routes = [
     loadChildren: () => import("./pages/user-account/user-account.module").then(module => module.UserAccountPageModule)
   },
   {
-    path: "**",
+    path: "story-details",
     canActivate: [LoggedInGuard],
-    redirectTo: "tabs",
-  },
+    loadChildren: () => import("./pages/story-details/story-details.module").then(module => module.StoryDetailsPageModule)
+  }
 ];
 
 @NgModule({

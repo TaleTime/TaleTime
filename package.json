@@ -47,9 +47,11 @@
     "chromedriver": "^80.0.1",
     "cordova": "^9.0.0",
     "cordova-android": "^8.1.0",
+    "cordova-browser": "6.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-globalization": "^1.11.0",
+    "cordova-plugin-media": "^5.0.3",
     "cordova-plugin-nativeaudio": "^3.0.9",
     "cordova-plugin-speechrecognition": "^1.2.0",
     "cordova-plugin-tts": "^0.2.3",
@@ -101,7 +103,7 @@
     "karma-coverage-istanbul-reporter": "^2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
-    "protractor": "~5.4.0",
+    "protractor": "^7.0.0",
     "protractor-cucumber-framework": "^6.2.0",
     "ts-node": "^8.6.2",
     "tslint": "^5.20.0",
@@ -121,11 +123,13 @@
       "cordova-plugin-file": {},
       "cordova-plugin-tts": {},
       "cordova-plugin-speechrecognition": {},
-      "cordova-plugin-nativeaudio": {}
+      "cordova-plugin-nativeaudio": {},
+      "cordova-plugin-media": {}
     },
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
