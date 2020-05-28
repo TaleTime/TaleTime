@@ -4,7 +4,15 @@ TaleTime is an interactive audiobook app for iOS and Android based on the ionic 
 Repository Metrics:
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/TaleTime/TaleTime/BuildAndDeploy?label=automatical%20build%20process)
-
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/TaleTime/TaleTime)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/TaleTime/TaleTime)
+![node-current](https://img.shields.io/node/v/ionic)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/ionic)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/cordova)
+![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/firebase)
+![Website](https://img.shields.io/website?label=tale-time.web.app&url=https%3A%2F%2Ftale-time.web.app)
+![GitHub watchers](https://img.shields.io/github/watchers/TaleTime/TaleTime?style=social)
+![GitHub stars](https://img.shields.io/github/stars/TaleTime/TaleTime?style=social)
 
 ## Get started
 
