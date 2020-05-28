@@ -113,5 +113,13 @@
   "INVALID_EMAIL" : "Invalid Email!",
   "WEAK_PASSWORD" : "Password should be at least 8 characters!",
   "REGISTER_ERROR" : "Error, Please try again later!",
-  "EMAIL_ALREADY_IN_USE" : "Email already in use!"
+  "EMAIL_ALREADY_IN_USE" : "Email already in use!",
+  "RESUME": "Resume",
+  "RESTART": "Restart",
+  "CANCEL": "Cancel",
+  "RESUME_OR_RESTART": "Resume or Restart",
+  "INFO_BUTTON_MOUSE_HOVER": "Change Story settings",
+  "DELETE_BUTTON_MOUSE_HOVER": "Delete the Story",
+  "PLAY_BUTTON_MOUSE_HOVER": "Start the Story",
+  "CHOOSE_READER": "Choose a reader"
 }

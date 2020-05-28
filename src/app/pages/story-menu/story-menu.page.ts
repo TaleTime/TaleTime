@@ -10,8 +10,8 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {Storage} from "@ionic/storage";
 import {AlertController} from "@ionic/angular";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {forEach} from "@angular-devkit/schematics";
 import {SettingsService} from "../../services/settings/settings.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: "app-story-menu",
@@ -23,10 +23,15 @@ export class StoryMenuPage implements OnInit {
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
 
+  CANCEL_BUTTON_TOOLTIP_LABEL: string;
+  PLAY_BUTTON_TOOLTIP_LABEL: string;
+  INFO_BUTTON_TOOLTIP_LABEL: string;
+
   constructor(
     private storage: Storage,
     private alertCtrl: AlertController,
     private toastService: SimpleToastService,
+    private translate: TranslateService,
     private settings: SettingsService,
     public platform: Platform,
     // public app: App,
@@ -53,6 +58,22 @@ export class StoryMenuPage implements OnInit {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
     }
+  }
+
+  /**
+   * Needed for automated language exchange in the tooltip of the buttons
+   */
+  ionViewWillEnter(){
+    this.translateHoverText();
+  }
+
+  /**
+   * change the language of the tooltip
+   */
+  private translateHoverText(){
+    this.CANCEL_BUTTON_TOOLTIP_LABEL = this.translate.instant("DELETE_BUTTON_MOUSE_HOVER");
+    this.INFO_BUTTON_TOOLTIP_LABEL = this.translate.instant("INFO_BUTTON_MOUSE_HOVER");
+    this.PLAY_BUTTON_TOOLTIP_LABEL = this.translate.instant("PLAY_BUTTON_MOUSE_HOVER");
   }
 
   public get stories(): Array<StoryInformation> {
@@ -114,7 +135,7 @@ export class StoryMenuPage implements OnInit {
 
     const alert = await this.showResumeOrRestartDialog((valid) => {
       if (valid === "begin") {
-        playerParams.mode = "begin"; //TODO i18n
+        playerParams.mode = "begin";
         this.playerParamsService.setPlayerParams(playerParams);
         this.router.navigate(["/player"]);
       } else {
@@ -129,38 +150,38 @@ export class StoryMenuPage implements OnInit {
 
   public showResumeOrRestartDialog(modeFn: (arg) => void, cancelFn?: (arg) => void){
     return this.alertCtrl.create({
-      header: "Resume or Restart", // TODO i18n
+      header: this.translate.instant("RESUME_OR_RESTART"),
       inputs: [
 
       ],
       buttons: [
         {
-          text: "Resume",
+          text: this.translate.instant("RESUME"),
           role: "resume",
           handler: (data) => {
             modeFn("continue");
           }
         },
         {
-          text: "Restart",
+          text: this.translate.instant("RESTART"),
           role: "restart",
           handler: (data) => {
             modeFn("begin");
           }
         },
         {
-          text: "Cancel", // TODO i18n
+          text: this.translate.instant("CANCEL"),
           role: "cancel",
           handler: (data) => {
             if (cancelFn) {
               cancelFn(data);
             } else {
-              console.log("Cancel clicked"); //TODO i18n
+              console.log("Cancel clicked");
             }
           }
         },
         // {
-        //   text: "Ok", // TODO i18
+        //   text: "Ok",
         //   handler: (data) => {
         //     this.authService.changePin(data.oldPin, data.newPin, data.newPinRe).subscribe(result => {
         //       validFn(result.success);

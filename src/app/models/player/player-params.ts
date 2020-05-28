@@ -3,4 +3,5 @@ import { Injectable } from "@angular/core";
 export class PlayerParams {
   storyId : string;
   mode : string;
+  reader: string;
 }
