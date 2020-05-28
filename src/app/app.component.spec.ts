@@ -42,6 +42,6 @@ import {AppComponent} from "./app.component";
 //     expect(splashScreenSpy.hide).toHaveBeenCalled();
 //   });
 //
-//   // TODO: add more tests!
+//   // TODO: add tests
 //
 // });

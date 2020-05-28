@@ -27,6 +27,9 @@ export class StoryMenuPage implements OnInit {
   PLAY_BUTTON_TOOLTIP_LABEL: string;
   INFO_BUTTON_TOOLTIP_LABEL: string;
 
+  languageMap = new Map()
+
+
   constructor(
     private storage: Storage,
     private alertCtrl: AlertController,
@@ -46,6 +49,8 @@ export class StoryMenuPage implements OnInit {
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);
     }
+    this.languageMap.set("English", "en-US");
+    this.languageMap.set("Deutsch", "de-DE");
   }
 
   ngOnInit() {
@@ -108,12 +113,7 @@ export class StoryMenuPage implements OnInit {
    * @return Language in Story-format
    */
   private storyLanguageToSystemLanguage(storyLanguage: string){
-    //TODO Find better place for the languageMap
-    let languageMap = new Map();
-    languageMap.set("English", "en-US");
-    languageMap.set("Deutsch", "de-DE");
-
-    return languageMap.get(storyLanguage);
+    return this.languageMap.get(storyLanguage);
   }
 
   goToSelectUserProfilePage() {

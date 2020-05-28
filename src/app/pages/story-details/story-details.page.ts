@@ -54,7 +54,6 @@ export class StoryDetailsPage {
     ).reader;
   }
 
-  // TODO Muss noch implementiert werden
   saveReader() {
     const sg = this.saveGameService.loadSavegame(this.selectedStory.id);
     sg.reader = this.selectedReader;

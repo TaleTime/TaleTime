@@ -41,7 +41,8 @@ export class SelectUserProfilePage implements OnInit {
   }
 
   public select(event, userProfileId: string) {
-    event.stopPropagation(); // TODO read desc in file header
+    console.log(event);
+    event.stopPropagation();
     this.authService.setActiveUserProfile(userProfileId).subscribe(
       (success) => {
         if (success) {
@@ -62,7 +63,7 @@ export class SelectUserProfilePage implements OnInit {
   }
 
   public delete(event, userProfileId: string) {
-    event.stopPropagation(); // TODO read desc in file header
+    event.stopPropagation();
 
     console.log("delete: " + userProfileId);
     this.authService.deleteUserProfile(userProfileId);
@@ -84,7 +85,7 @@ export class SelectUserProfilePage implements OnInit {
           this.isShowingOptions = true;
           this.showingOptionsLabel = this.translate.instant("COMMON_DONE");
         } else {
-          this.toastService.displayToast("Wrong pin."); // TODO tobi i18
+          this.toastService.displayToast("Wrong pin."); // TODO i18n
           return false;
         }
       });

@@ -121,5 +121,8 @@
   "INFO_BUTTON_MOUSE_HOVER": "Geschichten Einstellungen ändern",
   "DELETE_BUTTON_MOUSE_HOVER": "Geschichte löschen",
   "PLAY_BUTTON_MOUSE_HOVER": "Geschichte starten",
-  "CHOOSE_READER": "Wähle einen Vorleser aus"
+  "CHOOSE_READER": "Wähle einen Vorleser aus",
+  "ASK_USER_DELETE_ACCOUNT": "Möchten Sie den Account wirklich löschen? (j/n)",
+  "NO_USER_ACCOUNT_DELETION": "Ihr Account wird nicht gelöscht.",
+  "INVALID_INPUT": "Ungültige Eingabe"
 }

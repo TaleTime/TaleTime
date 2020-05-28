@@ -121,5 +121,8 @@
   "INFO_BUTTON_MOUSE_HOVER": "Change Story settings",
   "DELETE_BUTTON_MOUSE_HOVER": "Delete the Story",
   "PLAY_BUTTON_MOUSE_HOVER": "Start the Story",
-  "CHOOSE_READER": "Choose a reader"
+  "CHOOSE_READER": "Choose a reader",
+  "ASK_USER_DELETE_ACCOUNT": "Do you really want to delete your account? (y/n)",
+  "NO_USER_ACCOUNT_DELETION": "We won't delete your account",
+  "INVALID_INPUT": "Invalid input"
 }
