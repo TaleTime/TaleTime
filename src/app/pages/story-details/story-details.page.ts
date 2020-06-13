@@ -27,6 +27,9 @@ export class StoryDetailsPage {
 
   selectedStory: StoryInformation;
   imgPath = "dummy.png";
+
+  imageUrl: File;
+
   public selectedReader: string;
 
   constructor(
@@ -47,6 +50,8 @@ export class StoryDetailsPage {
       );
     } else {
       this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
+      let reader = new FileReader();
+
     }
     console.log("ImgPath:", this.imgPath);
     this.selectedReader = this.saveGameService.loadSavegame(
