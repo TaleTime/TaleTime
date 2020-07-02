@@ -145,6 +145,16 @@ export class PlayerPage implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Go back to Home Screen
+   */
+  goBackToHomeScreen(){
+    this.ionViewWillLeave();
+    this.ngOnDestroy();
+    this.updateSaveGame();
+    this.router.navigate(["/story-details"]);
+  }
+
   ionViewWillLeave() {
     // This is triggered when another screen is loaded
     console.log("Player leaved, stop audio");
@@ -202,7 +212,6 @@ export class PlayerPage implements OnInit {
    *  switches current node to previous node
    */
   previousChapter() {
-    console.log("----------click on Back---------------");
     console.log("Current Node: " + this.attr.storyNodeId);
     const peekObject = this.saveGame.chosenPath[
     this.saveGame.chosenPath.length - 1
@@ -217,7 +226,6 @@ export class PlayerPage implements OnInit {
       console.log("Already at first node");
       // maybe add an alert to indicate it
     }
-    console.log("-------------------------------------------");
   }
 
   /**

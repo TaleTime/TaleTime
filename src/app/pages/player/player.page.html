@@ -3,14 +3,14 @@
     <ion-title>
       {{metadata.title}}
     </ion-title>
+
+    <ion-button slot="start" margin-start="100px" (click)="goBackToHomeScreen()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-<!--  <h1 text-center>
-    Placeholder
-    &lt;!&ndash;    {{attr.name}}&ndash;&gt;
-  </h1>-->
   <ion-text [ngStyle]="{fontSize: this.fontSizePx}">
     {{text}}
   </ion-text>
@@ -27,22 +27,24 @@
   </ion-list>
 </ion-content>
 
+
 <ion-footer>
   <ion-toolbar>
     <ion-grid>
       <ion-row no-padding no-margin>
-        <ion-col size="4" align-self-center text-center>
-          <ion-button size="small" expand="block" slot="icon-only" (click)="previousChapter()">
+        <ion-col size="2" align-self-center text-center>
+          <ion-button (click)="previousChapter()">
             <ion-icon name="arrow-round-back"></ion-icon>
+            {{'STORY_BACK' | translate}}
           </ion-button>
         </ion-col>
-        <ion-col size="4" align-self-center text-center>
-          <ion-button size="small" expand="block" slot="icon-only" (click)="playPause()">
-            <ion-icon *ngIf="!playing" name="play"></ion-icon>
-            <ion-icon *ngIf="playing" name="pause"></ion-icon>
+        <ion-col size="2" align-self-center text-center>
+          <ion-button (click)="playPause()">
+            <ion-icon *ngIf="!playing" name="play">{{'PLAY' | translate}}</ion-icon>
+            <ion-icon *ngIf="playing" name="pause">{{'PAUSE' | translate}}</ion-icon>
           </ion-button>
         </ion-col>
-        <ion-col size="4">
+        <ion-col size="2">
           <!-- Intentionally empty to center the play button -->
         </ion-col>
       </ion-row>
