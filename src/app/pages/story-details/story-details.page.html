@@ -7,6 +7,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Details</ion-title>
+
+    <ion-button slot="start" margin-start="100px" (click)="goBackToHomeScreen()">
+      <ion-icon name="home"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
@@ -25,29 +29,34 @@
       >
       </ion-img>
     </ion-thumbnail>
-    <p>
+    <ion-label>
       {{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(',')}}
-    </p>
-    <p>{{'STORYDETAILS_DATE' | translate }}: {{selectedStory.date}}</p>
-    <p>{{'STORYDETAILS_LANGUAGE' | translate }}: {{selectedStory.language}}</p>
+      <br/>
+      {{'STORYDETAILS_DATE' | translate }}: {{selectedStory.date}}
+      <br/>
+      {{'STORYDETAILS_LANGUAGE' | translate }}: {{selectedStory.language}}</ion-label>
   </ion-item>
 
   <ion-item>
     <h2>{{'STORYDETAILS_SHORT_DESCRIPTION' | translate }}</h2>
+  </ion-item>
+  <ion-item>
     <p>{{selectedStory.shortDescription}}</p>
   </ion-item>
 
 
   <ion-list>
     <ion-list-header>
-      {{'CHOOSE_READER' | translate}}
+      <h2>
+        {{'CHOOSE_READER' | translate}}
+      </h2>
     </ion-list-header>
 
     <ion-radio-group [(ngModel)]="selectedReader">
-      <ion-item class="storyDetails">
+      <!-- <ion-item class="storyDetails">
         <ion-label>Text-to-speech</ion-label>
         <ion-radio value="default" (click)="saveReader()"></ion-radio>
-      </ion-item>
+      </ion-item> -->
 
       <ion-item class="storyDetails" *ngFor="let reader of selectedStory.readers">
         <ion-label>{{reader.name}}</ion-label>

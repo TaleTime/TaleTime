@@ -124,5 +124,9 @@
   "CHOOSE_READER": "Choose a reader",
   "ASK_USER_DELETE_ACCOUNT": "Do you really want to delete your account? (y/n)",
   "NO_USER_ACCOUNT_DELETION": "We won't delete your account",
-  "INVALID_INPUT": "Invalid input"
+  "INVALID_INPUT": "Invalid input",
+  "APP_HOME_BUTTON": "Home",
+  "STORY_BACK": "Back",
+  "PLAY": "Play",
+  "PAUSE": "Pause"
 }

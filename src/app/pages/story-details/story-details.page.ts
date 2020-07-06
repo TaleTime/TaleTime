@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NavController, NavParams} from "@ionic/angular";
 
 import {StoryInformation} from "../../models/storyInformation";
@@ -12,7 +12,7 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {StoryMenuPage} from "../story-menu/story-menu.page";
 import {PlayerParams} from "../../models/player/player-params";
 import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
-import {getMatFormFieldPlaceholderConflictError} from "@angular/material/form-field";
+import {Base64} from '@ionic-native/base64/ngx';
 
 const routes: Routes = [
   {path: "storyMenu", component: StoryMenuPage},
@@ -27,16 +27,17 @@ export class StoryDetailsPage {
 
   selectedStory: StoryInformation;
   imgPath = "dummy.png";
+
   public selectedReader: string;
 
   constructor(
     public navCtrl: NavController,
     public router: Router,
-    public storyInformationService : StoryInformationService,
+    public storyInformationService: StoryInformationService,
     public storyService: StoryService,
     public playerParamsService: PlayerParamsService,
     private saveGameService: SaveGameService,
-    private publicStoryHelper: PublicStoryHelperService
+    private publicStoryHelper: PublicStoryHelperService,
   ) {
     this.selectedStory = this.storyInformationService.storyInformation;
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
@@ -52,6 +53,11 @@ export class StoryDetailsPage {
     this.selectedReader = this.saveGameService.loadSavegame(
       this.selectedStory.id
     ).reader;
+  }
+
+  ngOnInit(){
+    this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
+    this.selectedStory.cover = this.imgPath;
   }
 
   saveReader() {
@@ -85,5 +91,9 @@ export class StoryDetailsPage {
     playerParams.reader = this.selectedReader;
     this.playerParamsService.setPlayerParams(playerParams);
     this.router.navigate(["/player"]);
+  }
+
+  goBackToHomeScreen(){
+    this.router.navigate(["/tabs/story-menu"]);
   }
 }
