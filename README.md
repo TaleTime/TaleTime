@@ -3,6 +3,7 @@ TaleTime is an interactive audiobook app for iOS and Android based on the ionic 
 
 Repository Metrics:
 
+
 ![GitHub Workflow Status](https://github.com/TaleTime/TaleTime/actions)
 ![GitHub pull requests](https://github.com/TaleTime/TaleTime/pulls)
 ![GitHub closed pull requests](https://github.com/TaleTime/TaleTime/pulls?q=is%3Apr+is%3Aclosed)
