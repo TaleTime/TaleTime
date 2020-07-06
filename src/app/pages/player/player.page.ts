@@ -150,8 +150,6 @@ export class PlayerPage implements OnInit {
    */
   goBackToHomeScreen(){
     this.ionViewWillLeave();
-    this.ngOnDestroy();
-    this.updateSaveGame();
     this.router.navigate(["/story-details"]);
   }
 
