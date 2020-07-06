@@ -3,7 +3,7 @@ name: BuildAndDeploy
 on:
   push:
     branches:
-    - ionic4
+    - master
 
 jobs:
   firebase-deploy:
@@ -11,9 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@master
-      with:
-        ref: ionic4
+    - uses: actions/checkout@v2
     - uses: actions/setup-node@master
       with:
         node-version: '10.x'
