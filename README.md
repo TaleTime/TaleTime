@@ -3,16 +3,28 @@ TaleTime is an interactive audiobook app for iOS and Android based on the ionic 
 
 Repository Metrics:
 
-![GitHub Workflow Status](https://github.com/TaleTime/TaleTime/actions)
-![GitHub pull requests](https://github.com/TaleTime/TaleTime/pulls)
-![GitHub closed pull requests](https://github.com/TaleTime/TaleTime/pulls?q=is%3Apr+is%3Aclosed)
-![node-current](https://img.shields.io/node/v/ionic)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/ionic)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/cordova)
-![GitHub package.json dependency version (subfolder of monorepo)](https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/firebase)
-![Website](https://tale-time.web.app/)
-![GitHub watchers](https://github.com/TaleTime/TaleTime/watchers)
-![GitHub stars](https://github.com/TaleTime/TaleTime/stargazers)
+<p align="center">
+    <a href="https://github.com/TaleTime/TaleTime/actions" alt="Actions">
+        <img src="https://img.shields.io/github/workflow/status/TaleTime/TaleTime/BuildAndDeploy?label=automatical%20build%20process" /></a>
+  <a href="https://github.com/TaleTime/TaleTime/pulls" alt="Pulls_Open">
+        <img src="https://img.shields.io/github/issues-pr-raw/TaleTime/TaleTime" /></a>
+  <a href="https://github.com/TaleTime/TaleTime/pulls?q=is%3Apr+is%3Aclosed" alt="Pulls_Closed">
+        <img src="https://img.shields.io/github/issues-pr-closed/TaleTime/TaleTime" /></a>
+  <a href="https://github.com/TaleTime/TaleTime/blob/master/package.json" alt="Node">
+        <img src="https://img.shields.io/node/v/ionic" /></a> 
+  <a href="https://github.com/TaleTime/TaleTime/blob/master/package.json" alt="Ionic">
+        <img src="https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/ionic" /></a>        
+  <a href="https://github.com/TaleTime/TaleTime/blob/master/package.json" alt="Cordova">
+        <img src="https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/cordova" /></a>       
+  <a href="https://github.com/TaleTime/TaleTime/blob/master/package.json" alt="Firebase">
+        <img src="https://img.shields.io/github/package-json/dependency-version/TaleTime/TaleTime/firebase" /></a>       
+  <a href="https://tale-time.web.app" alt="Website">
+        <img src="https://img.shields.io/website?label=tale-time.web.app&url=https%3A%2F%2Ftale-time.web.app" /></a>       
+  <a href="https://github.com/TaleTime/TaleTime/watchers" alt="Watchers">
+        <img src="https://img.shields.io/github/watchers/TaleTime/TaleTime?style=social" /></a>      
+  <a href="https://github.com/TaleTime/TaleTime/stargazers" alt="Stars">
+        <img src="https://img.shields.io/github/stars/TaleTime/TaleTime?style=social" /></a>
+</p>
 
 ## Get started
 
