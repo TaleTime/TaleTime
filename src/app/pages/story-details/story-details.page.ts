@@ -12,7 +12,6 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {StoryMenuPage} from "../story-menu/story-menu.page";
 import {PlayerParams} from "../../models/player/player-params";
 import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
-import {Base64} from '@ionic-native/base64/ngx';
 
 const routes: Routes = [
   {path: "storyMenu", component: StoryMenuPage},
@@ -49,7 +48,6 @@ export class StoryDetailsPage {
     } else {
       this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
     }
-    console.log("ImgPath:", this.imgPath);
     this.selectedReader = this.saveGameService.loadSavegame(
       this.selectedStory.id
     ).reader;

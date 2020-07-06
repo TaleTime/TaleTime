@@ -16,18 +16,16 @@
 <ion-content padding>
   <ion-item>
     <ion-thumbnail slot="start">
-      <ion-icon
-        *ngIf="!selectedStory.cover"
-        slot="start"
-        name="book"
-        style="font-size: 64px;"
-      ></ion-icon>
-      <ion-img
+<!--      <ion-icon-->
+<!--        *ngIf="!selectedStory.cover"-->
+<!--        slot="start"-->
+<!--        name="book"-->
+<!--        style="font-size: 64px;"-->
+<!--      ></ion-icon>-->
+      <img
         *ngIf="selectedStory.cover"
-        slot="start"
-        src="assets/stories/{{selectedStory.id}}/{{selectedStory.cover}}"
+        src="{{selectedStory.cover}}"
       >
-      </ion-img>
     </ion-thumbnail>
     <ion-label>
       {{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(',')}}
