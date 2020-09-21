@@ -128,5 +128,6 @@
   "APP_HOME_BUTTON": "Home",
   "STORY_BACK": "Back",
   "PLAY": "Play",
-  "PAUSE": "Pause"
+  "PAUSE": "Pause",
+  "TESTACCOUNT_DESCRIPTION": "If you just want to try out our App feel free to use this Test-Account:"
 }
