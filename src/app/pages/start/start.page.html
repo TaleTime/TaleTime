@@ -7,11 +7,10 @@
 
   <div class="ion-text-center">
     <h1 id="startPageHeading">{{'START_WELCOME' | translate }} TaleTime</h1>
-      <ion-img style="align-items: center; width: 100px !important;
-  height: 100px !important;
-  display: block !important;" src="assets/icon/appicon.png"></ion-img>
-
+      <ion-img style="margin: auto; align-items: center; width: 100px !important; height: 100px !important; display: block !important;" src="assets/icon/appicon.png"></ion-img>
+    <h4></h4>
     <h4>{{'START_DESCRIPTION' | translate }}</h4>
+    <h4>{{'TESTACCOUNT_DESCRIPTION' | translate }}<br>{{'EMAIL' | translate }}: tt.demo@htwsaar.de<br>{{'PASSWORD' | translate }}: TestDemo123</h4>
     <ngx-auth-firebaseui-login
       (onCreateAccountRequested)="goToCreateAccount()"
       (onSuccess)="login($event)"
@@ -30,6 +29,7 @@
 <!--    <ion-button id="registrationButton" (click)="goToCreateAccount()">-->
 <!--      {{'Registrieren' | translate }}-->
 <!--    </ion-button>-->
+
   </div>
 
 <!--  <div class="ion-text-center">-->

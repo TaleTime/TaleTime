@@ -12,6 +12,7 @@ import {AlertController} from "@ionic/angular";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {SettingsService} from "../../services/settings/settings.service";
 import {TranslateService} from "@ngx-translate/core";
+import {STORY_DIR} from "../../constants/constants";
 
 @Component({
   selector: "app-story-menu",
@@ -63,6 +64,8 @@ export class StoryMenuPage implements OnInit {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
     }
+    console.log("STORRYYY");
+    console.log(this.stories);
   }
 
   /**
@@ -85,6 +88,7 @@ export class StoryMenuPage implements OnInit {
     let storyInformation: Array<StoryInformation> = new Array<StoryInformation>();
     for(let story of this.storyService.stories){
       if(this.checkLanguage(story)){
+        story.cover = STORY_DIR + story.id + "/icon.png";
         storyInformation.push(story);
       }
     }

@@ -29,15 +29,15 @@
   <ion-card *ngFor="let story of this.stories">
     <ion-item>
       <ion-thumbnail slot="start">
-        <ion-icon
-          *ngIf="!story.cover"
-          name="book"
-          style="font-size: 64px;"
-        ></ion-icon>
-        <ion-img
+<!--        <ion-icon-->
+<!--          *ngIf="!story.cover"-->
+<!--          name="book"-->
+<!--          style="font-size: 64px;"-->
+<!--        ></ion-icon>-->
+        <img
           *ngIf="story.cover"
-          src="assets/stories/{{story.id}}/{{story.cover}}"
-        ></ion-img>
+          src="{{story.cover}}"
+        >
       </ion-thumbnail>
       <ion-label>
         <h1>

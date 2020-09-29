@@ -49,7 +49,6 @@ export class StoryDetailsPage {
     } else {
       this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
     }
-    console.log("ImgPath:", this.imgPath);
     this.selectedReader = this.saveGameService.loadSavegame(
       this.selectedStory.id
     ).reader;
