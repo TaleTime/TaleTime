@@ -12,6 +12,7 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {StoryMenuPage} from "../story-menu/story-menu.page";
 import {PlayerParams} from "../../models/player/player-params";
 import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
+import {Base64} from '@ionic-native/base64/ngx';
 
 const routes: Routes = [
   {path: "storyMenu", component: StoryMenuPage},
