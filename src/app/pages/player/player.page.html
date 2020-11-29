@@ -16,12 +16,7 @@
   </ion-text>
 
   <ion-list>
-    <ion-button
-      class="buttons"
-      *ngFor="let a of answers; index as i"
-      (click)="nextChapter(i)"
-      [ngClass]="pulseClass"
-    >
+    <ion-button class="buttons" *ngFor="let a of answers; index as i" (click)="nextChapter(i)" [ngClass]="pulseClass">
       {{a.value}}
     </ion-button>
   </ion-list>
@@ -33,7 +28,7 @@
     <ion-grid>
       <ion-row no-padding no-margin>
         <ion-col size="2" align-self-center text-center style="margin-right: 5rem">
-          <ion-button (click)="previousChapter()">
+          <ion-button [disabled]="disabled" (click)="previousChapter()">
             <ion-icon name="arrow-round-back"></ion-icon>
             {{'STORY_BACK' | translate}}
           </ion-button>

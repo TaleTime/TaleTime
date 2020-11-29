@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {Media, MediaObject} from "@ionic-native/media/ngx";
-import {EventEmitter} from "events";
-import {LoggerService} from "../logger/logger.service";
+import { Injectable } from "@angular/core";
+import { Media, MediaObject } from "@ionic-native/media/ngx";
+import { EventEmitter } from "events";
+import { LoggerService } from "../logger/logger.service";
 
 /**
  * @author Markus Altmeyer
@@ -80,9 +80,10 @@ export class AudioService {
     return new Promise((resolve) => {
       if (!this.isPlaying) {
         this.isPlaying = true;
-        this.emitter.once("started", () => {
-          resolve();
-        });
+        resolve();
+        // this.emitter.once("started", () => {
+        //   resolve();
+        // });
         this.mediaObject.play();
       } else {
         resolve();
@@ -97,9 +98,10 @@ export class AudioService {
     return new Promise((resolve) => {
       if (this.isPlaying) {
         this.isPlaying = false;
-        this.emitter.once("paused", () => {
-          resolve();
-        });
+        resolve();
+        // this.emitter.once("paused", () => {
+        //   resolve();
+        // });
         this.mediaObject.pause();
       } else {
         resolve();
