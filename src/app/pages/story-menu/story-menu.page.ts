@@ -13,6 +13,7 @@ import {SimpleToastService} from "../../services/simple-toast/simple-toast.servi
 import {SettingsService} from "../../services/settings/settings.service";
 import {TranslateService} from "@ngx-translate/core";
 import {STORY_DIR} from "../../constants/constants";
+import {ProfileService} from "../../services/profile/profile.service";
 
 @Component({
   selector: "app-story-menu",
@@ -38,14 +39,14 @@ export class StoryMenuPage implements OnInit {
     private translate: TranslateService,
     private settings: SettingsService,
     public platform: Platform,
-    // public app: App,
     public router: Router,
     public playerParamsService: PlayerParamsService,
     public storyInformationService: StoryInformationService,
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     private authService: AuthService,
-    public storyService: StoryService
+    public storyService: StoryService,
+    public profilservice: ProfileService
   ) {
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);
@@ -55,10 +56,8 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
-    // if(this.authService.currentUserAccount == null){
-    //   this.router.navigate(["/start"]);
-    // }
-    const activeUserProfile = this.authService.getActiveUserProfile();
+
+    const activeUserProfile = this.profilservice.getActiveUserProfile()
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;

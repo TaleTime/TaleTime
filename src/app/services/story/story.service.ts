@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Platform} from "@ionic/angular";
-import {StoryInformation} from "../../models/storyInformation";
+import {StoryInformation, StoryInformationWithUrl} from "../../models/storyInformation";
 import {DEFAULT_READER, SINGLE_STORY_FILE_NAME} from "../../constants/constants";
 import {HttpClient} from "@angular/common/http";
 import {ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData} from "../../models/story/story";
@@ -14,7 +14,7 @@ import {LoggerService} from "../logger/logger.service";
 
 @Injectable({
   providedIn: "root"
-})
+} )
 export class StoryService {
 
   private readonly STORY_INFO_KEY = "STORY_INFO";
@@ -39,8 +39,18 @@ export class StoryService {
           .get(this.STORY_INFO_KEY)
           .then((loadedStories) => {
             if (loadedStories) {
-              this._stories = loadedStories;
-              this.buildIndex();
+              //this._stories = loadedStories;
+              //this.buildIndex();
+              this.loadAllStories().then(stories => {
+                this._stories = stories;
+                this.buildIndex();
+              })
+            }
+            else {
+                this.loadAllStories().then(stories => {
+                  this._stories = stories;
+                  this.buildIndex();
+                })
             }
           })
           .catch((error) => {
@@ -268,4 +278,46 @@ export class StoryService {
     // if nothing was found assume the answers need to be read out
     return false;
   }
+  private loadAllStories(): Promise<Array<StoryInformationWithUrl>>{
+    //Mocks access to the local storage.
+    //TODO There must be a mock. The data should get fetch form the internal storage instead
+    var promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) =>{
+      var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+      const newStory = new StoryInformation();
+      newStory.title = "Der verlorene Ball";
+      newStory.id = "Der_verlorene_Ball";
+      newStory.author = ["Sarah Philippi", "Lisa Roisch"];
+      newStory.date = 2016;
+      newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
+      newStory.language = "Deutsch";
+      newStory.shortDescription =
+        "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
+      newStory.medium = "device";
+      newStory.readers = [
+        {name: "Kevin", answersPartOfAudioFile: true},
+        {name: "Raoul", answersPartOfAudioFile: false}
+      ];
+      mockStories.push(newStory as StoryInformationWithUrl);
+
+      const newStory2 = new StoryInformation();
+      newStory2.title = "Celebrating Shuby the Shy Sheep";
+      newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
+      newStory2.author = ["André Miede", "Sebastian Barth"];
+      newStory2.date = 2018;
+      newStory2.cover = "";
+      newStory2.language = "English";
+      newStory2.shortDescription =
+        "Description of \"Celebrating Shuby the Shy Sheep\"";
+      newStory2.medium = "device";
+      newStory2.readers = [];
+      mockStories.push(newStory2 as StoryInformationWithUrl);
+
+      resolve(mockStories)
+    });
+
+    return promise;
+
+  }
 }
+
+

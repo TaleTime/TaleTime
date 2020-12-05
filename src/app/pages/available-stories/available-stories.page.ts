@@ -13,6 +13,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import {CLOUD} from "../../constants/constants";
+import {ProfileService} from "../../services/profile/profile.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -45,7 +46,8 @@ export class AvailableStoriesPage implements OnInit {
     private file: File,
     private zip: Zip,
     private loadingCtrl: LoadingController,
-    private toastService: SimpleToastService
+    private toastService: SimpleToastService,
+    private profilService: ProfileService
   ) {
     // if(this.authService.currentUserAccount == null){
     //   this.router.navigate(["/start"]);
@@ -60,7 +62,7 @@ export class AvailableStoriesPage implements OnInit {
     // if(this.authService.currentUserAccount == null){
     //   this.router.navigate(["/start"]);
     // }
-    const activeUserProfile = this.authService.getActiveUserProfile();
+    const activeUserProfile = this.profilService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
@@ -74,34 +76,7 @@ export class AvailableStoriesPage implements OnInit {
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
   loadDeviceDefaultStories() {
-    const newStory = new StoryInformation();
-    newStory.title = "Der verlorene Ball";
-    newStory.id = "Der_verlorene_Ball";
-    newStory.author = ["Sarah Philippi", "Lisa Roisch"];
-    newStory.date = 2016;
-    newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
-    newStory.language = "Deutsch";
-    newStory.shortDescription =
-      "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
-    newStory.medium = "device";
-    newStory.readers = [
-      {name: "Kevin", answersPartOfAudioFile: true},
-      {name: "Raoul", answersPartOfAudioFile: false}
-    ];
-    this.availableStories.push(newStory as StoryInformationWithUrl);
-
-    const newStory2 = new StoryInformation();
-    newStory2.title = "Celebrating Shuby the Shy Sheep";
-    newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
-    newStory2.author = ["André Miede", "Sebastian Barth"];
-    newStory2.date = 2018;
-    newStory2.cover = "";
-    newStory2.language = "English";
-    newStory2.shortDescription =
-      "Description of \"Celebrating Shuby the Shy Sheep\"";
-    newStory2.medium = "device";
-    newStory2.readers = [];
-    this.availableStories.push(newStory2 as StoryInformationWithUrl);
+    this.availableStories =  this.storyService.stories as StoryInformationWithUrl[]
   }
 
   goToSelectUserProfile(){
