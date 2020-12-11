@@ -11,7 +11,10 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item (click)="select($event, userProfile.id)" *ngFor="let userProfile of this.authService.userProfiles">
+    <ion-item
+        (click)="select($event, userProfile.id)"
+        *ngFor="let userProfile of this.profilService.userProfiles"
+    >
       <ion-avatar slot="start">
         <img src="assets/imgs/profile/{{userProfile.avatar.name}}" />
       </ion-avatar>
@@ -22,7 +25,7 @@
       </ion-button>
     </ion-item>
 
-    <ion-item (click)="create()" id="createProfileButton">
+    <ion-item (click) ="create();" id="createProfileButton">
       <ion-icon name="add-circle" slot="start"></ion-icon>
       <h2>{{ 'USER_MANAGEMENT_CREATE_PROFILE' | translate }}</h2>
     </ion-item>

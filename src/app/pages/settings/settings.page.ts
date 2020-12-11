@@ -22,6 +22,7 @@ import {
   TTS_RATE_SLOW_VALUE
 } from "../../constants/constants";
 import {NavController} from "@ionic/angular";
+import {ProfileService} from "../../services/profile/profile.service";
 
 @Component({
   selector: "app-settings",
@@ -46,12 +47,12 @@ export class SettingsPage {
     public settings: SettingsService,
     private translate: TranslateService,
     private authService: AuthService,
-    private toastService: SimpleToastService,
+    private profilService: ProfileService
   ) {
   }
 
   ngOnInit() {
-    const activeUserProfile = this.authService.getActiveUserProfile();
+    const activeUserProfile = this.profilService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;

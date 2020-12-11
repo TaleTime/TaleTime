@@ -8,6 +8,7 @@ import {Settings} from "../../models/settings";
 import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
 import {Storage} from "@ionic/storage";
 import {AuthService} from "../auth/auth.service";
+import {ProfileService} from "../profile/profile.service";
 
 @Injectable({
   providedIn: "root"
@@ -27,7 +28,8 @@ export class SettingsService {
     private storage: Storage,
     private speechRecognitionService: SpeechRecognition,
     private logger: LoggerService,
-    private alert: AlertService
+    private alert: AlertService,
+    private profilService: ProfileService
   ) {
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
@@ -39,9 +41,9 @@ export class SettingsService {
   }
 
   loadSettings() {
-    if (this.authService.getActiveUserProfile() !== undefined) {
+    if (this.profilService.getActiveUserProfile()!== undefined) {
       this.storage
-        .get(this.SETTINGS_KEY + this.authService.getActiveUserProfile().id)
+        .get(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id)
         .then((settings: Settings) => {
           this.logger.log(
             "Read settings from storage: " + JSON.stringify(settings)
@@ -169,7 +171,7 @@ export class SettingsService {
    */
   private save() {
     this.storage
-      .set(this.SETTINGS_KEY + this.authService.getActiveUserProfile().id, this.settings)
+      .set(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id, this.settings)
       .then(() =>
         this.logger.log("Settings written: " + JSON.stringify(this.settings))
       )
