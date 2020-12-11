@@ -1,12 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {NavController, Platform} from "@ionic/angular";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AlertController, NavController, Platform } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { AuthService } from "../../services/auth/auth.service";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 
-import {AuthService} from "../../services/auth/auth.service";
-import {AlertController} from "@ionic/angular";
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 
-import {Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -34,41 +33,6 @@ export class UserAccountPage implements OnInit {
   }
 
   ngAfterViewInit() {
-    // if (!this.checked) {
-    //   this.checked = true;
-    //   this.platform.ready().then(() => {
-    //     // debugger;
-    //     let elements = document.getElementsByClassName('mat-button mat-button-base mat-warn ng-star-inserted');
-    //
-    //     // if (elements.length < 1) {
-    //     //   setTimeout(() => {
-    //     //     this.checked = false;
-    //     //     return;
-    //     //     }, 1500);
-    //     // }
-    //     if (elements.length < 1) {
-    //       debugger;
-    //       // console.log("uff");
-    //       // this.checked = false;
-    //       // return;
-    //     } else {
-    //       console.log(elements);
-    //       // let e = elements.item(0);
-    //       // e.id = 'logAccountOut';
-    //       // e.textContent
-    //       debugger;
-    //       for (let i = 0; i < elements.length; i++) {
-    //         let e = elements.item(i);
-    //
-    //         console.log(e);
-    //         if (e.textContent === 'Sign out') {
-    //           e.id = 'logAccountOut';
-    //         }
-    //       }
-    //       console.log(document.getElementById('logAccountOut'));
-    //     }
-    //   });
-    // }
   }
 
   public deleteAccount() {
@@ -78,75 +42,12 @@ export class UserAccountPage implements OnInit {
       this.authService.deleteAccount().subscribe((success) => {
         this.router.navigate(["/"]);
       });
-    } else if(decision === "n"){
+    } else if (decision === "n") {
       alert(this.translate.instant("NO_USER_ACCOUNT_DELETION"))
     } else {
       alert(this.translate.instant("INVALID_INPUT"))
     }
   }
-
-  // public changePin() {
-  //   debugger;
-  //   this.router.navigate(["/change-user-account-pin"])
-  //     .then(r => {
-  //     });
-  // }
-
-  // public async changePin() {
-  //   const alert = await this.showPinChangeDialog((valid) => {
-  //     if (valid) {
-  //       this.toastService.displayToast("Pin changed!");
-  //     } else {
-  //       this.toastService.displayToast("Error, please try again.");
-  //     }
-  //   });
-  //
-  //   await alert.present();
-  // }
-
-  // public showPinChangeDialog(validFn: (arg) => void, cancelFn?: (arg) => void){
-  //   return this.alertCtrl.create({
-  //     header: "Change Pin",
-  //     inputs: [
-  //       {
-  //         name: "oldPin",
-  //         placeholder: "Old Pin",
-  //         type: "password"
-  //       },
-  //       {
-  //         name: "newPin",
-  //         placeholder: "New Pin",
-  //         type: "password"
-  //       },
-  //       {
-  //         name: "newPinRe",
-  //         placeholder: "New Pin",
-  //         type: "password"
-  //       }
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: "Cancel",
-  //         role: "cancel",
-  //         handler: (data) => {
-  //           if (cancelFn) {
-  //             cancelFn(data);
-  //           } else {
-  //             console.log("Cancel clicked");
-  //           }
-  //         }
-  //       },
-  //       {
-  //         text: "Ok",
-  //         handler: (data) => {
-  //           this.authService.changePin(data.oldPin, data.newPin, data.newPinRe).subscribe(result => {
-  //             validFn(result.success);
-  //         });
-  //         }
-  //       }
-  //     ]
-  //   });
-  // }
 
   onUserEdited(event) {
     console.log(event);
@@ -204,5 +105,4 @@ export class UserAccountPage implements OnInit {
   ngOnInit() {
     // debugger;
   }
-
 }

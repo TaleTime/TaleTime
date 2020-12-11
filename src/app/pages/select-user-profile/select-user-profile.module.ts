@@ -1,14 +1,11 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {RouterModule, Routes} from "@angular/router";
-
-import {IonicModule} from "@ionic/angular";
-
-import {SelectUserProfilePage} from "./select-user-profile.page";
-import {TranslateModule} from "@ngx-translate/core";
-import {CreateUserProfilePage} from "../create-user-profile/create-user-profile.page";
-import {CreateUserProfilePageModule} from "../create-user-profile/create-user-profile.module";
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { MatCardModule } from '@angular/material/card';
+import { RouterModule, Routes } from "@angular/router";
+import { IonicModule } from "@ionic/angular";
+import { TranslateModule } from "@ngx-translate/core";
+import { SelectUserProfilePage } from "./select-user-profile.page";
 
 const routes: Routes = [
   {
@@ -24,6 +21,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     TranslateModule,
+    MatCardModule
     //CreateUserProfilePageModule
   ],
   declarations: [

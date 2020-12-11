@@ -1,13 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import{Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
-import {ModalController, NavController} from "@ionic/angular";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ModalController, NavController } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { AuthService } from "../../services/auth/auth.service";
+import { SettingsService } from "../../services/settings/settings.service";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 
-import {CreateUserProfilePage} from "../create-user-profile/create-user-profile.page";
-
-import {AuthService} from "../../services/auth/auth.service";
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {SettingsService} from "../../services/settings/settings.service";
 
 @Component({
   selector: "app-select-user-profile",
@@ -69,12 +67,7 @@ export class SelectUserProfilePage implements OnInit {
     this.authService.deleteUserProfile(userProfileId);
   }
 
-  // public async create() {
-  //   const userProfileModal = await this.modalCtrl.create({component: CreateUserProfilePage});
-  //   await userProfileModal.present();
-  // }
-
-  public create(){
+  public create() {
     this.router.navigate(["create-user-profile"]);
   }
 
@@ -100,4 +93,13 @@ export class SelectUserProfilePage implements OnInit {
   ngOnInit() {
   }
 
+  onSignOut() {
+    this.logout();
+  }
+
+  public logout() {
+    this.authService.logout().subscribe((success) => {
+      this.router.navigate([""]);
+    });
+  }
 }
