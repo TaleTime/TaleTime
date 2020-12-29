@@ -92,8 +92,8 @@ export class UserAccountPage implements OnInit {
     return false;
   }
 
-  onBackKeyDown() {
-    this.navCtrl.navigateForward("/settings", {});
+  public close() {
+    this.router.navigate(["tabs/settings"]);
   }
 
   public logout() {
