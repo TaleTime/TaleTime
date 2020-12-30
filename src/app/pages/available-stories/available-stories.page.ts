@@ -14,6 +14,8 @@ import {Router} from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import {CLOUD} from "../../constants/constants";
 import {ProfileService} from "../../services/profile/profile.service";
+import {UserProfile} from "../../models/userProfile";
+import {LanguageService} from "../../services/language/language.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -26,6 +28,7 @@ import {ProfileService} from "../../services/profile/profile.service";
 export class AvailableStoriesPage implements OnInit {
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
+  private activeUserProfile: UserProfile;
 
   public availableStories: Array<StoryInformationWithUrl> = [];
   public readonly PUBLIC_STORY_URL: string =
@@ -47,11 +50,10 @@ export class AvailableStoriesPage implements OnInit {
     private zip: Zip,
     private loadingCtrl: LoadingController,
     private toastService: SimpleToastService,
-    private profilService: ProfileService
+    private profileService: ProfileService,
+    private languageService: LanguageService
   ) {
-    // if(this.authService.currentUserAccount == null){
-    //   this.router.navigate(["/start"]);
-    // }
+
     this.loadDeviceDefaultStories();
     this.platform.ready().then(() => {
       this.loadPublicStories();
@@ -59,14 +61,11 @@ export class AvailableStoriesPage implements OnInit {
   }
 
   ngOnInit() {
-    // if(this.authService.currentUserAccount == null){
-    //   this.router.navigate(["/start"]);
-    // }
-    const activeUserProfile = this.profilService.getActiveUserProfile();
+    this.activeUserProfile = this.profileService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
-    if (activeUserProfile) {
-      this.activeUserProfileName = activeUserProfile.name;
-      this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
+    if (this.activeUserProfile) {
+      this.activeUserProfileName = this.activeUserProfile.name;
+      this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
   }
 
@@ -76,7 +75,14 @@ export class AvailableStoriesPage implements OnInit {
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
   loadDeviceDefaultStories() {
-    this.availableStories =  this.storyService.stories as StoryInformationWithUrl[]
+    const lang = this.languageService.selected;
+    let promise = this.storyService.getStoriesByLanguage(lang);
+    promise.then(stories => {
+      this.availableStories = stories;
+    }).catch(error => {
+      console.log(error);
+    });
+
   }
 
   goToSelectUserProfile(){
@@ -88,12 +94,14 @@ export class AvailableStoriesPage implements OnInit {
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
-    } else if (this.storyService.exists(story.id)) {
+   // } else if (user.isStoryPresent(story.id)) {
+    } else if (this.activeUserProfile.isStoryPresent(story.id)) {
       // story already exists
       this.alertStoryAlreadyExists(story.title);
     } else {
       // add new (non cloud) story
-      this.storyService.addStory(story);
+      this.activeUserProfile.addStory(story);
+
       this.alertStoryAddedSuccessfully(story.title);
     }
   }

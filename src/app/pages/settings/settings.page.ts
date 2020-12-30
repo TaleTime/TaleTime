@@ -23,6 +23,7 @@ import {
 } from "../../constants/constants";
 import {NavController} from "@ionic/angular";
 import {ProfileService} from "../../services/profile/profile.service";
+import {LanguageService} from "../../services/language/language.service";
 
 @Component({
   selector: "app-settings",
@@ -47,7 +48,8 @@ export class SettingsPage {
     public settings: SettingsService,
     private translate: TranslateService,
     private authService: AuthService,
-    private profilService: ProfileService
+    private profilService: ProfileService,
+    private languageService:LanguageService
   ) {
   }
 
@@ -123,6 +125,7 @@ export class SettingsPage {
     console.log("Changing language to <" + selectedLanguage + ">");
     this.translate.use(SettingsPage.getCodeFromLanguage(selectedLanguage));
     this.settings.language = SettingsPage.getCodeFromLanguage(selectedLanguage);
+    this.languageService.selected = this.settings.language;
   }
 
   changeFontSize(selectedFontSize){

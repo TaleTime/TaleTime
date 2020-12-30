@@ -83,9 +83,8 @@ export class ProfileService {
       const userProfile = userAccount.userProfiles.get(userProfileId);
       this.activeUserProfile = userProfile;
     }else {
-      //@Tobi muss hier noch eine Exception geworden werden.
+      //@Tobi Eventuell Exception werfen
     }
-    //@Tobi Warum wird hier ein Observable zurückgeben?
     return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
       subscriber.next(true);
       subscriber.complete();
@@ -98,5 +97,21 @@ export class ProfileService {
    */
   get userProfiles() {
     return Array.from(this.authService.currentUserAccount.userProfiles.values());
+  }
+
+  /**
+   * Store a user profil. This is needed if a user profile is modified. e.g. story is added to the profile
+   * @param {UserProfile} userProfile
+
+   */
+  public storeProfile(userprofile: UserProfile){
+    this.activeUserProfile = userprofile;
+    const userAccount: UserAccount = this.authService.currentUserAccount;
+    this.authService.save(userAccount);
+
+    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+      subscriber.next(true);
+      subscriber.complete();
+    })
   }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {MenuController, NavController, Platform} from "@ionic/angular";
+import {AlertController, MenuController, NavController, Platform} from "@ionic/angular";
 import {Reader, StoryInformation} from "../../models/storyInformation";
 import {AuthService} from "../../services/auth/auth.service";
 import {StoryService} from "../../services/story/story.service";
@@ -8,12 +8,13 @@ import {PlayerParamsService} from "../../services/player-parmas/player-params.se
 import {PlayerParams} from "../../models/player/player-params";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
 import {Storage} from "@ionic/storage";
-import {AlertController} from "@ionic/angular";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {SettingsService} from "../../services/settings/settings.service";
 import {TranslateService} from "@ngx-translate/core";
-import {STORY_DIR} from "../../constants/constants";
 import {ProfileService} from "../../services/profile/profile.service";
+import {UserProfile} from "../../models/userProfile";
+import {AvailableLanguage} from "../../models/AvailableLanguage";
+import {LanguageService} from "../../services/language/language.service";
 
 @Component({
   selector: "app-story-menu",
@@ -24,6 +25,8 @@ export class StoryMenuPage implements OnInit {
 
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
+  private activeUserProfile: UserProfile;
+  public stories: Array<StoryInformation>
 
   CANCEL_BUTTON_TOOLTIP_LABEL: string;
   PLAY_BUTTON_TOOLTIP_LABEL: string;
@@ -46,8 +49,10 @@ export class StoryMenuPage implements OnInit {
     public menuCtrl: MenuController,
     private authService: AuthService,
     public storyService: StoryService,
-    public profilservice: ProfileService
+    public profileService: ProfileService,
+    public languageService: LanguageService
   ) {
+
     if(this.authService.currentUserAccount == null){
       this.router.navigate(["/start"]);
     }
@@ -56,12 +61,19 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
-
-    const activeUserProfile = this.profilservice.getActiveUserProfile()
+    this.stories =[]
+     this.activeUserProfile = this.profileService.getActiveUserProfile()
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
-    if (activeUserProfile) {
-      this.activeUserProfileName = activeUserProfile.name;
-      this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
+    if (this.activeUserProfile) {
+      this.activeUserProfileName = this.activeUserProfile.name;
+      this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
+      //todo Ändern, dass nur noch Enum anstelle von Strings benutzt werden
+      if(this.  languageService.selected=="de-DE"){
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.Deutsch)
+      } else {
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.Englisch)
+      }
+
     }
     console.log("STORRYYY");
     console.log(this.stories);
@@ -83,17 +95,7 @@ export class StoryMenuPage implements OnInit {
     this.PLAY_BUTTON_TOOLTIP_LABEL = this.translate.instant("PLAY_BUTTON_MOUSE_HOVER");
   }
 
-  public get stories(): Array<StoryInformation> {
-    let storyInformation: Array<StoryInformation> = new Array<StoryInformation>();
-    for(let story of this.storyService.stories){
-      if(this.checkLanguage(story)){
-        story.cover = STORY_DIR + story.id + "/icon.png";
-        storyInformation.push(story);
-      }
-    }
 
-    return storyInformation;
-  }
 
   /**
    * Checks if the story is available in the current language
@@ -183,14 +185,6 @@ export class StoryMenuPage implements OnInit {
             }
           }
         },
-        // {
-        //   text: "Ok",
-        //   handler: (data) => {
-        //     this.authService.changePin(data.oldPin, data.newPin, data.newPinRe).subscribe(result => {
-        //       validFn(result.success);
-        //     });
-        //   }
-        // }
       ]
     });
   }

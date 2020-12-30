@@ -11,6 +11,7 @@ import {File} from "@ionic-native/file/ngx";
 import {SaveGameService} from "../save-game/save-game.service";
 import {PublicStoryHelperService} from "../public-story-helper/public-story-helper.service";
 import {LoggerService} from "../logger/logger.service";
+import {rejects} from "assert";
 
 @Injectable({
   providedIn: "root"
@@ -278,6 +279,10 @@ export class StoryService {
     // if nothing was found assume the answers need to be read out
     return false;
   }
+  /**
+   * Return a promise with a array contains all stories
+   * @returns {Promise<Array<StoryInformationWithUrl>>}
+   */
   private loadAllStories(): Promise<Array<StoryInformationWithUrl>>{
     //Mocks access to the local storage.
     //TODO There must be a mock. The data should get fetch form the internal storage instead
@@ -318,6 +323,72 @@ export class StoryService {
     return promise;
 
   }
+  //Mocks access to the local storage.
+  //TODO There must be a mock. The data should get fetch form the internal storage instead
+  /**
+   * Return a promise with a array contains all stories for a given language
+   * @param {String} lang language e.g. "de-DE"
+   * @returns {Promise<Array<StoryInformationWithUrl>>}
+   */
+  //TODO @Tobi Parameter änderen, so dass Enum benutzt wird.
+  public getStoriesByLanguage(lang : String):Promise<Array<StoryInformationWithUrl>> {
+    let promise
+    switch (lang){
+      case "de-DE": {
+         promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) =>{
+          var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+          const newStory = new StoryInformation();
+          newStory.title = "Der verlorene Ball";
+          newStory.id = "Der_verlorene_Ball";
+          newStory.author = ["Sarah Philippi", "Lisa Roisch"];
+          newStory.date = 2016;
+          newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
+          newStory.language = "Deutsch";
+          newStory.shortDescription =
+            "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
+          newStory.medium = "device";
+          newStory.readers = [
+            {name: "Kevin", answersPartOfAudioFile: true},
+            {name: "Raoul", answersPartOfAudioFile: false}
+          ];
+          mockStories.push(newStory as StoryInformationWithUrl);
+
+          resolve(mockStories)
+        });
+
+        break;
+      }
+
+      case "en-US": {
+        promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) =>{
+          var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+          const newStory2 = new StoryInformation();
+          newStory2.title = "Celebrating Shuby the Shy Sheep";
+          newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
+          newStory2.author = ["André Miede", "Sebastian Barth"];
+          newStory2.date = 2018;
+          newStory2.cover = "";
+          newStory2.language = "Englisch";
+          newStory2.shortDescription =
+            "Description of \"Celebrating Shuby the Shy Sheep\"";
+          newStory2.medium = "device";
+          newStory2.readers = [];
+          mockStories.push(newStory2 as StoryInformationWithUrl);
+
+          resolve(mockStories)
+        });
+
+        break;
+      }
+
+      default: {
+        rejects(new Error("No language found"));
+      }
+    }
+
+    return promise;
+  }
+
 }
 
 
