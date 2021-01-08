@@ -153,7 +153,7 @@ export class PlayerPage implements OnInit {
     this.ionViewWillLeave();
     this.ngOnDestroy();
     this.updateSaveGame();
-    this.router.navigate(["/story-details"]);
+    this.router.navigate(["tabs/story-menu"]);
   }
 
   ionViewWillLeave() {
@@ -202,7 +202,7 @@ export class PlayerPage implements OnInit {
    */
   nextChapter(answer: number) {
     if (this.answers[0].attributes.id === "-1") {
-      this.navCtrl.navigateBack("/story-menu");
+      this.navCtrl.navigateBack("tabs/story-menu");
     } else {
       this.loadNodeFromAnswer(answer);
       this.updateSaveGame();
