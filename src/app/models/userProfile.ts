@@ -3,11 +3,10 @@
  * @author Matthias Kiefer
  * @date 20.11.2017
  */
-import {Settings} from "./settings";
-import {StoryInformation} from "./storyInformation";
-import {SaveGame} from "./saveGame";
-import {AvailableLanguage} from "./AvailableLanguage";
-import {throwError as observableThrowError} from "rxjs/internal/observable/throwError";
+import { AvailableLanguage } from "./AvailableLanguage";
+import { SaveGame } from "./saveGame";
+import { Settings } from "./settings";
+import { StoryInformation } from "./storyInformation";
 
 export class UserProfile {
   private static AVATARS = [
@@ -56,7 +55,7 @@ export class UserProfile {
     this.arrayOfStories = [];
   }
 
-  public getArrayOfStories():Array<StoryInformation>{
+  public getArrayOfStories(): Array<StoryInformation> {
     return this.arrayOfStories;
   }
   /**
@@ -64,24 +63,24 @@ export class UserProfile {
    * @param {AvailableLanguage} lang Language as enum
    * @returns {Array<StoryInformation>}
    */
-  public getArrayOfStoriesByLanguage(lang: AvailableLanguage):Array<StoryInformation>{
-    return this.arrayOfStories.filter(o=> o.language===lang)
+  public getArrayOfStoriesByLanguage(lang: AvailableLanguage): Array<StoryInformation> {
+    return this.arrayOfStories.filter(o => o.language === lang)
 
   }
 
-  public addStory(story: StoryInformation):void{
+  public addStory(story: StoryInformation): void {
     this.arrayOfStories.push(story);
   }
 
-  public getSaveGame(findStoryId:string):SaveGame{
+  public getSaveGame(findStoryId: string): SaveGame {
     this.arrayOfSaveGames.find(o => {
-      if(o.storyId===findStoryId) {
+      if (o.storyId === findStoryId) {
         return o;
       }
     })
     throw Error("Object not found");
   }
-  public setSaveGame(savegame: SaveGame):void{
+  public setSaveGame(savegame: SaveGame): void {
     this.arrayOfSaveGames.push(savegame);
   }
   /**
@@ -89,9 +88,9 @@ export class UserProfile {
    * @param {String} title Title of the storie.
    * @returns {boolean} true if story already stored, otherwise false
    */
-  public isStoryPresent(title:String):boolean{
-    for (let story of this.arrayOfStories){
-      if(story.id === title){
+  public isStoryPresent(title: String): boolean {
+    for (let story of this.arrayOfStories) {
+      if (story.id === title) {
         return true;
       }
     }

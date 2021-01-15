@@ -1,21 +1,20 @@
-import {Component, NgZone, OnInit} from "@angular/core";
-import {LoadingController, NavController, Platform} from "@ionic/angular";
-import {HTTP} from "@ionic-native/http/ngx";
-import {StoryInformation, StoryInformationWithUrl} from "../../models/storyInformation";
-import {StoryService} from "../../services/story/story.service";
-import {AlertService} from "../../services/alert/alert.service";
-import {TranslateService} from "@ngx-translate/core";
-import {FileTransfer, FileTransferObject} from "@ionic-native/file-transfer/ngx";
-import {File} from "@ionic-native/file/ngx";
-import {Zip} from "@ionic-native/zip/ngx";
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {AuthService} from "../../services/auth/auth.service";
-import {Router} from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
-import {CLOUD} from "../../constants/constants";
-import {ProfileService} from "../../services/profile/profile.service";
-import {UserProfile} from "../../models/userProfile";
-import {LanguageService} from "../../services/language/language.service";
+import { Component, NgZone, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { HTTP } from "@ionic-native/http/ngx";
+import { Zip } from "@ionic-native/zip/ngx";
+import { LoadingController, NavController, Platform } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { CLOUD } from "../../constants/constants";
+import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
+import { UserProfile } from "../../models/userProfile";
+import { AlertService } from "../../services/alert/alert.service";
+import { AuthService } from "../../services/auth/auth.service";
+import { LanguageService } from "../../services/language/language.service";
+import { ProfileService } from "../../services/profile/profile.service";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
+import { StoryService } from "../../services/story/story.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -78,14 +77,19 @@ export class AvailableStoriesPage implements OnInit {
     const lang = this.languageService.selected;
     let promise = this.storyService.getStoriesByLanguage(lang);
     promise.then(stories => {
-      this.availableStories = stories;
+      if (this.activeUserProfile.child === true) {
+        this.availableStories = stories.filter(o => o.child === true);
+      }
+      else {
+        this.availableStories = stories;
+      }
     }).catch(error => {
       console.log(error);
     });
 
   }
 
-  goToSelectUserProfile(){
+  goToSelectUserProfile() {
     this.router.navigate(["/select-user-profile"]);
   }
 
@@ -94,7 +98,7 @@ export class AvailableStoriesPage implements OnInit {
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
-   // } else if (user.isStoryPresent(story.id)) {
+      // } else if (user.isStoryPresent(story.id)) {
     } else if (this.activeUserProfile.isStoryPresent(story.id)) {
       // story already exists
       this.alertStoryAlreadyExists(story.title);
@@ -261,7 +265,7 @@ export class AvailableStoriesPage implements OnInit {
     const al = await this.alert.createAlert(
       this.translate.instant("STORY_ALREADY_EXISTS_TITLE"),
       "",
-      [{text: this.translate.instant("COMMON_OK")}],
+      [{ text: this.translate.instant("COMMON_OK") }],
       this.translate.instant("STORY_ALREADY_EXISTS_MSG", {
         story_title: storyTitle
       })
@@ -277,8 +281,8 @@ export class AvailableStoriesPage implements OnInit {
     const al = await this.alert.createAlert(
       this.translate.instant("STORY_ADDED"),
       "",
-      [{text: this.translate.instant("COMMON_OK")}],
-      this.translate.instant("STORY_ADDED_MSG", {story_title: storyTitle})
+      [{ text: this.translate.instant("COMMON_OK") }],
+      this.translate.instant("STORY_ADDED_MSG", { story_title: storyTitle })
     );
     await al.present();
   }

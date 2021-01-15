@@ -7,6 +7,7 @@ export class StoryInformation {
   public author: string[];
   public date: number;
   public language: string;
+  public child: boolean; //true if the story is safe for children, false if it should only be visible by adult profiles
   public shortDescription: string;
   public readers: Reader[];
   public medium: string;

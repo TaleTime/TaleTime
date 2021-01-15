@@ -1,20 +1,20 @@
-import {Component, OnInit} from "@angular/core";
-import {AlertController, MenuController, NavController, Platform} from "@ionic/angular";
-import {Reader, StoryInformation} from "../../models/storyInformation";
-import {AuthService} from "../../services/auth/auth.service";
-import {StoryService} from "../../services/story/story.service";
-import {Router} from "@angular/router";
-import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
-import {PlayerParams} from "../../models/player/player-params";
-import {StoryInformationService} from "../../services/story-information/story-information.service";
-import {Storage} from "@ionic/storage";
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {SettingsService} from "../../services/settings/settings.service";
-import {TranslateService} from "@ngx-translate/core";
-import {ProfileService} from "../../services/profile/profile.service";
-import {UserProfile} from "../../models/userProfile";
-import {AvailableLanguage} from "../../models/AvailableLanguage";
-import {LanguageService} from "../../services/language/language.service";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AlertController, MenuController, NavController, Platform } from "@ionic/angular";
+import { Storage } from "@ionic/storage";
+import { TranslateService } from "@ngx-translate/core";
+import { AvailableLanguage } from "../../models/AvailableLanguage";
+import { PlayerParams } from "../../models/player/player-params";
+import { Reader, StoryInformation } from "../../models/storyInformation";
+import { UserProfile } from "../../models/userProfile";
+import { AuthService } from "../../services/auth/auth.service";
+import { LanguageService } from "../../services/language/language.service";
+import { PlayerParamsService } from "../../services/player-parmas/player-params.service";
+import { ProfileService } from "../../services/profile/profile.service";
+import { SettingsService } from "../../services/settings/settings.service";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
+import { StoryInformationService } from "../../services/story-information/story-information.service";
+import { StoryService } from "../../services/story/story.service";
 
 @Component({
   selector: "app-story-menu",
@@ -53,7 +53,7 @@ export class StoryMenuPage implements OnInit {
     public languageService: LanguageService
   ) {
 
-    if(this.authService.currentUserAccount == null){
+    if (this.authService.currentUserAccount == null) {
       this.router.navigate(["/start"]);
     }
     this.languageMap.set("English", "en-US");
@@ -61,20 +61,20 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
-    this.stories =[]
-     this.activeUserProfile = this.profileService.getActiveUserProfile()
+    this.stories = []
+    this.activeUserProfile = this.profileService.getActiveUserProfile()
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
       //todo Ändern, dass nur noch Enum anstelle von Strings benutzt werden
-      if(this.  languageService.selected=="de-DE"){
+      if (this.languageService.selected == "de-DE") {
         this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.Deutsch)
       } else {
         this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.Englisch)
       }
-
     }
+
     console.log("STORRYYY");
     console.log(this.stories);
   }
@@ -82,14 +82,14 @@ export class StoryMenuPage implements OnInit {
   /**
    * Needed for automated language exchange in the tooltip of the buttons
    */
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.translateHoverText();
   }
 
   /**
    * change the language of the tooltip
    */
-  private translateHoverText(){
+  private translateHoverText() {
     this.CANCEL_BUTTON_TOOLTIP_LABEL = this.translate.instant("DELETE_BUTTON_MOUSE_HOVER");
     this.INFO_BUTTON_TOOLTIP_LABEL = this.translate.instant("INFO_BUTTON_MOUSE_HOVER");
     this.PLAY_BUTTON_TOOLTIP_LABEL = this.translate.instant("PLAY_BUTTON_MOUSE_HOVER");
@@ -103,8 +103,8 @@ export class StoryMenuPage implements OnInit {
    * @param storyInformation Story to check language
    * @return True if story available in the current language, else false
    */
-  private checkLanguage(storyInformation: StoryInformation){
-    if(this.settings.language === this.storyLanguageToSystemLanguage(storyInformation.language)){
+  private checkLanguage(storyInformation: StoryInformation) {
+    if (this.settings.language === this.storyLanguageToSystemLanguage(storyInformation.language)) {
       return true;
     }
     return false;
@@ -117,7 +117,7 @@ export class StoryMenuPage implements OnInit {
    * @param storyLanguage Language in Story-format
    * @return Language in Story-format
    */
-  private storyLanguageToSystemLanguage(storyLanguage: string){
+  private storyLanguageToSystemLanguage(storyLanguage: string) {
     return this.languageMap.get(storyLanguage);
   }
 
@@ -153,7 +153,7 @@ export class StoryMenuPage implements OnInit {
     await alert.present();
   }
 
-  public showResumeOrRestartDialog(modeFn: (arg) => void, cancelFn?: (arg) => void){
+  public showResumeOrRestartDialog(modeFn: (arg) => void, cancelFn?: (arg) => void) {
     return this.alertCtrl.create({
       header: this.translate.instant("RESUME_OR_RESTART"),
       inputs: [
@@ -189,7 +189,7 @@ export class StoryMenuPage implements OnInit {
     });
   }
 
-  goToSelectUserProfile(){
+  goToSelectUserProfile() {
     this.router.navigate(["/select-user-profile"]);
   }
 
