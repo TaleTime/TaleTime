@@ -83,6 +83,7 @@ export class StoryMenuPage implements OnInit {
    * Needed for automated language exchange in the tooltip of the buttons
    */
   ionViewWillEnter() {
+    this.ngOnInit();
     this.translateHoverText();
   }
 
