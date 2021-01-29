@@ -5,7 +5,7 @@ import { Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { rejects } from "assert";
 import { Observable } from "rxjs";
-import { DEFAULT_READER, SINGLE_STORY_FILE_NAME } from "../../constants/constants";
+import {DEFAULT_READER, DEFAULT_STORIES, SINGLE_STORY_FILE_NAME} from "../../constants/constants";
 import { ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData } from "../../models/story/story";
 import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
 import { LoggerService } from "../logger/logger.service";
@@ -209,7 +209,7 @@ export class StoryService {
   public loadNode(i: number) {
     this.currentNode = this.story["mtga-story"]["mtga-story-node"][
       i.toString()
-    ];
+      ];
   }
 
   public loadNodeForAnswer(i: number): void {
@@ -284,44 +284,37 @@ export class StoryService {
    * @returns {Promise<Array<StoryInformationWithUrl>>}
    */
   private loadAllStories(): Promise<Array<StoryInformationWithUrl>> {
-    //Mocks access to the local storage.
-    //TODO There must be a mock. The data should get fetch form the internal storage instead
-    var promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-      var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-      const newStory = new StoryInformation();
-      newStory.title = "Der verlorene Ball";
-      newStory.id = "Der_verlorene_Ball";
-      newStory.author = ["Sarah Philippi", "Lisa Roisch"];
-      newStory.date = 2016;
-      newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
-      newStory.language = "Deutsch";
-      newStory.shortDescription =
-        "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
-      newStory.medium = "device";
-      newStory.readers = [
-        { name: "Kevin", answersPartOfAudioFile: true },
-        { name: "Raoul", answersPartOfAudioFile: false }
-      ];
-      mockStories.push(newStory as StoryInformationWithUrl);
+    let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
+      var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+      for (let i = 0; i < DEFAULT_STORIES.length; i++) {
+        let pathOfStorie = DEFAULT_STORIES[i]
+        let langs = pathOfStorie["languages"]
 
-      const newStory2 = new StoryInformation();
-      newStory2.title = "Celebrating Shuby the Shy Sheep";
-      newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
-      newStory2.author = ["André Miede", "Sebastian Barth"];
-      newStory2.date = 2018;
-      newStory2.cover = "";
-      newStory2.language = "English";
-      newStory2.shortDescription =
-        "Description of \"Celebrating Shuby the Shy Sheep\"";
-      newStory2.medium = "device";
-      newStory2.readers = [];
-      mockStories.push(newStory2 as StoryInformationWithUrl);
+        for (let j = 0; j< langs.length; j++) {
+          const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
+          let storie: Story;
+          this.getJSONFromAsset(storyJson).then(data => {
+            const newStory = new StoryInformation();
+            let storyInformation = data["mtga-story"].attributes
+            newStory.id = storyInformation.id;
+            newStory.title = storyInformation.title;
+            newStory.cover = storyInformation.imgCover;
+            newStory.language = storyInformation.lang;
+            newStory.shortDescription = storyInformation.desc;
+            newStory.author = storyInformation.creator;
+            newStory.readers = storyInformation.readers;
+            newStory.medium = storyInformation.medium;
+            newStory.child = true;
 
-      resolve(mockStories)
+            arrayOfStories.push(newStory as StoryInformationWithUrl);
+          })
+        }
+
+      }
+      resolve(arrayOfStories)
+
     });
-
     return promise;
-
   }
   //Mocks access to the local storage.
   //TODO There must be a mock. The data should get fetch form the internal storage instead
@@ -332,64 +325,80 @@ export class StoryService {
    */
   //TODO @Tobi Parameter änderen, so dass Enum benutzt wird.
   public getStoriesByLanguage(lang: String): Promise<Array<StoryInformationWithUrl>> {
-    let promise
-    switch (lang) {
-      case "de-DE": {
-        promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-          var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-          const newStory = new StoryInformation();
-          newStory.title = "Der verlorene Ball";
-          newStory.id = "Der_verlorene_Ball";
-          newStory.author = ["Sarah Philippi", "Lisa Roisch"];
-          newStory.date = 2016;
-          newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
-          newStory.language = "Deutsch";
-          newStory.child = true;
-          newStory.shortDescription =
-            "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
-          newStory.medium = "device";
-          newStory.readers = [
-            { name: "Kevin", answersPartOfAudioFile: true },
-            { name: "Raoul", answersPartOfAudioFile: false }
-          ];
-          mockStories.push(newStory as StoryInformationWithUrl);
+    let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) =>{
+      this.loadAllStories().then(data => {
+        let filteredData: Array<StoryInformationWithUrl>;
+        filteredData = data.filter(o => o.language===lang)
+        resolve(filteredData)
+      })
+    });
 
-          resolve(mockStories)
-        });
+    return  promise;
+    /*let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
+      var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+      for (let i = 0; i < DEFAULT_STORIES.length; i++) {
+        let pathOfStorie = DEFAULT_STORIES[i]
+        let langs = pathOfStorie["languages"]
 
-        break;
+        for (let j = 0; j< langs.length; j++) {
+          const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
+          let storie: Story;
+          this.getJSONFromAsset(storyJson).then(data => {
+            const newStory = new StoryInformation();
+            let storyInformation = data["mtga-story"].attributes
+            newStory.id = storyInformation.id;
+            newStory.title = storyInformation.title;
+            newStory.cover = storyInformation.imgCover;
+            newStory.language = storyInformation.lang;
+            newStory.shortDescription = storyInformation.desc;
+            newStory.author = storyInformation.creator;
+            newStory.readers = storyInformation.readers;
+            newStory.medium = storyInformation.medium;
+            newStory.child = true;
+            arrayOfStories.push(newStory as StoryInformationWithUrl);
+            console.log("array " + newStory);
+          })
+        }
+
       }
+      resolve(arrayOfStories)
 
-      case "en-US": {
-        promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-          var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-          const newStory2 = new StoryInformation();
-          newStory2.title = "Celebrating Shuby the Shy Sheep";
-          newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
-          newStory2.author = ["André Miede", "Sebastian Barth"];
-          newStory2.date = 2018;
-          newStory2.cover = "";
-          newStory2.language = "Englisch";
-          newStory2.child = false;
-          newStory2.shortDescription =
-            "Description of \"Celebrating Shuby the Shy Sheep\"";
-          newStory2.medium = "device";
-          newStory2.readers = [];
-          mockStories.push(newStory2 as StoryInformationWithUrl);
-
-          resolve(mockStories)
-        });
-
-        break;
-      }
-
-      default: {
-        rejects(new Error("No language found"));
-      }
-    }
-
-    return promise;
+    });
+    return promise;*/
   }
+
+  private getJSONFromAsset(storyPath):Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.http.get(storyPath).subscribe(data => {
+        resolve(data);
+      });
+    });
+  }
+
+  public testLoadStories():Array<StoryInformationWithUrl> {
+    var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+    for (let i = 0; i < DEFAULT_STORIES.length; i++) {
+      let pathOfStorie = DEFAULT_STORIES[i]
+      const storyJson = "assets/stories/" + pathOfStorie.name + "/" + pathOfStorie.languages[0] + "/" + SINGLE_STORY_FILE_NAME;
+      let storie: Story;
+
+      this.http.get(storyJson).subscribe(data => {
+        const newStory = new StoryInformation();
+        let storyInformation = data["mtga-story"].attributes
+        newStory.id = storyInformation.id;
+        newStory.title = storyInformation.title;
+        newStory.cover = storyInformation.imgCover;
+        newStory.language = storyInformation.lang;
+        newStory.shortDescription = storyInformation.desc;
+        arrayOfStories.push(newStory as StoryInformationWithUrl);
+      });
+
+      return arrayOfStories;
+
+    }
+  }
+
+
 
 }
 

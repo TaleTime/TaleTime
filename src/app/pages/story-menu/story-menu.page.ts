@@ -69,9 +69,9 @@ export class StoryMenuPage implements OnInit {
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
       //todo Ändern, dass nur noch Enum anstelle von Strings benutzt werden
       if (this.languageService.selected == "de-DE") {
-        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.Deutsch)
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.German)
       } else {
-        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.Englisch)
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.English)
       }
     }
 

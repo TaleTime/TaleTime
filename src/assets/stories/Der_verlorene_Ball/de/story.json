@@ -3,10 +3,15 @@
     "attributes": {
       "id": "Der_verlorene_Ball",
       "title": "Der verlorene Ball",
-      "imgCover": "der_verlorene_ball.png",
-      "lang": "DE",
-      "desc": "Geschichte Der verlorene Ball",
-      "creator": "Sarah Philippi, Lisa Roisch"
+      "imgCover": "Titelbild_Der_verlorene_Ball-02.png",
+      "lang": "German",
+      "desc": "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"",
+      "child": true,
+      "date":"2016",
+      "creator": ["Sarah Philippi", "Lisa Roisch"],
+      "medium": "device",
+      "readers":[
+        { "name": "Kevin", "answersPartOfAudioFile": true }, { "name": "Raoul", "answersPartOfAudioFile": false }]
     },
     "mtga-story-node": {
       "0": {

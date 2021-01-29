@@ -67,3 +67,15 @@ export const DEFAULT_READER = "default";
 
 /** CSS */
 export const CSS_PULSE_CLASS = "pulse";
+
+/** Default Stroies */
+export const DEFAULT_STORIES = [
+  {
+    name: "Celebrating_Shuby_the_Shy_Sheep",
+    languages : ["en"]
+  },
+  {
+    name: "Der_verlorene_Ball",
+    languages : ["en" ,"de"]
+  }
+];
