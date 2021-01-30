@@ -22,12 +22,7 @@ export class AuthService {
     private router: Router,
     private authProcessService : AuthProcessService
   ) {
-    // this.authProcessService.user$.subscribe(user => {
-    //   if (user != null) {
-    //     console.log(user);
-    //     this.signIn(user, () => {});
-    //   }
-    // });
+
   }
   async ready(): Promise<any> {
     if (this.promise === null) {
@@ -93,16 +88,6 @@ export class AuthService {
       });
   }
 
-  // public addTestUser() {
-  //   console.log("Test");
-  //   const userAccount = new UserAccount("Test", "test@mail.com", "1234");
-  //   this.storage.set(AuthService.USER_ACCOUNT_KEY, userAccount);
-  //   this.storage.ready().then(() =>
-  //     this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
-  //       console.log(val);
-  //     })
-  //   );
-  // }
 
   public register(credentials: { name: any; email: any; pin: any }) {
     if (
@@ -123,39 +108,6 @@ export class AuthService {
     }
   }
 
-  public createUserProfile(credentials: {
-    name: any;
-    avatarId: any;
-    child: any;
-  }) {
-    console.log("if been here");
-    if (credentials.name === null) {
-      return observableThrowError("Please insert credentials");
-    } else {
-      // TODO At this point store the credentials to your backend!
-      const userProfile = new UserProfile(
-        credentials.name,
-        credentials.avatarId,
-        credentials.child
-      );
-      this.storage.get(this.currentUser.email).then((val) => {
-        let userAccountTmp: UserAccount;
-        userAccountTmp = val;
-        let userAccount: UserAccount = new UserAccount(userAccountTmp.name, userAccountTmp.email, '', userAccountTmp.hash,
-          userAccountTmp.userProfiles);
-        userAccount.addUserProfile(userProfile);
-        this.currentUser = userAccount;
-        this.save(userAccount);
-      });
-      // this.currentUserAccount.addUserProfile(userProfile);
-      // this.save(this.currentUserAccount);
-
-      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-        subscriber.next(true);
-        subscriber.complete();
-      })
-    }
-  }
 
   public changePin(oldPin: any, newPin: any, retypePin: any) {
     const response = {
@@ -185,32 +137,6 @@ export class AuthService {
     });
   }
 
-  public deleteUserProfile(userProfileId: string) {
-    this.currentUserAccount.removeUserProfile(userProfileId);
-    this.save(this.currentUserAccount);
-
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      subscriber.next(true);
-      subscriber.complete();
-    });
-  }
-
-  public setActiveUserProfile(userProfileId: string) {
-    this.currentUserAccount.setActiveUserProfile(userProfileId);
-    this.save(this.currentUser);
-
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      subscriber.next(true);
-      subscriber.complete();
-    });
-  }
-
-  public getActiveUserProfile() {
-    if (this.currentUser.activeUserProfile === undefined) {
-      this.router.navigate(["/select-user-profile"]);
-    }
-    return this.currentUserAccount.activeUserProfile;
-  }
 
   public logout(){
     return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
@@ -229,41 +155,14 @@ export class AuthService {
     });
   }
 
-  private save(userAccount: UserAccount) {
-    // this.storage.set(
-    //   AuthService.USER_ACCOUNT_KEY,
-    //   userAccount || this.currentUserAccount
-    // );
-
-    this.storage.set(
-      userAccount.email,
-      userAccount
-    );
+  public save(userAccount: UserAccount) {
+    this.storage.set(userAccount.email, userAccount);
   }
 
   get currentUserAccount(): UserAccount {
-    // this.storage.get(AuthService.USER_ACCOUNT_KEY).then((val) => {
-    //   this.currentUser = val;
-    // });
-    // if (this.currentUser === undefined || this.currentUser === null) {
-    //   this.authProcessService.user$.subscribe(user => {
-    //     if (user != null) {
-    //       console.log(user);
-    //       this.signIn(user, () => {
-    //         return this.currentUser;
-    //       });
-    //     }
-    //   });
-    // } else {
-    //   //console.log('ProfileObject: ', this.currentUser);
       return this.currentUser;
-    // }
   }
 
-  get userProfiles() {
-
-    return Array.from(this.currentUserAccount.userProfiles.values());
-  }
 
   /*** UI ***/
   public presentPinPrompt(validFn: (arg) => void, cancelFn?: (arg) => void) {

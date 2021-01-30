@@ -1,18 +1,20 @@
-import {Component, NgZone, OnInit} from "@angular/core";
-import {LoadingController, NavController, Platform} from "@ionic/angular";
-import {HTTP} from "@ionic-native/http/ngx";
-import {StoryInformation, StoryInformationWithUrl} from "../../models/storyInformation";
-import {StoryService} from "../../services/story/story.service";
-import {AlertService} from "../../services/alert/alert.service";
-import {TranslateService} from "@ngx-translate/core";
-import {FileTransfer, FileTransferObject} from "@ionic-native/file-transfer/ngx";
-import {File} from "@ionic-native/file/ngx";
-import {Zip} from "@ionic-native/zip/ngx";
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {AuthService} from "../../services/auth/auth.service";
-import {Router} from "@angular/router";
-import { HttpClientModule } from "@angular/common/http";
-import {CLOUD} from "../../constants/constants";
+import { Component, NgZone, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { HTTP } from "@ionic-native/http/ngx";
+import { Zip } from "@ionic-native/zip/ngx";
+import { LoadingController, NavController, Platform } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { CLOUD } from "../../constants/constants";
+import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
+import { UserProfile } from "../../models/userProfile";
+import { AlertService } from "../../services/alert/alert.service";
+import { AuthService } from "../../services/auth/auth.service";
+import { LanguageService } from "../../services/language/language.service";
+import { ProfileService } from "../../services/profile/profile.service";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
+import { StoryService } from "../../services/story/story.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -25,6 +27,7 @@ import {CLOUD} from "../../constants/constants";
 export class AvailableStoriesPage implements OnInit {
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
+  private activeUserProfile: UserProfile;
 
   public availableStories: Array<StoryInformationWithUrl> = [];
   public readonly PUBLIC_STORY_URL: string =
@@ -45,11 +48,11 @@ export class AvailableStoriesPage implements OnInit {
     private file: File,
     private zip: Zip,
     private loadingCtrl: LoadingController,
-    private toastService: SimpleToastService
+    private toastService: SimpleToastService,
+    private profileService: ProfileService,
+    private languageService: LanguageService
   ) {
-    // if(this.authService.currentUserAccount == null){
-    //   this.router.navigate(["/start"]);
-    // }
+
     this.loadDeviceDefaultStories();
     this.platform.ready().then(() => {
       this.loadPublicStories();
@@ -57,14 +60,11 @@ export class AvailableStoriesPage implements OnInit {
   }
 
   ngOnInit() {
-    // if(this.authService.currentUserAccount == null){
-    //   this.router.navigate(["/start"]);
-    // }
-    const activeUserProfile = this.authService.getActiveUserProfile();
+    this.activeUserProfile = this.profileService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
-    if (activeUserProfile) {
-      this.activeUserProfileName = activeUserProfile.name;
-      this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
+    if (this.activeUserProfile) {
+      this.activeUserProfileName = this.activeUserProfile.name;
+      this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
   }
 
@@ -74,37 +74,22 @@ export class AvailableStoriesPage implements OnInit {
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
   loadDeviceDefaultStories() {
-    const newStory = new StoryInformation();
-    newStory.title = "Der verlorene Ball";
-    newStory.id = "Der_verlorene_Ball";
-    newStory.author = ["Sarah Philippi", "Lisa Roisch"];
-    newStory.date = 2016;
-    newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
-    newStory.language = "Deutsch";
-    newStory.shortDescription =
-      "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
-    newStory.medium = "device";
-    newStory.readers = [
-      {name: "Kevin", answersPartOfAudioFile: true},
-      {name: "Raoul", answersPartOfAudioFile: false}
-    ];
-    this.availableStories.push(newStory as StoryInformationWithUrl);
+    const lang = this.languageService.selected;
+    let promise = this.storyService.getStoriesByLanguage(lang);
+    promise.then(stories => {
+      if (this.activeUserProfile.child === true) {
+        this.availableStories = stories.filter(o => o.child === true);
+      }
+      else {
+        this.availableStories = stories;
+      }
+    }).catch(error => {
+      console.log(error);
+    });
 
-    const newStory2 = new StoryInformation();
-    newStory2.title = "Celebrating Shuby the Shy Sheep";
-    newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
-    newStory2.author = ["André Miede", "Sebastian Barth"];
-    newStory2.date = 2018;
-    newStory2.cover = "";
-    newStory2.language = "English";
-    newStory2.shortDescription =
-      "Description of \"Celebrating Shuby the Shy Sheep\"";
-    newStory2.medium = "device";
-    newStory2.readers = [];
-    this.availableStories.push(newStory2 as StoryInformationWithUrl);
   }
 
-  goToSelectUserProfile(){
+  goToSelectUserProfile() {
     this.router.navigate(["/select-user-profile"]);
   }
 
@@ -113,12 +98,14 @@ export class AvailableStoriesPage implements OnInit {
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
-    } else if (this.storyService.exists(story.id)) {
+      // } else if (user.isStoryPresent(story.id)) {
+    } else if (this.activeUserProfile.isStoryPresent(story.id)) {
       // story already exists
       this.alertStoryAlreadyExists(story.title);
     } else {
       // add new (non cloud) story
-      this.storyService.addStory(story);
+      this.activeUserProfile.addStory(story);
+
       this.alertStoryAddedSuccessfully(story.title);
     }
   }
@@ -278,7 +265,7 @@ export class AvailableStoriesPage implements OnInit {
     const al = await this.alert.createAlert(
       this.translate.instant("STORY_ALREADY_EXISTS_TITLE"),
       "",
-      [{text: this.translate.instant("COMMON_OK")}],
+      [{ text: this.translate.instant("COMMON_OK") }],
       this.translate.instant("STORY_ALREADY_EXISTS_MSG", {
         story_title: storyTitle
       })
@@ -294,8 +281,8 @@ export class AvailableStoriesPage implements OnInit {
     const al = await this.alert.createAlert(
       this.translate.instant("STORY_ADDED"),
       "",
-      [{text: this.translate.instant("COMMON_OK")}],
-      this.translate.instant("STORY_ADDED_MSG", {story_title: storyTitle})
+      [{ text: this.translate.instant("COMMON_OK") }],
+      this.translate.instant("STORY_ADDED_MSG", { story_title: storyTitle })
     );
     await al.present();
   }

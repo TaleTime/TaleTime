@@ -1,16 +1,9 @@
-import {ApplicationRef, Component, OnInit} from "@angular/core";
-import {NavController, NavParams, Platform} from "@ionic/angular";
-/** Service */
-import {StoryService} from "../../services/story/story.service";
-import {AudioService} from "../../services/audio/audio.service";
-import {AnswerMatchingService} from "../../services/speech-recognition/answer-matching/answer-matching.service";
-import {SettingsService} from "../../services/settings/settings.service";
-import {TtsTextService} from "../../services/speech-recognition/tts-text/tts-text.service";
+import { ApplicationRef, Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router, Routes } from "@angular/router";
 /** Plugins */
-import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
-import {TextToSpeech} from "@ionic-native/text-to-speech/ngx";
-/** Datamodels & Constants */
-import {ChapterAttributes, MtgaNextStoryNode, StoryMetaData} from "../../models/story/story";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
+import { TextToSpeech } from "@ionic-native/text-to-speech/ngx";
+import { NavController, Platform } from "@ionic/angular";
 import {
   ANSWER_CHAPTER_BACKWARDS,
   ANSWER_CHAPTER_REPEAT,
@@ -20,17 +13,22 @@ import {
   READER_DIR,
   STORY_DIR
 } from "../../constants/constants";
-import {SaveGame} from "../../models/saveGame";
+import { SaveGame } from "../../models/saveGame";
+/** Datamodels & Constants */
+import { ChapterAttributes, MtgaNextStoryNode, StoryMetaData } from "../../models/story/story";
+import { AudioService } from "../../services/audio/audio.service";
+import { AuthService } from "../../services/auth/auth.service";
+import { PlatformBridgeService } from "../../services/platform-bridge/platform-bridge.service";
+import { PlayerParamsService } from "../../services/player-parmas/player-params.service";
+import { PublicStoryHelperService } from "../../services/public-story-helper/public-story-helper.service";
+import { SaveGameService } from "../../services/save-game/save-game.service";
+import { SettingsService } from "../../services/settings/settings.service";
+import { AnswerMatchingService } from "../../services/speech-recognition/answer-matching/answer-matching.service";
+import { TtsTextService } from "../../services/speech-recognition/tts-text/tts-text.service";
+/** Service */
+import { StoryService } from "../../services/story/story.service";
+import { StoryMenuPage } from "../story-menu/story-menu.page";
 
-import {StoryMenuPage} from "../story-menu/story-menu.page";
-import {SaveGameService} from "../../services/save-game/save-game.service";
-import {PublicStoryHelperService} from "../../services/public-story-helper/public-story-helper.service";
-import {PlatformBridgeService} from "../../services/platform-bridge/platform-bridge.service";
-import {Routes} from "@angular/router";
-import {ActivatedRoute} from '@angular/router';
-import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
-import {AuthService} from "../../services/auth/auth.service";
-import {Router} from "@angular/router";
 
 // import Stack from "ts-data.stack";
 /**
@@ -45,7 +43,7 @@ const CONTINUE = "continue";
 const FIRST_NODE = 1;
 
 const routes: Routes = [
-  {path: "storyMenu", component: StoryMenuPage},
+  { path: "storyMenu", component: StoryMenuPage },
 ];
 
 @Component({
@@ -73,6 +71,9 @@ export class PlayerPage implements OnInit {
   private stopped: boolean;
   //must be public for the aot compilation
   public fontSizePx: string;
+
+  //
+  public disabled = false;
 
   // While tts is reading answers out or while speechrecognition is listening, block playPause-Button
   private isPlayPauseBlocked = false;
@@ -110,7 +111,7 @@ export class PlayerPage implements OnInit {
       // DEFAULT_READER if new savegame
       // this.selectedReader = this.saveGame.reader;
       // this.selectedReader = DEFAULT_READER;
-      if(this.playerParamsService.getPlayerParams().reader === ''){
+      if (this.playerParamsService.getPlayerParams().reader === '') {
         this.selectedReader = this.saveGame.reader;
       } else {
         this.selectedReader = this.playerParamsService.getPlayerParams().reader;
@@ -148,11 +149,11 @@ export class PlayerPage implements OnInit {
   /**
    * Go back to Home Screen
    */
-  goBackToHomeScreen(){
+  goBackToHomeScreen() {
     this.ionViewWillLeave();
     this.ngOnDestroy();
     this.updateSaveGame();
-    this.router.navigate(["/story-details"]);
+    this.router.navigate(["tabs/story-menu"]);
   }
 
   ionViewWillLeave() {
@@ -201,7 +202,7 @@ export class PlayerPage implements OnInit {
    */
   nextChapter(answer: number) {
     if (this.answers[0].attributes.id === "-1") {
-      this.navCtrl.navigateBack("/story-menu");
+      this.navCtrl.navigateBack("tabs/story-menu");
     } else {
       this.loadNodeFromAnswer(answer);
       this.updateSaveGame();
@@ -214,17 +215,14 @@ export class PlayerPage implements OnInit {
   previousChapter() {
     console.log("Current Node: " + this.attr.storyNodeId);
     const peekObject = this.saveGame.chosenPath[
-    this.saveGame.chosenPath.length - 1
-      ];
+      this.saveGame.chosenPath.length - 1
+    ];
     if (peekObject !== 1) {
       this.pause().then(() => {
         this.saveGame.chosenPath.length = this.saveGame.chosenPath.length - 1;
         this.loadNode();
         this.updateSaveGame();
       });
-    } else {
-      console.log("Already at first node");
-      // maybe add an alert to indicate it
     }
   }
 
@@ -393,6 +391,14 @@ export class PlayerPage implements OnInit {
     this.checkAnswers();
     this.text = this.story.getText();
     this.attr = this.story.getChapterAtrributes();
+
+    // disable back button on the first page of a story
+    if (this.attr.storyNodeId == "1") {
+      this.disabled = true;
+    }
+    else {
+      this.disabled = false;
+    }
   }
 
   /**
@@ -415,8 +421,8 @@ export class PlayerPage implements OnInit {
     // console.log("chosenPath[]: " + this.savegame.chosenPath.peek());
     // this.story.loadNode(this.savegame.chosenPath.peek() - 1);
     const peekObject = this.saveGame.chosenPath[
-    this.saveGame.chosenPath.length - 1
-      ];
+      this.saveGame.chosenPath.length - 1
+    ];
     console.log("chosenPath[]: " + peekObject);
     this.story.loadNode(peekObject - 1);
 

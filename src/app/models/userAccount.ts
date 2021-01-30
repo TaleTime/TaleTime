@@ -52,4 +52,12 @@ export class UserAccount {
   public setActiveUserProfile(userProfileId) {
     this.activeUserProfile = this.userProfiles.get(userProfileId);
   }
+
+  /**
+   * Method check if a user profil is the map
+   * @returns      Return true if a user profil is already exists
+   */
+  public checkIfuderProfileIdExistes(userProfileId:string):boolean{
+   return this.userProfiles.get(userProfileId) === undefined ? false : true;
+  }
 }

@@ -22,6 +22,8 @@ import {
   TTS_RATE_SLOW_VALUE
 } from "../../constants/constants";
 import {NavController} from "@ionic/angular";
+import {ProfileService} from "../../services/profile/profile.service";
+import {LanguageService} from "../../services/language/language.service";
 
 @Component({
   selector: "app-settings",
@@ -46,12 +48,13 @@ export class SettingsPage {
     public settings: SettingsService,
     private translate: TranslateService,
     private authService: AuthService,
-    private toastService: SimpleToastService,
+    private profilService: ProfileService,
+    private languageService:LanguageService
   ) {
   }
 
   ngOnInit() {
-    const activeUserProfile = this.authService.getActiveUserProfile();
+    const activeUserProfile = this.profilService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
@@ -122,6 +125,7 @@ export class SettingsPage {
     console.log("Changing language to <" + selectedLanguage + ">");
     this.translate.use(SettingsPage.getCodeFromLanguage(selectedLanguage));
     this.settings.language = SettingsPage.getCodeFromLanguage(selectedLanguage);
+    this.languageService.selected = this.settings.language;
   }
 
   changeFontSize(selectedFontSize){

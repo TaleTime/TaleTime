@@ -13,26 +13,33 @@
   <ion-list>
     <ion-item
         (click)="select($event, userProfile.id)"
-        *ngFor="let userProfile of this.authService.userProfiles"
+        *ngFor="let userProfile of this.profilService.userProfiles"
     >
       <ion-avatar slot="start">
-        <img src="assets/imgs/profile/{{userProfile.avatar.name}}"/>
+        <img src="assets/imgs/profile/{{userProfile.avatar.name}}" />
       </ion-avatar>
       <h2>{{userProfile.name}}</h2>
 
-      <ion-button
-          *ngIf="isShowingOptions"
-          (click)="delete($event, userProfile.id)"
-          fill="clear"
-          slot="end"
-      >
+      <ion-button *ngIf="isShowingOptions" (click)="delete($event, userProfile.id)" fill="clear" slot="end">
         {{ 'COMMON_DELETE' | translate }}
       </ion-button>
     </ion-item>
 
-    <ion-item (click)="create()" id="createProfileButton">
+    <ion-item (click) ="create();" id="createProfileButton">
       <ion-icon name="add-circle" slot="start"></ion-icon>
       <h2>{{ 'USER_MANAGEMENT_CREATE_PROFILE' | translate }}</h2>
     </ion-item>
   </ion-list>
+
+  <mat-card>
+    <mat-card-actions style="flex-direction: column; box-sizing: border-box; display: flex;">
+      <ion-button (click)="onSignOut()" fill="clear"
+        class="mat-focus-indicator mat-button mat-button-base mat-primary ng-star-inserted">
+        <span>{{ 'USER_MANAGEMENT_LOGOUT' | translate }}</span>
+        <div class="mat-ripple mat-button-ripple">
+        </div>
+        <div class="mat-button-focus-overlay"></div>
+      </ion-button>
+    </mat-card-actions>
+  </mat-card>
 </ion-content>

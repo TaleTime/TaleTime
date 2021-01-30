@@ -1,13 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import{Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
-import {ModalController, NavController} from "@ionic/angular";
-
-import {CreateUserProfilePage} from "../create-user-profile/create-user-profile.page";
-
-import {AuthService} from "../../services/auth/auth.service";
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {SettingsService} from "../../services/settings/settings.service";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ModalController, NavController } from "@ionic/angular";
+import { TranslateService } from "@ngx-translate/core";
+import { AuthService } from "../../services/auth/auth.service";
+import { ProfileService } from "../../services/profile/profile.service";
+import { SettingsService } from "../../services/settings/settings.service";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 
 @Component({
   selector: "app-select-user-profile",
@@ -20,6 +18,7 @@ export class SelectUserProfilePage implements OnInit {
   isShowingOptionsButton = false;
   showingOptionsLabel: string;
 
+
   constructor(
     private navCtrl: NavController,
     private settingsService: SettingsService,
@@ -27,23 +26,23 @@ export class SelectUserProfilePage implements OnInit {
     private translate: TranslateService,
     public authService: AuthService,
     public modalCtrl: ModalController,
-    private toastService: SimpleToastService
+    private toastService: SimpleToastService,
+    public profilService: ProfileService
   ) {
     this.isShowingOptions = true;
     this.translate.get("COMMON_EDIT").subscribe((value) => {
       // value is our translated string
       this.showingOptionsLabel = value;
     });
-    const activeUserProfile = this.authService.getActiveUserProfile();
+    const activeUserProfile = this.profilService.getActiveUserProfile();
     if (activeUserProfile && !activeUserProfile.child) {
       this.isShowingOptionsButton = true;
     }
   }
 
   public select(event, userProfileId: string) {
-    console.log(event);
     event.stopPropagation();
-    this.authService.setActiveUserProfile(userProfileId).subscribe(
+    this.profilService.setActiveUserProfile(userProfileId).subscribe(
       (success) => {
         if (success) {
           // this.navCtrl.push(TabsPage);
@@ -66,15 +65,10 @@ export class SelectUserProfilePage implements OnInit {
     event.stopPropagation();
 
     console.log("delete: " + userProfileId);
-    this.authService.deleteUserProfile(userProfileId);
+    this.profilService.deleteUserProfile(userProfileId);
   }
 
-  // public async create() {
-  //   const userProfileModal = await this.modalCtrl.create({component: CreateUserProfilePage});
-  //   await userProfileModal.present();
-  // }
-
-  public create(){
+  public create() {
     this.router.navigate(["create-user-profile"]);
   }
 
@@ -100,4 +94,13 @@ export class SelectUserProfilePage implements OnInit {
   ngOnInit() {
   }
 
+  onSignOut() {
+    this.logout();
+  }
+
+  public logout() {
+    this.authService.logout().subscribe((success) => {
+      this.router.navigate([""]);
+    });
+  }
 }

@@ -45,6 +45,7 @@ import {AppComponent} from "../../app.component";
 import {CreateUserAccountPage} from "../../pages/create-user-account/create-user-account.page";
 import {LanguageFileService} from "../speech-recognition/language-file/language-file.service";
 import {Logger} from "@angular/compiler-cli/ngcc";
+import {ProfileService} from "../profile/profile.service";
 
 let navController
 let storage
@@ -52,6 +53,7 @@ let router : Router
 let location : Location
 let translateService
 let authService
+let profileService
 let toastService
 let alertController
 let loadingController
@@ -72,6 +74,7 @@ function renewTestbed(){
       {provide: Storage, useClass: MockedStorage},
       {provide: TranslateService, useClass: MockedTranslateService},
       {provide: AuthService, useClass: MockedAuthService},
+      {provide: ProfileService, useClass: ProfileService},
       {provide: SimpleToastService, useClass: MockedToastService},
       {provide: AlertController, useClass: MockedAlertController},
       {provide: LoadingController, useClass: MockedLoadingController},
@@ -90,6 +93,7 @@ function renewTestbed(){
   location = TestBed.get(Location)
   translateService = TestBed.get(TranslateService)
   authService = TestBed.get(AuthService)
+  profileService = TestBed.get(ProfileService)
   toastService = TestBed.get(SimpleToastService)
   alertController = TestBed.get(AlertController)
   loadingController = TestBed.get(LoadingController)
@@ -109,7 +113,7 @@ describe('Test get and set interaction', () =>{
     renewTestbed()
 
     settingsService = new SettingsService(authService, platform, languageFileService, storage, speechRecognitionService,
-      loggerService, alertService)
+      loggerService, alertService, profileService)
   });
 
   afterEach(() => {
@@ -133,7 +137,7 @@ describe('Testing TTS Rate', () =>{
   beforeEach(() => {
     renewTestbed()
     settingsService =  new SettingsService(authService, platform, languageFileService, storage,
-      speechRecognitionService, loggerService, alertService)
+      speechRecognitionService, loggerService, alertService, profileService)
     authService.currentUser = null
   });
 
@@ -163,7 +167,7 @@ describe('Testing font size', () =>{
   beforeEach(() => {
     renewTestbed()
     settingsService =  new SettingsService(authService, platform, languageFileService, storage,
-      speechRecognitionService, loggerService, alertService)
+      speechRecognitionService, loggerService, alertService, profileService)
     authService.currentUser = null
   });
 
@@ -199,7 +203,7 @@ describe('Test get and set language', () =>{
     renewTestbed()
 
     settingsService = new SettingsService(authService, platform, languageFileService, storage, speechRecognitionService,
-      loggerService, alertService)
+      loggerService, alertService,  profileService)
   });
 
   afterEach(() => {
