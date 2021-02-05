@@ -42,13 +42,13 @@ export class StoryService {
             if (loadedStories) {
               //this._stories = loadedStories;
               //this.buildIndex();
-              this.loadAllStories().then(stories => {
+              this.asyncLoadAllStorie().then(stories => {
                 this._stories = stories;
                 this.buildIndex();
               })
             }
             else {
-              this.loadAllStories().then(stories => {
+              this.asyncLoadAllStorie().then(stories => {
                 this._stories = stories;
                 this.buildIndex();
               })
@@ -283,7 +283,7 @@ export class StoryService {
    * Return a promise with a array contains all stories
    * @returns {Promise<Array<StoryInformationWithUrl>>}
    */
-  private loadAllStories(): Promise<Array<StoryInformationWithUrl>> {
+/*  public loadAllStories(): Promise<Array<StoryInformationWithUrl>> {
     let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
       var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
       for (let i = 0; i < DEFAULT_STORIES.length; i++) {
@@ -315,7 +315,38 @@ export class StoryService {
 
     });
     return promise;
+  }*/
+
+  public async asyncLoadAllStorie(){
+    var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+    for (let i = 0; i < DEFAULT_STORIES.length; i++) {
+      let pathOfStorie = DEFAULT_STORIES[i]
+      let langs = pathOfStorie["languages"]
+
+      for (let j = 0; j< langs.length; j++) {
+        const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
+        let storie: Story;
+        let data = await this.getJSONFromAsset(storyJson);
+        const newStory = new StoryInformation();
+        let storyInformation = data["mtga-story"].attributes
+        newStory.id = storyInformation.id;
+        newStory.title = storyInformation.title;
+        newStory.cover = storyInformation.imgCover;
+        newStory.language = storyInformation.lang;
+        newStory.shortDescription = storyInformation.desc;
+        newStory.author = storyInformation.creator;
+        newStory.readers = storyInformation.readers;
+        newStory.medium = storyInformation.medium;
+        newStory.child = true;
+
+        arrayOfStories.push(newStory as StoryInformationWithUrl);
+      }
+
+    }
+    return arrayOfStories
   }
+
+
   //Mocks access to the local storage.
   //TODO There must be a mock. The data should get fetch form the internal storage instead
   /**
@@ -325,46 +356,9 @@ export class StoryService {
    */
   //TODO @Tobi Parameter änderen, so dass Enum benutzt wird.
   public getStoriesByLanguage(lang: String): Promise<Array<StoryInformationWithUrl>> {
-    let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) =>{
-      this.loadAllStories().then(data => {
-        let filteredData: Array<StoryInformationWithUrl>;
-        filteredData = data.filter(o => o.language===lang)
-        resolve(filteredData)
-      })
-    });
 
-    return  promise;
-    /*let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-      var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-      for (let i = 0; i < DEFAULT_STORIES.length; i++) {
-        let pathOfStorie = DEFAULT_STORIES[i]
-        let langs = pathOfStorie["languages"]
+    return null
 
-        for (let j = 0; j< langs.length; j++) {
-          const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
-          let storie: Story;
-          this.getJSONFromAsset(storyJson).then(data => {
-            const newStory = new StoryInformation();
-            let storyInformation = data["mtga-story"].attributes
-            newStory.id = storyInformation.id;
-            newStory.title = storyInformation.title;
-            newStory.cover = storyInformation.imgCover;
-            newStory.language = storyInformation.lang;
-            newStory.shortDescription = storyInformation.desc;
-            newStory.author = storyInformation.creator;
-            newStory.readers = storyInformation.readers;
-            newStory.medium = storyInformation.medium;
-            newStory.child = true;
-            arrayOfStories.push(newStory as StoryInformationWithUrl);
-            console.log("array " + newStory);
-          })
-        }
-
-      }
-      resolve(arrayOfStories)
-
-    });
-    return promise;*/
   }
 
   private getJSONFromAsset(storyPath):Promise<any>{

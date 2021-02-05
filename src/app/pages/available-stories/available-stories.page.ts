@@ -62,8 +62,7 @@ export class AvailableStoriesPage implements OnInit {
 
   ionViewWillEnter() {
     this.loadDeviceDefaultStories();
-    //this.availableStories = this.storyService.testLoadStories();
-    console.log(this.availableStories)
+
   }
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
@@ -72,6 +71,7 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
+    this.loadDeviceDefaultStories();
   }
 
 
@@ -79,20 +79,11 @@ export class AvailableStoriesPage implements OnInit {
    * Loads the (hardcoded) default stories into the availableStories array
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
-  loadDeviceDefaultStories() {
+  async loadDeviceDefaultStories() {
     const lang = convertSystemLangToAvailableLanguage(this.languageService.selected);
-    let promise = this.storyService.getStoriesByLanguage(lang);
-    promise.then(stories => {
-      if (this.activeUserProfile.child === true) {
-        this.availableStories = stories.filter(o => o.child === true);
-      }
-      else {
-        this.availableStories = stories;
-      }
-    }).catch(error => {
-      console.log(error);
-    });
-
+    let storieForChild = this.activeUserProfile.child
+    let array = await this.storyService.asyncLoadAllStorie();
+    this.availableStories = array.filter(o=> o.language === lang && o.child === storieForChild);
   }
 
   goToSelectUserProfile() {
