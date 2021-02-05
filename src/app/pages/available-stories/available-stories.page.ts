@@ -82,8 +82,8 @@ export class AvailableStoriesPage implements OnInit {
   async loadDeviceDefaultStories() {
     const lang = convertSystemLangToAvailableLanguage(this.languageService.selected);
     let storieForChild = this.activeUserProfile.child
-    let array = await this.storyService.asyncLoadAllStorie();
-    this.availableStories = array.filter(o=> o.language === lang && o.child === storieForChild);
+    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(lang, storieForChild);
+    console.log(this.availableStories);
   }
 
   goToSelectUserProfile() {

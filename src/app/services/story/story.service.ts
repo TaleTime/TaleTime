@@ -42,13 +42,13 @@ export class StoryService {
             if (loadedStories) {
               //this._stories = loadedStories;
               //this.buildIndex();
-              this.asyncLoadAllStorie().then(stories => {
+              this.loadDefaultStories().then(stories => {
                 this._stories = stories;
                 this.buildIndex();
               })
             }
             else {
-              this.asyncLoadAllStorie().then(stories => {
+              this.loadDefaultStories().then(stories => {
                 this._stories = stories;
                 this.buildIndex();
               })
@@ -317,7 +317,7 @@ export class StoryService {
     return promise;
   }*/
 
-  public async asyncLoadAllStorie(){
+  private async loadDefaultStories(){
     var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
     for (let i = 0; i < DEFAULT_STORIES.length; i++) {
       let pathOfStorie = DEFAULT_STORIES[i]
@@ -344,6 +344,11 @@ export class StoryService {
 
     }
     return arrayOfStories
+  }
+
+  public getUserStoriesByLanguageAndChild(lang: String , child: boolean):Array<StoryInformationWithUrl>{
+    let array = this._stories.filter(o=> o.language === lang && o.child === child) as Array<StoryInformationWithUrl>;
+    return array
   }
 
 
