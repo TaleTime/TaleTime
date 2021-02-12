@@ -132,7 +132,8 @@ export class StoryMenuPage implements OnInit {
   }
 
   deleteStory(story: StoryInformation) {
-    this.storyService.deleteStory(story.id);
+    this.activeUserProfile.deleteStory(story.id);
+    this.ionViewWillEnter();
   }
 
   async goToPlayerPage(storyId: string) {

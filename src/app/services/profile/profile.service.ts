@@ -95,7 +95,7 @@ export class ProfileService {
    * Get all user profiles of the current account.
    * @return {Array} Return all users profiles as an array
    */
-  get userProfiles() {
+  public getUserProfiles() {
     return Array.from(this.authService.currentUserAccount.userProfiles.values());
   }
 
