@@ -1,8 +1,9 @@
 {
-  "name": "TaleTimeI4",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "TaleTime",
+  "version": "1.0.0",
+  "author": "Tale Time",
+  "description": "TaleTime is an interactive audiobook app.",
+  "homepage": "https://github.com/TaleTime",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -57,6 +58,7 @@
     "cordova-plugin-nativeaudio": "^3.0.9",
     "cordova-plugin-speechrecognition": "^1.2.0",
     "cordova-plugin-tts": "^0.2.3",
+    "cordova-res": "^0.15.3",
     "cordova-sqlite-storage": "^3.4.0",
     "core-js": "^3.3.5",
     "cucumber-pretty": "^6.0.0",
@@ -111,7 +113,6 @@
     "tslint": "^5.20.0",
     "typescript": "~3.7.5"
   },
-  "description": "An Ionic project",
   "cordova": {
     "plugins": {
       "cordova-sqlite-storage": {},
