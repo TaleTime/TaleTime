@@ -74,7 +74,6 @@ export class SettingsService {
   }
 
   get language(): string {
-    //console.log(this.settings);
     return this.settings.language;
   }
 

@@ -241,16 +241,7 @@ export class PlayerPage implements OnInit {
       );
     } else {
       audioPath = this.platformBridge.getAppDirectory();
-      audioPath +=
-        STORY_DIR +
-        this.storyId +
-        "/" +
-        this.settings.getShortLangCode() +
-        READER_DIR +
-        this.selectedReader +
-        "/" +
-        audioSrc +
-        FILETYPE_MP4;
+      audioPath += STORY_DIR + story.folder + "/" + this.settings.getShortLangCode() + READER_DIR + this.selectedReader + "/" + audioSrc + FILETYPE_MP4;
     }
     return audioPath;
   }

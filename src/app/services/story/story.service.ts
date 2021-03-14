@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file/ngx";
 import { Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
-import { rejects } from "assert";
 import { Observable } from "rxjs";
 import {DEFAULT_READER, DEFAULT_STORIES, SINGLE_STORY_FILE_NAME} from "../../constants/constants";
 import { ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData } from "../../models/story/story";
@@ -130,17 +129,8 @@ export class StoryService {
    * @param story device story to load (one of the mock stories)
    * @param shortLangCode language code (2 chars)
    */
-  private loadDeviceStory(
-    story: StoryInformation,
-    shortLangCode: string
-  ): Observable<boolean> {
-    const storyJson =
-      "assets/stories/" +
-      story.id +
-      "/" +
-      shortLangCode +
-      "/" +
-      SINGLE_STORY_FILE_NAME;
+  private loadDeviceStory(story: StoryInformation, shortLangCode: string): Observable<boolean> {
+    const storyJson = "assets/stories/" + story.folder + "/" + shortLangCode + "/" + SINGLE_STORY_FILE_NAME;
     return Observable.create((observer) => {
       this.http.get(storyJson).subscribe((s: Story) => {
         this.story = s;
@@ -156,14 +146,8 @@ export class StoryService {
    * @param story cloud/public story to load from SD/Root directory
    * @param shortLangCode language code (2 chars)
    */
-  private loadPublicStory(
-    story: StoryInformation,
-    shortLangCode: string
-  ): Observable<boolean> {
-    const storyJsonBasePath = this.publicStoryHelper.getStoryJsonFolderPath(
-      story,
-      shortLangCode
-    );
+  private loadPublicStory(story: StoryInformation, shortLangCode: string): Observable<boolean> {
+    const storyJsonBasePath = this.publicStoryHelper.getStoryJsonFolderPath(story, shortLangCode);
     return Observable.create((observer) => {
       this.fileService
         .readAsText(storyJsonBasePath, SINGLE_STORY_FILE_NAME)
@@ -183,10 +167,9 @@ export class StoryService {
   public loadStory(id: string): Observable<boolean> {
     const lang = this.settings.getShortLangCode();
     const story = this.getStoryInformation(id);
-    this.logger.log(
-      "StoryService-loadStory(): Loading:" + JSON.stringify(story)
-    );
+    this.logger.log("StoryService-loadStory(): Loading:" + JSON.stringify(story));
     this.logger.log("Loading story <" + id + "> with language <" + lang + ">");
+
     if (story.medium === "cloud") {
       return this.loadPublicStory(story, lang);
     } else {
@@ -279,43 +262,6 @@ export class StoryService {
     // if nothing was found assume the answers need to be read out
     return false;
   }
-  /**
-   * Return a promise with a array contains all stories
-   * @returns {Promise<Array<StoryInformationWithUrl>>}
-   */
-/*  public loadAllStories(): Promise<Array<StoryInformationWithUrl>> {
-    let promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-      var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-      for (let i = 0; i < DEFAULT_STORIES.length; i++) {
-        let pathOfStorie = DEFAULT_STORIES[i]
-        let langs = pathOfStorie["languages"]
-
-        for (let j = 0; j< langs.length; j++) {
-          const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
-          let storie: Story;
-          this.getJSONFromAsset(storyJson).then(data => {
-            const newStory = new StoryInformation();
-            let storyInformation = data["mtga-story"].attributes
-            newStory.id = storyInformation.id;
-            newStory.title = storyInformation.title;
-            newStory.cover = storyInformation.imgCover;
-            newStory.language = storyInformation.lang;
-            newStory.shortDescription = storyInformation.desc;
-            newStory.author = storyInformation.creator;
-            newStory.readers = storyInformation.readers;
-            newStory.medium = storyInformation.medium;
-            newStory.child = true;
-
-            arrayOfStories.push(newStory as StoryInformationWithUrl);
-          })
-        }
-
-      }
-      resolve(arrayOfStories)
-
-    });
-    return promise;
-  }*/
 
   private async loadDefaultStories(){
     var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
@@ -330,6 +276,7 @@ export class StoryService {
         const newStory = new StoryInformation();
         let storyInformation = data["mtga-story"].attributes
         newStory.id = storyInformation.id;
+        newStory.folder = storyInformation.folder
         newStory.title = storyInformation.title;
         newStory.cover = storyInformation.imgCover;
         newStory.language = storyInformation.lang;
@@ -352,19 +299,7 @@ export class StoryService {
   }
 
 
-  //Mocks access to the local storage.
-  //TODO There must be a mock. The data should get fetch form the internal storage instead
-  /**
-   * Return a promise with a array contains all stories for a given language
-   * @param {String} lang language e.g. "de-DE"
-   * @returns {Promise<Array<StoryInformationWithUrl>>}
-   */
-  //TODO @Tobi Parameter änderen, so dass Enum benutzt wird.
-  public getStoriesByLanguage(lang: String): Promise<Array<StoryInformationWithUrl>> {
 
-    return null
-
-  }
 
   private getJSONFromAsset(storyPath):Promise<any>{
     return new Promise((resolve, reject) => {
@@ -372,29 +307,6 @@ export class StoryService {
         resolve(data);
       });
     });
-  }
-
-  public testLoadStories():Array<StoryInformationWithUrl> {
-    var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-    for (let i = 0; i < DEFAULT_STORIES.length; i++) {
-      let pathOfStorie = DEFAULT_STORIES[i]
-      const storyJson = "assets/stories/" + pathOfStorie.name + "/" + pathOfStorie.languages[0] + "/" + SINGLE_STORY_FILE_NAME;
-      let storie: Story;
-
-      this.http.get(storyJson).subscribe(data => {
-        const newStory = new StoryInformation();
-        let storyInformation = data["mtga-story"].attributes
-        newStory.id = storyInformation.id;
-        newStory.title = storyInformation.title;
-        newStory.cover = storyInformation.imgCover;
-        newStory.language = storyInformation.lang;
-        newStory.shortDescription = storyInformation.desc;
-        arrayOfStories.push(newStory as StoryInformationWithUrl);
-      });
-
-      return arrayOfStories;
-
-    }
   }
 
 
