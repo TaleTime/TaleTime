@@ -28,11 +28,8 @@ export class PublicStoryHelperService {
    * @param story the story information of the downloaded/public story
    * @param lang preferred language
    */
-  public getStoryJsonFolderPath(
-    story: StoryInformation | StoryInformationWithUrl,
-    lang: string
-  ): string {
-    return this.publicStoryBasePath + story.id + "/" + lang + "/";
+  public getStoryJsonFolderPath(story: StoryInformation | StoryInformationWithUrl, lang: string): string {
+    return this.publicStoryBasePath + story.folder + "/" + lang + "/";
   }
 
   /**
@@ -65,6 +62,6 @@ export class PublicStoryHelperService {
   public getThumbnailPathForStory(
     story: StoryInformation | StoryInformationWithUrl
   ) {
-    return this.publicStoryBasePath + story.id + "/icon.png";
+    return this.publicStoryBasePath + story.folder + "/icon.png";
   }
 }

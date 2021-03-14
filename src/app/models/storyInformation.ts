@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 export class StoryInformation {
   // TODO tobi des todes!
   public id: string;
+  public folder: string;
   public title: string;
   public author: string[];
   public date: number;

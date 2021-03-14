@@ -15,6 +15,7 @@ import { LanguageService } from "../../services/language/language.service";
 import { ProfileService } from "../../services/profile/profile.service";
 import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 import { StoryService } from "../../services/story/story.service";
+import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -53,12 +54,16 @@ export class AvailableStoriesPage implements OnInit {
     private languageService: LanguageService
   ) {
 
-    this.loadDeviceDefaultStories();
-    this.platform.ready().then(() => {
-      this.loadPublicStories();
-    });
+   //this.loadDeviceDefaultStories();
+   // this.platform.ready().then(() => {
+      //this.loadPublicStories();
+    //});
   }
 
+  ionViewWillEnter() {
+    this.loadDeviceDefaultStories();
+
+  }
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
     console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
@@ -66,6 +71,7 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
+    this.loadDeviceDefaultStories();
   }
 
 
@@ -73,20 +79,11 @@ export class AvailableStoriesPage implements OnInit {
    * Loads the (hardcoded) default stories into the availableStories array
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
-  loadDeviceDefaultStories() {
-    const lang = this.languageService.selected;
-    let promise = this.storyService.getStoriesByLanguage(lang);
-    promise.then(stories => {
-      if (this.activeUserProfile.child === true) {
-        this.availableStories = stories.filter(o => o.child === true);
-      }
-      else {
-        this.availableStories = stories;
-      }
-    }).catch(error => {
-      console.log(error);
-    });
-
+  async loadDeviceDefaultStories() {
+    const lang = convertSystemLangToAvailableLanguage(this.languageService.selected);
+    let storieForChild = this.activeUserProfile.child
+    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(lang, storieForChild);
+    console.log(this.availableStories);
   }
 
   goToSelectUserProfile() {

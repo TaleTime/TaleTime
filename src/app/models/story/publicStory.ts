@@ -15,6 +15,7 @@ export class PublicStoryMetaData {
   creator: string;
   medium: string;
   url: string;
+
 }
 
 export interface MtgaStoryNode {
