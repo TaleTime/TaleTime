@@ -284,7 +284,7 @@ export class StoryService {
         newStory.author = storyInformation.creator;
         newStory.readers = storyInformation.readers;
         newStory.medium = storyInformation.medium;
-        newStory.child = true;
+        newStory.child = false;
 
         arrayOfStories.push(newStory as StoryInformationWithUrl);
       }
