@@ -7,7 +7,7 @@
       "imgCover": "Titelbild_Der_verlorene_Ball-02.png",
       "lang": "German",
       "desc": "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"",
-      "child": true,
+      "child": false,
       "date":"2016",
       "creator": ["Sarah Philippi", "Lisa Roisch"],
       "medium": "device",
