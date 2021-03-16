@@ -7,7 +7,7 @@
       "imgCover": "Titelbild_Der_verlorene_Ball-02.png",
       "lang": "English",
       "desc": "A story about soccer and a missing ball",
-      "child": true,
+      "child": false,
       "date":"2016",
       "creator": ["Sarah Philippi", "Lisa Roisch"],
       "medium": "device",
