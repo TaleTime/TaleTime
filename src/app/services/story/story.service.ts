@@ -3,9 +3,8 @@ import { Injectable } from "@angular/core";
 import { File } from "@ionic-native/file/ngx";
 import { Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
-import { rejects } from "assert";
 import { Observable } from "rxjs";
-import { DEFAULT_READER, SINGLE_STORY_FILE_NAME } from "../../constants/constants";
+import {DEFAULT_READER, DEFAULT_STORIES, SINGLE_STORY_FILE_NAME} from "../../constants/constants";
 import { ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData } from "../../models/story/story";
 import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
 import { LoggerService } from "../logger/logger.service";
@@ -42,13 +41,13 @@ export class StoryService {
             if (loadedStories) {
               //this._stories = loadedStories;
               //this.buildIndex();
-              this.loadAllStories().then(stories => {
+              this.loadDefaultStories().then(stories => {
                 this._stories = stories;
                 this.buildIndex();
               })
             }
             else {
-              this.loadAllStories().then(stories => {
+              this.loadDefaultStories().then(stories => {
                 this._stories = stories;
                 this.buildIndex();
               })
@@ -130,17 +129,8 @@ export class StoryService {
    * @param story device story to load (one of the mock stories)
    * @param shortLangCode language code (2 chars)
    */
-  private loadDeviceStory(
-    story: StoryInformation,
-    shortLangCode: string
-  ): Observable<boolean> {
-    const storyJson =
-      "assets/stories/" +
-      story.id +
-      "/" +
-      shortLangCode +
-      "/" +
-      SINGLE_STORY_FILE_NAME;
+  private loadDeviceStory(story: StoryInformation, shortLangCode: string): Observable<boolean> {
+    const storyJson = "assets/stories/" + story.folder + "/" + shortLangCode + "/" + SINGLE_STORY_FILE_NAME;
     return Observable.create((observer) => {
       this.http.get(storyJson).subscribe((s: Story) => {
         this.story = s;
@@ -156,14 +146,8 @@ export class StoryService {
    * @param story cloud/public story to load from SD/Root directory
    * @param shortLangCode language code (2 chars)
    */
-  private loadPublicStory(
-    story: StoryInformation,
-    shortLangCode: string
-  ): Observable<boolean> {
-    const storyJsonBasePath = this.publicStoryHelper.getStoryJsonFolderPath(
-      story,
-      shortLangCode
-    );
+  private loadPublicStory(story: StoryInformation, shortLangCode: string): Observable<boolean> {
+    const storyJsonBasePath = this.publicStoryHelper.getStoryJsonFolderPath(story, shortLangCode);
     return Observable.create((observer) => {
       this.fileService
         .readAsText(storyJsonBasePath, SINGLE_STORY_FILE_NAME)
@@ -183,10 +167,9 @@ export class StoryService {
   public loadStory(id: string): Observable<boolean> {
     const lang = this.settings.getShortLangCode();
     const story = this.getStoryInformation(id);
-    this.logger.log(
-      "StoryService-loadStory(): Loading:" + JSON.stringify(story)
-    );
+    this.logger.log("StoryService-loadStory(): Loading:" + JSON.stringify(story));
     this.logger.log("Loading story <" + id + "> with language <" + lang + ">");
+
     if (story.medium === "cloud") {
       return this.loadPublicStory(story, lang);
     } else {
@@ -209,7 +192,7 @@ export class StoryService {
   public loadNode(i: number) {
     this.currentNode = this.story["mtga-story"]["mtga-story-node"][
       i.toString()
-    ];
+      ];
   }
 
   public loadNodeForAnswer(i: number): void {
@@ -279,117 +262,54 @@ export class StoryService {
     // if nothing was found assume the answers need to be read out
     return false;
   }
-  /**
-   * Return a promise with a array contains all stories
-   * @returns {Promise<Array<StoryInformationWithUrl>>}
-   */
-  private loadAllStories(): Promise<Array<StoryInformationWithUrl>> {
-    //Mocks access to the local storage.
-    //TODO There must be a mock. The data should get fetch form the internal storage instead
-    var promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-      var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-      const newStory = new StoryInformation();
-      newStory.title = "Der verlorene Ball";
-      newStory.id = "Der_verlorene_Ball";
-      newStory.author = ["Sarah Philippi", "Lisa Roisch"];
-      newStory.date = 2016;
-      newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
-      newStory.language = "Deutsch";
-      newStory.shortDescription =
-        "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
-      newStory.medium = "device";
-      newStory.readers = [
-        { name: "Kevin", answersPartOfAudioFile: true },
-        { name: "Raoul", answersPartOfAudioFile: false }
-      ];
-      mockStories.push(newStory as StoryInformationWithUrl);
 
-      const newStory2 = new StoryInformation();
-      newStory2.title = "Celebrating Shuby the Shy Sheep";
-      newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
-      newStory2.author = ["André Miede", "Sebastian Barth"];
-      newStory2.date = 2018;
-      newStory2.cover = "";
-      newStory2.language = "English";
-      newStory2.shortDescription =
-        "Description of \"Celebrating Shuby the Shy Sheep\"";
-      newStory2.medium = "device";
-      newStory2.readers = [];
-      mockStories.push(newStory2 as StoryInformationWithUrl);
+  private async loadDefaultStories(){
+    var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+    for (let i = 0; i < DEFAULT_STORIES.length; i++) {
+      let pathOfStorie = DEFAULT_STORIES[i]
+      let langs = pathOfStorie["languages"]
 
-      resolve(mockStories)
-    });
+      for (let j = 0; j< langs.length; j++) {
+        const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
+        let storie: Story;
+        let data = await this.getJSONFromAsset(storyJson);
+        const newStory = new StoryInformation();
+        let storyInformation = data["mtga-story"].attributes
+        newStory.id = storyInformation.id;
+        newStory.folder = storyInformation.folder
+        newStory.title = storyInformation.title;
+        newStory.cover = storyInformation.imgCover;
+        newStory.language = storyInformation.lang;
+        newStory.shortDescription = storyInformation.desc;
+        newStory.author = storyInformation.creator;
+        newStory.readers = storyInformation.readers;
+        newStory.medium = storyInformation.medium;
+        newStory.child = false;
 
-    return promise;
-
-  }
-  //Mocks access to the local storage.
-  //TODO There must be a mock. The data should get fetch form the internal storage instead
-  /**
-   * Return a promise with a array contains all stories for a given language
-   * @param {String} lang language e.g. "de-DE"
-   * @returns {Promise<Array<StoryInformationWithUrl>>}
-   */
-  //TODO @Tobi Parameter änderen, so dass Enum benutzt wird.
-  public getStoriesByLanguage(lang: String): Promise<Array<StoryInformationWithUrl>> {
-    let promise
-    switch (lang) {
-      case "de-DE": {
-        promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-          var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-          const newStory = new StoryInformation();
-          newStory.title = "Der verlorene Ball";
-          newStory.id = "Der_verlorene_Ball";
-          newStory.author = ["Sarah Philippi", "Lisa Roisch"];
-          newStory.date = 2016;
-          newStory.cover = "Titelbild_Der_verlorene_Ball-02.png";
-          newStory.language = "Deutsch";
-          newStory.child = true;
-          newStory.shortDescription =
-            "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"";
-          newStory.medium = "device";
-          newStory.readers = [
-            { name: "Kevin", answersPartOfAudioFile: true },
-            { name: "Raoul", answersPartOfAudioFile: false }
-          ];
-          mockStories.push(newStory as StoryInformationWithUrl);
-
-          resolve(mockStories)
-        });
-
-        break;
+        arrayOfStories.push(newStory as StoryInformationWithUrl);
       }
 
-      case "en-US": {
-        promise = new Promise<Array<StoryInformationWithUrl>>((resolve, rejects) => {
-          var mockStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
-          const newStory2 = new StoryInformation();
-          newStory2.title = "Celebrating Shuby the Shy Sheep";
-          newStory2.id = "Celebrating_Shuby_the_Shy_Sheep";
-          newStory2.author = ["André Miede", "Sebastian Barth"];
-          newStory2.date = 2018;
-          newStory2.cover = "";
-          newStory2.language = "Englisch";
-          newStory2.child = false;
-          newStory2.shortDescription =
-            "Description of \"Celebrating Shuby the Shy Sheep\"";
-          newStory2.medium = "device";
-          newStory2.readers = [];
-          mockStories.push(newStory2 as StoryInformationWithUrl);
-
-          resolve(mockStories)
-        });
-
-        break;
-      }
-
-      default: {
-        rejects(new Error("No language found"));
-      }
     }
-
-    return promise;
+    return arrayOfStories
   }
+
+  public getUserStoriesByLanguageAndChild(lang: String , child: boolean):Array<StoryInformationWithUrl>{
+    let array = this._stories.filter(o=> o.language === lang && o.child === child) as Array<StoryInformationWithUrl>;
+    return array
+  }
+
+
+
+
+  private getJSONFromAsset(storyPath):Promise<any>{
+    return new Promise((resolve, reject) => {
+      this.http.get(storyPath).subscribe(data => {
+        resolve(data);
+      });
+    });
+  }
+
+
 
 }
 

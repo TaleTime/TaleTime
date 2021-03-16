@@ -72,6 +72,13 @@ export class UserProfile {
     this.arrayOfStories.push(story);
   }
 
+  public deleteStory(id: string) {
+    if(this.isStoryPresent(id)){
+      const index = this.arrayOfStories.findIndex(o => o.id === id);
+      this.arrayOfStories.splice(index,1);
+    }
+  }
+
   public getSaveGame(findStoryId: string): SaveGame {
     this.arrayOfSaveGames.find(o => {
       if (o.storyId === findStoryId) {
@@ -88,9 +95,9 @@ export class UserProfile {
    * @param {String} title Title of the storie.
    * @returns {boolean} true if story already stored, otherwise false
    */
-  public isStoryPresent(title: String): boolean {
+  public isStoryPresent(id: String): boolean {
     for (let story of this.arrayOfStories) {
-      if (story.id === title) {
+      if (story.id === id) {
         return true;
       }
     }

@@ -7,6 +7,7 @@ export interface Story {
 
 export class StoryMetaData {
   id: string;
+  folder: string;
   title: string;
   imgCover: string;
   lang: string;

@@ -1,12 +1,17 @@
 {
   "mtga-story": {
     "attributes": {
-      "id": "Celebrating_Shuby_the_Shy_Sheep",
+      "id": "Celebrating_Shuby_the_Shy_Sheep_en",
+      "folder": "Celebrating_Shuby_the_Shy_Sheep",
       "title": "Celebrating Shuby the Shy Sheep",
       "imgCover": "",
-      "lang": "EN",
+      "lang": "English",
       "desc": "",
-      "creator": "André Miede, Sebastian Barth"
+      "child": false,
+      "date":"2016",
+      "creator": ["André Miede", "Sebastian Barth"],
+      "medium": "device",
+      "readers":[{}]
     },
     "mtga-story-node": {
       "0": {

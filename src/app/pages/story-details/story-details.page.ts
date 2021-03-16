@@ -67,8 +67,6 @@ export class StoryDetailsPage {
 
   deleteStory(id: string) {
     this.storyService.deleteStory(id);
-    // TODO Muss noch implementiert werden
-    // deleteSaveGame();
     this.navCtrl.pop();
   }
 
