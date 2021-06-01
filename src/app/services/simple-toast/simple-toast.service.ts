@@ -21,9 +21,9 @@ export class SimpleToastService {
   ) {
     const toast = await this.toastCtrl.create({
       message: message1,
-      showCloseButton: displayOkBtn,
+      //showCloseButton: displayOkBtn,
       duration: duration1,
-      closeButtonText: this.translate.instant("COMMON_OK")
+      //closeButtonText: this.translate.instant("COMMON_OK")
     });
     if (dismissHandler != null) {
       toast.onDidDismiss().then(dismissHandler);  // TODO might not work
