@@ -30,7 +30,6 @@ export class ProfileService {
    */
   public getActiveUserProfile() {
     if (this.activeUserProfile === undefined) {
-      console.log("Route to /select-user-profile")
       this.router.navigate(["/select-user-profile"]);
     }
     return this.activeUserProfile
@@ -46,7 +45,6 @@ export class ProfileService {
       return observableThrowError("Please insert credentials");
     } else {
       const userProfile = new UserProfile(credentials.name, credentials.avatarId, credentials.child);
-      console.log(typeof(userProfile));
       const userAccount: UserAccount = this.authService.currentUserAccount;
       userAccount.addUserProfile(userProfile);
       this.authService.save(userAccount);

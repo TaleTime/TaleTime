@@ -104,6 +104,9 @@ export class UserProfile {
     return false;
   }
 
+
+
+
   static avatars(id?): Array<object> | object {
     if (id !== undefined) {
       return UserProfile.AVATARS[id];

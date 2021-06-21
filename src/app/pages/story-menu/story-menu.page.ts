@@ -52,26 +52,26 @@ export class StoryMenuPage implements OnInit {
     public profileService: ProfileService,
     public languageService: LanguageService
   ) {
+
     if (this.authService.currentUserAccount == null) {
       this.router.navigate(["/start"]);
     }
     this.languageMap.set("English", "en-US");
     this.languageMap.set("Deutsch", "de-DE");
   }
-  
+
   ngOnInit() {
     this.stories = []
-    this.activeUserProfile = this.profileService.getActiveUserProfile();
-    const userProfile = new UserProfile(this.activeUserProfile.name, this.activeUserProfile.avatar, this.activeUserProfile.child)
+    this.activeUserProfile = this.profileService.getActiveUserProfile()
+    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
       //todo Ändern, dass nur noch Enum anstelle von Strings benutzt werden
-      console.log("This: ", this)
       if (this.languageService.selected == "de-DE") {
-        this.stories = userProfile.getArrayOfStoriesByLanguage(AvailableLanguage.German);
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.German)
       } else {
-        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.English);
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.English)
       }
     }
 
