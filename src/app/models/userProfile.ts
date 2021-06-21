@@ -42,8 +42,8 @@ export class UserProfile {
   public avatar;
   public child: boolean;
   public settings: Settings;
-  private arrayOfStories: Array<StoryInformation>;
-  private arrayOfSaveGames: Array<SaveGame>;
+  public arrayOfStories: Array<StoryInformation>;
+  public arrayOfSaveGames: Array<SaveGame>;
 
   constructor(name: string, avatarId: number, child: boolean) {
     this.id = Math.random()

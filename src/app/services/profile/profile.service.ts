@@ -32,7 +32,7 @@ export class ProfileService {
     if (this.activeUserProfile === undefined) {
       this.router.navigate(["/select-user-profile"]);
     }
-    return this.activeUserProfile
+    return this.activeUserProfile;
   }
   /**
    * Creates a user profile.
@@ -81,7 +81,10 @@ export class ProfileService {
     const userAccount: UserAccount = this.authService.currentUserAccount;
     if (userAccount.checkIfuderProfileIdExistes(userProfileId)){
       const userProfile = userAccount.userProfiles.get(userProfileId);
-      this.activeUserProfile = userProfile;
+      let newProfile = new UserProfile(userProfile.name, userProfile.avatar.id, userProfile.child);
+      newProfile.arrayOfStories = userProfile.arrayOfStories;
+      newProfile.arrayOfSaveGames = userProfile.arrayOfSaveGames;
+      this.activeUserProfile = newProfile;
     }else {
       //@Tobi Eventuell Exception werfen
     }
