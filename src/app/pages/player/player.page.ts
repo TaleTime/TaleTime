@@ -251,7 +251,7 @@ export class PlayerPage implements OnInit {
    * depends on whether tts or real audio file is used
    */
   private play(): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.stopped = false;
       if (this.usingTTS || this.temporaryTTS) {
         if (!this.platformBridge.platformIsBrowser()) {
@@ -291,7 +291,7 @@ export class PlayerPage implements OnInit {
    */
   private pause() {
     console.log("Pressed pause");
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (this.usingTTS || this.temporaryTTS) {
         if (!this.platformBridge.platformIsBrowser()) {
           // text has to be whitespace to work correct for some tts versions, not empty string

@@ -302,7 +302,7 @@ export class StoryService {
 
 
   private getJSONFromAsset(storyPath):Promise<any>{
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.http.get(storyPath).subscribe(data => {
         resolve(data);
       });

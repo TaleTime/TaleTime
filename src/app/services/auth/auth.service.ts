@@ -26,7 +26,7 @@ export class AuthService {
   }
   async ready(): Promise<any> {
     if (this.promise === null) {
-      this.promise = new Promise((resolve, reject) => {
+      this.promise = new Promise<void>((resolve, reject) => {
         if (this.currentUser === null) {
           this.authProcessService.user$.subscribe(user => {
             if (user != null) {

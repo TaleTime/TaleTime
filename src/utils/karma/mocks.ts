@@ -15,7 +15,7 @@ export class MockedStorage{
   public map = new Map();
 
   public ready(): Promise<any>{
-    let promise = new Promise(() => {
+    let promise = new Promise<void>(() => {
 
     });
     return promise
@@ -23,14 +23,14 @@ export class MockedStorage{
 
   set(key: string, value: any): Promise<any>{
     this.map.set(key, value)
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise<void>((resolve, reject) => {
 
     });
     return promise;
   }
 
   get(key: string): Promise<any>{
-    let promise = new Promise((result) => {
+    let promise = new Promise<void>((result) => {
         result = this.map.get(key)
     });
     return promise;
@@ -111,7 +111,7 @@ export class MockedAuthService{
   private _activeUserProfile : UserProfile;
 
   public ready(): Promise<any>{
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise<void>((resolve, reject) => {
 
     });
     return promise
@@ -193,7 +193,7 @@ export class MockedAppComponent{
 @Injectable()
 export class MockedPlatform{
   public ready(): Promise<any>{
-    let promise = new Promise(() => {
+    let promise = new Promise<void>(() => {
 
     });
     return promise
