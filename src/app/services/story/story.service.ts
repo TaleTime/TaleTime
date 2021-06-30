@@ -4,19 +4,31 @@ import { File } from "@ionic-native/file/ngx";
 import { Platform } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { Observable } from "rxjs";
-import {DEFAULT_READER, DEFAULT_STORIES, SINGLE_STORY_FILE_NAME} from "../../constants/constants";
-import { ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData } from "../../models/story/story";
-import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
+import {
+  DEFAULT_READER,
+  DEFAULT_STORIES,
+  SINGLE_STORY_FILE_NAME,
+} from "../../constants/constants";
+import {
+  ChapterAttributes,
+  MtgaNextStoryNode,
+  MtgaStoryNode,
+  Story,
+  StoryMetaData,
+} from "../../models/story/story";
+import {
+  StoryInformation,
+  StoryInformationWithUrl,
+} from "../../models/storyInformation";
 import { LoggerService } from "../logger/logger.service";
 import { PublicStoryHelperService } from "../public-story-helper/public-story-helper.service";
 import { SaveGameService } from "../save-game/save-game.service";
 import { SettingsService } from "../settings/settings.service";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class StoryService {
-
   private readonly STORY_INFO_KEY = "STORY_INFO";
   private storyIndices: Map<string, number> = new Map<string, number>();
   private _stories: Array<StoryInformation> = new Array<StoryInformation>();
@@ -41,16 +53,15 @@ export class StoryService {
             if (loadedStories) {
               //this._stories = loadedStories;
               //this.buildIndex();
-              this.loadDefaultStories().then(stories => {
+              this.loadDefaultStories().then((stories) => {
                 this._stories = stories;
                 this.buildIndex();
-              })
-            }
-            else {
-              this.loadDefaultStories().then(stories => {
+              });
+            } else {
+              this.loadDefaultStories().then((stories) => {
                 this._stories = stories;
                 this.buildIndex();
-              })
+              });
             }
           })
           .catch((error) => {
@@ -129,8 +140,17 @@ export class StoryService {
    * @param story device story to load (one of the mock stories)
    * @param shortLangCode language code (2 chars)
    */
-  private loadDeviceStory(story: StoryInformation, shortLangCode: string): Observable<boolean> {
-    const storyJson = "assets/stories/" + story.folder + "/" + shortLangCode + "/" + SINGLE_STORY_FILE_NAME;
+  private loadDeviceStory(
+    story: StoryInformation,
+    shortLangCode: string
+  ): Observable<boolean> {
+    const storyJson =
+      "assets/stories/" +
+      story.folder +
+      "/" +
+      shortLangCode +
+      "/" +
+      SINGLE_STORY_FILE_NAME;
     return Observable.create((observer) => {
       this.http.get(storyJson).subscribe((s: Story) => {
         this.story = s;
@@ -146,8 +166,14 @@ export class StoryService {
    * @param story cloud/public story to load from SD/Root directory
    * @param shortLangCode language code (2 chars)
    */
-  private loadPublicStory(story: StoryInformation, shortLangCode: string): Observable<boolean> {
-    const storyJsonBasePath = this.publicStoryHelper.getStoryJsonFolderPath(story, shortLangCode);
+  private loadPublicStory(
+    story: StoryInformation,
+    shortLangCode: string
+  ): Observable<boolean> {
+    const storyJsonBasePath = this.publicStoryHelper.getStoryJsonFolderPath(
+      story,
+      shortLangCode
+    );
     return Observable.create((observer) => {
       this.fileService
         .readAsText(storyJsonBasePath, SINGLE_STORY_FILE_NAME)
@@ -167,7 +193,9 @@ export class StoryService {
   public loadStory(id: string): Observable<boolean> {
     const lang = this.settings.getShortLangCode();
     const story = this.getStoryInformation(id);
-    this.logger.log("StoryService-loadStory(): Loading:" + JSON.stringify(story));
+    this.logger.log(
+      "StoryService-loadStory(): Loading:" + JSON.stringify(story)
+    );
     this.logger.log("Loading story <" + id + "> with language <" + lang + ">");
 
     if (story.medium === "cloud") {
@@ -190,9 +218,8 @@ export class StoryService {
   }
 
   public loadNode(i: number) {
-    this.currentNode = this.story["mtga-story"]["mtga-story-node"][
-      i.toString()
-      ];
+    this.currentNode =
+      this.story["mtga-story"]["mtga-story-node"][i.toString()];
   }
 
   public loadNodeForAnswer(i: number): void {
@@ -205,11 +232,11 @@ export class StoryService {
     }
     this.logger.log(
       "Answer #" +
-      i +
-      " matched to the next node with the id: " +
-      id +
-      ". Loading node " +
-      id
+        i +
+        " matched to the next node with the id: " +
+        id +
+        ". Loading node " +
+        id
     );
     this.loadNode(id);
   }
@@ -263,20 +290,27 @@ export class StoryService {
     return false;
   }
 
-  private async loadDefaultStories(){
-    var arrayOfStories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
+  private async loadDefaultStories() {
+    var arrayOfStories: Array<StoryInformationWithUrl> =
+      new Array<StoryInformationWithUrl>();
     for (let i = 0; i < DEFAULT_STORIES.length; i++) {
-      let pathOfStorie = DEFAULT_STORIES[i]
-      let langs = pathOfStorie["languages"]
+      let pathOfStorie = DEFAULT_STORIES[i];
+      let langs = pathOfStorie["languages"];
 
-      for (let j = 0; j< langs.length; j++) {
-        const storyJson = "assets/stories/" + pathOfStorie.name + "/" + langs[j] + "/" + SINGLE_STORY_FILE_NAME;
+      for (let j = 0; j < langs.length; j++) {
+        const storyJson =
+          "assets/stories/" +
+          pathOfStorie.name +
+          "/" +
+          langs[j] +
+          "/" +
+          SINGLE_STORY_FILE_NAME;
         let storie: Story;
         let data = await this.getJSONFromAsset(storyJson);
         const newStory = new StoryInformation();
-        let storyInformation = data["mtga-story"].attributes
+        let storyInformation = data["mtga-story"].attributes;
         newStory.id = storyInformation.id;
-        newStory.folder = storyInformation.folder
+        newStory.folder = storyInformation.folder;
         newStory.title = storyInformation.title;
         newStory.cover = storyInformation.imgCover;
         newStory.language = storyInformation.lang;
@@ -288,29 +322,25 @@ export class StoryService {
 
         arrayOfStories.push(newStory as StoryInformationWithUrl);
       }
-
     }
-    return arrayOfStories
+    return arrayOfStories;
   }
 
-  public getUserStoriesByLanguageAndChild(lang: String , child: boolean):Array<StoryInformationWithUrl>{
-    let array = this._stories.filter(o=> o.language === lang && o.child === child) as Array<StoryInformationWithUrl>;
-    return array
+  public getUserStoriesByLanguageAndChild(
+    lang: String,
+    child: boolean
+  ): Array<StoryInformationWithUrl> {
+    let array = this._stories.filter(
+      (o) => o.language === lang && o.child === child
+    ) as Array<StoryInformationWithUrl>;
+    return array;
   }
 
-
-
-
-  private getJSONFromAsset(storyPath):Promise<any>{
-    return new Promise<void>((resolve, reject) => {
-      this.http.get(storyPath).subscribe(data => {
+  private getJSONFromAsset(storyPath): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.http.get(storyPath).subscribe((data) => {
         resolve(data);
       });
     });
   }
-
-
-
 }
-
-
