@@ -60,7 +60,7 @@
     "cordova-sqlite-storage": "^3.4.0",
     "core-js": "^3.3.5",
     "cucumber-pretty": "^6.0.0",
-    "firebase": "^7.14.1",
+    "firebase": "^7.24.0",
     "install": "^0.13.0",
     "ionic": "^5.4.6",
     "ionic-angular": "^3.9.9",
