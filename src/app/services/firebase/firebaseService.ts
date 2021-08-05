@@ -19,6 +19,10 @@ export class FireBaseService {
     // db.list("users");
   }
 
+  /*
+    Gets Data from dbNode
+    dbNode: dbNode: Path to Parentnode (i.e. settings/<uid>)
+  */
   getItems(dbNode: string): Observable<any> {
     return this.db.list(dbNode).stateChanges();
   }
