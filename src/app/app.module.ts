@@ -51,7 +51,7 @@ import { NgxAuthFirebaseUIModule } from "ngx-auth-firebaseui";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { AngularFireModule } from "@angular/fire";
-import { FireBaseService } from "./pages/firebase/firebaseService";
+import { FireBaseService } from "./services/firebase/firebaseService";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");

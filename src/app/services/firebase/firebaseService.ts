@@ -9,16 +9,28 @@ import { Observable } from "rxjs";
 export class FireBaseService {
   itemsRef: AngularFireList<any>;
   item: Observable<any[]>;
+  data: Observable<any>;
 
-  constructor(private http: HttpClient, private db: AngularFireDatabase) {}
+  constructor(private http: HttpClient, private db: AngularFireDatabase) {
+    this.itemsRef = db.list("test");
+    this.data = this.itemsRef.stateChanges();
+    this.data.forEach((item) => {
+      console.log("item.key: ", item.key);
+      console.log("item: ", item);
+    });
+
+    db.list("users");
+  }
 
   /**
    * Get All tickers from firebase
    */
   getMessages(): Observable<any> {
-    this.itemsRef = this.db.list("test");
     this.item = this.itemsRef.valueChanges();
-    this.item.subscribe((res) => console.log(res));
     return;
+  }
+
+  addItem(): any {
+    this.itemsRef.push({ name: "BEEEEDER" });
   }
 }
