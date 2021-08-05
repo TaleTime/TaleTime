@@ -20,6 +20,7 @@ import { SettingsService } from "../../services/settings/settings.service";
 import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 import { StoryInformationService } from "../../services/story-information/story-information.service";
 import { StoryService } from "../../services/story/story.service";
+import { FireBaseService } from "../firebase/firebaseService";
 
 @Component({
   selector: "app-story-menu",
@@ -53,7 +54,8 @@ export class StoryMenuPage implements OnInit {
     private authService: AuthService,
     public storyService: StoryService,
     public profileService: ProfileService,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    public firebaseService: FireBaseService
   ) {
     if (this.authService.currentUserAccount == null) {
       this.router.navigate(["/start"]);
@@ -63,6 +65,7 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
+    var messages = this.firebaseService.getMessages();
     this.stories = [];
     this.activeUserProfile = this.profileService.getActiveUserProfile();
     console.log(
