@@ -1,28 +1,22 @@
-import { Injectable } from '@angular/core';
-import {throwError as observableThrowError} from "rxjs/internal/observable/throwError";
-import {UserProfile} from "../../models/userProfile";
-import {UserAccount} from "../../models/userAccount";
-import {Observable} from "rxjs";
-import {AuthService} from "../auth/auth.service";
-import {Router} from "@angular/router";
+import { Injectable } from "@angular/core";
+import { throwError as observableThrowError } from "rxjs/internal/observable/throwError";
+import { UserProfile } from "../../models/userProfile";
+import { UserAccount } from "../../models/userAccount";
+import { Observable } from "rxjs";
+import { AuthService } from "../auth/auth.service";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 
 /**
  * This class handels all concerns regarding Profiles. This service handles all.
  */
 export class ProfileService {
-
   private activeUserProfile: UserProfile;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {
-
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   /**
    * Get the current user profile.
@@ -40,19 +34,32 @@ export class ProfileService {
    * @throws {observableThrowError} - Throw if credentials object is empty
    * @return {Observable} Return a observable
    */
-  public createUserProfile(credentials: { name: any; avatarId: any; child: any; }) {
+  public createUserProfile(credentials: {
+    name: any;
+    avatarId: any;
+    child: any;
+  }) {
     if (credentials.name === null) {
       return observableThrowError("Please insert credentials");
     } else {
-      const userProfile = new UserProfile(credentials.name, credentials.avatarId, credentials.child);
+      const userProfile = new UserProfile(
+        credentials.name,
+        credentials.avatarId,
+        credentials.child
+      );
       const userAccount: UserAccount = this.authService.currentUserAccount;
       userAccount.addUserProfile(userProfile);
       this.authService.save(userAccount);
 
-      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-        subscriber.next(true);
-        subscriber.complete();
-      })
+      return new Observable(
+        (subscriber: {
+          next: (arg0: boolean) => void;
+          complete: () => void;
+        }) => {
+          subscriber.next(true);
+          subscriber.complete();
+        }
+      );
     }
   }
 
@@ -66,10 +73,12 @@ export class ProfileService {
     userAccount.removeUserProfile(userProfileId);
     this.authService.save(userAccount);
 
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      subscriber.next(true);
-      subscriber.complete();
-    });
+    return new Observable(
+      (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        subscriber.next(true);
+        subscriber.complete();
+      }
+    );
   }
 
   /**
@@ -79,19 +88,26 @@ export class ProfileService {
    */
   public setActiveUserProfile(userProfileId: string) {
     const userAccount: UserAccount = this.authService.currentUserAccount;
-    if (userAccount.checkIfuderProfileIdExistes(userProfileId)){
+    if (userAccount.checkIfuderProfileIdExistes(userProfileId)) {
       const userProfile = userAccount.userProfiles.get(userProfileId);
-      let newProfile = new UserProfile(userProfile.name, userProfile.avatar.id, userProfile.child);
+      let newProfile = new UserProfile(
+        userProfile.name,
+        userProfile.avatar.id,
+        userProfile.child
+      );
       newProfile.arrayOfStories = userProfile.arrayOfStories;
       newProfile.arrayOfSaveGames = userProfile.arrayOfSaveGames;
+      newProfile.id = userProfile.id;
       this.activeUserProfile = newProfile;
-    }else {
+    } else {
       //@Tobi Eventuell Exception werfen
     }
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      subscriber.next(true);
-      subscriber.complete();
-    });
+    return new Observable(
+      (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        subscriber.next(true);
+        subscriber.complete();
+      }
+    );
   }
 
   /**
@@ -99,7 +115,9 @@ export class ProfileService {
    * @return {Array} Return all users profiles as an array
    */
   public getUserProfiles() {
-    return Array.from(this.authService.currentUserAccount.userProfiles.values());
+    return Array.from(
+      this.authService.currentUserAccount.userProfiles.values()
+    );
   }
 
   /**
@@ -107,14 +125,16 @@ export class ProfileService {
    * @param {UserProfile} userProfile
 
    */
-  public storeProfile(userprofile: UserProfile){
+  public storeProfile(userprofile: UserProfile) {
     this.activeUserProfile = userprofile;
     const userAccount: UserAccount = this.authService.currentUserAccount;
     this.authService.save(userAccount);
 
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      subscriber.next(true);
-      subscriber.complete();
-    })
+    return new Observable(
+      (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        subscriber.next(true);
+        subscriber.complete();
+      }
+    );
   }
 }

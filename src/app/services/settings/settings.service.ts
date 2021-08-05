@@ -1,22 +1,22 @@
-import {Injectable} from "@angular/core";
-import {Observable, Subject} from "rxjs";
-import {Platform} from "@ionic/angular";
-import {AlertService} from "../alert/alert.service";
-import {LanguageFileService} from "../speech-recognition/language-file/language-file.service";
-import {LoggerService} from "../logger/logger.service";
-import {Settings} from "../../models/settings";
-import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
-import {Storage} from "@ionic/storage";
-import {AuthService} from "../auth/auth.service";
-import {ProfileService} from "../profile/profile.service";
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { Platform } from "@ionic/angular";
+import { AlertService } from "../alert/alert.service";
+import { LanguageFileService } from "../speech-recognition/language-file/language-file.service";
+import { LoggerService } from "../logger/logger.service";
+import { Settings } from "../../models/settings";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
+import { Storage } from "@ionic/storage";
+import { AuthService } from "../auth/auth.service";
+import { ProfileService } from "../profile/profile.service";
+import { FireBaseService } from "../firebase/firebaseService";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SettingsService {
-
   private readonly SETTINGS_KEY = "SETTINGS";
-  private settings: Settings = new Settings();  // TODO: initializing Settings this way was not necessary before
+  private settings: Settings = new Settings(); // TODO: initializing Settings this way was not necessary before
 
   private languageSubject: Subject<string> = new Subject();
   private settingsLoaded: Subject<boolean> = new Subject();
@@ -29,19 +29,24 @@ export class SettingsService {
     private speechRecognitionService: SpeechRecognition,
     private logger: LoggerService,
     private alert: AlertService,
-    private profilService: ProfileService
+    private profilService: ProfileService,
+    private firebaseService: FireBaseService
   ) {
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
-        this.authService.ready().then( () => {
+        this.authService.ready().then(() => {
           this.loadSettings();
         });
       });
     });
+    console.log(
+      "this.authService.currentUserAccount.uid",
+      this.authService.currentUserAccount.uid
+    );
   }
 
   loadSettings() {
-    if (this.profilService.getActiveUserProfile()!== undefined) {
+    if (this.profilService.getActiveUserProfile() !== undefined) {
       this.storage
         .get(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id)
         .then((settings: Settings) => {
@@ -97,13 +102,13 @@ export class SettingsService {
           } else {
             this.speechRecognitionService.requestPermission().then(
               () => this.updateAndSaveSpeechRecognitionValue(value),
-              async () => {  // TODO might not work, async / await problematic ?
-                const alert = await this.alert
-                  .createAlert(
-                    "Error",
-                    "Permission needed to use Speech Recognition",
-                    [{text: "OK"}]
-                  );
+              async () => {
+                // TODO might not work, async / await problematic ?
+                const alert = await this.alert.createAlert(
+                  "Error",
+                  "Permission needed to use Speech Recognition",
+                  [{ text: "OK" }]
+                );
                 await alert.present();
                 this.updateAndSaveSpeechRecognitionValue(false);
               }
@@ -141,7 +146,7 @@ export class SettingsService {
     this.save();
   }
 
-  set fontSize(value: number){
+  set fontSize(value: number) {
     this.settings.fontSize = value;
     this.save();
   }
@@ -169,8 +174,22 @@ export class SettingsService {
    * Save all the settings to ionic storage
    */
   private save() {
+    console.log(
+      "this.profilService.getActiveUserProfile().id",
+      this.profilService.getActiveUserProfile().id
+    );
+
+    this.firebaseService.setItem(
+      "settings/" + this.authService.currentUserAccount.uid,
+      this.profilService.getActiveUserProfile().id,
+      this.settings
+    );
+
     this.storage
-      .set(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id, this.settings)
+      .set(
+        this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id,
+        this.settings
+      )
       .then(() =>
         this.logger.log("Settings written: " + JSON.stringify(this.settings))
       )

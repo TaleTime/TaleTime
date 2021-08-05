@@ -7,30 +7,30 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class FireBaseService {
-  itemsRef: AngularFireList<any>;
-  item: Observable<any[]>;
-  data: Observable<any>;
+  dbRef: AngularFireList<any>;
+  //data: Observable<any>;
 
   constructor(private http: HttpClient, private db: AngularFireDatabase) {
-    this.itemsRef = db.list("test");
-    this.data = this.itemsRef.stateChanges();
-    this.data.forEach((item) => {
-      console.log("item.key: ", item.key);
-      console.log("item: ", item);
-    });
-
-    db.list("users");
+    // this.data = this.itemsRef.stateChanges();
+    // this.data.forEach((item) => {
+    //   console.log("item.key: ", item.key);
+    //   console.log("item: ", item);
+    // });
+    // db.list("users");
   }
 
-  /**
-   * Get All tickers from firebase
-   */
-  getMessages(): Observable<any> {
-    this.item = this.itemsRef.valueChanges();
-    return;
+  getItems(dbNode: string): Observable<any> {
+    return this.db.list(dbNode).stateChanges();
   }
 
-  addItem(): any {
-    this.itemsRef.push({ name: "BEEEEDER" });
+  /*
+    Sets/Updates the information. If the node doesn't exist it gets created
+    
+    dbNode: Path to Parentnode (i.e. settings/<uid>)
+    key: key to Database-Entry
+    data: JSON-Data to commit
+  */
+  setItem(dbNode: string, key: string, data: any): any {
+    this.db.list(dbNode).set(key, data);
   }
 }
