@@ -3,8 +3,8 @@
  * @author Matthias Kiefer
  * @date 2017-11-19
  */
-import {UserProfile} from "./userProfile";
-import {sha256} from "js-sha256";
+import { UserProfile } from "./userProfile";
+import { sha256 } from "js-sha256";
 
 export class UserAccount {
   public name: string;
@@ -42,6 +42,21 @@ export class UserAccount {
   }
 
   public addUserProfile(userProfile: UserProfile) {
+    // this.firebaseService.setItem(
+    //   "users/" + userAccount.uid + "/" + userAccount.activeUserProfile.id,
+    //   "uid",
+    //   userAccount.uid
+    // );
+    // this.firebaseService.setItem(
+    //   "users/" + userAccount.uid + "/" + userAccount.userProfiles.,
+    //   "name",
+    //   userAccount.name
+    // );
+    // this.firebaseService.setItem(
+    //   "users/" + userAccount.uid + "/" + userAccount.activeUserProfile.id,
+    //   "email",
+    //   userAccount.email
+    // );
     this.userProfiles.set(userProfile.id, userProfile);
   }
 
@@ -57,7 +72,7 @@ export class UserAccount {
    * Method check if a user profil is the map
    * @returns      Return true if a user profil is already exists
    */
-  public checkIfuderProfileIdExistes(userProfileId:string):boolean{
-   return this.userProfiles.get(userProfileId) === undefined ? false : true;
+  public checkIfuderProfileIdExistes(userProfileId: string): boolean {
+    return this.userProfiles.get(userProfileId) === undefined ? false : true;
   }
 }

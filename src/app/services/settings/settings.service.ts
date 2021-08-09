@@ -11,6 +11,7 @@ import { AuthService } from "../auth/auth.service";
 import { ProfileService } from "../profile/profile.service";
 import { FireBaseService } from "../firebase/firebaseService";
 import { map } from "rxjs/operators";
+import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
 
 @Injectable({
   providedIn: "root",
@@ -21,8 +22,6 @@ export class SettingsService {
 
   private languageSubject: Subject<string> = new Subject();
   private settingsLoaded: Subject<boolean> = new Subject();
-
-  data: any;
 
   constructor(
     private authService: AuthService,
@@ -42,60 +41,46 @@ export class SettingsService {
         });
       });
     });
-    console.log(
-      "this.authService.currentUserAccount.uid",
-      this.authService.currentUserAccount.uid
-    );
   }
 
   loadSettings() {
+    /*Firebase Realtime Database*/
     if (this.profilService.getActiveUserProfile() !== undefined) {
-      var path = "settings/" + this.authService.currentUserAccount.uid + "/" + this.profilService.getActiveUserProfile().id;
-      // var pipeData = this.firebaseService
-      //   .getAll(path)
-      //   .pipe(map((action) => action.map((a) => a.payload.toJSON())));
+      var path =
+        "users/" +
+        this.authService.currentUserAccount.uid +
+        "/" +
+        this.profilService.getActiveUserProfile().id +
+        "/settings";
 
-      // console.log("PipeData", pipeData);
-      // pipeData.subscribe((data) => {
-      //   this.data = data;
-      //   console.log(data);
-      // });
-
-      var pipeData = this.firebaseService
+      this.firebaseService
         .getItemById(path)
-        .pipe(map( a => a.payload.toJSON()));
-
-
-      console.log("PipeData", pipeData);
-      pipeData.subscribe((data) => {
-        this.data = data;
-        
-        console.log(data);
-      })
-
-
-
-      
-
-      this.storage
-        .get(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id)
-        .then((settings: Settings) => {
-          this.logger.log(
-            "Read settings from storage: " + JSON.stringify(settings)
-          );
-          console.log("1: ", this.settings);
-          this.settings = settings;
-          console.log("2: ", this.settings);
-
-          this.reloadLanguageFile();
-          this.settingsLoaded.next(true);
-        })
-        .catch((error) => {
-          this.logger.log(error.message);
-          this.settings = new Settings();
-          this.save();
-          this.settingsLoaded.next(true);
+        .pipe(map((a) => a.payload.toJSON()))
+        .subscribe((data: Settings) => {
+          this.settings = data;
+          console.log(this.settings);
         });
+
+      /*With IONIC*/
+      // this.storage
+      //   .get(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id)
+      //   .then((settings: Settings) => {
+      //     this.logger.log(
+      //       "Read settings from storage: " + JSON.stringify(settings)
+      //     );
+      //     console.log("1: ", this.settings);
+      //     this.settings = settings;
+      //     console.log("2: ", this.settings);
+
+      //     this.reloadLanguageFile();
+      //     this.settingsLoaded.next(true);
+      //   })
+      //   .catch((error) => {
+      //     this.logger.log(error.message);
+      //     this.settings = new Settings();
+      //     this.save();
+      //     this.settingsLoaded.next(true);
+      //   });
     }
   }
 
@@ -200,19 +185,15 @@ export class SettingsService {
     });
   }
 
+  users: {};
+
   /**
    * Save all the settings to ionic storage
    */
   private save() {
-    //console.log("this.item", this.item)
-    console.log(
-      "this.profilService.getActiveUserProfile().id",
-      this.profilService.getActiveUserProfile().id
-    );
-
     this.firebaseService.setItem(
-      "settings/" + this.authService.currentUserAccount.uid,
-      this.profilService.getActiveUserProfile().id,
+      "users/" + this.authService.currentUserAccount.uid,
+      this.profilService.getActiveUserProfile().id + "/settings",
       this.settings
     );
 
