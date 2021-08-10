@@ -13,7 +13,7 @@
   <ion-list>
     <ion-item
         (click)="select($event, userProfile.id)"
-        *ngFor="let userProfile of this.profilService.getUserProfiles()"
+        *ngFor="let userProfile of this.userProfiles | async"
     >
       <ion-avatar slot="start">
         <img src="assets/imgs/profile/{{userProfile.avatar.name}}" />

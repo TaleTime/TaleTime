@@ -2,9 +2,12 @@ import { Injectable } from "@angular/core";
 import { throwError as observableThrowError } from "rxjs/internal/observable/throwError";
 import { UserProfile } from "../../models/userProfile";
 import { UserAccount } from "../../models/userAccount";
-import { Observable } from "rxjs";
+import { from, Observable } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
+import { FireBaseService } from "../firebase/firebaseService";
+import { map } from "rxjs/operators";
+import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
 
 @Injectable({
   providedIn: "root",
@@ -16,13 +19,25 @@ import { Router } from "@angular/router";
 export class ProfileService {
   private activeUserProfile: UserProfile;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private firebaseService: FireBaseService
+  ) {}
 
   /**
    * Get the current user profile.
    * @return {UserProfile} Return a UserProfile object
    */
   public getActiveUserProfile() {
+    console.log("GetActiveUserProfile");
+    var userProfiles = this.firebaseService
+      .getAllItems("users/" + this.authService.currentUserAccount.uid)
+      .pipe(map((action) => action.map((a) => a.payload.toJSON())))
+      .subscribe((userProfiles) => {
+        console.log("userProfiles", userProfiles);
+      });
+
     if (this.activeUserProfile === undefined) {
       this.router.navigate(["/select-user-profile"]);
     }
@@ -48,8 +63,26 @@ export class ProfileService {
         credentials.child
       );
       const userAccount: UserAccount = this.authService.currentUserAccount;
-      userAccount.addUserProfile(userProfile);
-      this.authService.save(userAccount);
+
+      //map Userprofile or loop Userprofile
+      this.firebaseService.setItem(
+        "users/" + userAccount.uid + "/" + userProfile.id,
+        "name",
+        userProfile.name
+      );
+      this.firebaseService.setItem(
+        "users/" + userAccount.uid + "/" + userProfile.id,
+        "avatar",
+        userProfile.avatar
+      );
+      this.firebaseService.setItem(
+        "users/" + userAccount.uid + "/" + userProfile.id,
+        "child",
+        userProfile.child
+      );
+
+      //userAccount.addUserProfile(userProfile);
+      //this.authService.save(userAccount);
 
       return new Observable(
         (subscriber: {
@@ -88,7 +121,15 @@ export class ProfileService {
    */
   public setActiveUserProfile(userProfileId: string) {
     const userAccount: UserAccount = this.authService.currentUserAccount;
-    if (userAccount.checkIfuderProfileIdExistes(userProfileId)) {
+    if (userAccount.checkIfUserProfileIdExists(userProfileId)) {
+      console.log("Pfad:", "users/" + userAccount.uid + "/" + userProfileId);
+      var pipeData = this.firebaseService
+        .getItemById("users/" + userAccount.uid + "/" + userProfileId)
+        .pipe(map((a) => a.payload.toJSON()));
+      console.log("PipeData:", pipeData);
+      pipeData.subscribe((data) => {
+        console.log("Data:", data);
+      });
       const userProfile = userAccount.userProfiles.get(userProfileId);
       let newProfile = new UserProfile(
         userProfile.name,
@@ -115,9 +156,14 @@ export class ProfileService {
    * @return {Array} Return all users profiles as an array
    */
   public getUserProfiles() {
-    return Array.from(
-      this.authService.currentUserAccount.userProfiles.values()
-    );
+    var userProfiles = this.firebaseService
+      .getAllItems("users/" + this.authService.currentUserAccount.uid)
+      .pipe(map((action) => action.map((a) => a.payload.toJSON())));
+
+    return userProfiles;
+    //  Array.from(
+    //    this.authService.currentUserAccount.userProfiles.values()
+    //  );
   }
 
   /**
