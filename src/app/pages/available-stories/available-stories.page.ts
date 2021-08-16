@@ -1,13 +1,19 @@
 import { Component, NgZone, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
+import {
+  FileTransfer,
+  FileTransferObject,
+} from "@ionic-native/file-transfer/ngx";
 import { File } from "@ionic-native/file/ngx";
 import { HTTP } from "@ionic-native/http/ngx";
 import { Zip } from "@ionic-native/zip/ngx";
 import { LoadingController, NavController, Platform } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { CLOUD } from "../../constants/constants";
-import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
+import {
+  StoryInformation,
+  StoryInformationWithUrl,
+} from "../../models/storyInformation";
 import { UserProfile } from "../../models/userProfile";
 import { AlertService } from "../../services/alert/alert.service";
 import { AuthService } from "../../services/auth/auth.service";
@@ -15,7 +21,7 @@ import { LanguageService } from "../../services/language/language.service";
 import { ProfileService } from "../../services/profile/profile.service";
 import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 import { StoryService } from "../../services/story/story.service";
-import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
+import { convertSystemLangToAvailableLanguage } from "../../Util/UtilLanguage";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -53,20 +59,21 @@ export class AvailableStoriesPage implements OnInit {
     private profileService: ProfileService,
     private languageService: LanguageService
   ) {
-
-   //this.loadDeviceDefaultStories();
-   // this.platform.ready().then(() => {
-      //this.loadPublicStories();
+    //this.loadDeviceDefaultStories();
+    // this.platform.ready().then(() => {
+    //this.loadPublicStories();
     //});
   }
 
   ionViewWillEnter() {
     this.loadDeviceDefaultStories();
-
   }
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
-    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
+    console.log(
+      "STORY_MENU_CURRENT_USER: ",
+      this.authService.currentUserAccount
+    );
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
@@ -74,16 +81,19 @@ export class AvailableStoriesPage implements OnInit {
     this.loadDeviceDefaultStories();
   }
 
-
   /**
    * Loads the (hardcoded) default stories into the availableStories array
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
   async loadDeviceDefaultStories() {
-    const lang = convertSystemLangToAvailableLanguage(this.languageService.selected);
-    let storieForChild = this.activeUserProfile.child
-    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(lang, storieForChild);
-    console.log(this.availableStories);
+    const lang = convertSystemLangToAvailableLanguage(
+      this.languageService.selected
+    );
+    let storieForChild = this.activeUserProfile.child;
+    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(
+      lang,
+      storieForChild
+    );
   }
 
   goToSelectUserProfile() {
@@ -135,7 +145,7 @@ export class AvailableStoriesPage implements OnInit {
    */
   private async createLoading(content: string) {
     return await this.loadingCtrl.create({
-      message: content
+      message: content,
     });
   }
 
@@ -146,7 +156,7 @@ export class AvailableStoriesPage implements OnInit {
   ): string {
     return this.translate.instant("STORY_DOWNLOAD_PROGRESS", {
       title,
-      progress: Math.round((loaded / total) * 100) + "%"
+      progress: Math.round((loaded / total) * 100) + "%",
     });
   }
 
@@ -157,7 +167,7 @@ export class AvailableStoriesPage implements OnInit {
   ): string {
     return this.translate.instant("STORY_UNPACKING_PROGRESS", {
       title,
-      progress: Math.round((loaded / total) * 100) + "%"
+      progress: Math.round((loaded / total) * 100) + "%",
     });
   }
 
@@ -264,7 +274,7 @@ export class AvailableStoriesPage implements OnInit {
       "",
       [{ text: this.translate.instant("COMMON_OK") }],
       this.translate.instant("STORY_ALREADY_EXISTS_MSG", {
-        story_title: storyTitle
+        story_title: storyTitle,
       })
     );
     await al.present();
@@ -284,4 +294,3 @@ export class AvailableStoriesPage implements OnInit {
     await al.present();
   }
 }
-

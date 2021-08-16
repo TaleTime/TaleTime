@@ -1,12 +1,19 @@
-import {Component, OnInit} from "@angular/core";
-import {AlertController, LoadingController, NavController,} from "@ionic/angular";
-import {Router} from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import {
+  AlertController,
+  LoadingController,
+  NavController,
+} from "@ionic/angular";
+import { Router } from "@angular/router";
 
-import {AuthService} from "../../services/auth/auth.service";
-import {UserAccount} from "../../models/userAccount";
+import { AuthService } from "../../services/auth/auth.service";
+import { UserAccount } from "../../models/userAccount";
 import { TranslateService } from "@ngx-translate/core";
 import { AppComponent } from "../../app.component";
-import { NgxAuthFirebaseuiLoginComponent, NgxAuthFirebaseUIModule } from "ngx-auth-firebaseui";
+import {
+  NgxAuthFirebaseuiLoginComponent,
+  NgxAuthFirebaseUIModule,
+} from "ngx-auth-firebaseui";
 import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 
 @Component({
@@ -15,47 +22,44 @@ import { SimpleToastService } from "../../services/simple-toast/simple-toast.ser
   styleUrls: ["./create-user-account.page.scss"],
 })
 export class CreateUserAccountPage implements OnInit {
-
   createSuccess = false;
-  registerCredentials = {name: "", email: "", pin: ""};
-  private checked:boolean = false;
+  registerCredentials = { name: "", email: "", pin: "" };
+  private checked: boolean = false;
 
-  constructor(public router: Router,
-              private navCtrl: NavController,
-              private authService: AuthService,
-              private alertCtrl: AlertController,
-              private loadingCtrl: LoadingController,
-              private translator: TranslateService,
-              private app: AppComponent
-  ) {
-
-  }
-  ngOnInit() {
-
-  }
+  constructor(
+    public router: Router,
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private translator: TranslateService,
+    private app: AppComponent
+  ) {}
+  ngOnInit() {}
 
   public error(event) {
     let message: string;
     switch (event.code) {
-      case 'auth/invalid-email': {
-        message = this.translator.instant('INVALID_EMAIL');
+      case "auth/invalid-email": {
+        message = this.translator.instant("INVALID_EMAIL");
         break;
-      } case 'auth/weak-password': {
-        message = this.translator.instant('WEAK_PASSWORD');
+      }
+      case "auth/weak-password": {
+        message = this.translator.instant("WEAK_PASSWORD");
         break;
-      } case 'auth/email-already-in-use': {
-        message = this.translator.instant('EMAIL_ALREADY_IN_USE');
+      }
+      case "auth/email-already-in-use": {
+        message = this.translator.instant("EMAIL_ALREADY_IN_USE");
         break;
-      } default : {
-        message = this.translator.instant('REGISTER_ERROR');
+      }
+      default: {
+        message = this.translator.instant("REGISTER_ERROR");
       }
     }
-    console.log(event);
-    this.app.openSnackBar(message, 'close');
+    this.app.openSnackBar(message, "close");
   }
 
   public register(event) {
-    console.log(event);
     this.showLoading();
 
     this.authService.register(this.registerCredentials).subscribe(
@@ -64,15 +68,17 @@ export class CreateUserAccountPage implements OnInit {
           this.createSuccess = true;
           // automatic login user
           try {
-            let userAccount: UserAccount = new UserAccount(this.registerCredentials.name,
-              this.registerCredentials.email, this.registerCredentials.pin);
-            this.authService.trySignIn(userAccount,() =>
+            let userAccount: UserAccount = new UserAccount(
+              this.registerCredentials.name,
+              this.registerCredentials.email,
+              this.registerCredentials.pin
+            );
+            this.authService.trySignIn(userAccount, () =>
               this.router.navigate(["/select-user-profile"])
             );
           } catch (ex) {
             this.showPopup("Error", ex.message);
           }
-
         } else {
           this.showPopup("Error", "Problem creating account.");
         }
@@ -86,7 +92,7 @@ export class CreateUserAccountPage implements OnInit {
   async showLoading() {
     const loading = await this.loadingCtrl.create({
       message: "Please wait...",
-      backdropDismiss: true
+      backdropDismiss: true,
     });
     await loading.present().catch(() => this.showError(loading, ""));
     await loading.dismiss();
@@ -98,7 +104,7 @@ export class CreateUserAccountPage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: "Fail",
       subHeader: text,
-      buttons: ["OK"]
+      buttons: ["OK"],
     });
     await alert.present();
   }
@@ -115,9 +121,9 @@ export class CreateUserAccountPage implements OnInit {
               console.log("To be implemeted: Jump back to root");
               // this.navCtrl.popToRoot();
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     await alert.present();
   }

@@ -45,6 +45,10 @@ export class SettingsService {
 
   loadSettings() {
     /*Firebase Realtime Database*/
+    console.log(
+      "this.profilService.getActiveUserProfile()",
+      this.profilService.getActiveUserProfile()
+    );
     if (this.profilService.getActiveUserProfile() !== undefined) {
       var path =
         "users/" +

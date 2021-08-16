@@ -18,7 +18,7 @@ export class SelectUserProfilePage implements OnInit {
   isShowingOptionsButton = false;
   showingOptionsLabel: string;
   userProfiles: Observable<any[]>;
-
+  //userProfiles: Map<string, Object>;
   constructor(
     private navCtrl: NavController,
     private settingsService: SettingsService,
@@ -30,6 +30,7 @@ export class SelectUserProfilePage implements OnInit {
     public profileService: ProfileService
   ) {
     this.userProfiles = this.profileService.getUserProfiles();
+    console.log("PROFILE: this.userProfiles", this.userProfiles);
     this.isShowingOptions = true;
     this.translate.get("COMMON_EDIT").subscribe((value) => {
       // value is our translated string
@@ -48,6 +49,7 @@ export class SelectUserProfilePage implements OnInit {
         if (success) {
           // this.navCtrl.push(TabsPage);
           this.settingsService.loadSettings();
+
           this.router.navigate(["/tabs/story-menu"]);
         }
       },

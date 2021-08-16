@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 import { FireBaseService } from "../firebase/firebaseService";
 import { map } from "rxjs/operators";
 import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
+import { updateLanguageServiceSourceFile } from "typescript";
+import { stringify } from "@angular/compiler/src/util";
 
 @Injectable({
   providedIn: "root",
@@ -18,12 +20,15 @@ import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
  */
 export class ProfileService {
   private activeUserProfile: UserProfile;
+  private userProfiles: Map<string, UserProfile>;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private firebaseService: FireBaseService
-  ) {}
+  ) {
+    this.userProfiles = new Map<string, UserProfile>();
+  }
 
   /**
    * Get the current user profile.
@@ -31,12 +36,38 @@ export class ProfileService {
    */
   public getActiveUserProfile() {
     console.log("GetActiveUserProfile");
+
     var userProfiles = this.firebaseService
       .getAllItems("users/" + this.authService.currentUserAccount.uid)
-      .pipe(map((action) => action.map((a) => a.payload.toJSON())))
-      .subscribe((userProfiles) => {
-        console.log("userProfiles", userProfiles);
-      });
+      .pipe(
+        map((action) =>
+          action.map((a) => {
+            /*
+            avatarId: Avatar
+            name: string
+            child: bool
+             */
+            let name = a.payload.child("/name").val();
+            let child = a.payload.child("/child").val();
+            let avatarId = a.payload.child("/avatar/id").val();
+            let id = a.payload.key;
+            let userProfile = new UserProfile(name, child, avatarId);
+            userProfile.id = id;
+            return this.userProfiles.set(a.payload.key, userProfile);
+          })
+        )
+      )
+      .subscribe(
+        (userProfiles) =>
+          (this.authService.currentUserAccount.userProfiles = this.userProfiles)
+      );
+
+    // var userProfiles = this.firebaseService
+    //   .getAllItems("users/" + this.authService.currentUserAccount.uid)
+    //   .pipe(map((action) => action.map((a) => a.payload.toJSON())))
+    //   .subscribe((userProfiles) => {
+    //     console.log("userProfiles", userProfiles);
+    //   });
 
     if (this.activeUserProfile === undefined) {
       this.router.navigate(["/select-user-profile"]);
@@ -80,6 +111,11 @@ export class ProfileService {
         "child",
         userProfile.child
       );
+      this.firebaseService.setItem(
+        "users/" + userAccount.uid + "/" + userProfile.id,
+        "id",
+        userProfile.id
+      );
 
       //userAccount.addUserProfile(userProfile);
       //this.authService.save(userAccount);
@@ -121,8 +157,9 @@ export class ProfileService {
    */
   public setActiveUserProfile(userProfileId: string) {
     const userAccount: UserAccount = this.authService.currentUserAccount;
+    console.log("userProfileId", userProfileId);
+    console.log("userAccount.userProfiles", userAccount.userProfiles);
     if (userAccount.checkIfUserProfileIdExists(userProfileId)) {
-      console.log("Pfad:", "users/" + userAccount.uid + "/" + userProfileId);
       var pipeData = this.firebaseService
         .getItemById("users/" + userAccount.uid + "/" + userProfileId)
         .pipe(map((a) => a.payload.toJSON()));
@@ -140,7 +177,15 @@ export class ProfileService {
       newProfile.arrayOfSaveGames = userProfile.arrayOfSaveGames;
       newProfile.id = userProfile.id;
       this.activeUserProfile = newProfile;
+      console.log(
+        "this.authService.currentUserAccount",
+        this.authService.currentUserAccount
+      );
     } else {
+      console.log(
+        "ELSE: this.authService.currentUserAccount",
+        this.authService.currentUserAccount
+      );
       //@Tobi Eventuell Exception werfen
     }
     return new Observable(
@@ -155,6 +200,7 @@ export class ProfileService {
    * Get all user profiles of the current account.
    * @return {Array} Return all users profiles as an array
    */
+  //Observable<Map<string, UserProfile>>
   public getUserProfiles() {
     var userProfiles = this.firebaseService
       .getAllItems("users/" + this.authService.currentUserAccount.uid)
