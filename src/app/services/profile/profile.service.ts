@@ -95,26 +95,17 @@ export class ProfileService {
       );
       const userAccount: UserAccount = this.authService.currentUserAccount;
 
-      //map Userprofile or loop Userprofile
+      let userProfileJSON = {
+        name: userProfile.name,
+        avatar: userProfile.avatar,
+        child: userProfile.child,
+        id: userProfile.id,
+      };
+
       this.firebaseService.setItem(
-        "users/" + userAccount.uid + "/" + userProfile.id,
-        "name",
-        userProfile.name
-      );
-      this.firebaseService.setItem(
-        "users/" + userAccount.uid + "/" + userProfile.id,
-        "avatar",
-        userProfile.avatar
-      );
-      this.firebaseService.setItem(
-        "users/" + userAccount.uid + "/" + userProfile.id,
-        "child",
-        userProfile.child
-      );
-      this.firebaseService.setItem(
-        "users/" + userAccount.uid + "/" + userProfile.id,
-        "id",
-        userProfile.id
+        "users/" + userAccount.uid + "/",
+        userProfile.id,
+        userProfileJSON
       );
 
       //userAccount.addUserProfile(userProfile);
@@ -157,30 +148,23 @@ export class ProfileService {
    */
   public setActiveUserProfile(userProfileId: string) {
     const userAccount: UserAccount = this.authService.currentUserAccount;
-    console.log("userProfileId", userProfileId);
-    console.log("userAccount.userProfiles", userAccount.userProfiles);
+
     if (userAccount.checkIfUserProfileIdExists(userProfileId)) {
-      var pipeData = this.firebaseService
+      this.firebaseService
         .getItemById("users/" + userAccount.uid + "/" + userProfileId)
-        .pipe(map((a) => a.payload.toJSON()));
-      console.log("PipeData:", pipeData);
-      pipeData.subscribe((data) => {
-        console.log("Data:", data);
-      });
-      const userProfile = userAccount.userProfiles.get(userProfileId);
-      let newProfile = new UserProfile(
-        userProfile.name,
-        userProfile.avatar.id,
-        userProfile.child
-      );
-      newProfile.arrayOfStories = userProfile.arrayOfStories;
-      newProfile.arrayOfSaveGames = userProfile.arrayOfSaveGames;
-      newProfile.id = userProfile.id;
-      this.activeUserProfile = newProfile;
-      console.log(
-        "this.authService.currentUserAccount",
-        this.authService.currentUserAccount
-      );
+        .pipe(map((a) => a.payload.toJSON()))
+        .subscribe((data: UserProfile) => (this.activeUserProfile = data));
+
+      // let userProfile = userAccount.userProfiles.get(userProfileId);
+      // let newProfile = new UserProfile(
+      //   userProfile.name,
+      //   userProfile.avatar.id,
+      //   userProfile.child
+      // );
+      // newProfile.arrayOfStories = userProfile.arrayOfStories;
+      // newProfile.arrayOfSaveGames = userProfile.arrayOfSaveGames;
+      // newProfile.id = userProfile.id;
+      // this.activeUserProfile = newProfile;
     } else {
       console.log(
         "ELSE: this.authService.currentUserAccount",
