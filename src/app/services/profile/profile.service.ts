@@ -35,32 +35,34 @@ export class ProfileService {
    * @return {UserProfile} Return a UserProfile object
    */
   public getActiveUserProfile() {
-    console.log("GetActiveUserProfile");
-
-    var userProfiles = this.firebaseService
-      .getAllItems("users/" + this.authService.currentUserAccount.uid)
-      .pipe(
-        map((action) =>
-          action.map((a) => {
-            /*
-            avatarId: Avatar
-            name: string
-            child: bool
-             */
-            let name = a.payload.child("/name").val();
-            let child = a.payload.child("/child").val();
-            let avatarId = a.payload.child("/avatar/id").val();
-            let id = a.payload.key;
-            let userProfile = new UserProfile(name, child, avatarId);
-            userProfile.id = id;
-            return this.userProfiles.set(a.payload.key, userProfile);
-          })
-        )
-      )
-      .subscribe(
-        (userProfiles) =>
-          (this.authService.currentUserAccount.userProfiles = this.userProfiles)
-      );
+    // var key: string;
+    // var userProfiles = this.firebaseService
+    //   .getAllItems("users/" + this.authService.currentUserAccount.uid)
+    //   .pipe(
+    //     map((action) =>
+    //       action.map((a) => {
+    //         /*
+    //         avatarId: Avatar
+    //         name: string
+    //         child: bool
+    //          */
+    //         let name = a.payload.child("/name").val();
+    //         let child = a.payload.child("/child").val();
+    //         let avatarId = a.payload.child("/avatar/id").val();
+    //         key = a.payload.key;
+    //         let userProfile = new UserProfile(name, child, avatarId);
+    //         userProfile.id = key;
+    //         return this.userProfiles.set(a.payload.key, userProfile);
+    //       })
+    //     )
+    //   )
+    //   .subscribe((userProfiles) => {
+    //     this.authService.currentUserAccount.userProfiles = this.userProfiles;
+    //     console.log(
+    //       "this.authService.currentUserAccount.userProfiles",
+    //       this.authService.currentUserAccount.userProfiles
+    //     );
+    //   });
 
     // var userProfiles = this.firebaseService
     //   .getAllItems("users/" + this.authService.currentUserAccount.uid)
@@ -145,24 +147,27 @@ export class ProfileService {
     if (userAccount.checkIfUserProfileIdExists(userProfileId)) {
       this.firebaseService
         .getItemById("users/" + userAccount.uid + "/" + userProfileId)
-        .pipe(map((a) => a.payload.toJSON()))
-        .subscribe((data: UserProfile) => (this.activeUserProfile = data));
-
-      // let userProfile = userAccount.userProfiles.get(userProfileId);
-      // let newProfile = new UserProfile(
-      //   userProfile.name,
-      //   userProfile.avatar.id,
-      //   userProfile.child
-      // );
-      // newProfile.arrayOfStories = userProfile.arrayOfStories;
-      // newProfile.arrayOfSaveGames = userProfile.arrayOfSaveGames;
-      // newProfile.id = userProfile.id;
-      // this.activeUserProfile = newProfile;
+        .pipe(
+          map((a): UserProfile => {
+            //create new UserProfile to get all functions
+            let name: string = a.payload.child("/name").val();
+            let child: boolean = a.payload.child("/child").val();
+            let avatarId: number = a.payload.child("/avatar/id").val();
+            let id: string = a.payload.key;
+            let userProfile: UserProfile = new UserProfile(
+              name,
+              avatarId,
+              child
+            );
+            userProfile.id = id;
+            return userProfile;
+          })
+        )
+        .subscribe((profile: UserProfile) => {
+          this.activeUserProfile = profile;
+        });
     } else {
-      console.log(
-        "ELSE: this.authService.currentUserAccount",
-        this.authService.currentUserAccount
-      );
+      console.log("setActiveUserProfile ELSE:");
       //@Tobi Eventuell Exception werfen
     }
     return new Observable(
