@@ -91,8 +91,11 @@ export class ProfileService {
    */
   public deleteUserProfile(userProfileId: string) {
     const userAccount: UserAccount = this.authService.currentUserAccount;
-    userAccount.removeUserProfile(userProfileId);
-    this.authService.save(userAccount);
+    this.firebaseService.deleteItem(
+      "users/" + userAccount.uid + "/" + userProfileId
+    );
+
+    this.userProfiles.delete(userProfileId);
 
     return new Observable(
       (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {

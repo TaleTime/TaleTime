@@ -42,4 +42,8 @@ export class FireBaseService {
   setItem(dbNode: string, key: string, data: any): any {
     this.db.list(dbNode).set(key, data);
   }
+
+  deleteItem(dbNode: string) {
+    this.db.object(dbNode).remove();
+  }
 }
