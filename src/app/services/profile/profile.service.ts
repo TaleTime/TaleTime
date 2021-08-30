@@ -21,6 +21,7 @@ import { stringify } from "@angular/compiler/src/util";
 export class ProfileService {
   private activeUserProfile: UserProfile;
   private userProfiles: Map<string, UserProfile>;
+  private promise: Promise<any> = null;
 
   constructor(
     private authService: AuthService,
@@ -36,13 +37,6 @@ export class ProfileService {
    * @return {UserProfile} Return a UserProfile object
    */
   public getActiveUserProfile() {
-    // var userProfiles = this.firebaseService
-    //   .getAllItems("users/" + this.authService.currentUserAccount.uid)
-    //   .pipe(map((action) => action.map((a) => a.payload.toJSON())))
-    //   .subscribe((userProfiles) => {
-    //     console.log("userProfiles", userProfiles);
-    //   });
-
     if (this.activeUserProfile === undefined) {
       this.router.navigate(["/select-user-profile"]);
     }
@@ -114,34 +108,12 @@ export class ProfileService {
    * @return {Observable} Return a observable
    */
   public setActiveUserProfile(userProfileId: string) {
-    const userAccount: UserAccount = this.authService.currentUserAccount;
-
-    if (userAccount.checkIfUserProfileIdExists(userProfileId)) {
-      this.firebaseService
-        .getItemById("users/" + userAccount.uid + "/" + userProfileId)
-        .pipe(
-          map((a): UserProfile => {
-            //create new UserProfile to get all functions
-            let name: string = a.payload.child("/name").val();
-            let child: boolean = a.payload.child("/child").val();
-            let avatarId: number = a.payload.child("/avatar/id").val();
-            let id: string = a.payload.key;
-            let userProfile: UserProfile = new UserProfile(
-              name,
-              avatarId,
-              child
-            );
-            userProfile.id = id;
-            return userProfile;
-          })
-        )
-        .subscribe((profile: UserProfile) => {
-          this.activeUserProfile = profile;
-        });
+    if (this.userProfiles.has(userProfileId)) {
+      this.activeUserProfile = this.userProfiles.get(userProfileId);
     } else {
-      console.log("setActiveUserProfile ELSE:");
-      //@Tobi Eventuell Exception werfen
+      console.log(userProfileId, " nicht vorhanden");
     }
+
     return new Observable(
       (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
         subscriber.next(true);
@@ -150,7 +122,11 @@ export class ProfileService {
     );
   }
 
-  public setUserProfiles() {
+  /**
+   * Loads all UserProfiles and writes them into this.userProfiles
+   *
+   */
+  public setUserProfiles(): void {
     this.firebaseService
       .getAllItems("users/" + this.authService.currentUserAccount.uid)
       .pipe(
@@ -176,7 +152,7 @@ export class ProfileService {
    * @return {Array} Return all users profiles as an array
    */
   //Observable<Map<string, UserProfile>>
-  public getUserProfiles() {
+  public getUserProfilesObservable(): Observable<Object[]> {
     var userProfiles = this.firebaseService
       .getAllItems("users/" + this.authService.currentUserAccount.uid)
       .pipe(map((action) => action.map((a) => a.payload.toJSON())));

@@ -35,20 +35,14 @@ export class SettingsService {
     private firebaseService: FireBaseService
   ) {
     this.platform.ready().then(() => {
-      // this.storage.ready().then(() => {
       this.authService.ready().then(() => {
         this.loadSettings();
       });
-      // });
     });
   }
 
   loadSettings() {
     /*Firebase Realtime Database*/
-    console.log(
-      "SETTINGS this.profilService.getActiveUserProfile()",
-      this.profilService.getActiveUserProfile()
-    );
     if (this.profilService.getActiveUserProfile() !== undefined) {
       var path =
         "users/" +

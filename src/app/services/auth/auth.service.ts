@@ -24,6 +24,7 @@ export class AuthService {
     private authProcessService: AuthProcessService,
     private firebaseService: FireBaseService
   ) {}
+
   async ready(): Promise<any> {
     if (this.promise === null) {
       this.promise = new Promise<void>((resolve, reject) => {
