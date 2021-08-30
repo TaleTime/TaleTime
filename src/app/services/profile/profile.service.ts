@@ -28,6 +28,7 @@ export class ProfileService {
     private firebaseService: FireBaseService
   ) {
     this.userProfiles = new Map<string, UserProfile>();
+    this.setUserProfiles();
   }
 
   /**
@@ -35,35 +36,6 @@ export class ProfileService {
    * @return {UserProfile} Return a UserProfile object
    */
   public getActiveUserProfile() {
-    // var key: string;
-    // var userProfiles = this.firebaseService
-    //   .getAllItems("users/" + this.authService.currentUserAccount.uid)
-    //   .pipe(
-    //     map((action) =>
-    //       action.map((a) => {
-    //         /*
-    //         avatarId: Avatar
-    //         name: string
-    //         child: bool
-    //          */
-    //         let name = a.payload.child("/name").val();
-    //         let child = a.payload.child("/child").val();
-    //         let avatarId = a.payload.child("/avatar/id").val();
-    //         key = a.payload.key;
-    //         let userProfile = new UserProfile(name, child, avatarId);
-    //         userProfile.id = key;
-    //         return this.userProfiles.set(a.payload.key, userProfile);
-    //       })
-    //     )
-    //   )
-    //   .subscribe((userProfiles) => {
-    //     this.authService.currentUserAccount.userProfiles = this.userProfiles;
-    //     console.log(
-    //       "this.authService.currentUserAccount.userProfiles",
-    //       this.authService.currentUserAccount.userProfiles
-    //     );
-    //   });
-
     // var userProfiles = this.firebaseService
     //   .getAllItems("users/" + this.authService.currentUserAccount.uid)
     //   .pipe(map((action) => action.map((a) => a.payload.toJSON())))
@@ -176,6 +148,27 @@ export class ProfileService {
         subscriber.complete();
       }
     );
+  }
+
+  public setUserProfiles() {
+    this.firebaseService
+      .getAllItems("users/" + this.authService.currentUserAccount.uid)
+      .pipe(
+        map((action) =>
+          action.map((a) => {
+            let name = a.payload.child("/name").val();
+            let child = a.payload.child("/child").val();
+            let avatarId = a.payload.child("/avatar/id").val();
+            let id = a.payload.key;
+            let userProfile = new UserProfile(name, avatarId, child);
+            userProfile.id = id;
+            return this.userProfiles.set(a.payload.key, userProfile);
+          })
+        )
+      )
+      .subscribe(() => {
+        this.authService.currentUserAccount.userProfiles = this.userProfiles;
+      });
   }
 
   /**

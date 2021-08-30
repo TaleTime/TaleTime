@@ -35,18 +35,18 @@ export class SettingsService {
     private firebaseService: FireBaseService
   ) {
     this.platform.ready().then(() => {
-      this.storage.ready().then(() => {
-        this.authService.ready().then(() => {
-          this.loadSettings();
-        });
+      //this.storage.ready().then(() => {
+      this.authService.ready().then(() => {
+        this.loadSettings();
       });
+      //});
     });
   }
 
   loadSettings() {
     /*Firebase Realtime Database*/
     console.log(
-      "this.profilService.getActiveUserProfile()",
+      "SETTINGS this.profilService.getActiveUserProfile()",
       this.profilService.getActiveUserProfile()
     );
     if (this.profilService.getActiveUserProfile() !== undefined) {
@@ -60,8 +60,8 @@ export class SettingsService {
       this.firebaseService
         .getItemById(path)
         .pipe(map((a) => a.payload.toJSON()))
-        .subscribe((data: Settings) => {
-          this.settings = data;
+        .subscribe((settings: Settings) => {
+          this.settings = settings;
           console.log(this.settings);
         });
 
