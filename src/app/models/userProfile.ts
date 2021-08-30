@@ -44,7 +44,7 @@ export class UserProfile {
   public settings: Settings;
   public arrayOfStories: Array<StoryInformation>;
   public arrayOfSaveGames: Array<SaveGame>;
-  public array: Array<any>;
+  public storyService;
 
   constructor(name: string, avatarId: number, child: boolean) {
     this.id = Math.random().toString(36).substr(2, 9);
@@ -55,8 +55,9 @@ export class UserProfile {
   }
 
   public getArrayOfStories(): Array<StoryInformation> {
-    return this.arrayOfStories;
+    return this.storyService.get();
   }
+
   /**
    * Returns an array of type Array<StoryInformation> for a given language
    * @param {AvailableLanguage} lang Language as enum

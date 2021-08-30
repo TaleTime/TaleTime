@@ -8,6 +8,7 @@ import {
 } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { TranslateService } from "@ngx-translate/core";
+import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import { AvailableLanguage } from "../../models/AvailableLanguage";
 import { PlayerParams } from "../../models/player/player-params";
 import { Reader, StoryInformation } from "../../models/storyInformation";
@@ -53,7 +54,8 @@ export class StoryMenuPage implements OnInit {
     private authService: AuthService,
     public storyService: StoryService,
     public profileService: ProfileService,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    private firebaseService: FireBaseService
   ) {
     if (this.authService.currentUserAccount == null) {
       this.router.navigate(["/start"]);
@@ -63,8 +65,9 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
-    this.stories = [];
     this.activeUserProfile = this.profileService.getActiveUserProfile();
+
+    this.stories = this.activeUserProfile.arrayOfStories;
 
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
@@ -142,8 +145,15 @@ export class StoryMenuPage implements OnInit {
   }
 
   deleteStory(story: StoryInformation) {
-    this.activeUserProfile.deleteStory(story.id);
-    this.ionViewWillEnter();
+    //this.activeUserProfile.deleteStory(story.id);
+    this.firebaseService.deleteItem(
+      "users/" +
+        this.authService.currentUserAccount.uid +
+        "/" +
+        this.activeUserProfile.id +
+        "/ArrayOfStories/" +
+        story.id
+    );
   }
 
   async goToPlayerPage(storyId: string) {

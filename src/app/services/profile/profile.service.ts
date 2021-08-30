@@ -10,6 +10,7 @@ import { map } from "rxjs/operators";
 import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
 import { updateLanguageServiceSourceFile } from "typescript";
 import { stringify } from "@angular/compiler/src/util";
+import { Settings } from "src/app/models/settings";
 
 @Injectable({
   providedIn: "root",
@@ -22,6 +23,7 @@ export class ProfileService {
   private activeUserProfile: UserProfile;
   private userProfiles: Map<string, UserProfile>;
   private promise: Promise<any> = null;
+  private defaultSettings: Settings;
 
   constructor(
     private authService: AuthService,
@@ -30,6 +32,7 @@ export class ProfileService {
   ) {
     this.userProfiles = new Map<string, UserProfile>();
     this.setUserProfiles();
+    this.defaultSettings = new Settings();
   }
 
   /**
@@ -42,6 +45,7 @@ export class ProfileService {
     }
     return this.activeUserProfile;
   }
+
   /**
    * Creates a user profile.
    * @param {credentials} value - name: any; avatarId: any; child: any;
@@ -67,6 +71,11 @@ export class ProfileService {
         "users/" + userAccount.uid + "/",
         userProfile.id,
         userProfile
+      );
+      this.firebaseService.setItem(
+        "users/" + userAccount.uid + "/",
+        userProfile.id + "/settings",
+        this.defaultSettings
       );
 
       //userAccount.addUserProfile(userProfile);

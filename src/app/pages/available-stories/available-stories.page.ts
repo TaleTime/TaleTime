@@ -9,6 +9,7 @@ import { HTTP } from "@ionic-native/http/ngx";
 import { Zip } from "@ionic-native/zip/ngx";
 import { LoadingController, NavController, Platform } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
+import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import { CLOUD } from "../../constants/constants";
 import {
   StoryInformation,
@@ -57,7 +58,8 @@ export class AvailableStoriesPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastService: SimpleToastService,
     private profileService: ProfileService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private firebaseService: FireBaseService
   ) {
     //this.loadDeviceDefaultStories();
     // this.platform.ready().then(() => {
@@ -109,6 +111,15 @@ export class AvailableStoriesPage implements OnInit {
     } else {
       // add new (non cloud) story
       this.activeUserProfile.addStory(story);
+      this.firebaseService.setItem(
+        "users/" +
+          this.authService.currentUserAccount.uid +
+          "/" +
+          this.activeUserProfile.id +
+          "/ArrayOfStories/",
+        story.id,
+        story
+      );
 
       this.alertStoryAddedSuccessfully(story.title);
     }
