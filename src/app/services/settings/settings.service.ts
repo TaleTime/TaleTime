@@ -35,11 +35,11 @@ export class SettingsService {
     private firebaseService: FireBaseService
   ) {
     this.platform.ready().then(() => {
-      this.storage.ready().then(() => {
+     // this.storage.ready().then(() => {
         this.authService.ready().then(() => {
           this.loadSettings();
         });
-      });
+     // });
     });
   }
 
