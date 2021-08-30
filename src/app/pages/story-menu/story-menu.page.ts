@@ -65,21 +65,16 @@ export class StoryMenuPage implements OnInit {
   ngOnInit() {
     this.stories = [];
     this.activeUserProfile = this.profileService.getActiveUserProfile();
-    console.log(
-      "STORY_MENU_CURRENT_USER: ",
-      this.authService.currentUserAccount
-    );
+
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
       //todo Ändern, dass nur noch Enum anstelle von Strings benutzt werden
       if (this.languageService.selected == "de-DE") {
-        console.log("DEUTSCH");
         this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(
           AvailableLanguage.German
         );
       } else {
-        console.log("NID DEUTSCH");
         this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(
           AvailableLanguage.English
         );

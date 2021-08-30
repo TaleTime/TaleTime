@@ -56,7 +56,6 @@ export class SettingsService {
         .pipe(map((a) => a.payload.toJSON()))
         .subscribe((settings: Settings) => {
           this.settings = settings;
-          console.log(this.settings);
         });
 
       /*With IONIC*/

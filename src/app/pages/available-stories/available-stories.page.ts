@@ -70,10 +70,7 @@ export class AvailableStoriesPage implements OnInit {
   }
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
-    console.log(
-      "STORY_MENU_CURRENT_USER: ",
-      this.authService.currentUserAccount
-    );
+
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;

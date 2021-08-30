@@ -49,8 +49,6 @@ export class UserProfile {
   constructor(name: string, avatarId: number, child: boolean) {
     this.id = Math.random().toString(36).substr(2, 9);
     this.name = name;
-    console.log("avatarId", avatarId);
-    console.log("UserProfile.avatars(avatarId)", UserProfile.avatars(avatarId));
     this.avatar = UserProfile.avatars(avatarId);
     this.child = child;
     this.arrayOfStories = [];

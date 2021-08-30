@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
-import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
-import {AuthService} from "../../services/auth/auth.service";
-import {TranslateService} from "@ngx-translate/core";
-import {SettingsService} from "../../services/settings/settings.service";
-import {Storage} from "@ionic/storage";
-import {Router} from "@angular/router";
+import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
+import { AuthService } from "../../services/auth/auth.service";
+import { TranslateService } from "@ngx-translate/core";
+import { SettingsService } from "../../services/settings/settings.service";
+import { Storage } from "@ionic/storage";
+import { Router } from "@angular/router";
 
 import {
   AVAILABLE_LANGUAGES,
@@ -13,17 +13,20 @@ import {
   FONT_SIZE_12_VALUE,
   FONT_SIZE_14_LABEL,
   FONT_SIZE_14_VALUE,
-  FONT_SIZE_16_LABEL, FONT_SIZE_16_VALUE, FONT_SIZE_18_LABEL, FONT_SIZE_18_VALUE,
+  FONT_SIZE_16_LABEL,
+  FONT_SIZE_16_VALUE,
+  FONT_SIZE_18_LABEL,
+  FONT_SIZE_18_VALUE,
   TTS_RATE_FAST,
   TTS_RATE_FAST_VALUE,
   TTS_RATE_NORMAL,
   TTS_RATE_NORMAL_VALUE,
   TTS_RATE_SLOW,
-  TTS_RATE_SLOW_VALUE
+  TTS_RATE_SLOW_VALUE,
 } from "../../constants/constants";
-import {NavController} from "@ionic/angular";
-import {ProfileService} from "../../services/profile/profile.service";
-import {LanguageService} from "../../services/language/language.service";
+import { NavController } from "@ionic/angular";
+import { ProfileService } from "../../services/profile/profile.service";
+import { LanguageService } from "../../services/language/language.service";
 
 @Component({
   selector: "app-settings",
@@ -31,7 +34,6 @@ import {LanguageService} from "../../services/language/language.service";
   styleUrls: ["./settings.page.scss"],
 })
 export class SettingsPage {
-
   languages = AVAILABLE_LANGUAGES;
   ttsRates = [TTS_RATE_SLOW, TTS_RATE_NORMAL, TTS_RATE_FAST];
   selectedLanguage;
@@ -49,13 +51,11 @@ export class SettingsPage {
     private translate: TranslateService,
     private authService: AuthService,
     private profilService: ProfileService,
-    private languageService:LanguageService
-  ) {
-  }
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     const activeUserProfile = this.profilService.getActiveUserProfile();
-    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
     if (activeUserProfile) {
       this.activeUserProfileName = activeUserProfile.name;
       this.activeUserProfileAvatarName = activeUserProfile.avatar.name;
@@ -79,7 +79,7 @@ export class SettingsPage {
         this.ttsRate = TTS_RATE_NORMAL;
     }
 
-    switch (this.settings.fontSize){
+    switch (this.settings.fontSize) {
       case FONT_SIZE_12_VALUE:
         this.selectedFontSize = FONT_SIZE_12_LABEL;
         break;
@@ -113,14 +113,6 @@ export class SettingsPage {
     return null;
   }
 
-  // public  changeLanguage() {
-  //   console.log("Changing language to <" + this.selectedLanguage + ">");
-  //   this.translate.use(SettingsPage.getCodeFromLanguage(this.selectedLanguage));
-  //   this.settings.language = SettingsPage.getCodeFromLanguage(
-  //     this.selectedLanguage
-  //   );
-  // }
-
   public changeLanguage(selectedLanguage) {
     console.log("Changing language to <" + selectedLanguage + ">");
     this.translate.use(SettingsPage.getCodeFromLanguage(selectedLanguage));
@@ -128,9 +120,9 @@ export class SettingsPage {
     this.languageService.selected = this.settings.language;
   }
 
-  changeFontSize(selectedFontSize){
+  changeFontSize(selectedFontSize) {
     console.log("Changing font size to <" + selectedFontSize + ">");
-    switch (selectedFontSize){
+    switch (selectedFontSize) {
       case FONT_SIZE_12_LABEL:
         this.settings.fontSize = FONT_SIZE_12_VALUE;
         break;
@@ -166,7 +158,7 @@ export class SettingsPage {
     this.router.navigate(["/user-account"]);
   }
 
-  goToSelectUserProfile(){
+  goToSelectUserProfile() {
     this.router.navigate(["/select-user-profile"]);
   }
 

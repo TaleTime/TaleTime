@@ -31,7 +31,6 @@ export class AuthService {
         if (this.currentUser === null) {
           this.authProcessService.user$.subscribe((user) => {
             if (user != null) {
-              console.log(user);
               this.signIn(user, () => {
                 this.router.navigate(["/select-user-profile"]);
                 resolve();
