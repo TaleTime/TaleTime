@@ -95,17 +95,10 @@ export class ProfileService {
       );
       const userAccount: UserAccount = this.authService.currentUserAccount;
 
-      let userProfileJSON = {
-        name: userProfile.name,
-        avatar: userProfile.avatar,
-        child: userProfile.child,
-        id: userProfile.id,
-      };
-
       this.firebaseService.setItem(
         "users/" + userAccount.uid + "/",
         userProfile.id,
-        userProfileJSON
+        userProfile
       );
 
       //userAccount.addUserProfile(userProfile);

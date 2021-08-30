@@ -44,6 +44,7 @@ export class UserProfile {
   public settings: Settings;
   public arrayOfStories: Array<StoryInformation>;
   public arrayOfSaveGames: Array<SaveGame>;
+  public array: Array<any>;
 
   constructor(name: string, avatarId: number, child: boolean) {
     this.id = Math.random().toString(36).substr(2, 9);
