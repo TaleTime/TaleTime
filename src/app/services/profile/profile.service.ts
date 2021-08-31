@@ -12,6 +12,7 @@ import { updateLanguageServiceSourceFile } from "typescript";
 import { stringify } from "@angular/compiler/src/util";
 import { Settings } from "src/app/models/settings";
 import { StoryInformation } from "src/app/models/storyInformation";
+import { Story } from "src/app/models/story/story";
 
 @Injectable({
   providedIn: "root",
@@ -145,18 +146,28 @@ export class ProfileService {
       .pipe(
         map((action) =>
           action.map((a) => {
-            console.log("Get Users Map")
             //Load Profile Information
-            let name = a.payload.child("/name").val();
-            let child = a.payload.child("/child").val();
-            let avatarId = a.payload.child("/avatar/id").val();
+            let profile = a.payload.child("/").val();
+            console.log("a.payload", profile.name);
+
+            let name = profile.name;
+            let child = profile.child;
+            let avatarId = profile.avatar.id;
+
+            // let name = a.payload.child("/name").val();
+            // let child = a.payload.child("/child").val();
+            // let avatarId = a.payload.child("/avatar/id").val();
             let id = a.payload.key;
             let userProfile = new UserProfile(name, avatarId, child);
             userProfile.id = id;
-            let arrayOfStories = a.payload.child("/ArrayOfStories").toJSON()
+            var arrayOfStories: Array<StoryInformation> = [];
+
+            //let jsonOfStories = a.payload.child("/ArrayOfStories").toJSON();
+            for (let element in profile.ArrayOfStories) {
+              arrayOfStories.push(profile.ArrayOfStories[element]);
+            }
+            console.log("arrayOfStories", arrayOfStories);
             userProfile.setArrayOfStories(arrayOfStories);
-            console.log("arrayOfStories:", arrayOfStories);
-            console.log("userProfile.arrayOfStories", userProfile.arrayOfStories);
             /*
             //Load Stories of Profile
             this.firebaseService
