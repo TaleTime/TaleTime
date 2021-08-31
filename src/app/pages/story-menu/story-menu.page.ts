@@ -68,6 +68,7 @@ export class StoryMenuPage implements OnInit {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
 
     this.stories = this.activeUserProfile.arrayOfStories;
+    console.log("ngOnInit story-menu.page stories", this.stories);
 
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;

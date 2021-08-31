@@ -11,6 +11,7 @@ import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
 import { updateLanguageServiceSourceFile } from "typescript";
 import { stringify } from "@angular/compiler/src/util";
 import { Settings } from "src/app/models/settings";
+import { StoryInformation } from "src/app/models/storyInformation";
 
 @Injectable({
   providedIn: "root",
@@ -144,12 +145,45 @@ export class ProfileService {
       .pipe(
         map((action) =>
           action.map((a) => {
+            console.log("Get Users Map")
+            //Load Profile Information
             let name = a.payload.child("/name").val();
             let child = a.payload.child("/child").val();
             let avatarId = a.payload.child("/avatar/id").val();
             let id = a.payload.key;
             let userProfile = new UserProfile(name, avatarId, child);
             userProfile.id = id;
+            let arrayOfStories = a.payload.child("/ArrayOfStories").toJSON()
+            userProfile.setArrayOfStories(arrayOfStories);
+            console.log("arrayOfStories:", arrayOfStories);
+            console.log("userProfile.arrayOfStories", userProfile.arrayOfStories);
+            /*
+            //Load Stories of Profile
+            this.firebaseService
+              .getAllItems("users/" + this.authService.currentUserAccount.uid + "/" + id + "/ArrayOfStories")
+              .pipe(
+                map((action) => action.map((b) => {
+
+                    let id:string = b.payload.key;
+                    let folder:string = b.payload.child("/folder").val();
+                    let title:string = b.payload.child("/title").val();
+                    //author, aber ka, weil das auch ein Array ist
+                    let language:string = b.payload.child("/language").val();
+                    console.log("SILAS StoryName:", id);
+
+                    let storyInformation = new StoryInformation();
+                    storyInformation.id = id;
+                    storyInformation.folder = folder;
+                    storyInformation.title = title;
+                    storyInformation.language = language;
+
+                    //return userProfile.addStory(storyInformation);
+                })
+                )
+              ).subscribe(() => {
+                console.log("in subscribe");
+              });
+              */
             return this.userProfiles.set(a.payload.key, userProfile);
           })
         )

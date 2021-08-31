@@ -54,6 +54,11 @@ export class UserProfile {
     this.arrayOfStories = [];
   }
 
+  public setArrayOfStories(story){
+    this.arrayOfStories.push(story)
+  }
+
+
   public getArrayOfStories(): Array<StoryInformation> {
     return this.storyService.get();
   }

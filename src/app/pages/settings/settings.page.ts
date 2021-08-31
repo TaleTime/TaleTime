@@ -40,7 +40,7 @@ export class SettingsPage {
   selectedFontSize;
   ttsRate;
 
-  activeUserProfileName: string;
+  activeUserProfileName: string;st
   activeUserProfileAvatarName: string;
 
   constructor(
