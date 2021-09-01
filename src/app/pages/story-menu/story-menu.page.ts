@@ -146,7 +146,7 @@ export class StoryMenuPage implements OnInit {
   }
 
   deleteStory(story: StoryInformation) {
-    //this.activeUserProfile.deleteStory(story.id);
+    this.activeUserProfile.deleteStory(story.id);
     this.firebaseService.deleteItem(
       "users/" +
         this.authService.currentUserAccount.uid +
@@ -155,6 +155,8 @@ export class StoryMenuPage implements OnInit {
         "/ArrayOfStories/" +
         story.id
     );
+    this.ngOnInit(); // reinit to show changes
+
   }
 
   async goToPlayerPage(storyId: string) {
