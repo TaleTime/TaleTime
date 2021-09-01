@@ -6,7 +6,6 @@ import {
   NavController,
   Platform,
 } from "@ionic/angular";
-import { Storage } from "@ionic/storage";
 import { TranslateService } from "@ngx-translate/core";
 import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import { AvailableLanguage } from "../../models/AvailableLanguage";
@@ -40,7 +39,6 @@ export class StoryMenuPage implements OnInit {
   languageMap = new Map();
 
   constructor(
-    private storage: Storage,
     private alertCtrl: AlertController,
     private toastService: SimpleToastService,
     private translate: TranslateService,

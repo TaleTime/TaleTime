@@ -6,7 +6,6 @@ import { LanguageFileService } from "../speech-recognition/language-file/languag
 import { LoggerService } from "../logger/logger.service";
 import { Settings } from "../../models/settings";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
-import { Storage } from "@ionic/storage";
 import { AuthService } from "../auth/auth.service";
 import { ProfileService } from "../profile/profile.service";
 import { FireBaseService } from "../firebase/firebaseService";
@@ -27,7 +26,6 @@ export class SettingsService {
     private authService: AuthService,
     private platform: Platform,
     private languageFile: LanguageFileService,
-    private storage: Storage,
     private speechRecognitionService: SpeechRecognition,
     private logger: LoggerService,
     private alert: AlertService,
@@ -194,18 +192,6 @@ export class SettingsService {
       this.settings
     );
 
-    this.storage
-      .set(
-        this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id,
-        this.settings
-      )
-      .then(() =>
-        this.logger.log("Settings written: " + JSON.stringify(this.settings))
-      )
-      .catch((err) => {
-        this.logger.error("Could not save setting file!");
-        this.logger.error(err);
-      });
   }
 
   public getShortLangCode() {
