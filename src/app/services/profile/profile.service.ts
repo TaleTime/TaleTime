@@ -80,9 +80,6 @@ export class ProfileService {
         this.defaultSettings
       );
 
-      //userAccount.addUserProfile(userProfile);
-      //this.authService.save(userAccount);
-
       return new Observable(
         (subscriber: {
           next: (arg0: boolean) => void;
@@ -154,47 +151,16 @@ export class ProfileService {
             let child = profile.child;
             let avatarId = profile.avatar.id;
 
-            // let name = a.payload.child("/name").val();
-            // let child = a.payload.child("/child").val();
-            // let avatarId = a.payload.child("/avatar/id").val();
             let id = a.payload.key;
             let userProfile = new UserProfile(name, avatarId, child);
             userProfile.id = id;
             var arrayOfStories: Array<StoryInformation> = [];
 
-            //let jsonOfStories = a.payload.child("/ArrayOfStories").toJSON();
             for (let element in profile.ArrayOfStories) {
               arrayOfStories.push(profile.ArrayOfStories[element]);
             }
             console.log("arrayOfStories", arrayOfStories);
             userProfile.setArrayOfStories(arrayOfStories);
-            /*
-            //Load Stories of Profile
-            this.firebaseService
-              .getAllItems("users/" + this.authService.currentUserAccount.uid + "/" + id + "/ArrayOfStories")
-              .pipe(
-                map((action) => action.map((b) => {
-
-                    let id:string = b.payload.key;
-                    let folder:string = b.payload.child("/folder").val();
-                    let title:string = b.payload.child("/title").val();
-                    //author, aber ka, weil das auch ein Array ist
-                    let language:string = b.payload.child("/language").val();
-                    console.log("SILAS StoryName:", id);
-
-                    let storyInformation = new StoryInformation();
-                    storyInformation.id = id;
-                    storyInformation.folder = folder;
-                    storyInformation.title = title;
-                    storyInformation.language = language;
-
-                    //return userProfile.addStory(storyInformation);
-                })
-                )
-              ).subscribe(() => {
-                console.log("in subscribe");
-              });
-              */
             return this.userProfiles.set(a.payload.key, userProfile);
           })
         )
@@ -215,9 +181,7 @@ export class ProfileService {
       .pipe(map((action) => action.map((a) => a.payload.toJSON())));
 
     return userProfiles;
-    //  Array.from(
-    //    this.authService.currentUserAccount.userProfiles.values()
-    //  );
+
   }
 
   /**
