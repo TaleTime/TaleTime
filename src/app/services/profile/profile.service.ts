@@ -158,6 +158,8 @@ export class ProfileService {
 
             for (let element in profile.ArrayOfStories) {
               arrayOfStories.push(profile.ArrayOfStories[element]);
+              if (arrayOfStories[arrayOfStories.length - 1].readers == null) 
+                arrayOfStories[arrayOfStories.length - 1].readers = [];
             }
             console.log("arrayOfStories", arrayOfStories);
             userProfile.setArrayOfStories(arrayOfStories);
