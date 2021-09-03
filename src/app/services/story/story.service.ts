@@ -42,7 +42,7 @@ export class StoryService {
     private storage: Storage,
     private http: HttpClient,
     private settings: SettingsService,
-    private saveGames: SaveGameService,
+    private saveGameService: SaveGameService,
     private publicStoryHelper: PublicStoryHelperService
   ) {
     this.platform.ready().then(() => {
@@ -270,7 +270,7 @@ export class StoryService {
 
   public isCurrentSpeakerReadingAnswersOut(): boolean {
     const storyId = this.getStoryAttributes().id;
-    const reader = this.saveGames.loadSavegame(storyId).reader;
+    const reader = this.saveGameService.loadSavegame(storyId).reader;
     this.logger.log("Current speaker is " + reader);
 
     if (reader === DEFAULT_READER) {

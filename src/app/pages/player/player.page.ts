@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Routes } from "@angular/router";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { TextToSpeech } from "@ionic-native/text-to-speech/ngx";
 import { NavController, Platform } from "@ionic/angular";
+import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import {
   ANSWER_CHAPTER_BACKWARDS,
   ANSWER_CHAPTER_REPEAT,
@@ -96,7 +97,8 @@ export class PlayerPage implements OnInit {
     private matching: AnswerMatchingService,
     private settings: SettingsService,
     private publicStoryHelper: PublicStoryHelperService,
-    private platformBridge: PlatformBridgeService
+    private platformBridge: PlatformBridgeService,
+    private firebaseService: FireBaseService
   ) {
     // if(this.authService.currentUserAccount == null){
     //   this.router.navigate(["/start"]);
@@ -368,6 +370,8 @@ export class PlayerPage implements OnInit {
   private createNewSaveGame() {
     this.saveGame.storyId = this.storyId;
     this.saveGame.chosenPath.push(FIRST_NODE);
+
+    this.saveGameService.addSavegame(this.saveGame);
     //TODO Uncomment if accounts are functional
     //this.saveGameService.addSavegame(this.saveGame);
   }

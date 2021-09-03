@@ -1,66 +1,93 @@
-import {Injectable} from "@angular/core";
-import {SaveGame} from "../../models/saveGame";
-import {Storage} from "@ionic/storage";
-import {AuthService} from "../auth/auth.service";
-import {ProfileService} from "../profile/profile.service";
+import { Injectable } from "@angular/core";
+import { SaveGame } from "../../models/saveGame";
+import { Storage } from "@ionic/storage";
+import { AuthService } from "../auth/auth.service";
+import { ProfileService } from "../profile/profile.service";
+import { FireBaseService } from "../firebase/firebaseService";
+import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SaveGameService {
-
   private readonly SAVEGAME_KEY = "SAVEGAMES";
   // Stores a Map, that maps profile ids to a story-id/savegame map
   private savegames: Map<string, Map<string, SaveGame>> = new Map();
-
+  private profileSaveGames: Map<string, SaveGame> = new Map();
   constructor(
     private storage: Storage,
     private authService: AuthService,
-    private profilService: ProfileService
-
+    private profileService: ProfileService,
+    private firebaseService: FireBaseService
   ) {
-    this.storage
-      .ready()
-      .then((storage) => {
-        this.loadSavegames();
-      })
-      .catch((error) => {
-        console.error("Could not load savegames at all!");
-      });
+    this.loadSavegames();
   }
 
   public loadSavegames() {
-    return this.storage.get(this.SAVEGAME_KEY).then((savegames) => {
-      if (savegames != null) {
-        this.savegames = savegames;
-      }
-    });
+    this.firebaseService
+      .getAllItems(
+        "users/" +
+          this.authService.currentUserAccount.uid +
+          "/" +
+          this.profileService.getActiveUserProfile().id +
+          "/saveGame"
+      )
+      .pipe(
+        map((action) =>
+          action.map((a) => {
+            //let profile = a.payload.child("/").val();
+            let payload = a.payload.child("/").val();
+            let saveGame = new SaveGame();
+            let saveGameMap: Map<string, SaveGame> = new Map();
+            saveGame.chosenPath = payload.chosenPath;
+            saveGame.reader = payload.reader;
+            saveGame.storyId = payload.storyId;
+            this.profileSaveGames.set(saveGame.storyId, saveGame);
+            //this.profileSaveGames.set(saveGame.storyId, saveGame);
+          })
+        )
+      )
+      .subscribe();
+    // return this.storage.get(this.SAVEGAME_KEY).then((savegames) => {
+    //   if (savegames != null) {
+    //     this.savegames = savegames;
+    //   }
+    // });
   }
 
   public loadSavegame(storyId: string): SaveGame {
     const emptySave = new SaveGame();
     emptySave.storyId = storyId;
     emptySave.chosenPath = new Array<number>();
-    const userSaves = this.savegames.get(
-      this.profilService.getActiveUserProfile().id
-    );
-    if (userSaves == null) {
-      return emptySave;
-    } else {
-      const savegame = userSaves.get(storyId);
-      // If no savegame for story found --> return an empty savegame
-      return savegame || emptySave;
-    }
+
+    return this.profileSaveGames.has(storyId)
+      ? this.profileSaveGames.get(storyId)
+      : emptySave;
   }
 
   public addSavegame(savegame: SaveGame) {
-    const profileSaves = this.getProfileSaves();
-    profileSaves.set(savegame.storyId, savegame);
-    this.save();
+    console.log("Add");
+    this.firebaseService.setItem(
+      "users/" +
+        this.authService.currentUserAccount.uid +
+        "/" +
+        this.profileService.getActiveUserProfile().id,
+      "/saveGame/" + savegame.storyId,
+      savegame
+    );
+
+    //profileSaves = Map<storyId, SaveGame>
+
+    // const profileSaves = this.getProfileSaves();
+    // profileSaves.set(savegame.storyId, savegame);
+    // this.save();
   }
 
   private getProfileSaves(): Map<string, SaveGame> {
-    const profileId = this.profilService.getActiveUserProfile().id;
+    const profileId = this.profileService.getActiveUserProfile().id;
+
+    //savegames = Map<profileId, ProfileSaves>
+
     let profileSaves = this.savegames.get(profileId);
     if (profileSaves == null) {
       profileSaves = new Map<string, SaveGame>();
@@ -77,15 +104,25 @@ export class SaveGameService {
       (reason) => {
         console.error(
           "SaveGameService: Could not save savegames. Error: " +
-          JSON.stringify(reason)
+            JSON.stringify(reason)
         );
       }
     );
   }
 
   public updateSavegame(savegame: SaveGame) {
-    const profileSaves = this.getProfileSaves();
-    profileSaves.set(savegame.storyId, savegame);
-    this.save();
+    console.log("UPDÄÄTE");
+    this.firebaseService.setItem(
+      "users/" +
+        this.authService.currentUserAccount.uid +
+        "/" +
+        this.profileService.getActiveUserProfile().id,
+      "/saveGame/" + savegame.storyId,
+      savegame
+    );
+
+    // const profileSaves = this.getProfileSaves();
+    // profileSaves.set(savegame.storyId, savegame);
+    // this.save();
   }
 }
