@@ -10,7 +10,7 @@ import { Zip } from "@ionic-native/zip/ngx";
 import { LoadingController, NavController, Platform } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { FireBaseService } from "src/app/services/firebase/firebaseService";
-import { CLOUD } from "../../constants/constants";
+import { CLOUD, FB_PATH_USERS } from "../../constants/constants";
 import {
   StoryInformation,
   StoryInformationWithUrl,
@@ -41,10 +41,11 @@ export class AvailableStoriesPage implements OnInit {
   public readonly PUBLIC_STORY_URL: string =
     "https://raw.githubusercontent.com/TaleTime/Stories/master/index.json";
 
+  private pathToCurrentUser = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/"
+
   constructor(
     private zone: NgZone,
     private authService: AuthService,
-
     public navCtrl: NavController,
     private router: Router,
     private http: HTTP,
@@ -60,12 +61,7 @@ export class AvailableStoriesPage implements OnInit {
     private profileService: ProfileService,
     private languageService: LanguageService,
     private firebaseService: FireBaseService
-  ) {
-    //this.loadDeviceDefaultStories();
-    // this.platform.ready().then(() => {
-    //this.loadPublicStories();
-    //});
-  }
+  ) {}
 
   ionViewWillEnter() {
     this.loadDeviceDefaultStories();
@@ -100,23 +96,16 @@ export class AvailableStoriesPage implements OnInit {
   }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
-    console.log("addStory(): " + JSON.stringify(story));
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
-      // } else if (user.isStoryPresent(story.id)) {
     } else if (this.activeUserProfile.isStoryPresent(story.id)) {
       // story already exists
       this.alertStoryAlreadyExists(story.title);
     } else {
-      // add new (non cloud) story
       this.activeUserProfile.addStory(story);
       this.firebaseService.setItem(
-        "users/" +
-          this.authService.currentUserAccount.uid +
-          "/" +
-          this.activeUserProfile.id +
-          "/ArrayOfStories/",
+        this.pathToCurrentUser + this.activeUserProfile.id + "/ArrayOfStories/",
         story.id,
         story
       );

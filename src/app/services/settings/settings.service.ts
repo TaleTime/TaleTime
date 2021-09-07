@@ -8,20 +8,22 @@ import { Settings } from "../../models/settings";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { AuthService } from "../auth/auth.service";
 import { ProfileService } from "../profile/profile.service";
-import { FireBaseService } from "../firebase/firebaseService";
+import { FireBaseService} from "../firebase/firebaseService";
 import { map } from "rxjs/operators";
 import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
+import { FB_PATH_SETTINGS, FB_PATH_USERS } from "src/app/constants/constants";
 
 @Injectable({
   providedIn: "root",
 })
 export class SettingsService {
-  private readonly SETTINGS_KEY = "SETTINGS";
-  private settings: Settings = new Settings(); // TODO: initializing Settings this way was not necessary before
-
+  private settings: Settings = new Settings(); 
   private languageSubject: Subject<string> = new Subject();
   private settingsLoaded: Subject<boolean> = new Subject();
 
+  pathToActiveProfile = FB_PATH_USERS + this.authService.currentUserAccount.uid + this.profilService.getActiveUserProfile().id + "/";
+  pathToUserProfileSettings = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/" + this.profilService.getActiveUserProfile().id + "/" + FB_PATH_SETTINGS;
+  
   constructor(
     private authService: AuthService,
     private platform: Platform,
@@ -31,51 +33,24 @@ export class SettingsService {
     private alert: AlertService,
     private profilService: ProfileService,
     private firebaseService: FireBaseService
-  ) {
-    this.platform.ready().then(() => {
-      this.authService.ready().then(() => {
-        this.loadSettings();
+    ) {
+      this.platform.ready().then(() => {
+        this.authService.ready().then(() => {
+          this.loadSettings();
+        });
       });
-    });
-  }
-
-  loadSettings() {
+    }
+    
+    public loadSettings() {
     /*Firebase Realtime Database*/
     if (this.profilService.getActiveUserProfile() !== undefined) {
-      var path =
-        "users/" +
-        this.authService.currentUserAccount.uid +
-        "/" +
-        this.profilService.getActiveUserProfile().id +
-        "/settings";
 
       this.firebaseService
-        .getItemById(path)
+        .getItemById(this.pathToUserProfileSettings)
         .pipe(map((a) => a.payload.toJSON()))
         .subscribe((settings: Settings) => {
           this.settings = settings;
         });
-
-      /*With IONIC*/
-      // this.storage
-      //   .get(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id)
-      //   .then((settings: Settings) => {
-      //     this.logger.log(
-      //       "Read settings from storage: " + JSON.stringify(settings)
-      //     );
-      //     console.log("1: ", this.settings);
-      //     this.settings = settings;
-      //     console.log("2: ", this.settings);
-
-      //     this.reloadLanguageFile();
-      //     this.settingsLoaded.next(true);
-      //   })
-      //   .catch((error) => {
-      //     this.logger.log(error.message);
-      //     this.settings = new Settings();
-      //     this.save();
-      //     this.settingsLoaded.next(true);
-      //   });
     }
   }
 
@@ -180,15 +155,13 @@ export class SettingsService {
     });
   }
 
-  users: {};
-
   /**
-   * Save all the settings to ionic storage
+   * Save all the settings to firebase
    */
   private save() {
     this.firebaseService.setItem(
-      "users/" + this.authService.currentUserAccount.uid,
-      this.profilService.getActiveUserProfile().id + "/settings",
+      this.pathToActiveProfile,
+      FB_PATH_SETTINGS,
       this.settings
     );
 

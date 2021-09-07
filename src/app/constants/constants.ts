@@ -79,3 +79,10 @@ export const DEFAULT_STORIES = [
     languages : ["en" ,"de"]
   }
 ];
+
+/** Constants for Realtime Database Paths */
+export const FB_PATH_USERS = "users/"
+export const FB_PATH_SETTINGS = "settings/"
+export const FB_PATH_PROFILE = "profile/"
+export const FB_PATH_STORIES = "stories/"
+export const FB_PATH_SAVEGAME = "saveGame/"

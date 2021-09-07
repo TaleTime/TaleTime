@@ -4,7 +4,6 @@ import { SimpleToastService } from "../../services/simple-toast/simple-toast.ser
 import { AuthService } from "../../services/auth/auth.service";
 import { TranslateService } from "@ngx-translate/core";
 import { SettingsService } from "../../services/settings/settings.service";
-import { Storage } from "@ionic/storage";
 import { Router } from "@angular/router";
 
 import {
@@ -45,7 +44,6 @@ export class SettingsPage {
 
   constructor(
     public navCtrl: NavController,
-    private storage: Storage,
     private router: Router,
     public settings: SettingsService,
     private translate: TranslateService,

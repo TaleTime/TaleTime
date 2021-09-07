@@ -16,34 +16,39 @@ export class FireBaseService {
 
   constructor(private http: HttpClient, private db: AngularFireDatabase) {}
 
-  /*
-    Gets Data from dbNode
-    dbNode: dbNode: Path to Parentnode (i.e. settings/<uid>)
+  /**
+  * Gets Data from dbNode
+  * @param dbNode Path to Parentnode (i.e. settings/<uid>)}
+  * @return {Observable<any[]>}: Observable with the data in it (Observable.pipe().subscribe())
   */
-  getAllItems(dbNode: string) {
+  public getAllItems(dbNode: string):Observable<any[]> {
     return this.db.list(dbNode).snapshotChanges();
   }
 
-  getAllValues(dbNode: string) {
-    return this.db.list(dbNode).valueChanges();
-  }
-
-  getItemById(dbNode: string) {
+  /**
+   * Gets a single object
+   * @param dbNode Path to Parentnode (i.e. settings/<uid>)}
+   * @return {Observable<any>}
+   */
+  public getItemById(dbNode: string):Observable<any> {
     return this.db.object(dbNode).snapshotChanges();
   }
 
-  /*
-    Sets/Updates the information. If the node doesn't exist it gets created
-    
-    dbNode: Path to Parentnode (i.e. settings/<uid>)
-    key: key to Database-Entry
-    data: JSON-Data to commit
-  */
-  setItem(dbNode: string, key: string, data: any): any {
+  /**
+   * Sets/Updates the information. If the node doesn't exist it gets created
+   * @param key: key to Database-Entry
+   * @param data: JSON-Data to commit
+   * @param dbNode: Path to Parentnode (i.e. users/currentUser)
+   */
+  public setItem(dbNode: string, key: string, data: any): void {
     this.db.list(dbNode).set(key, data);
   }
 
-  deleteItem(dbNode: string) {
+  /**
+   * Deletes the information.
+   * @param dbNode: Path to Parentnode (i.e. users/currentUser)
+   */
+  public deleteItem(dbNode: string): void {
     this.db.object(dbNode).remove();
   }
 }
