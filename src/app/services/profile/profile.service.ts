@@ -13,7 +13,11 @@ import { stringify } from "@angular/compiler/src/util";
 import { Settings } from "src/app/models/settings";
 import { StoryInformation } from "src/app/models/storyInformation";
 import { Story } from "src/app/models/story/story";
-import { FB_PATH_PROFILE, FB_PATH_SETTINGS, FB_PATH_USERS } from "src/app/constants/constants";
+import {
+  FB_PATH_PROFILE,
+  FB_PATH_SETTINGS,
+  FB_PATH_USERS,
+} from "src/app/constants/constants";
 
 @Injectable({
   providedIn: "root",
@@ -27,9 +31,9 @@ export class ProfileService {
   private userProfiles: Map<string, UserProfile>;
   private promise: Promise<any> = null;
   private defaultSettings: Settings;
-  private userAccount: UserAccount = this.authService.currentUserAccount
-  pathToCurrentUser = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/"
-
+  private userAccount: UserAccount = this.authService.currentUserAccount;
+  private pathToCurrentUser =
+    FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
 
   constructor(
     private authService: AuthService,
@@ -101,9 +105,7 @@ export class ProfileService {
    * @return {Observable} Return a observable
    */
   public deleteUserProfile(userProfileId: string) {
-    this.firebaseService.deleteItem(
-      this.pathToCurrentUser + userProfileId
-    );
+    this.firebaseService.deleteItem(this.pathToCurrentUser + userProfileId);
 
     this.userProfiles.delete(userProfileId);
 
@@ -148,24 +150,28 @@ export class ProfileService {
             //Load Profile Information
             let profile = a.payload.child("/").val();
             let profileInfo = profile.profile;
-            //let userProfile = new UserProfile(profileInfo.name, profileInfo.avatar.id, profileInfo.child);
-            let userProfile = new UserProfile("BEDER", 1, false);
+            let userProfile = new UserProfile(
+              profileInfo.name,
+              profileInfo.avatar.id,
+              profileInfo.child
+            );
+            //let userProfile = new UserProfile("BEDER", 1, false);
 
             //set userProfileId
             userProfile.id = a.payload.key;
-            
 
             var arrayOfStories: Array<StoryInformation> = [];
 
             //JSON to Array<StoryInformation>
             for (let element in profile.ArrayOfStories) {
               arrayOfStories.push(profile.ArrayOfStories[element]);
-              if (arrayOfStories[arrayOfStories.length - 1].readers == null) //set empty Array instead of null
+              if (arrayOfStories[arrayOfStories.length - 1].readers == null)
+                //set empty Array instead of null
                 arrayOfStories[arrayOfStories.length - 1].readers = [];
             }
-            
+
             userProfile.setArrayOfStories(arrayOfStories);
-            
+
             return this.userProfiles.set(a.payload.key, userProfile);
           })
         )
@@ -182,7 +188,9 @@ export class ProfileService {
   public getUserProfilesObservable(): Observable<Object[]> {
     var userProfiles = this.firebaseService
       .getAllItems(this.pathToCurrentUser)
-      .pipe(map((action) => action.map((a) => a.payload.child("/profile").val())));
+      .pipe(
+        map((action) => action.map((a) => a.payload.child("/profile").val()))
+      );
 
     return userProfiles;
   }
