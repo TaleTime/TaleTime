@@ -182,7 +182,7 @@ export class ProfileService {
   public getUserProfilesObservable(): Observable<Object[]> {
     var userProfiles = this.firebaseService
       .getAllItems(this.pathToCurrentUser)
-      .pipe(map((action) => action.map((a) => a.payload.toJSON())));
+      .pipe(map((action) => action.map((a) => a.payload.child("/profile").val())));
 
     return userProfiles;
   }

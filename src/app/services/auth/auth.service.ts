@@ -32,7 +32,6 @@ export class AuthService {
           this.authProcessService.user$.subscribe((user) => {
             if (user != null) {
               this.signIn(user, () => {
-                console.log("Bin ich es????")
                 this.router.navigate(["/select-user-profile"]);
                 resolve();
               });
@@ -72,7 +71,6 @@ export class AuthService {
             userAccountData.userProfiles
           );
         } else {
-          console.log("FALSE")
           //no user found
           this.currentUser = new UserAccount(
             user.displayName,
@@ -82,7 +80,6 @@ export class AuthService {
           );
         }
         this.storage.set(user.email, this.currentUser);
-        console.log("Vor Callback")
         callback();
       });
   }

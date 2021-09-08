@@ -30,7 +30,6 @@ export class SelectUserProfilePage implements OnInit {
     public profileService: ProfileService
   ) {
     //Loading as Observable to generate the HTML-view
-    console.log("MA sinn aankomm")
     this.userProfiles = this.profileService.getUserProfilesObservable();
     this.isShowingOptions = true;
     this.translate.get("COMMON_EDIT").subscribe((value) => {

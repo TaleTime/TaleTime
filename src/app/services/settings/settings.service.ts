@@ -21,8 +21,8 @@ export class SettingsService {
   private languageSubject: Subject<string> = new Subject();
   private settingsLoaded: Subject<boolean> = new Subject();
 
-  pathToActiveProfile = FB_PATH_USERS + this.authService.currentUserAccount.uid + this.profilService.getActiveUserProfile().id + "/";
-  pathToUserProfileSettings = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/" + this.profilService.getActiveUserProfile().id + "/" + FB_PATH_SETTINGS;
+  pathToActiveProfile = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+  pathToUserProfileSettings = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
   
   constructor(
     private authService: AuthService,
@@ -46,7 +46,7 @@ export class SettingsService {
     if (this.profilService.getActiveUserProfile() !== undefined) {
 
       this.firebaseService
-        .getItemById(this.pathToUserProfileSettings)
+        .getItemById(this.pathToUserProfileSettings + this.profilService.getActiveUserProfile().id + "/" + FB_PATH_SETTINGS)
         .pipe(map((a) => a.payload.toJSON()))
         .subscribe((settings: Settings) => {
           this.settings = settings;
@@ -161,7 +161,7 @@ export class SettingsService {
   private save() {
     this.firebaseService.setItem(
       this.pathToActiveProfile,
-      FB_PATH_SETTINGS,
+      this.profilService.getActiveUserProfile().id + "/" + FB_PATH_SETTINGS,
       this.settings
     );
 
