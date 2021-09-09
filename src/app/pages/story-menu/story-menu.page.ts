@@ -7,6 +7,7 @@ import {
   Platform,
 } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
+import { FB_PATH_STORIES, FB_PATH_USERS } from "src/app/constants/constants";
 import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import { AvailableLanguage } from "../../models/AvailableLanguage";
 import { PlayerParams } from "../../models/player/player-params";
@@ -146,15 +147,15 @@ export class StoryMenuPage implements OnInit {
   deleteStory(story: StoryInformation) {
     this.activeUserProfile.deleteStory(story.id);
     this.firebaseService.deleteItem(
-      "users/" +
+      FB_PATH_USERS +
         this.authService.currentUserAccount.uid +
         "/" +
         this.activeUserProfile.id +
-        "/ArrayOfStories/" +
+        "/" +
+        FB_PATH_STORIES +
         story.id
     );
     this.ngOnInit(); // reinit to show changes
-
   }
 
   async goToPlayerPage(storyId: string) {

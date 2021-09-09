@@ -10,7 +10,11 @@ import { Zip } from "@ionic-native/zip/ngx";
 import { LoadingController, NavController, Platform } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { FireBaseService } from "src/app/services/firebase/firebaseService";
-import { CLOUD, FB_PATH_USERS } from "../../constants/constants";
+import {
+  CLOUD,
+  FB_PATH_STORIES,
+  FB_PATH_USERS,
+} from "../../constants/constants";
 import {
   StoryInformation,
   StoryInformationWithUrl,
@@ -41,7 +45,8 @@ export class AvailableStoriesPage implements OnInit {
   public readonly PUBLIC_STORY_URL: string =
     "https://raw.githubusercontent.com/TaleTime/Stories/master/index.json";
 
-  private pathToCurrentUser = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/"
+  private pathToCurrentUser =
+    FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
 
   constructor(
     private zone: NgZone,
@@ -105,7 +110,10 @@ export class AvailableStoriesPage implements OnInit {
     } else {
       this.activeUserProfile.addStory(story);
       this.firebaseService.setItem(
-        this.pathToCurrentUser + this.activeUserProfile.id + "/ArrayOfStories/",
+        this.pathToCurrentUser +
+          this.activeUserProfile.id +
+          "/" +
+          FB_PATH_STORIES,
         story.id,
         story
       );
