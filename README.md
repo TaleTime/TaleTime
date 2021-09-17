@@ -34,9 +34,9 @@ git clone https://github.com/TaleTime/TaleTime.git
 cd TaleTime
 ```
 
-install all dependencies using npm:
+install all dependencies using npm force (dependency hell):
 ```Shell
-  npm install
+  npm install -f
 ```
 
 make sure you have angular and ionic cli installed:
@@ -62,6 +62,21 @@ Besides our professionally recorded audiobooks we also give parents the opportun
     </p>
 </div> -->
 *[Try our online demo](https://tale-time.web.app/")*
+
+To run the app with a reader:
+```Shell
+  ionic cordova run browser
+```
+
+Login firebase:
+```Shell
+  firebase login
+```
+
+To push the changes to the webapp use (make sure you`re logged into firebase):
+```Shell
+  firebase deploy
+```
 
 ## Write a new Story
 
