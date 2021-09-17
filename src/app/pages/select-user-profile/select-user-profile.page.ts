@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { ModalController, NavController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
+import { Observable } from "rxjs";
 import { AuthService } from "../../services/auth/auth.service";
 import { ProfileService } from "../../services/profile/profile.service";
 import { SettingsService } from "../../services/settings/settings.service";
@@ -13,11 +14,10 @@ import { SimpleToastService } from "../../services/simple-toast/simple-toast.ser
   styleUrls: ["./select-user-profile.page.scss"],
 })
 export class SelectUserProfilePage implements OnInit {
-
   isShowingOptions: boolean;
   isShowingOptionsButton = false;
   showingOptionsLabel: string;
-
+  userProfiles: Observable<any[]>;
 
   constructor(
     private navCtrl: NavController,
@@ -27,14 +27,16 @@ export class SelectUserProfilePage implements OnInit {
     public authService: AuthService,
     public modalCtrl: ModalController,
     private toastService: SimpleToastService,
-    public profilService: ProfileService
+    public profileService: ProfileService
   ) {
+    //Loading as Observable to generate the HTML-view
+    this.userProfiles = this.profileService.getUserProfilesObservable();
     this.isShowingOptions = true;
     this.translate.get("COMMON_EDIT").subscribe((value) => {
       // value is our translated string
       this.showingOptionsLabel = value;
     });
-    const activeUserProfile = this.profilService.getActiveUserProfile();
+    const activeUserProfile = this.profileService.getActiveUserProfile();
     if (activeUserProfile && !activeUserProfile.child) {
       this.isShowingOptionsButton = true;
     }
@@ -42,20 +44,22 @@ export class SelectUserProfilePage implements OnInit {
 
   public select(event, userProfileId: string) {
     event.stopPropagation();
-    this.profilService.setActiveUserProfile(userProfileId).subscribe(
+    this.profileService.setActiveUserProfile(userProfileId).subscribe(
       (success) => {
         if (success) {
           // this.navCtrl.push(TabsPage);
+
           this.settingsService.loadSettings();
+
           this.router.navigate(["/tabs/story-menu"]);
         }
       },
       (error) => {
         console.log(
           "SelectUserProfilePage-select(): " +
-          error.prototype.toString() +
-          ":" +
-          JSON.stringify(error)
+            error.prototype.toString() +
+            ":" +
+            JSON.stringify(error)
         );
       }
     );
@@ -65,7 +69,7 @@ export class SelectUserProfilePage implements OnInit {
     event.stopPropagation();
 
     console.log("delete: " + userProfileId);
-    this.profilService.deleteUserProfile(userProfileId);
+    this.profileService.deleteUserProfile(userProfileId);
   }
 
   public create() {
@@ -91,8 +95,7 @@ export class SelectUserProfilePage implements OnInit {
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSignOut() {
     this.logout();

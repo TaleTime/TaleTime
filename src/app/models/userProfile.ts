@@ -13,28 +13,28 @@ export class UserProfile {
     {
       id: 0,
       name: "profile_standard.png",
-      fullPath: "/www/assets/imgs/profile/profile_standard.png"
+      fullPath: "/www/assets/imgs/profile/profile_standard.png",
     },
     {
       id: 1,
       name: "profile_girl_01.png",
-      fullPath: "/www/assets/imgs/profile/profile_girl_01.png"
+      fullPath: "/www/assets/imgs/profile/profile_girl_01.png",
     },
     {
       id: 2,
       name: "profile_boy_01.png",
-      fullPath: "/www/assets/imgs/profile/profile_boy_01.png"
+      fullPath: "/www/assets/imgs/profile/profile_boy_01.png",
     },
     {
       id: 3,
       name: "profile_girl_02.png",
-      fullPath: "/www/assets/imgs/profile/profile_girl_02.png"
+      fullPath: "/www/assets/imgs/profile/profile_girl_02.png",
     },
     {
       id: 4,
       name: "profile_boy_02.png",
-      fullPath: "/www/assets/imgs/profile/profile_boy_02.png"
-    }
+      fullPath: "/www/assets/imgs/profile/profile_boy_02.png",
+    },
   ];
 
   public id: string;
@@ -42,30 +42,35 @@ export class UserProfile {
   public avatar;
   public child: boolean;
   public settings: Settings;
-  private arrayOfStories: Array<StoryInformation>;
-  private arrayOfSaveGames: Array<SaveGame>;
+  public arrayOfStories: Array<StoryInformation>;
+  public arrayOfSaveGames: Array<SaveGame>;
+  public storyService;
 
   constructor(name: string, avatarId: number, child: boolean) {
-    this.id = Math.random()
-      .toString(36)
-      .substr(2, 9);
+    this.id = Math.random().toString(36).substr(2, 9);
     this.name = name;
     this.avatar = UserProfile.avatars(avatarId);
     this.child = child;
     this.arrayOfStories = [];
   }
 
-  public getArrayOfStories(): Array<StoryInformation> {
-    return this.arrayOfStories;
+  public setArrayOfStories(arrayOfStories) {
+    this.arrayOfStories = arrayOfStories;
   }
+
+  public getArrayOfStories(): Array<StoryInformation> {
+    return this.storyService.get();
+  }
+
   /**
    * Returns an array of type Array<StoryInformation> for a given language
    * @param {AvailableLanguage} lang Language as enum
    * @returns {Array<StoryInformation>}
    */
-  public getArrayOfStoriesByLanguage(lang: AvailableLanguage): Array<StoryInformation> {
-    return this.arrayOfStories.filter(o => o.language === lang)
-
+  public getArrayOfStoriesByLanguage(
+    lang: AvailableLanguage
+  ): Array<StoryInformation> {
+    return this.arrayOfStories.filter((o) => o.language === lang);
   }
 
   public addStory(story: StoryInformation): void {
@@ -73,18 +78,18 @@ export class UserProfile {
   }
 
   public deleteStory(id: string) {
-    if(this.isStoryPresent(id)){
-      const index = this.arrayOfStories.findIndex(o => o.id === id);
-      this.arrayOfStories.splice(index,1);
+    if (this.isStoryPresent(id)) {
+      const index = this.arrayOfStories.findIndex((o) => o.id === id);
+      this.arrayOfStories.splice(index, 1);
     }
   }
 
   public getSaveGame(findStoryId: string): SaveGame {
-    this.arrayOfSaveGames.find(o => {
+    this.arrayOfSaveGames.find((o) => {
       if (o.storyId === findStoryId) {
         return o;
       }
-    })
+    });
     throw Error("Object not found");
   }
   public setSaveGame(savegame: SaveGame): void {
@@ -103,9 +108,6 @@ export class UserProfile {
     }
     return false;
   }
-
-
-
 
   static avatars(id?): Array<object> | object {
     if (id !== undefined) {

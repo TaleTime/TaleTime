@@ -1,15 +1,16 @@
-import {Observable, throwError as observableThrowError} from 'rxjs';
-import {Injectable} from "@angular/core";
-import {Storage} from "@ionic/storage";
-import {AlertController} from "@ionic/angular";
-import {UserAccount} from "../../models/userAccount";
-import {UserProfile} from "../../models/userProfile";
-import {LoggerService} from "../logger/logger.service";
+import { Observable, throwError as observableThrowError } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Storage } from "@ionic/storage";
+import { AlertController } from "@ionic/angular";
+import { UserAccount } from "../../models/userAccount";
+import { UserProfile } from "../../models/userProfile";
+import { LoggerService } from "../logger/logger.service";
 import { AuthProcessService } from "ngx-auth-firebaseui";
 import { Router } from "@angular/router";
+import { FireBaseService } from "../firebase/firebaseService";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthService {
   private currentUser: UserAccount = null;
@@ -20,17 +21,16 @@ export class AuthService {
     private alertCtrl: AlertController,
     private logger: LoggerService,
     private router: Router,
-    private authProcessService : AuthProcessService
-  ) {
+    private authProcessService: AuthProcessService,
+    private firebaseService: FireBaseService
+  ) {}
 
-  }
   async ready(): Promise<any> {
     if (this.promise === null) {
-      this.promise = new Promise((resolve, reject) => {
+      this.promise = new Promise<void>((resolve, reject) => {
         if (this.currentUser === null) {
-          this.authProcessService.user$.subscribe(user => {
+          this.authProcessService.user$.subscribe((user) => {
             if (user != null) {
-              console.log(user);
               this.signIn(user, () => {
                 this.router.navigate(["/select-user-profile"]);
                 resolve();
@@ -54,24 +54,37 @@ export class AuthService {
    * @param user
    * @param callback
    */
-  async signIn(user,callback: () => any) {
-    this.storage.ready()
+  async signIn(user, callback: () => any) {
+    this.storage
+      .ready()
       .then(() => this.storage.get(user.email))
-        .then((userAccountData) => {
-          //checks if a user in the local storage already exists
-          if (userAccountData != null) {
-            //user found
-            this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '', userAccountData.userProfiles);
-          } else {
-            //no user found
-            this.currentUser = new UserAccount(user.displayName, user.email, user.uid, '');
-          }
-          this.storage.set(user.email, this.currentUser);
-          callback();
-        });
+      .then((userAccountData) => {
+        //checks if a user in the local storage already exists
+        console.log("userAccountData", userAccountData)
+        if (userAccountData != null) {
+          //user found
+          this.currentUser = new UserAccount(
+            user.displayName,
+            user.email,
+            user.uid,
+            "",
+            userAccountData.userProfiles
+          );
+        } else {
+          //no user found
+          this.currentUser = new UserAccount(
+            user.displayName,
+            user.email,
+            user.uid,
+            ""
+          );
+        }
+        this.storage.set(user.email, this.currentUser);
+        callback();
+      });
   }
 
-  public trySignIn(userAccount: UserAccount,callback: () => any) {
+  public trySignIn(userAccount: UserAccount, callback: () => any) {
     this.storage
       .ready()
       .then(() => this.storage.get(userAccount.email))
@@ -88,7 +101,6 @@ export class AuthService {
       });
   }
 
-
   public register(credentials: { name: any; email: any; pin: any }) {
     if (
       credentials.email === null ||
@@ -97,22 +109,30 @@ export class AuthService {
     ) {
       return observableThrowError("Please insert credentials");
     } else {
-      const userAccount = new UserAccount(credentials.name, credentials.email, '');
+      const userAccount = new UserAccount(
+        credentials.name,
+        credentials.email,
+        ""
+      );
       userAccount.updatePin(credentials.pin); // Set pin seperately to hash it
       this.save(userAccount);
 
-      return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-        subscriber.next(true);
-        subscriber.complete();
-      })
+      return new Observable(
+        (subscriber: {
+          next: (arg0: boolean) => void;
+          complete: () => void;
+        }) => {
+          subscriber.next(true);
+          subscriber.complete();
+        }
+      );
     }
   }
-
 
   public changePin(oldPin: any, newPin: any, retypePin: any) {
     const response = {
       success: true,
-      reason: ""
+      reason: "",
     };
 
     if (this.currentUserAccount.checkPin(oldPin)) {
@@ -128,31 +148,36 @@ export class AuthService {
       response.reason = "Old pin do not match"; // TODO i18n
     }
 
-    return new Observable((subscriber: {
-      next: (arg0: { success: boolean; reason: string }) => void;
-      complete: () => void;
-    }) => {
-      subscriber.next(response);
-      subscriber.complete();
-    });
+    return new Observable(
+      (subscriber: {
+        next: (arg0: { success: boolean; reason: string }) => void;
+        complete: () => void;
+      }) => {
+        subscriber.next(response);
+        subscriber.complete();
+      }
+    );
   }
 
-
-  public logout(){
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      this.currentUser = null;
-      subscriber.next(true);
-      subscriber.complete();
-    });
+  public logout() {
+    return new Observable(
+      (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        this.currentUser = null;
+        subscriber.next(true);
+        subscriber.complete();
+      }
+    );
   }
 
   public deleteAccount() {
-    return new Observable((subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
-      this.storage.remove(this.currentUser.email);
-      this.currentUser = null;
-      subscriber.next(true);
-      subscriber.complete();
-    });
+    return new Observable(
+      (subscriber: { next: (arg0: boolean) => void; complete: () => void }) => {
+        this.storage.remove(this.currentUser.email);
+        this.currentUser = null;
+        subscriber.next(true);
+        subscriber.complete();
+      }
+    );
   }
 
   public save(userAccount: UserAccount) {
@@ -160,9 +185,8 @@ export class AuthService {
   }
 
   get currentUserAccount(): UserAccount {
-      return this.currentUser;
+    return this.currentUser;
   }
-
 
   /*** UI ***/
   public presentPinPrompt(validFn: (arg) => void, cancelFn?: (arg) => void) {
@@ -172,8 +196,8 @@ export class AuthService {
         {
           name: "pin",
           placeholder: "Pin", // TODO i18
-          type: "password"
-        }
+          type: "password",
+        },
       ],
       buttons: [
         {
@@ -185,7 +209,7 @@ export class AuthService {
             } else {
               this.logger.log("Cancel clicked");
             }
-          }
+          },
         },
         {
           text: "Ok", // TODO i18
@@ -195,9 +219,9 @@ export class AuthService {
             } else {
               this.logger.log("Ok clicked");
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
   }
 }

@@ -1,5 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
-import {async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import {
   MockedAlertController, MockedAppComponent,
   MockedAuthService, MockedLoadingController,

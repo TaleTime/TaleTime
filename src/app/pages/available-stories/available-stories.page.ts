@@ -1,13 +1,24 @@
 import { Component, NgZone, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ngx";
+import {
+  FileTransfer,
+  FileTransferObject,
+} from "@ionic-native/file-transfer/ngx";
 import { File } from "@ionic-native/file/ngx";
 import { HTTP } from "@ionic-native/http/ngx";
 import { Zip } from "@ionic-native/zip/ngx";
 import { LoadingController, NavController, Platform } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
-import { CLOUD } from "../../constants/constants";
-import { StoryInformation, StoryInformationWithUrl } from "../../models/storyInformation";
+import { FireBaseService } from "src/app/services/firebase/firebaseService";
+import {
+  CLOUD,
+  FB_PATH_STORIES,
+  FB_PATH_USERS,
+} from "../../constants/constants";
+import {
+  StoryInformation,
+  StoryInformationWithUrl,
+} from "../../models/storyInformation";
 import { UserProfile } from "../../models/userProfile";
 import { AlertService } from "../../services/alert/alert.service";
 import { AuthService } from "../../services/auth/auth.service";
@@ -15,7 +26,7 @@ import { LanguageService } from "../../services/language/language.service";
 import { ProfileService } from "../../services/profile/profile.service";
 import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 import { StoryService } from "../../services/story/story.service";
-import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
+import { convertSystemLangToAvailableLanguage } from "../../Util/UtilLanguage";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -34,10 +45,12 @@ export class AvailableStoriesPage implements OnInit {
   public readonly PUBLIC_STORY_URL: string =
     "https://raw.githubusercontent.com/TaleTime/Stories/master/index.json";
 
+  private pathToCurrentUser =
+    FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+
   constructor(
     private zone: NgZone,
     private authService: AuthService,
-
     public navCtrl: NavController,
     private router: Router,
     private http: HTTP,
@@ -51,22 +64,16 @@ export class AvailableStoriesPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastService: SimpleToastService,
     private profileService: ProfileService,
-    private languageService: LanguageService
-  ) {
-
-   //this.loadDeviceDefaultStories();
-   // this.platform.ready().then(() => {
-      //this.loadPublicStories();
-    //});
-  }
+    private languageService: LanguageService,
+    private firebaseService: FireBaseService
+  ) {}
 
   ionViewWillEnter() {
     this.loadDeviceDefaultStories();
-
   }
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
-    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
+
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
@@ -74,16 +81,19 @@ export class AvailableStoriesPage implements OnInit {
     this.loadDeviceDefaultStories();
   }
 
-
   /**
    * Loads the (hardcoded) default stories into the availableStories array
    * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
    */
   async loadDeviceDefaultStories() {
-    const lang = convertSystemLangToAvailableLanguage(this.languageService.selected);
-    let storieForChild = this.activeUserProfile.child
-    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(lang, storieForChild);
-    console.log(this.availableStories);
+    const lang = convertSystemLangToAvailableLanguage(
+      this.languageService.selected
+    );
+    let storieForChild = this.activeUserProfile.child;
+    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(
+      lang,
+      storieForChild
+    );
   }
 
   goToSelectUserProfile() {
@@ -91,17 +101,22 @@ export class AvailableStoriesPage implements OnInit {
   }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
-    console.log("addStory(): " + JSON.stringify(story));
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
-      // } else if (user.isStoryPresent(story.id)) {
     } else if (this.activeUserProfile.isStoryPresent(story.id)) {
       // story already exists
       this.alertStoryAlreadyExists(story.title);
     } else {
-      // add new (non cloud) story
       this.activeUserProfile.addStory(story);
+      this.firebaseService.setItem(
+        this.pathToCurrentUser +
+          this.activeUserProfile.id +
+          "/" +
+          FB_PATH_STORIES,
+        story.id,
+        story
+      );
 
       this.alertStoryAddedSuccessfully(story.title);
     }
@@ -135,7 +150,7 @@ export class AvailableStoriesPage implements OnInit {
    */
   private async createLoading(content: string) {
     return await this.loadingCtrl.create({
-      message: content
+      message: content,
     });
   }
 
@@ -146,7 +161,7 @@ export class AvailableStoriesPage implements OnInit {
   ): string {
     return this.translate.instant("STORY_DOWNLOAD_PROGRESS", {
       title,
-      progress: Math.round((loaded / total) * 100) + "%"
+      progress: Math.round((loaded / total) * 100) + "%",
     });
   }
 
@@ -157,7 +172,7 @@ export class AvailableStoriesPage implements OnInit {
   ): string {
     return this.translate.instant("STORY_UNPACKING_PROGRESS", {
       title,
-      progress: Math.round((loaded / total) * 100) + "%"
+      progress: Math.round((loaded / total) * 100) + "%",
     });
   }
 
@@ -264,7 +279,7 @@ export class AvailableStoriesPage implements OnInit {
       "",
       [{ text: this.translate.instant("COMMON_OK") }],
       this.translate.instant("STORY_ALREADY_EXISTS_MSG", {
-        story_title: storyTitle
+        story_title: storyTitle,
       })
     );
     await al.present();
@@ -284,4 +299,3 @@ export class AvailableStoriesPage implements OnInit {
     await al.present();
   }
 }
-

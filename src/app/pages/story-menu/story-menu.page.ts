@@ -1,8 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { AlertController, MenuController, NavController, Platform } from "@ionic/angular";
-import { Storage } from "@ionic/storage";
+import {
+  AlertController,
+  MenuController,
+  NavController,
+  Platform,
+} from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
+import { FB_PATH_STORIES, FB_PATH_USERS } from "src/app/constants/constants";
+import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import { AvailableLanguage } from "../../models/AvailableLanguage";
 import { PlayerParams } from "../../models/player/player-params";
 import { Reader, StoryInformation } from "../../models/storyInformation";
@@ -22,21 +28,18 @@ import { StoryService } from "../../services/story/story.service";
   styleUrls: ["./story-menu.page.scss"],
 })
 export class StoryMenuPage implements OnInit {
-
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
   private activeUserProfile: UserProfile;
-  public stories: Array<StoryInformation>
+  public stories: Array<StoryInformation>;
 
   CANCEL_BUTTON_TOOLTIP_LABEL: string;
   PLAY_BUTTON_TOOLTIP_LABEL: string;
   INFO_BUTTON_TOOLTIP_LABEL: string;
 
-  languageMap = new Map()
-
+  languageMap = new Map();
 
   constructor(
-    private storage: Storage,
     private alertCtrl: AlertController,
     private toastService: SimpleToastService,
     private translate: TranslateService,
@@ -50,9 +53,9 @@ export class StoryMenuPage implements OnInit {
     private authService: AuthService,
     public storyService: StoryService,
     public profileService: ProfileService,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    private firebaseService: FireBaseService
   ) {
-
     if (this.authService.currentUserAccount == null) {
       this.router.navigate(["/start"]);
     }
@@ -61,22 +64,25 @@ export class StoryMenuPage implements OnInit {
   }
 
   ngOnInit() {
-    this.stories = []
-    this.activeUserProfile = this.profileService.getActiveUserProfile()
-    console.log("STORY_MENU_CURRENT_USER: ", this.authService.currentUserAccount);
+    this.activeUserProfile = this.profileService.getActiveUserProfile();
+
+    this.stories = this.activeUserProfile.arrayOfStories;
+    console.log("ngOnInit story-menu.page stories", this.stories);
+
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
       //todo Ändern, dass nur noch Enum anstelle von Strings benutzt werden
       if (this.languageService.selected == "de-DE") {
-        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.German)
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(
+          AvailableLanguage.German
+        );
       } else {
-        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(AvailableLanguage.English)
+        this.stories = this.activeUserProfile.getArrayOfStoriesByLanguage(
+          AvailableLanguage.English
+        );
       }
     }
-
-    console.log("STORRYYY");
-    console.log(this.stories);
   }
 
   /**
@@ -91,12 +97,16 @@ export class StoryMenuPage implements OnInit {
    * change the language of the tooltip
    */
   private translateHoverText() {
-    this.CANCEL_BUTTON_TOOLTIP_LABEL = this.translate.instant("DELETE_BUTTON_MOUSE_HOVER");
-    this.INFO_BUTTON_TOOLTIP_LABEL = this.translate.instant("INFO_BUTTON_MOUSE_HOVER");
-    this.PLAY_BUTTON_TOOLTIP_LABEL = this.translate.instant("PLAY_BUTTON_MOUSE_HOVER");
+    this.CANCEL_BUTTON_TOOLTIP_LABEL = this.translate.instant(
+      "DELETE_BUTTON_MOUSE_HOVER"
+    );
+    this.INFO_BUTTON_TOOLTIP_LABEL = this.translate.instant(
+      "INFO_BUTTON_MOUSE_HOVER"
+    );
+    this.PLAY_BUTTON_TOOLTIP_LABEL = this.translate.instant(
+      "PLAY_BUTTON_MOUSE_HOVER"
+    );
   }
-
-
 
   /**
    * Checks if the story is available in the current language
@@ -105,7 +115,10 @@ export class StoryMenuPage implements OnInit {
    * @return True if story available in the current language, else false
    */
   private checkLanguage(storyInformation: StoryInformation) {
-    if (this.settings.language === this.storyLanguageToSystemLanguage(storyInformation.language)) {
+    if (
+      this.settings.language ===
+      this.storyLanguageToSystemLanguage(storyInformation.language)
+    ) {
       return true;
     }
     return false;
@@ -133,7 +146,16 @@ export class StoryMenuPage implements OnInit {
 
   deleteStory(story: StoryInformation) {
     this.activeUserProfile.deleteStory(story.id);
-    this.ionViewWillEnter();
+    this.firebaseService.deleteItem(
+      FB_PATH_USERS +
+        this.authService.currentUserAccount.uid +
+        "/" +
+        this.activeUserProfile.id +
+        "/" +
+        FB_PATH_STORIES +
+        story.id
+    );
+    this.ngOnInit(); // reinit to show changes
   }
 
   async goToPlayerPage(storyId: string) {
@@ -155,26 +177,27 @@ export class StoryMenuPage implements OnInit {
     await alert.present();
   }
 
-  public showResumeOrRestartDialog(modeFn: (arg) => void, cancelFn?: (arg) => void) {
+  public showResumeOrRestartDialog(
+    modeFn: (arg) => void,
+    cancelFn?: (arg) => void
+  ) {
     return this.alertCtrl.create({
       header: this.translate.instant("RESUME_OR_RESTART"),
-      inputs: [
-
-      ],
+      inputs: [],
       buttons: [
         {
           text: this.translate.instant("RESUME"),
           role: "resume",
           handler: (data) => {
             modeFn("continue");
-          }
+          },
         },
         {
           text: this.translate.instant("RESTART"),
           role: "restart",
           handler: (data) => {
             modeFn("begin");
-          }
+          },
         },
         {
           text: this.translate.instant("CANCEL"),
@@ -185,9 +208,9 @@ export class StoryMenuPage implements OnInit {
             } else {
               console.log("Cancel clicked");
             }
-          }
+          },
         },
-      ]
+      ],
     });
   }
 

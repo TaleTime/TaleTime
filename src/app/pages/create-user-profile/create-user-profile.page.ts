@@ -1,9 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {NavController} from "@ionic/angular";
-import {AuthService} from "../../services/auth/auth.service";
-import {UserProfile} from "../../models/userProfile";
-import {ProfileService} from "../../services/profile/profile.service"; // for avatars
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { NavController } from "@ionic/angular";
+import { AuthService } from "../../services/auth/auth.service";
+import { UserProfile } from "../../models/userProfile";
+import { ProfileService } from "../../services/profile/profile.service"; // for avatars
 
 @Component({
   selector: "app-create-user-profile",
@@ -12,7 +12,7 @@ import {ProfileService} from "../../services/profile/profile.service"; // for av
 })
 export class CreateUserProfilePage implements OnInit {
   activeAvatarId: number;
-  profileCredentials = {name: "", avatarId: 0, child: false};
+  profileCredentials = { name: "", avatarId: 0, child: false };
   profileAvatars;
 
   constructor(
@@ -21,15 +21,14 @@ export class CreateUserProfilePage implements OnInit {
     private authService: AuthService,
     private profilService: ProfileService
   ) {
-    if(this.authService.currentUserAccount == null){
+    if (this.authService.currentUserAccount == null) {
       this.router.navigate(["/start"]);
     }
     this.profileAvatars = UserProfile.avatars();
     this.selectAvatar(null, 0);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public selectAvatar(event, avatarId) {
     if (event) {

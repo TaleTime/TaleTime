@@ -13,12 +13,13 @@
   <ion-list>
     <ion-item
         (click)="select($event, userProfile.id)"
-        *ngFor="let userProfile of this.profilService.getUserProfiles()"
+        *ngFor="let userProfile of this.userProfiles | async"
     >
       <ion-avatar slot="start">
         <img src="assets/imgs/profile/{{userProfile.avatar.name}}" />
       </ion-avatar>
       <h2>{{userProfile.name}}</h2>
+      <h2>{{userProfile.key}}</h2>
 
       <ion-button *ngIf="isShowingOptions" (click)="delete($event, userProfile.id)" fill="clear" slot="end">
         {{ 'COMMON_DELETE' | translate }}

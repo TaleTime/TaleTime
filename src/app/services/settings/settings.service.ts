@@ -1,65 +1,55 @@
-import {Injectable} from "@angular/core";
-import {Observable, Subject} from "rxjs";
-import {Platform} from "@ionic/angular";
-import {AlertService} from "../alert/alert.service";
-import {LanguageFileService} from "../speech-recognition/language-file/language-file.service";
-import {LoggerService} from "../logger/logger.service";
-import {Settings} from "../../models/settings";
-import {SpeechRecognition} from "@ionic-native/speech-recognition/ngx";
-import {Storage} from "@ionic/storage";
-import {AuthService} from "../auth/auth.service";
-import {ProfileService} from "../profile/profile.service";
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { Platform } from "@ionic/angular";
+import { AlertService } from "../alert/alert.service";
+import { LanguageFileService } from "../speech-recognition/language-file/language-file.service";
+import { LoggerService } from "../logger/logger.service";
+import { Settings } from "../../models/settings";
+import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
+import { AuthService } from "../auth/auth.service";
+import { ProfileService } from "../profile/profile.service";
+import { FireBaseService} from "../firebase/firebaseService";
+import { map } from "rxjs/operators";
+import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
+import { FB_PATH_SETTINGS, FB_PATH_USERS } from "src/app/constants/constants";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SettingsService {
-
-  private readonly SETTINGS_KEY = "SETTINGS";
-  private settings: Settings = new Settings();  // TODO: initializing Settings this way was not necessary before
-
+  private settings: Settings = new Settings(); 
   private languageSubject: Subject<string> = new Subject();
   private settingsLoaded: Subject<boolean> = new Subject();
 
+  pathToActiveProfile = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+  pathToUserProfileSettings = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+  
   constructor(
     private authService: AuthService,
     private platform: Platform,
     private languageFile: LanguageFileService,
-    private storage: Storage,
     private speechRecognitionService: SpeechRecognition,
     private logger: LoggerService,
     private alert: AlertService,
-    private profilService: ProfileService
-  ) {
-    this.platform.ready().then(() => {
-      this.storage.ready().then(() => {
-        this.authService.ready().then( () => {
+    private profilService: ProfileService,
+    private firebaseService: FireBaseService
+    ) {
+      this.platform.ready().then(() => {
+        this.authService.ready().then(() => {
           this.loadSettings();
         });
       });
-    });
-  }
+    }
+    
+    public loadSettings() {
+    /*Firebase Realtime Database*/
+    if (this.profilService.getActiveUserProfile() !== undefined) {
 
-  loadSettings() {
-    if (this.profilService.getActiveUserProfile()!== undefined) {
-      this.storage
-        .get(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id)
-        .then((settings: Settings) => {
-          this.logger.log(
-            "Read settings from storage: " + JSON.stringify(settings)
-          );
-          console.log("1: ", this.settings);
+      this.firebaseService
+        .getItemById(this.pathToUserProfileSettings + this.profilService.getActiveUserProfile().id + "/" + FB_PATH_SETTINGS)
+        .pipe(map((a) => a.payload.toJSON()))
+        .subscribe((settings: Settings) => {
           this.settings = settings;
-          console.log("2: ", this.settings);
-
-          this.reloadLanguageFile();
-          this.settingsLoaded.next(true);
-        })
-        .catch((error) => {
-          this.logger.log(error.message);
-          this.settings = new Settings();
-          this.save();
-          this.settingsLoaded.next(true);
         });
     }
   }
@@ -97,13 +87,13 @@ export class SettingsService {
           } else {
             this.speechRecognitionService.requestPermission().then(
               () => this.updateAndSaveSpeechRecognitionValue(value),
-              async () => {  // TODO might not work, async / await problematic ?
-                const alert = await this.alert
-                  .createAlert(
-                    "Error",
-                    "Permission needed to use Speech Recognition",
-                    [{text: "OK"}]
-                  );
+              async () => {
+                // TODO might not work, async / await problematic ?
+                const alert = await this.alert.createAlert(
+                  "Error",
+                  "Permission needed to use Speech Recognition",
+                  [{ text: "OK" }]
+                );
                 await alert.present();
                 this.updateAndSaveSpeechRecognitionValue(false);
               }
@@ -141,7 +131,7 @@ export class SettingsService {
     this.save();
   }
 
-  set fontSize(value: number){
+  set fontSize(value: number) {
     this.settings.fontSize = value;
     this.save();
   }
@@ -166,18 +156,15 @@ export class SettingsService {
   }
 
   /**
-   * Save all the settings to ionic storage
+   * Save all the settings to firebase
    */
   private save() {
-    this.storage
-      .set(this.SETTINGS_KEY + this.profilService.getActiveUserProfile().id, this.settings)
-      .then(() =>
-        this.logger.log("Settings written: " + JSON.stringify(this.settings))
-      )
-      .catch((err) => {
-        this.logger.error("Could not save setting file!");
-        this.logger.error(err);
-      });
+    this.firebaseService.setItem(
+      this.pathToActiveProfile,
+      this.profilService.getActiveUserProfile().id + "/" + FB_PATH_SETTINGS,
+      this.settings
+    );
+
   }
 
   public getShortLangCode() {

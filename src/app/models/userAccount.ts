@@ -3,8 +3,8 @@
  * @author Matthias Kiefer
  * @date 2017-11-19
  */
-import {UserProfile} from "./userProfile";
-import {sha256} from "js-sha256";
+import { UserProfile } from "./userProfile";
+import { sha256 } from "js-sha256";
 
 export class UserAccount {
   public name: string;
@@ -57,7 +57,7 @@ export class UserAccount {
    * Method check if a user profil is the map
    * @returns      Return true if a user profil is already exists
    */
-  public checkIfuderProfileIdExistes(userProfileId:string):boolean{
-   return this.userProfiles.get(userProfileId) === undefined ? false : true;
+  public checkIfUserProfileIdExists(userProfileId: string): boolean {
+    return this.userProfiles.get(userProfileId) === undefined ? false : true;
   }
 }

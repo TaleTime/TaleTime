@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, Routes } from "@angular/router";
 import { SpeechRecognition } from "@ionic-native/speech-recognition/ngx";
 import { TextToSpeech } from "@ionic-native/text-to-speech/ngx";
 import { NavController, Platform } from "@ionic/angular";
+import { FireBaseService } from "src/app/services/firebase/firebaseService";
 import {
   ANSWER_CHAPTER_BACKWARDS,
   ANSWER_CHAPTER_REPEAT,
@@ -11,11 +12,15 @@ import {
   DEFAULT_READER,
   FILETYPE_MP4,
   READER_DIR,
-  STORY_DIR
+  STORY_DIR,
 } from "../../constants/constants";
 import { SaveGame } from "../../models/saveGame";
 /** Datamodels & Constants */
-import { ChapterAttributes, MtgaNextStoryNode, StoryMetaData } from "../../models/story/story";
+import {
+  ChapterAttributes,
+  MtgaNextStoryNode,
+  StoryMetaData,
+} from "../../models/story/story";
 import { AudioService } from "../../services/audio/audio.service";
 import { AuthService } from "../../services/auth/auth.service";
 import { PlatformBridgeService } from "../../services/platform-bridge/platform-bridge.service";
@@ -29,7 +34,6 @@ import { TtsTextService } from "../../services/speech-recognition/tts-text/tts-t
 import { StoryService } from "../../services/story/story.service";
 import { StoryMenuPage } from "../story-menu/story-menu.page";
 
-
 // import Stack from "ts-data.stack";
 /**
  * @author Janis Schacht
@@ -42,9 +46,7 @@ const BEGIN = "begin";
 const CONTINUE = "continue";
 const FIRST_NODE = 1;
 
-const routes: Routes = [
-  { path: "storyMenu", component: StoryMenuPage },
-];
+const routes: Routes = [{ path: "storyMenu", component: StoryMenuPage }];
 
 @Component({
   selector: "app-player",
@@ -95,7 +97,8 @@ export class PlayerPage implements OnInit {
     private matching: AnswerMatchingService,
     private settings: SettingsService,
     private publicStoryHelper: PublicStoryHelperService,
-    private platformBridge: PlatformBridgeService
+    private platformBridge: PlatformBridgeService,
+    private firebaseService: FireBaseService
   ) {
     // if(this.authService.currentUserAccount == null){
     //   this.router.navigate(["/start"]);
@@ -104,14 +107,13 @@ export class PlayerPage implements OnInit {
     this.platform.ready().then(() => {
       console.log("PlayerPage started");
       this.storyId = this.playerParamsService.getPlayerParams().storyId;
-      console.log("storyId:", this.storyId);
 
       this.loadSaveGame();
 
       // DEFAULT_READER if new savegame
       // this.selectedReader = this.saveGame.reader;
       // this.selectedReader = DEFAULT_READER;
-      if (this.playerParamsService.getPlayerParams().reader === '') {
+      if (this.playerParamsService.getPlayerParams().reader === "") {
         this.selectedReader = this.saveGame.reader;
       } else {
         this.selectedReader = this.playerParamsService.getPlayerParams().reader;
@@ -143,8 +145,7 @@ export class PlayerPage implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /**
    * Go back to Home Screen
@@ -214,9 +215,8 @@ export class PlayerPage implements OnInit {
    */
   previousChapter() {
     console.log("Current Node: " + this.attr.storyNodeId);
-    const peekObject = this.saveGame.chosenPath[
-      this.saveGame.chosenPath.length - 1
-    ];
+    const peekObject =
+      this.saveGame.chosenPath[this.saveGame.chosenPath.length - 1];
     if (peekObject !== 1) {
       this.pause().then(() => {
         this.saveGame.chosenPath.length = this.saveGame.chosenPath.length - 1;
@@ -241,7 +241,16 @@ export class PlayerPage implements OnInit {
       );
     } else {
       audioPath = this.platformBridge.getAppDirectory();
-      audioPath += STORY_DIR + story.folder + "/" + this.settings.getShortLangCode() + READER_DIR + this.selectedReader + "/" + audioSrc + FILETYPE_MP4;
+      audioPath +=
+        STORY_DIR +
+        story.folder +
+        "/" +
+        this.settings.getShortLangCode() +
+        READER_DIR +
+        this.selectedReader +
+        "/" +
+        audioSrc +
+        FILETYPE_MP4;
     }
     return audioPath;
   }
@@ -251,7 +260,7 @@ export class PlayerPage implements OnInit {
    * depends on whether tts or real audio file is used
    */
   private play(): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.stopped = false;
       if (this.usingTTS || this.temporaryTTS) {
         if (!this.platformBridge.platformIsBrowser()) {
@@ -260,7 +269,7 @@ export class PlayerPage implements OnInit {
             .speak({
               text: this.text,
               locale: this.settings.language,
-              rate: this.settings.ttsRate
+              rate: this.settings.ttsRate,
             })
             .then(() => {
               this.playing = false;
@@ -291,7 +300,7 @@ export class PlayerPage implements OnInit {
    */
   private pause() {
     console.log("Pressed pause");
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (this.usingTTS || this.temporaryTTS) {
         if (!this.platformBridge.platformIsBrowser()) {
           // text has to be whitespace to work correct for some tts versions, not empty string
@@ -361,6 +370,8 @@ export class PlayerPage implements OnInit {
   private createNewSaveGame() {
     this.saveGame.storyId = this.storyId;
     this.saveGame.chosenPath.push(FIRST_NODE);
+
+    this.saveGameService.addSavegame(this.saveGame);
     //TODO Uncomment if accounts are functional
     //this.saveGameService.addSavegame(this.saveGame);
   }
@@ -386,8 +397,7 @@ export class PlayerPage implements OnInit {
     // disable back button on the first page of a story
     if (this.attr.storyNodeId == "1") {
       this.disabled = true;
-    }
-    else {
+    } else {
       this.disabled = false;
     }
   }
@@ -411,9 +421,8 @@ export class PlayerPage implements OnInit {
   private loadNode() {
     // console.log("chosenPath[]: " + this.savegame.chosenPath.peek());
     // this.story.loadNode(this.savegame.chosenPath.peek() - 1);
-    const peekObject = this.saveGame.chosenPath[
-      this.saveGame.chosenPath.length - 1
-    ];
+    const peekObject =
+      this.saveGame.chosenPath[this.saveGame.chosenPath.length - 1];
     console.log("chosenPath[]: " + peekObject);
     this.story.loadNode(peekObject - 1);
 
@@ -462,7 +471,6 @@ export class PlayerPage implements OnInit {
         }
       }
     );
-
   }
 
   /**
@@ -495,7 +503,7 @@ export class PlayerPage implements OnInit {
               .speak({
                 text: readAnswer,
                 locale: this.settings.language,
-                rate: this.settings.ttsRate
+                rate: this.settings.ttsRate,
               })
               .then(() => {
                 if (this.settings.speechRecognition) {
@@ -525,7 +533,7 @@ export class PlayerPage implements OnInit {
       if (available) {
         const options = {
           language: this.settings.language,
-          showPopup: false
+          showPopup: false,
         };
 
         this.speechRecognition.startListening(options).subscribe(
@@ -610,7 +618,7 @@ export class PlayerPage implements OnInit {
         .speak({
           text: repeatText,
           locale: this.settings.language,
-          rate: this.settings.ttsRate
+          rate: this.settings.ttsRate,
         })
         .then(() => {
           this.startSpeechRecognition(++counter);
@@ -640,7 +648,7 @@ export class PlayerPage implements OnInit {
       .speak({
         text: endText,
         locale: this.settings.language,
-        rate: this.settings.ttsRate
+        rate: this.settings.ttsRate,
       })
       .then(() => {
         this.pulseClass = CSS_PULSE_CLASS;

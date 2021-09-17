@@ -77,7 +77,7 @@ export class AudioService {
    * Starts playing or resuming an audio file
    */
   play(): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (!this.isPlaying) {
         this.isPlaying = true;
         resolve();
@@ -95,7 +95,7 @@ export class AudioService {
    * Pauses an audio file if playing
    */
   pause(): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (this.isPlaying) {
         this.isPlaying = false;
         resolve();
@@ -113,7 +113,7 @@ export class AudioService {
    * Stops an Audio file if playing
    */
   stop(): Promise<any> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (this.isPlaying) {
         this.isPlaying = false;
         this.emitter.once("stopped", () => {

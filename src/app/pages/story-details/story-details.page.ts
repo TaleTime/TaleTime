@@ -1,30 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams} from "@ionic/angular";
+import { Component, OnInit } from "@angular/core";
+import { NavController, NavParams } from "@ionic/angular";
 
-import {StoryInformation} from "../../models/storyInformation";
-import {StoryService} from "../../services/story/story.service";
+import { StoryInformation } from "../../models/storyInformation";
+import { StoryService } from "../../services/story/story.service";
 
-import {STORY_DIR} from "../../constants/constants";
-import {SaveGameService} from "../../services/save-game/save-game.service";
-import {PublicStoryHelperService} from "../../services/public-story-helper/public-story-helper.service";
-import {Router, Routes} from "@angular/router";
-import {StoryInformationService} from "../../services/story-information/story-information.service";
-import {StoryMenuPage} from "../story-menu/story-menu.page";
-import {PlayerParams} from "../../models/player/player-params";
-import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
-import {Base64} from '@ionic-native/base64/ngx';
+import { STORY_DIR } from "../../constants/constants";
+import { SaveGameService } from "../../services/save-game/save-game.service";
+import { PublicStoryHelperService } from "../../services/public-story-helper/public-story-helper.service";
+import { Router, Routes } from "@angular/router";
+import { StoryInformationService } from "../../services/story-information/story-information.service";
+import { StoryMenuPage } from "../story-menu/story-menu.page";
+import { PlayerParams } from "../../models/player/player-params";
+import { PlayerParamsService } from "../../services/player-parmas/player-params.service";
+import { Base64 } from "@ionic-native/base64/ngx";
 
-const routes: Routes = [
-  {path: "storyMenu", component: StoryMenuPage},
-];
+const routes: Routes = [{ path: "storyMenu", component: StoryMenuPage }];
 
 @Component({
-  selector: 'app-story-details',
-  templateUrl: './story-details.page.html',
-  styleUrls: ['./story-details.page.scss'],
+  selector: "app-story-details",
+  templateUrl: "./story-details.page.html",
+  styleUrls: ["./story-details.page.scss"],
 })
 export class StoryDetailsPage {
-
   selectedStory: StoryInformation;
   imgPath = "dummy.png";
 
@@ -37,7 +34,7 @@ export class StoryDetailsPage {
     public storyService: StoryService,
     public playerParamsService: PlayerParamsService,
     private saveGameService: SaveGameService,
-    private publicStoryHelper: PublicStoryHelperService,
+    private publicStoryHelper: PublicStoryHelperService
   ) {
     this.selectedStory = this.storyInformationService.storyInformation;
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
@@ -54,7 +51,7 @@ export class StoryDetailsPage {
     ).reader;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
     this.selectedStory.cover = this.imgPath;
   }
@@ -71,7 +68,6 @@ export class StoryDetailsPage {
   }
 
   goToPlayerPageNew(storyId: string) {
-    console.log("StoryId: " + storyId);
     let playerParams = new PlayerParams();
     playerParams.storyId = storyId;
     playerParams.mode = "begin";
@@ -90,7 +86,7 @@ export class StoryDetailsPage {
     this.router.navigate(["/player"]);
   }
 
-  goBackToHomeScreen(){
+  goBackToHomeScreen() {
     this.router.navigate(["/tabs/story-menu"]);
   }
 }
