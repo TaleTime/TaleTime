@@ -78,12 +78,12 @@ export class ProfileService {
 
       this.firebaseService.setItem(
         this.pathToCurrentUser,
-        userProfile.id + FB_PATH_PROFILE,
+        userProfile.id + "/" + FB_PATH_PROFILE,
         userProfile
       );
       this.firebaseService.setItem(
         this.pathToCurrentUser,
-        userProfile.id + FB_PATH_SETTINGS,
+        userProfile.id + "/" + FB_PATH_SETTINGS,
         this.defaultSettings
       );
 
