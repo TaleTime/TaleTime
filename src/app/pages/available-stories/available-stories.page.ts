@@ -158,6 +158,10 @@ export class AvailableStoriesPage implements OnInit {
     this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
       console.log(payload.date);
+
+      //let newStory = StoryInformation(title: )
+
+      this.availableStories.push(payload);
     }))).subscribe();
   }
 
