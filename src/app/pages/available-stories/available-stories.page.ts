@@ -43,7 +43,7 @@ export class AvailableStoriesPage implements OnInit {
 
   public availableStories: Array<StoryInformationWithUrl> = [];
   public readonly PUBLIC_STORY_URL: string =
-    "https://raw.githubusercontent.com/TaleTime/Stories/master/index.json";
+    "https://raw.githubusercontent.com/TaleTime/feature_firebase-cloud-stories/index.json";
 
   private pathToCurrentUser =
     FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
@@ -89,7 +89,7 @@ export class AvailableStoriesPage implements OnInit {
     const lang = convertSystemLangToAvailableLanguage(
       this.languageService.selected
     );
-    let storieForChild = this.activeUserProfile.child;
+    const storieForChild = this.activeUserProfile.child;
     this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(
       lang,
       storieForChild
