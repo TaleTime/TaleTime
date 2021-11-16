@@ -27,6 +27,7 @@ import { ProfileService } from "../../services/profile/profile.service";
 import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
 import { StoryService } from "../../services/story/story.service";
 import { convertSystemLangToAvailableLanguage } from "../../Util/UtilLanguage";
+import {map} from "rxjs/operators";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -82,7 +83,8 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
     this.loadDeviceDefaultStories();
-    this.loadPublicStories();
+    this.loadFirebaseStories();
+    // this.loadPublicStories();
   }
 
   /**
@@ -131,6 +133,7 @@ export class AvailableStoriesPage implements OnInit {
    * specified by the PUBLIC_STORY_URL
    */
   public loadPublicStories() {
+    console.log("Ime here");
     const that = this;
     this.http
       .get(this.PUBLIC_STORY_URL, {}, {})
@@ -145,10 +148,17 @@ export class AvailableStoriesPage implements OnInit {
         }
       })
       .catch((error) => {
-        console.log(error.status);
-        console.log(error.error); // error message as string
-        console.log(error.headers);
+        console.log("1" + error.status);
+        console.log("2" + error.error); // error message as string
+        console.log("3" + error.headers);
       });
+  }
+
+  public loadFirebaseStories(){
+    this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
+      const payload = a.payload.val();
+      console.log(payload.date);
+    }))).subscribe();
   }
 
   /**
