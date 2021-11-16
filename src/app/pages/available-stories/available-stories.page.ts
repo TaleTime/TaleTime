@@ -43,7 +43,7 @@ export class AvailableStoriesPage implements OnInit {
 
   public availableStories: Array<StoryInformationWithUrl> = [];
   public readonly PUBLIC_STORY_URL: string =
-    "https://raw.githubusercontent.com/TaleTime/feature_firebase-cloud-stories/index.json";
+    "https://raw.githubusercontent.com/TaleTime/TaleTime/feature_firebase-cloud-stories/index.json";
 
   private pathToCurrentUser =
     FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
@@ -68,9 +68,12 @@ export class AvailableStoriesPage implements OnInit {
     private firebaseService: FireBaseService
   ) {}
 
+  /*
   ionViewWillEnter() {
     this.loadDeviceDefaultStories();
+    this.loadPublicStories();
   }
+   */
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
 
@@ -79,6 +82,7 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
     this.loadDeviceDefaultStories();
+    this.loadPublicStories();
   }
 
   /**
@@ -131,10 +135,13 @@ export class AvailableStoriesPage implements OnInit {
     this.http
       .get(this.PUBLIC_STORY_URL, {}, {})
       .then((data) => {
+        // von mir:
+        console.log("public stories ::" + data.data);
+        // von den:
         const content = (data = JSON.parse(data.data));
-        for (let i = 0; i < content.length; i++) {
-          content[i].medium = CLOUD;
-          that.availableStories.push(content[i]);
+        for (const item of content) {
+          item.medium = CLOUD;
+          that.availableStories.push(item);
         }
       })
       .catch((error) => {
