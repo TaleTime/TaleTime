@@ -154,13 +154,13 @@ export class AvailableStoriesPage implements OnInit {
       });
   }
 
+  /**
+   * Loads the stories stored under /stories/ in the FireBase RealtimeDB
+   */
   public loadFirebaseStories(){
     this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
       console.log(payload.date);
-
-      //let newStory = StoryInformation(title: )
-
       this.availableStories.push(payload);
     }))).subscribe();
   }
@@ -265,7 +265,7 @@ export class AvailableStoriesPage implements OnInit {
                     this.toastService.displayToast(
                       this.translate.instant("STORY_ZIP_REMOVE_FAIL")
                     );
-                    console.log("Could not remove downloaded Zip!"); //TODO: Konstante(n) erstellen
+                    console.log("Could not remove downloaded Zip!"); // TODO: Konstante(n) erstellen
                   });
               } else if (result === -1) {
                 console.log("Unzipping the file failed!");
