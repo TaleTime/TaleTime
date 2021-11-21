@@ -1,3 +1,31 @@
-ion-card:hover{
+ion-card:hover {
   cursor: pointer;
+}
+
+.storyLabel {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ion-thumbnail {
+  --size: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.cover {
+  width: 150px;
+  height: 200px;
+}
+
+.ion-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }

@@ -9,35 +9,35 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-card *ngFor="let story of availableStories" (click)="addStory(story)">
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <ion-icon
-          *ngIf="!story.cover"
-          name="book"
-          style="font-size: 64px;"
-        ></ion-icon>
-        <ion-img
-          *ngIf="story.cover"
-          src="assets/stories/{{story.folder}}/{{story.cover}}"
-        ></ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        <h1>
-          <ion-icon
-            name="cloud-download"
-            *ngIf="story.medium === 'cloud'"
-          ></ion-icon>
-          {{story.title}}
-        </h1>
-        <h2>{{story.author.join(', ')}}</h2>
-        <p>{{story.date}}</p>
-      </ion-label>
-
-    </ion-item>
-
+  <ion-card class="card" *ngFor="let story of availableStories" (click)="addStory(story)">
+    <div class="cover">
+      <ion-icon
+        *ngIf="!story.cover"
+        name="book"
+        style="font-size: 64px;"
+      ></ion-icon>
+      <ion-img
+        *ngIf="story.cover"
+        src="assets/stories/{{story.folder}}/{{story.cover}}"
+      ></ion-img>
+    </div>
     <ion-card-content>
-      <p>{{story.shortDescription}}</p>
+      <ion-card-title>
+        <ion-icon
+          name="cloud-download"
+          *ngIf="story.medium === 'cloud'"
+        ></ion-icon>
+        {{story.title}}
+      </ion-card-title>
+      <ion-card-subtitle>
+        {{story.author.join(', ')}}
+      </ion-card-subtitle>
+      <ion-card-header>
+        {{story.date}}
+      </ion-card-header>
+      <p>
+        {{story.shortDescription}}
+      </p>
     </ion-card-content>
   </ion-card>
 </ion-content>
