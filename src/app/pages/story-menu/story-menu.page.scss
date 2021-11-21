@@ -23,3 +23,31 @@
 //.child-button {
 //  height: 20px !important;
 //}
+
+.storyLabel {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ion-thumbnail {
+  --size: 20px;
+}
+
+ion-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.cover {
+  width: 150px;
+  height: 200px;
+}
+
+.ion-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
