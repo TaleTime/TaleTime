@@ -1,32 +1,22 @@
-import { Component, NgZone, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import {
-  FileTransfer,
-  FileTransferObject,
-} from "@ionic-native/file-transfer/ngx";
-import { File } from "@ionic-native/file/ngx";
-import { HTTP } from "@ionic-native/http/ngx";
-import { Zip } from "@ionic-native/zip/ngx";
-import { LoadingController, NavController, Platform } from "@ionic/angular";
-import { TranslateService } from "@ngx-translate/core";
-import { FireBaseService } from "src/app/services/firebase/firebaseService";
-import {
-  CLOUD,
-  FB_PATH_STORIES,
-  FB_PATH_USERS,
-} from "../../constants/constants";
-import {
-  StoryInformation,
-  StoryInformationWithUrl,
-} from "../../models/storyInformation";
-import { UserProfile } from "../../models/userProfile";
-import { AlertService } from "../../services/alert/alert.service";
-import { AuthService } from "../../services/auth/auth.service";
-import { LanguageService } from "../../services/language/language.service";
-import { ProfileService } from "../../services/profile/profile.service";
-import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
-import { StoryService } from "../../services/story/story.service";
-import { convertSystemLangToAvailableLanguage } from "../../Util/UtilLanguage";
+import {Component, NgZone, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {FileTransfer, FileTransferObject, } from "@ionic-native/file-transfer/ngx";
+import {File} from "@ionic-native/file/ngx";
+import {HTTP} from "@ionic-native/http/ngx";
+import {Zip} from "@ionic-native/zip/ngx";
+import {LoadingController, NavController, Platform} from "@ionic/angular";
+import {TranslateService} from "@ngx-translate/core";
+import {FireBaseService} from "src/app/services/firebase/firebaseService";
+import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS, } from "../../constants/constants";
+import {StoryInformation, StoryInformationWithUrl, } from "../../models/storyInformation";
+import {UserProfile} from "../../models/userProfile";
+import {AlertService} from "../../services/alert/alert.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {LanguageService} from "../../services/language/language.service";
+import {ProfileService} from "../../services/profile/profile.service";
+import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
+import {StoryService} from "../../services/story/story.service";
+import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
 
 /**
@@ -67,7 +57,8 @@ export class AvailableStoriesPage implements OnInit {
     private profileService: ProfileService,
     private languageService: LanguageService,
     private firebaseService: FireBaseService
-  ) {}
+  ) {
+  }
 
   /*
   ionViewWillEnter() {
@@ -117,9 +108,9 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfile.addStory(story);
       this.firebaseService.setItem(
         this.pathToCurrentUser +
-          this.activeUserProfile.id +
-          "/" +
-          FB_PATH_STORIES,
+        this.activeUserProfile.id +
+        "/" +
+        FB_PATH_STORIES,
         story.id,
         story
       );
@@ -131,6 +122,8 @@ export class AvailableStoriesPage implements OnInit {
   /**
    * Load the public stories available from the remote JSON file or an API
    * specified by the PUBLIC_STORY_URL
+   *
+   * Not used anymore, replaced by loadFirebaseStories()
    */
   public loadPublicStories() {
     console.log("Ime here");
@@ -157,7 +150,7 @@ export class AvailableStoriesPage implements OnInit {
   /**
    * Loads the stories stored under /stories/ in the FireBase RealtimeDB
    */
-  public loadFirebaseStories(){
+  public loadFirebaseStories() {
     this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
       console.log(payload.date);
@@ -298,7 +291,7 @@ export class AvailableStoriesPage implements OnInit {
     const al = await this.alert.createAlert(
       this.translate.instant("STORY_ALREADY_EXISTS_TITLE"),
       "",
-      [{ text: this.translate.instant("COMMON_OK") }],
+      [{text: this.translate.instant("COMMON_OK")}],
       this.translate.instant("STORY_ALREADY_EXISTS_MSG", {
         story_title: storyTitle,
       })
@@ -314,8 +307,8 @@ export class AvailableStoriesPage implements OnInit {
     const al = await this.alert.createAlert(
       this.translate.instant("STORY_ADDED"),
       "",
-      [{ text: this.translate.instant("COMMON_OK") }],
-      this.translate.instant("STORY_ADDED_MSG", { story_title: storyTitle })
+      [{text: this.translate.instant("COMMON_OK")}],
+      this.translate.instant("STORY_ADDED_MSG", {story_title: storyTitle})
     );
     await al.present();
   }
