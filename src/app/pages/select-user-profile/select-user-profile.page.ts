@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { ModalController, NavController } from "@ionic/angular";
-import { TranslateService } from "@ngx-translate/core";
-import { Observable } from "rxjs";
-import { AuthService } from "../../services/auth/auth.service";
-import { ProfileService } from "../../services/profile/profile.service";
-import { SettingsService } from "../../services/settings/settings.service";
-import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {ModalController, NavController} from "@ionic/angular";
+import {TranslateService} from "@ngx-translate/core";
+import {Observable} from "rxjs";
+import {AuthService} from "../../services/auth/auth.service";
+import {ProfileService} from "../../services/profile/profile.service";
+import {SettingsService} from "../../services/settings/settings.service";
+import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 
 @Component({
   selector: "app-select-user-profile",
@@ -29,7 +29,7 @@ export class SelectUserProfilePage implements OnInit {
     private toastService: SimpleToastService,
     public profileService: ProfileService
   ) {
-    //Loading as Observable to generate the HTML-view
+    // Loading as Observable to generate the HTML-view
     this.userProfiles = this.profileService.getUserProfilesObservable();
     this.isShowingOptions = true;
     this.translate.get("COMMON_EDIT").subscribe((value) => {
@@ -57,9 +57,9 @@ export class SelectUserProfilePage implements OnInit {
       (error) => {
         console.log(
           "SelectUserProfilePage-select(): " +
-            error.prototype.toString() +
-            ":" +
-            JSON.stringify(error)
+          error.prototype.toString() +
+          ":" +
+          JSON.stringify(error)
         );
       }
     );
@@ -95,7 +95,8 @@ export class SelectUserProfilePage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onSignOut() {
     this.logout();

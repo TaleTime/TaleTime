@@ -1,0 +1,22 @@
+.itemTitle {
+  margin: 0px;
+}
+
+#selectUserTitle {
+  //padding-bottom: 20px;
+}
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+ion-icon {
+  font-size: 40px;
+}
