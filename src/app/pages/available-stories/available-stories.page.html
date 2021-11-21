@@ -12,6 +12,7 @@
   <ion-card class="card" *ngFor="let story of availableStories" (click)="addStory(story)">
     <div class="cover">
       <ion-icon
+        class="noCoverIcon"
         *ngIf="!story.cover"
         name="book"
         style="font-size: 64px;"
@@ -32,9 +33,6 @@
       <ion-card-subtitle>
         {{story.author.join(', ')}}
       </ion-card-subtitle>
-      <ion-card-header>
-        {{story.date}}
-      </ion-card-header>
       <p>
         {{story.shortDescription}}
       </p>
