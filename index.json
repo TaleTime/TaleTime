@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Der verlorene Ball (Cloud Version)",
+    "id": "Der_verlorene_Ball_cloud",
+    "author": ["Sarah Philippi", "Lisa Roisch"],
+    "date": 2016,
+    "language": "Deutsch",
+    "medium": "cloud",
+    "shortDescription": "Hey, ich bin eine Beschreibung von der verlorenen Ball",
+    "readers": [
+      {
+        "name": "Kevin",
+        "answersPartOfAudioFile": true
+      },
+      {
+        "name": "Raoul",
+        "answersPartOfAudioFile": false
+      }
+    ],
+    "url": "https://raw.githubusercontent.com/TaleTime/Stories/master/zip/Der_verlorene_Ball_cloud.zip"
+  }
+]
