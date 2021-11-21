@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-card class="card" *ngFor="let story of availableStories" (click)="addStory(story)">
+  <ion-card class="card" *ngFor="let story of availableStories" >
     <div class="cover">
       <ion-icon
         class="noCoverIcon"
@@ -24,17 +24,20 @@
     </div>
     <ion-card-content>
       <ion-card-title>
-        <ion-icon
+        <ion-icon (click)="addStory(story)"
           name="cloud-download"
           *ngIf="story.medium === 'cloud'"
         ></ion-icon>
         {{story.title}}
+        <p  *ngIf="story.medium === 'cloud'">{{story.downloadCounter}} Downloads</p>
+
       </ion-card-title>
       <ion-card-subtitle>
         {{story.author.join(', ')}}
       </ion-card-subtitle>
       <p>
         {{story.shortDescription}}
+        <button (click)="seeReview(story)">Mehr Informationen</button>
       </p>
     </ion-card-content>
   </ion-card>

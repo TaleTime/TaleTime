@@ -97,7 +97,28 @@ export class AvailableStoriesPage implements OnInit {
     this.router.navigate(["/select-user-profile"]);
   }
 
+
+  seeReview(story: StoryInformation | StoryInformationWithUrl){
+    this.router.navigate(["/review"]);
+  }
+
+
+    /**
+   * Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
+   */
+  increaseCounter(story: StoryInformation | StoryInformationWithUrl){  
+
+    this.firebaseService.setItem(
+      "stories/"+ 
+      story.elementId+     
+      "/",
+      "downloadCounter",
+      (story.downloadCounter +1)
+    );
+    }
+
   addStory(story: StoryInformation | StoryInformationWithUrl) {
+    this.increaseCounter(story);
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
