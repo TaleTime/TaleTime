@@ -1,12 +1,13 @@
 <ion-header>
   <ion-toolbar>
-<!--    <ion-button menuToggle slot="icon-only" color="dark">-->
-<!--      <ion-icon name="menu"></ion-icon>-->
-<!--    </ion-button>-->
+    <!--    <ion-button menuToggle slot="icon-only" color="dark">-->
+    <!--      <ion-icon name="menu"></ion-icon>-->
+    <!--    </ion-button>-->
     <ion-title>{{'STORYMENU_HEADER' | translate}}</ion-title>
 
     <ion-buttons slot="end">
-        <ion-img style="align-self: flex-end; width: 80px; height: 80px" src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
+      <ion-img style="align-self: flex-end; width: 80px; height: 80px; padding: 10px"
+               src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -29,11 +30,11 @@
   <ion-card *ngFor="let story of this.stories">
     <ion-item>
       <ion-thumbnail slot="start">
-<!--        <ion-icon-->
-<!--          *ngIf="!story.cover"-->
-<!--          name="book"-->
-<!--          style="font-size: 64px;"-->
-<!--        ></ion-icon>-->
+        <!--        <ion-icon-->
+        <!--          *ngIf="!story.cover"-->
+        <!--          name="book"-->
+        <!--          style="font-size: 64px;"-->
+        <!--        ></ion-icon>-->
         <img
           *ngIf="story.cover"
           src="assets/stories/{{story.folder}}/{{story.cover}}"
@@ -69,7 +70,8 @@
           >
             <ion-icon name="play"></ion-icon>
           </ion-button>
-          <ion-button (click)="showDetails(story)" [matTooltip]="INFO_BUTTON_TOOLTIP_LABEL" matTooltipPosition="below" matTooltipShowDelay="750">
+          <ion-button (click)="showDetails(story)" [matTooltip]="INFO_BUTTON_TOOLTIP_LABEL" matTooltipPosition="below"
+                      matTooltipShowDelay="750">
             <ion-icon name="information-circle"></ion-icon>
           </ion-button>
           <ion-button

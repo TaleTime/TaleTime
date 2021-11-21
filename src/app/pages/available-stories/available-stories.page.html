@@ -2,7 +2,8 @@
   <ion-toolbar>
     <ion-title>{{ 'APP_AVAILABLE_STORIES' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-img style="align-self: flex-end; width: 80px; height: 80px" src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
+      <ion-img style="align-self: flex-end; width: 80px; height: 80px; padding: 10px"
+               src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -12,20 +13,20 @@
     <ion-item>
       <ion-thumbnail slot="start">
         <ion-icon
-            *ngIf="!story.cover"
-            name="book"
-            style="font-size: 64px;"
+          *ngIf="!story.cover"
+          name="book"
+          style="font-size: 64px;"
         ></ion-icon>
         <ion-img
-            *ngIf="story.cover"
-            src="assets/stories/{{story.folder}}/{{story.cover}}"
+          *ngIf="story.cover"
+          src="assets/stories/{{story.folder}}/{{story.cover}}"
         ></ion-img>
       </ion-thumbnail>
       <ion-label>
         <h1>
           <ion-icon
-              name="cloud-download"
-              *ngIf="story.medium === 'cloud'"
+            name="cloud-download"
+            *ngIf="story.medium === 'cloud'"
           ></ion-icon>
           {{story.title}}
         </h1>
