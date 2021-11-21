@@ -13,22 +13,20 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-row class="ion-padding" *ngIf="this.stories.length < 1">
-    <ion-card class="card padding" style="width: 100%">
-      <ion-card-header>
-        <ion-card-title>{{ 'STORYMENU_NO_STORIES_HEADER' | translate }}</ion-card-title>
-        <ion-card-subtitle>{{ 'STORYMENU_NO_STORIES_YET' | translate }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-button expand="full" (click)="goToAvailableStories()" id="storyMenuAddNewStory">
-          {{ 'STORYMENU_ADD_SOME_STORIES' | translate }}
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
-  </ion-row>
+  <ion-card style="width: 100%" *ngIf="this.stories.length < 1">
+    <ion-card-header>
+      <ion-card-title>{{ 'STORYMENU_NO_STORIES_HEADER' | translate }}</ion-card-title>
+      <ion-card-subtitle>{{ 'STORYMENU_NO_STORIES_YET' | translate }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="full" (click)="goToAvailableStories()" id="storyMenuAddNewStory">
+        {{ 'STORYMENU_ADD_SOME_STORIES' | translate }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-card *ngFor="let story of this.stories">
-    <div class="cover">
+  <ion-card class="bookIonCard" *ngFor="let story of this.stories">
+    <div class="bookCover">
       <ion-icon
         *ngIf="!story.cover"
         name="book"
