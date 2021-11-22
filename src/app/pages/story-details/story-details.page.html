@@ -16,12 +16,12 @@
 <ion-content padding>
   <ion-item>
     <ion-thumbnail slot="start">
-<!--      <ion-icon-->
-<!--        *ngIf="!selectedStory.cover"-->
-<!--        slot="start"-->
-<!--        name="book"-->
-<!--        style="font-size: 64px;"-->
-<!--      ></ion-icon>-->
+      <!--      <ion-icon-->
+      <!--        *ngIf="!selectedStory.cover"-->
+      <!--        slot="start"-->
+      <!--        name="book"-->
+      <!--        style="font-size: 64px;"-->
+      <!--      ></ion-icon>-->
       <img
         *ngIf="selectedStory.cover"
         src="{{selectedStory.cover}}"
@@ -76,4 +76,13 @@
   >
     {{'STORYDETAILS_DELETE' | translate}}
   </ion-button>
+  <div class="list">
+    <label class="item item-input">
+      <input type="text" placeholder="Placeholder 1"/>
+    </label>
+
+    <label class="item item-input">
+      <input type="text" placeholder="Placeholder 2"/>
+    </label>
+  </div>
 </ion-content>

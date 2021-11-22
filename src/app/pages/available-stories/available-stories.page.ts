@@ -1,14 +1,14 @@
 import {Component, NgZone, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {FileTransfer, FileTransferObject, } from "@ionic-native/file-transfer/ngx";
+import {FileTransfer, FileTransferObject,} from "@ionic-native/file-transfer/ngx";
 import {File} from "@ionic-native/file/ngx";
 import {HTTP} from "@ionic-native/http/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {LoadingController, NavController, Platform} from "@ionic/angular";
 import {TranslateService} from "@ngx-translate/core";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
-import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS, } from "../../constants/constants";
-import {StoryInformation, StoryInformationWithUrl, } from "../../models/storyInformation";
+import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS,} from "../../constants/constants";
+import {StoryInformation, StoryInformationWithUrl,} from "../../models/storyInformation";
 import {UserProfile} from "../../models/userProfile";
 import {AlertService} from "../../services/alert/alert.service";
 import {AuthService} from "../../services/auth/auth.service";
@@ -18,6 +18,7 @@ import {SimpleToastService} from "../../services/simple-toast/simple-toast.servi
 import {StoryService} from "../../services/story/story.service";
 import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
+import {StoryInformationService} from "../../services/story-information/story-information.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -56,7 +57,8 @@ export class AvailableStoriesPage implements OnInit {
     private toastService: SimpleToastService,
     private profileService: ProfileService,
     private languageService: LanguageService,
-    private firebaseService: FireBaseService
+    private firebaseService: FireBaseService,
+    private storyInformationService: StoryInformationService
   ) {
   }
 
@@ -145,6 +147,11 @@ export class AvailableStoriesPage implements OnInit {
         console.log("2" + error.error); // error message as string
         console.log("3" + error.headers);
       });
+  }
+
+  showDetails(story: StoryInformation) {
+    this.storyInformationService.storyInformation = story;
+    this.router.navigate(["/story-details"]);
   }
 
   /**
