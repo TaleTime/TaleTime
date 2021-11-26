@@ -78,8 +78,8 @@ export const routes: Routes = [
   },
   {
     path: "story-edit",
-    loadChildren: () => import("./pages/story-edit/story-edit.module").then( m => m.StoryEditPageModule)
-  }
+    loadChildren: () => import("./pages/story-edit/story-edit.module").then(m => m.StoryEditPageModule)
+  },
 ];
 
 @NgModule({

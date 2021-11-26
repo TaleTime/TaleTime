@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Edit the story</ion-title>
+    <ion-button slot="start" margin-start="100px" (click)="goBackToStoryDetails()">
+      <ion-icon name="home"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Main Content</h1>
+  <ion-list>
+    <ion-list-header>
+      <h2>Part A</h2>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Title</ion-label>
+      <ion-input [placeholder]="model.title" type="text" [(ngModel)]="title" text-right id="input"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Multiple Inputs</ion-label>
+      <ion-input placeholder="Address Line 1"></ion-input>
+      <ion-input placeholder="Address Line 2"></ion-input>
+      <ion-input placeholder="City"></ion-input>
+      <ion-input placeholder="State"></ion-input>
+      <ion-input placeholder="Zip Code"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button expand="block" (click)="handleClick()">Print</button>
 </ion-content>

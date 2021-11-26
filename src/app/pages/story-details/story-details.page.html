@@ -15,18 +15,20 @@
 </ion-header>
 <ion-content padding>
   <ion-item>
-    <ion-thumbnail slot="start">
-      <!--      <ion-icon-->
-      <!--        *ngIf="!selectedStory.cover"-->
-      <!--        slot="start"-->
-      <!--        name="book"-->
-      <!--        style="font-size: 64px;"-->
-      <!--      ></ion-icon>-->
-      <img
-        *ngIf="selectedStory.cover"
-        src="{{selectedStory.cover}}"
-      >
-    </ion-thumbnail>
+    <!--
+    <ion-thumbnail slot="start"> -->
+    <!--      <ion-icon-->
+    <!--        *ngIf="!selectedStory.cover"-->
+    <!--        slot="start"-->
+    <!--        name="book"-->
+    <!--        style="font-size: 64px;"-->
+    <!--      ></ion-icon>-->
+    <!-- <img
+      *ngIf="selectedStory.cover"
+      src="{{selectedStory.cover}}"
+    > -->
+    <!--</ion-thumbnail>
+    -->
     <ion-label>
       {{'STORYDETAILS_AUTHOR' | translate }}: {{selectedStory.author.join(',')}}
       <br/>
@@ -76,13 +78,11 @@
   >
     {{'STORYDETAILS_DELETE' | translate}}
   </ion-button>
-  <div class="list">
-    <label class="item item-input">
-      <input type="text" placeholder="Placeholder 1"/>
-    </label>
-
-    <label class="item item-input">
-      <input type="text" placeholder="Placeholder 2"/>
-    </label>
-  </div>
+  <ion-button
+    expand="block"
+    color="secondary"
+    (click)="goToEditScreen()"
+  >
+    Story bearbeiten
+  </ion-button>
 </ion-content>

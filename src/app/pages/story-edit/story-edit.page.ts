@@ -3,6 +3,9 @@ import {StoryInformation} from "../../models/storyInformation";
 import {Router} from "@angular/router";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
 import {StoryService} from "../../services/story/story.service";
+import {FireBaseService} from "../../services/firebase/firebaseService";
+import {FB_PATH_STORIES} from "../../constants/constants";
+import {map} from "rxjs/operators";
 
 /*
 public id: string;
@@ -26,18 +29,43 @@ public id: string;
 export class StoryEditPage implements OnInit {
   model: StoryInformation;
   submitted: boolean;
+  title: string;
 
   constructor(public router: Router,
               public storyInformationService: StoryInformationService,
-              public storyService: StoryService) {
+              public storyService: StoryService,
+              private fireBaseService: FireBaseService
+  ) {
+    // load selected story
     this.model = this.storyInformationService.storyInformation;
   }
 
   ngOnInit() {
+    this.setStoryField("date", "2016");
+    this.onSubmit();
   }
 
   onSubmit() {
     this.submitted = true;
+  }
+
+  setStoryField(fieldName: string, value: string) {
+    this.fireBaseService.setItem("stories/0/", fieldName, value);
+  }
+
+  getStory() {
+    this.fireBaseService.getItemById(FB_PATH_STORIES + "0/").pipe(map((a) => a.payload.toJSON()))
+      .subscribe((story: StoryInformation) => {
+        console.log("this is the story" + story.title);
+      });
+  }
+
+  handleClick() {
+    console.log("hey");
+  }
+
+  goBackToStoryDetails() {
+    this.router.navigate(["story-details"]);
   }
 
 }
