@@ -5,13 +5,13 @@ import {RouterModule, Routes} from "@angular/router";
 
 import {IonicModule} from "@ionic/angular";
 
-import { ReviewComponent } from "./review.component";
+import { StoryReviewComponent } from "./story-review.component";
 import {TranslateModule} from "@ngx-translate/core";
 
 const routes: Routes = [
   {
     path: "",
-    component: ReviewComponent
+    component: StoryReviewComponent
   }
 ];
 
@@ -23,7 +23,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     TranslateModule
   ],
-  declarations: [ReviewComponent]
+  declarations: [StoryReviewComponent]
 })
-export class ReviewModule {
+export class StoryReviewModule {
 }

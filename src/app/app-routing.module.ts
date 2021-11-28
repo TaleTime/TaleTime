@@ -79,6 +79,12 @@ export const routes: Routes = [
     canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/story-details/story-details.module").then(module => module.StoryDetailsPageModule)
   }
+  ,
+  {
+    path: "story-review",
+    canActivate: [LoggedInGuard],
+    loadChildren: () => import("./pages/story-review/story-review.module").then(module => module.StoryReviewModule)
+  }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 @Injectable()
-export class Rating {
+export class Review {
 
   public author: string;
   public comment: string;
