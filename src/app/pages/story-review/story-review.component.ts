@@ -19,12 +19,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./story-review.component.scss'],
 })
 export class StoryReviewComponent implements OnInit {
-  public storyID:string;
+  public currentstoryID:string;
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
   private activeUserProfile: UserProfile;
 
-  public availableReview: Review;
+  public availableReview: Array<Review> = [];
 
   private pathToCurrentUser =
   FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
@@ -41,8 +41,7 @@ export class StoryReviewComponent implements OnInit {
   }
 
   ngOnInit():void  {
-   // this.storyID = this.reviewService.storyID;
-    this.storyID = "0";
+   // this.currentStoryID = this.reviewService.storyID;
     this.loadFirebaseStorieReview();
 
     this.activeUserProfile = this.profileService.getActiveUserProfile();
@@ -57,8 +56,11 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   loadFirebaseStorieReview(){
-      this.availableReview = this.firebaseService.getItemById(this.storyID);
-      console.log("__debug:" + this.firebaseService.getItemById(this.storyID));
+    this.firebaseService.getAllItems("ratings").pipe(map((action) => action.map((a) => {
+      const payload = a.payload.val();
+      console.log(payload.date);
+      this.availableReview.push(payload);
+    }))).subscribe();
   }
 
   /**
