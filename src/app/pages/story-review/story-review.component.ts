@@ -12,6 +12,7 @@ import {ProfileService} from "../../services/profile/profile.service";
 import {CLOUD,FB_PATH_STORIES,FB_PATH_USERS, } from "../../constants/constants";
 import {Review} from "../../models/review"
 import { map } from 'rxjs/operators';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-review',
@@ -19,7 +20,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./story-review.component.scss'],
 })
 export class StoryReviewComponent implements OnInit {
-  public currentstoryID:string;
+  public currentStoryID:string;
+  public currentStoryTitle:string;
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
   private activeUserProfile: UserProfile;
@@ -41,7 +43,8 @@ export class StoryReviewComponent implements OnInit {
   }
 
   ngOnInit():void  {
-   // this.currentStoryID = this.reviewService.storyID;
+    this.currentStoryID = this.reviewService.storyID;
+    this.currentStoryTitle = this.reviewService.storyTitle;
     this.loadFirebaseStorieReview();
 
     this.activeUserProfile = this.profileService.getActiveUserProfile();
@@ -56,9 +59,9 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   loadFirebaseStorieReview(){
-    this.firebaseService.getAllItems("ratings").pipe(map((action) => action.map((a) => {
+    console.log("__debug: "+this.currentStoryTitle);
+    this.firebaseService.getAllItems("ratings/"+this.currentStoryTitle).pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
-      console.log(payload.date);
       this.availableReview.push(payload);
     }))).subscribe();
   }
@@ -71,12 +74,39 @@ export class StoryReviewComponent implements OnInit {
     this.router.navigate(["/select-user-profile"]);
   }
 
-    /**
+  /**
    * Router to page 'select-user-profile'
    * @author Alexander Stolz
    */
      goToAvailableStories() {
       this.router.navigate(["/available-stories"]);
+    }
+
+    /**
+     * Add new review for story
+     */
+    addNewReview(reviewText:string){
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+
+      let newStoryReview:  Review ={
+         author: this.activeUserProfileName,
+         comment: reviewText,
+         date: mm + '/' + dd + '/' + yyyy,
+         rating: 0,
+      }
+      console.log(reviewText);
+
+      this.firebaseService.setItem(
+        "ratings/"+ 
+        this.currentStoryTitle+     
+        "/",
+        "3",
+        newStoryReview
+      );
     }
 
 }

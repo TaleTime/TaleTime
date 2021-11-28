@@ -6,7 +6,5 @@ export class Review {
   public comment: string;
   public date: string;
   public rating: number;
-  public storyId: number;
-  public storyTitle: string;
 }
 

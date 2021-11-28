@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ReviewServiceService {
 
   public storyID:string;
+  public storyTitle:string;
 
   constructor() { }
 }

@@ -107,6 +107,7 @@ export class AvailableStoriesPage implements OnInit {
    */
   goToReview(story: StoryInformation | StoryInformationWithUrl){
     this.reviewService.storyID = story.elementId;
+    this.reviewService.storyTitle = story.title;
     this.router.navigate(["/story-review"]);
   }
 
