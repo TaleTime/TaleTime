@@ -9,7 +9,7 @@
     <ion-title>Details</ion-title>
 
     <ion-button slot="start" margin-start="100px" (click)="goBackToHomeScreen()">
-      <ion-icon name="home"></ion-icon>
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -83,6 +83,6 @@
               color="secondary"
               (click)="goToEditScreen()"
   >
-    Story bearbeiten
+    {{'EDIT_STORY' | translate}}
   </ion-button>
 </ion-content>

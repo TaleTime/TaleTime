@@ -1,12 +1,13 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
-import { IonicModule } from "@ionic/angular";
+import {IonicModule} from "@ionic/angular";
 
-import { StoryEditPageRoutingModule } from "./story-edit-routing.module";
+import {StoryEditPageRoutingModule} from "./story-edit-routing.module";
 
-import { StoryEditPage } from "./story-edit.page";
+import {StoryEditPage} from "./story-edit.page";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -14,8 +15,10 @@ import { StoryEditPage } from "./story-edit.page";
     CommonModule,
     FormsModule,
     IonicModule,
-    StoryEditPageRoutingModule
+    StoryEditPageRoutingModule,
+    TranslateModule
   ],
   declarations: [StoryEditPage]
 })
-export class StoryEditPageModule {}
+export class StoryEditPageModule {
+}

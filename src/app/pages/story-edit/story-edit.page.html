@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Edit the story</ion-title>
     <ion-button slot="start" margin-start="100px" (click)="goBackToStoryDetails()">
-      <ion-icon name="home"></ion-icon>
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -10,16 +10,16 @@
 <ion-content class="ion-padding">
   <ion-list>
     <ion-item>
-      <ion-label position="stacked">Title</ion-label>
+      <ion-label position="stacked">{{'TITLE' | translate}}</ion-label>
       <ion-input type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
     </ion-item>
     <ion-item *ngFor="let author of authors, index as i">
-      <ion-label position="stacked">Author {{i}}</ion-label>
+      <ion-label position="stacked">{{'AUTHOR' | translate}} {{i + 1}}</ion-label>
       <ion-input type="text" minlength="3" [(ngModel)]="authors[i]"
                  text-right></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Description</ion-label>
+      <ion-label position="stacked">{{'DESCRIPTION' | translate}}</ion-label>
       <ion-input type="text" minlength="5" [(ngModel)]="description" text-right></ion-input>
     </ion-item>
   </ion-list>
@@ -27,6 +27,7 @@
     expand="block"
     color="primary"
     (click)="onSubmit()"
-  >Submit
+  >
+    {{'SETTINGS_SAVE' | translate}}
   </ion-button>
 </ion-content>
