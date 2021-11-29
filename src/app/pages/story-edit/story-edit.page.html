@@ -9,21 +9,24 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-list-header>
-      <h2>Part A</h2>
-    </ion-list-header>
     <ion-item>
-      <ion-label>Title</ion-label>
-      <ion-input [placeholder]="model.title" type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
+    </ion-item>
+    <ion-item *ngFor="let author of authors, index as i">
+      <ion-label position="stacked">Author {{i}}</ion-label>
+      <ion-input type="text" minlength="3" [(ngModel)]="authors[i]"
+                 text-right></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Author</ion-label>
-      <ion-input [placeholder]="model.title" type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Description</ion-label>
-      <ion-input [placeholder]="model.title" type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-input type="text" minlength="5" [(ngModel)]="description" text-right></ion-input>
     </ion-item>
   </ion-list>
-  <button expand="block" (click)="handleClick()">Print</button>
+  <ion-button
+    expand="block"
+    color="primary"
+    (click)="onSubmit()"
+  >Submit
+  </ion-button>
 </ion-content>

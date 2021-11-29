@@ -1,78 +1,100 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {StoryInformation} from "../../models/storyInformation";
 import {Router} from "@angular/router";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
-import {StoryService} from "../../services/story/story.service";
 import {FireBaseService} from "../../services/firebase/firebaseService";
 import {FB_PATH_STORIES} from "../../constants/constants";
 import {map} from "rxjs/operators";
-
-/*
-public id: string;
-  public folder: string;
-  public title: string;
-  public author: string[];
-  public date: number;
-  public language: string;
-  public child: boolean; //true if the story is safe for children, false if it should only be visible by adult profiles
-  public shortDescription: string;
-  public readers: Reader[];
-  public medium: string;
-  public cover: string;
- */
 
 @Component({
   selector: "app-story-edit",
   templateUrl: "./story-edit.page.html",
   styleUrls: ["./story-edit.page.scss"],
 })
-export class StoryEditPage implements OnInit {
-  model: StoryInformation;
+export class StoryEditPage {
   submitted: boolean;
   title: string;
   description: string;
-  author: string[];
+  authors: string[];
 
   constructor(public router: Router,
               public storyInformationService: StoryInformationService,
-              public storyService: StoryService,
               private fireBaseService: FireBaseService
   ) {
-    // load selected story
-    this.model = this.storyInformationService.storyInformation;
+    // load the currently selected story
+    const currentStoryInformation = this.storyInformationService.storyInformation;
 
-    this.title = this.model.title;
-    this.description = this.model.shortDescription;
-    this.author = this.model.author;
+    // load current story information from model
+    this.title = currentStoryInformation.title;
+    this.description = currentStoryInformation.shortDescription;
+    this.authors = currentStoryInformation.author;
   }
 
-  ngOnInit() {
-    this.onSubmit();
-  }
-
+  /**
+   * Submits data to firebase and returns to the StoryDetails screen
+   */
   onSubmit() {
+    this.setStoryField("shortDescription", this.description);
+    this.setStoryField("title", this.title);
+    this.setAuthors();
     this.submitted = true;
+
+    this.updateSelectedStory();
+    this.goBackToStoryDetails();
   }
 
+  /**
+   * Updates the currently selected story, which is saved in the StoryInformationService
+   */
+  updateSelectedStory() {
+    this.storyInformationService.storyInformation.title = this.title;
+    this.storyInformationService.storyInformation.shortDescription = this.description;
+    this.storyInformationService.storyInformation.author = this.authors;
+  }
+
+  /**
+   * Updates one story field on firebase
+   * @param fieldName the to be updated field (e.g. date, author, ...)
+   * @param value the value to update the field to
+   */
   setStoryField(fieldName: string, value: string) {
     this.fireBaseService.setItem("stories/0/", fieldName, value);
   }
 
-  setAuthorField(authorIndex: number) {
-    this.setStoryField(`author/${authorIndex}`, "Lisa");
+  /**
+   * Sets the author field at the authorIndex to the specified value.
+   * E.g. .../stories/0/author/0 with 0 as the authorIndex.
+   * @param authorIndex is 0 for the first author
+   * @param value is the name of the author
+   */
+  setAuthorField(authorIndex: number, value: string) {
+    this.setStoryField(`author/${authorIndex}`, value);
   }
 
-  getStory() {
+  /**
+   * Sets all n authors saved on firebase to the authors specified in
+   * the form.
+   */
+  setAuthors() {
+    for (let i = 0; i < this.authors.length; i++) {
+      this.setAuthorField(i, this.authors[i]);
+    }
+  }
+
+  /**
+   * Retrieves the cloud story at index 0 and saves it to the local model.
+   */
+  refreshLocalStory() {
     this.fireBaseService.getItemById(FB_PATH_STORIES + "0/").pipe(map((a) => a.payload.toJSON()))
       .subscribe((story: StoryInformation) => {
-        console.log("this is the story" + story.title);
+        console.log(story.shortDescription);
+        this.storyInformationService.storyInformation = story;
       });
   }
 
-  handleClick() {
-    console.log("hey");
-  }
-
+  /**
+   * Navigates back to the storyDetails-Screen.
+   */
   goBackToStoryDetails() {
     this.router.navigate(["story-details"]);
   }
