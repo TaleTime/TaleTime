@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { NavController } from "@ionic/angular";
-import { AuthService } from "../../services/auth/auth.service";
-import { UserProfile } from "../../models/userProfile";
-import { ProfileService } from "../../services/profile/profile.service"; // for avatars
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {NavController} from "@ionic/angular";
+import {AuthService} from "../../services/auth/auth.service";
+import {UserProfile} from "../../models/userProfile";
+import {ProfileService} from "../../services/profile/profile.service"; // for avatars
 
 @Component({
   selector: "app-create-user-profile",
@@ -12,7 +12,7 @@ import { ProfileService } from "../../services/profile/profile.service"; // for 
 })
 export class CreateUserProfilePage implements OnInit {
   activeAvatarId: number;
-  profileCredentials = { name: "", avatarId: 0, child: false };
+  profileCredentials = {name: "", avatarId: 0, child: false, editor: false};
   profileAvatars;
 
   constructor(
@@ -28,7 +28,8 @@ export class CreateUserProfilePage implements OnInit {
     this.selectAvatar(null, 0);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public selectAvatar(event, avatarId) {
     if (event) {

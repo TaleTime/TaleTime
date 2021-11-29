@@ -12,6 +12,9 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {StoryMenuPage} from "../story-menu/story-menu.page";
 import {PlayerParams} from "../../models/player/player-params";
 import {PlayerParamsService} from "../../services/player-parmas/player-params.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {UserAccount} from "../../models/userAccount";
+import {ProfileService} from "../../services/profile/profile.service";
 
 const routes: Routes = [{path: "storyMenu", component: StoryMenuPage}];
 
@@ -23,8 +26,11 @@ const routes: Routes = [{path: "storyMenu", component: StoryMenuPage}];
 export class StoryDetailsPage {
   selectedStory: StoryInformation;
   imgPath = "dummy.png";
+  userAccount: UserAccount = this.authService.currentUserAccount;
+
 
   public selectedReader: string;
+  public isEditor: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -34,9 +40,14 @@ export class StoryDetailsPage {
     public playerParamsService: PlayerParamsService,
     private saveGameService: SaveGameService,
     private publicStoryHelper: PublicStoryHelperService,
+    private authService: AuthService,
+    private profileService: ProfileService
   ) {
     this.selectedStory = this.storyInformationService.storyInformation;
     console.log("Show Details: " + JSON.stringify(this.selectedStory));
+
+    // check if the current user has permisson to edit stories
+    this.isEditor = profileService.getActiveUserProfile().editor;
 
     if (this.selectedStory.medium === "cloud") {
       this.imgPath = this.publicStoryHelper.getThumbnailPathForStory(

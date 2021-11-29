@@ -3,10 +3,10 @@
  * @author Matthias Kiefer
  * @date 20.11.2017
  */
-import { AvailableLanguage } from "./AvailableLanguage";
-import { SaveGame } from "./saveGame";
-import { Settings } from "./settings";
-import { StoryInformation } from "./storyInformation";
+import {AvailableLanguage} from "./AvailableLanguage";
+import {SaveGame} from "./saveGame";
+import {Settings} from "./settings";
+import {StoryInformation} from "./storyInformation";
 
 export class UserProfile {
   private static AVATARS = [
@@ -41,17 +41,19 @@ export class UserProfile {
   public name: string;
   public avatar;
   public child: boolean;
+  public editor: boolean;
   public settings: Settings;
   public arrayOfStories: Array<StoryInformation>;
   public arrayOfSaveGames: Array<SaveGame>;
   public storyService;
 
-  constructor(name: string, avatarId: number, child: boolean) {
+  constructor(name: string, avatarId: number, child: boolean, editor: boolean) {
     this.id = Math.random().toString(36).substr(2, 9);
     this.name = name;
     this.avatar = UserProfile.avatars(avatarId);
     this.child = child;
     this.arrayOfStories = [];
+    this.editor = editor;
   }
 
   public setArrayOfStories(arrayOfStories) {
@@ -92,9 +94,11 @@ export class UserProfile {
     });
     throw Error("Object not found");
   }
+
   public setSaveGame(savegame: SaveGame): void {
     this.arrayOfSaveGames.push(savegame);
   }
+
   /**
    * Checks if a storie was already added.
    * @param {String} title Title of the storie.

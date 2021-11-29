@@ -1,23 +1,15 @@
-import { Injectable } from "@angular/core";
-import { throwError as observableThrowError } from "rxjs/internal/observable/throwError";
-import { UserProfile } from "../../models/userProfile";
-import { UserAccount } from "../../models/userAccount";
-import { from, Observable } from "rxjs";
-import { AuthService } from "../auth/auth.service";
-import { Router } from "@angular/router";
-import { FireBaseService } from "../firebase/firebaseService";
-import { map } from "rxjs/operators";
-import { ConsoleLogger } from "@angular/compiler-cli/ngcc";
-import { updateLanguageServiceSourceFile } from "typescript";
-import { stringify } from "@angular/compiler/src/util";
-import { Settings } from "src/app/models/settings";
-import { StoryInformation } from "src/app/models/storyInformation";
-import { Story } from "src/app/models/story/story";
-import {
-  FB_PATH_PROFILE,
-  FB_PATH_SETTINGS,
-  FB_PATH_USERS,
-} from "src/app/constants/constants";
+import {Injectable} from "@angular/core";
+import {throwError as observableThrowError} from "rxjs/internal/observable/throwError";
+import {UserProfile} from "../../models/userProfile";
+import {UserAccount} from "../../models/userAccount";
+import {Observable} from "rxjs";
+import {AuthService} from "../auth/auth.service";
+import {Router} from "@angular/router";
+import {FireBaseService} from "../firebase/firebaseService";
+import {map} from "rxjs/operators";
+import {Settings} from "src/app/models/settings";
+import {StoryInformation} from "src/app/models/storyInformation";
+import {FB_PATH_PROFILE, FB_PATH_SETTINGS, FB_PATH_USERS,} from "src/app/constants/constants";
 
 @Injectable({
   providedIn: "root",
@@ -58,7 +50,7 @@ export class ProfileService {
 
   /**
    * Creates a user profile.
-   * @param {credentials} value - name: any; avatarId: any; child: any;
+   * @param {credentials} value - name: any; avatarId: any; child: any; editor: any;
    * @throws {observableThrowError} - Throw if credentials object is empty
    * @return {Observable} Return a observable
    */
@@ -66,6 +58,7 @@ export class ProfileService {
     name: any;
     avatarId: any;
     child: any;
+    editor: any;
   }) {
     if (credentials.name === null) {
       return observableThrowError("Please insert credentials");
@@ -73,7 +66,8 @@ export class ProfileService {
       const userProfile = new UserProfile(
         credentials.name,
         credentials.avatarId,
-        credentials.child
+        credentials.child,
+        credentials.editor ?? false
       );
 
       this.firebaseService.setItem(
@@ -147,15 +141,19 @@ export class ProfileService {
       .pipe(
         map((action) =>
           action.map((a) => {
+            console.log(a);
             //Load Profile Information
             let profile = a.payload.child("/").val();
             let profileInfo = profile.profile;
             let userProfile = new UserProfile(
               profileInfo.name,
               profileInfo.avatar.id,
-              profileInfo.child
+              profileInfo.child,
+              profileInfo.editor
             );
             //let userProfile = new UserProfile("BEDER", 1, false);
+
+            console.log("heyy:::" + profile.settings.autoPlay);
 
             //set userProfileId
             userProfile.id = a.payload.key;
@@ -167,7 +165,9 @@ export class ProfileService {
               arrayOfStories.push(profile.ArrayOfStories[element]);
               if (arrayOfStories[arrayOfStories.length - 1].readers == null)
                 //set empty Array instead of null
+              {
                 arrayOfStories[arrayOfStories.length - 1].readers = [];
+              }
             }
 
             userProfile.setArrayOfStories(arrayOfStories);

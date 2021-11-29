@@ -1,10 +1,8 @@
-import { Component } from "@angular/core";
-
-import { SimpleToastService } from "../../services/simple-toast/simple-toast.service";
-import { AuthService } from "../../services/auth/auth.service";
-import { TranslateService } from "@ngx-translate/core";
-import { SettingsService } from "../../services/settings/settings.service";
-import { Router } from "@angular/router";
+import {Component} from "@angular/core";
+import {AuthService} from "../../services/auth/auth.service";
+import {TranslateService} from "@ngx-translate/core";
+import {SettingsService} from "../../services/settings/settings.service";
+import {Router} from "@angular/router";
 
 import {
   AVAILABLE_LANGUAGES,
@@ -23,9 +21,9 @@ import {
   TTS_RATE_SLOW,
   TTS_RATE_SLOW_VALUE,
 } from "../../constants/constants";
-import { NavController } from "@ionic/angular";
-import { ProfileService } from "../../services/profile/profile.service";
-import { LanguageService } from "../../services/language/language.service";
+import {NavController} from "@ionic/angular";
+import {ProfileService} from "../../services/profile/profile.service";
+import {LanguageService} from "../../services/language/language.service";
 
 @Component({
   selector: "app-settings",
@@ -39,7 +37,7 @@ export class SettingsPage {
   selectedFontSize;
   ttsRate;
 
-  activeUserProfileName: string;st
+  activeUserProfileName: string;
   activeUserProfileAvatarName: string;
 
   constructor(
@@ -50,7 +48,8 @@ export class SettingsPage {
     private authService: AuthService,
     private profilService: ProfileService,
     private languageService: LanguageService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     const activeUserProfile = this.profilService.getActiveUserProfile();

@@ -78,10 +78,10 @@
   >
     {{'STORYDETAILS_DELETE' | translate}}
   </ion-button>
-  <ion-button
-    expand="block"
-    color="secondary"
-    (click)="goToEditScreen()"
+  <ion-button *ngIf="isEditor"
+              expand="block"
+              color="secondary"
+              (click)="goToEditScreen()"
   >
     Story bearbeiten
   </ion-button>
