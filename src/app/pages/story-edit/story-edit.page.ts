@@ -30,6 +30,8 @@ export class StoryEditPage implements OnInit {
   model: StoryInformation;
   submitted: boolean;
   title: string;
+  description: string;
+  author: string[];
 
   constructor(public router: Router,
               public storyInformationService: StoryInformationService,
@@ -38,10 +40,13 @@ export class StoryEditPage implements OnInit {
   ) {
     // load selected story
     this.model = this.storyInformationService.storyInformation;
+
+    this.title = this.model.title;
+    this.description = this.model.shortDescription;
+    this.author = this.model.author;
   }
 
   ngOnInit() {
-    this.setStoryField("date", "2016");
     this.onSubmit();
   }
 
@@ -51,6 +56,10 @@ export class StoryEditPage implements OnInit {
 
   setStoryField(fieldName: string, value: string) {
     this.fireBaseService.setItem("stories/0/", fieldName, value);
+  }
+
+  setAuthorField(authorIndex: number) {
+    this.setStoryField(`author/${authorIndex}`, "Lisa");
   }
 
   getStory() {

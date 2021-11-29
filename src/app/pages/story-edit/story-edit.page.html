@@ -14,15 +14,15 @@
     </ion-list-header>
     <ion-item>
       <ion-label>Title</ion-label>
-      <ion-input [placeholder]="model.title" type="text" [(ngModel)]="title" text-right id="input"></ion-input>
+      <ion-input [placeholder]="model.title" type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="stacked">Multiple Inputs</ion-label>
-      <ion-input placeholder="Address Line 1"></ion-input>
-      <ion-input placeholder="Address Line 2"></ion-input>
-      <ion-input placeholder="City"></ion-input>
-      <ion-input placeholder="State"></ion-input>
-      <ion-input placeholder="Zip Code"></ion-input>
+      <ion-label>Author</ion-label>
+      <ion-input [placeholder]="model.title" type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-input [placeholder]="model.title" type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
     </ion-item>
   </ion-list>
   <button expand="block" (click)="handleClick()">Print</button>
