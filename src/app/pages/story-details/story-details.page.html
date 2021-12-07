@@ -78,7 +78,7 @@
   >
     {{'STORYDETAILS_DELETE' | translate}}
   </ion-button>
-  <ion-button *ngIf="isEditor"
+  <ion-button *ngIf="isEditor && selectedStory.medium != 'device'"
               expand="block"
               color="secondary"
               (click)="goToEditScreen()"
