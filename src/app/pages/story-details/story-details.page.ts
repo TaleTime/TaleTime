@@ -63,7 +63,7 @@ export class StoryDetailsPage {
 
   ngOnInit() {
     this.imgPath = STORY_DIR + this.selectedStory.id + "/icon.png";
-    this.selectedStory.cover = this.imgPath;
+    //this.selectedStory.cover = this.imgPath;
   }
 
   saveReader() {
