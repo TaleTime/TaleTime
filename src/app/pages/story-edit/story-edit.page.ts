@@ -5,6 +5,7 @@ import {StoryInformationService} from "../../services/story-information/story-in
 import {FireBaseService} from "../../services/firebase/firebaseService";
 import {FB_PATH_STORIES} from "../../constants/constants";
 import {map} from "rxjs/operators";
+import {StoryService} from "../../services/story/story.service";
 
 @Component({
   selector: "app-story-edit",
@@ -19,7 +20,8 @@ export class StoryEditPage {
 
   constructor(public router: Router,
               public storyInformationService: StoryInformationService,
-              private fireBaseService: FireBaseService
+              private fireBaseService: FireBaseService,
+              private storyService: StoryService
   ) {
     // load the currently selected story
     const currentStoryInformation = this.storyInformationService.storyInformation;
@@ -39,6 +41,7 @@ export class StoryEditPage {
     this.setAuthors();
     this.submitted = true;
 
+    this.storyService.fetchAvailableStories();
     this.updateSelectedStory();
     this.goBackToStoryDetails();
   }

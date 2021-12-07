@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-card class="card" *ngFor="let story of availableStories">
+  <ion-card class="card" *ngFor="let story of this.storyService.availableStories">
     <div class="cover">
       <ion-icon
         class="noCoverIcon"

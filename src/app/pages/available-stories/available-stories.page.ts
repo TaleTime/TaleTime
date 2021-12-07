@@ -16,8 +16,6 @@ import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {StoryService} from "../../services/story/story.service";
-import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
-import {map} from "rxjs/operators";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
 
 /**
@@ -33,10 +31,6 @@ export class AvailableStoriesPage implements OnInit {
   activeUserProfileAvatarName: string;
   private activeUserProfile: UserProfile;
 
-  public availableStories: Array<StoryInformationWithUrl> = [];
-  public readonly PUBLIC_STORY_URL: string =
-    "https://raw.githubusercontent.com/TaleTime/TaleTime/feature_firebase-cloud-stories/index.json";
-
   private pathToCurrentUser =
     FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
 
@@ -47,7 +41,7 @@ export class AvailableStoriesPage implements OnInit {
     private router: Router,
     private http: HTTP,
     private translate: TranslateService,
-    private storyService: StoryService,
+    public storyService: StoryService,
     private alert: AlertService,
     private platform: Platform,
     private transfer: FileTransfer,
@@ -62,12 +56,6 @@ export class AvailableStoriesPage implements OnInit {
   ) {
   }
 
-  /*
-  ionViewWillEnter() {
-    this.loadDeviceDefaultStories();
-    this.loadPublicStories();
-  }
-   */
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
 
@@ -75,24 +63,8 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
-    this.loadDeviceDefaultStories();
-    this.loadFirebaseStories();
-    // this.loadPublicStories();
-  }
 
-  /**
-   * Loads the (hardcoded) default stories into the availableStories array
-   * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
-   */
-  async loadDeviceDefaultStories() {
-    const lang = convertSystemLangToAvailableLanguage(
-      this.languageService.selected
-    );
-    const storieForChild = this.activeUserProfile.child;
-    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(
-      lang,
-      storieForChild
-    );
+    this.storyService.fetchAvailableStories();
   }
 
   goToSelectUserProfile() {
@@ -121,48 +93,9 @@ export class AvailableStoriesPage implements OnInit {
     }
   }
 
-  /**
-   * Load the public stories available from the remote JSON file or an API
-   * specified by the PUBLIC_STORY_URL
-   *
-   * Not used anymore, replaced by loadFirebaseStories()
-   */
-  public loadPublicStories() {
-    console.log("Ime here");
-    const that = this;
-    this.http
-      .get(this.PUBLIC_STORY_URL, {}, {})
-      .then((data) => {
-        // von mir:
-        console.log("public stories ::" + data.data);
-        // von den:
-        const content = (data = JSON.parse(data.data));
-        for (const item of content) {
-          item.medium = CLOUD;
-          that.availableStories.push(item);
-        }
-      })
-      .catch((error) => {
-        console.log("1" + error.status);
-        console.log("2" + error.error); // error message as string
-        console.log("3" + error.headers);
-      });
-  }
-
   showDetails(story: StoryInformation) {
     this.storyInformationService.storyInformation = story;
     this.router.navigate(["/story-details"]);
-  }
-
-  /**
-   * Loads the stories stored under /stories/ in the FireBase RealtimeDB
-   */
-  public loadFirebaseStories() {
-    this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
-      const payload = a.payload.val();
-      console.log(payload.date);
-      this.availableStories.push(payload);
-    }))).subscribe();
   }
 
   /**
