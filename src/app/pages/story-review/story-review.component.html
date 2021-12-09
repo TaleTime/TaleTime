@@ -11,8 +11,6 @@
 
 <ion-content class="content">
 
-  <ion-buttons (click)="goToAvailableStories()">{{ 'GO_BACK' | translate }} </ion-buttons>
-
   <ion-card-content>
 
     <ion-card-title>
@@ -30,7 +28,8 @@
   <div *ngFor="let review of availableReview" >
   <ion-card class="card"  >
 
-    <ion-card-content *ngIf="review.storyId === currentStoryID">
+    <ion-card-content *ngIf="review.storyId === currentStoryID" >
+
 
       <ion-card-title>
         {{review.storyTitle}}
@@ -48,6 +47,11 @@
       <p>
         {{review.rating}}/5
       </p>
+
+      <ion-button *ngIf="review.authorId === userId"  (click)="deleteReview(review.ratingId)" color="danger" fill="clear"
+            slot="end">
+      {{ 'COMMON_DELETE' | translate }}
+      </ion-button>
     </ion-card-content>
   </ion-card>
 </div> 

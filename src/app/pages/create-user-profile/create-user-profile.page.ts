@@ -37,7 +37,7 @@ export class CreateUserProfilePage implements OnInit {
 
     this.activeAvatarId = avatarId;
   }
-
+  
   public create() {
     this.profileCredentials.avatarId = this.activeAvatarId;
 
