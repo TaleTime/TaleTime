@@ -23,12 +23,12 @@
       <ion-textarea #textareaNewStoryReview placeholder="Enter any notes here..."></ion-textarea>
     </ion-item>
     <ion-button (click)="addNewReview(textareaNewStoryReview.value)" >
-      {{ 'STORYMENU_ADD_SOME_STORIES' | translate }}
+      {{ 'ADD_A_REVIEW' | translate }}
     </ion-button>
   </ion-card-content>
 
-
-  <ion-card class="card" *ngFor="let review of availableReview" >
+  <div *ngFor="let review of availableReview" >
+  <ion-card class="card"  >
 
     <ion-card-content *ngIf="review.storyId === currentStoryID">
 
@@ -50,4 +50,5 @@
       </p>
     </ion-card-content>
   </ion-card>
+</div> 
 </ion-content>

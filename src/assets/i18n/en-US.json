@@ -115,6 +115,7 @@
   "INVALID_EMAIL" : "Invalid Email!",
   "WEAK_PASSWORD" : "Password should be at least 8 characters!",
   "WRITE_A_REVIEW" : "Write a review for",
+  "ADD_A_REVIEW" : "Add Review",
   "REGISTER_ERROR" : "Error, Please try again later!",
   "EMAIL_ALREADY_IN_USE" : "Email already in use!",
   "RESUME": "Resume",

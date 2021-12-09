@@ -127,6 +127,9 @@ export class AvailableStoriesPage implements OnInit {
       "downloadCounter",
       (story.downloadCounter +1)
     );
+
+    this.installPublicStory(story as StoryInformationWithUrl);
+ 
     }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {

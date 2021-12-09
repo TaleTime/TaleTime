@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import {Router} from "@angular/router";
-import {HTTP} from "@ionic-native/http/ngx";
 import { ReviewServiceService } from "src/app/services/review-service.service";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
 import {UserProfile} from "../../models/userProfile";
@@ -12,7 +11,7 @@ import {ProfileService} from "../../services/profile/profile.service";
 import {CLOUD,FB_PATH_STORIES,FB_PATH_USERS, } from "../../constants/constants";
 import {Review} from "../../models/review"
 import { map } from 'rxjs/operators';
-import { stringify } from 'querystring';
+
 
 @Component({
   selector: 'app-review',
@@ -33,6 +32,7 @@ export class StoryReviewComponent implements OnInit {
 
 
   constructor(
+    private zone: NgZone,
     private firebaseService: FireBaseService,
     private reviewService: ReviewServiceService,
     private router: Router,
@@ -59,12 +59,11 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   loadFirebaseStorieReview(){
-    console.log("__debug: "+this.currentStoryTitle);
-    this.firebaseService.getAllItems("ratings/"+this.currentStoryTitle).pipe(map((action) => action.map((a) => {
-      const payload = a.payload.val();
-      this.availableReview.push(payload);
-    }))).subscribe();
+
+    this.updateLoadingContent();
   }
+
+
 
   /**
    * Router to page 'select-user-profile'
@@ -73,6 +72,21 @@ export class StoryReviewComponent implements OnInit {
   goToSelectUserProfile() {
     this.router.navigate(["/select-user-profile"]);
   }
+
+  /**
+   * Updates the content of a loading and forces a ui refresh
+   * @param content new content for the loading
+   * @param loading loading to be updated
+   */
+     private updateLoadingContent() {
+      // Without zone.run, the new content is not displayed
+      this.zone.run(() => {
+          this.firebaseService.getAllItems("ratings/"+this.currentStoryTitle).pipe(map((action) => action.map((a) => {
+          const payload = a.payload.val();
+          this.availableReview.push(payload);
+        }))).subscribe();
+      });
+    }
 
   /**
    * Router to page 'select-user-profile'
@@ -98,7 +112,7 @@ export class StoryReviewComponent implements OnInit {
          date: mm + '/' + dd + '/' + yyyy,
          rating: 0,
       }
-      console.log(reviewText);
+
 
       this.firebaseService.setItem(
         "ratings/"+ 
