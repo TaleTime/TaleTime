@@ -13,7 +13,7 @@
       <ion-label position="stacked">{{'TITLE' | translate}}</ion-label>
       <ion-input type="text" minlength="5" [(ngModel)]="title" text-right></ion-input>
     </ion-item>
-    <ion-item *ngFor="let author of authors, index as i">
+    <ion-item *ngFor="let author of tempAuthors, index as i">
       <ion-label position="stacked">{{'AUTHOR' | translate}} {{i + 1}}</ion-label>
       <ion-input type="text" minlength="3" [(ngModel)]="authors[i]"
                  text-right></ion-input>

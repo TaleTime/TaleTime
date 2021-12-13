@@ -16,7 +16,12 @@ export class StoryEditPage {
   submitted: boolean;
   title: string;
   description: string;
+  // used to render one input field for each author
   authors: string[];
+  // used to store the authors during editing
+  // using authors would retrigger the *for directive
+  // of angular on each edit
+  tempAuthors: string[];
 
   constructor(public router: Router,
               public storyInformationService: StoryInformationService,
@@ -30,6 +35,7 @@ export class StoryEditPage {
     this.title = currentStoryInformation.title;
     this.description = currentStoryInformation.shortDescription;
     this.authors = currentStoryInformation.author;
+    this.tempAuthors = [...currentStoryInformation.author];
   }
 
   /**
