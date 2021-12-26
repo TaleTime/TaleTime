@@ -13,6 +13,8 @@ export class StoryInformation {
   public readers: Reader[];
   public medium: string;
   public cover: string; // TODO Base64 String für das Bild, zum darstellen des Covers
+  public downloadCounter: number; // statistics: count amount of downloads from cloud
+  public elementId:string
 }
 
 export class StoryInformationWithUrl extends StoryInformation {

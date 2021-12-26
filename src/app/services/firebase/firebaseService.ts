@@ -6,6 +6,7 @@ import {
   AngularFireList,
   AngularFireObject,
 } from "@angular/fire/database";
+
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -51,4 +52,17 @@ export class FireBaseService {
   public deleteItem(dbNode: string): void {
     this.db.object(dbNode).remove();
   }
+
+  /**
+   * Creates a new element with Automatic Hash ID
+   * @author Alexander Stolz
+   * @param dbNode Path to Parentnode (i.e. users/currentUser)
+   * @param data JSON-Data to commit
+   */
+  public addNewItem(dbNode:string, data:any):string{
+    let ref = this.db.list(dbNode).push(data);
+    return ref.key;
+
+  }
+
 }

@@ -18,6 +18,7 @@ import {SimpleToastService} from "../../services/simple-toast/simple-toast.servi
 import {StoryService} from "../../services/story/story.service";
 import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
+import { ReviewServiceService } from "src/app/services/review-service.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -56,7 +57,8 @@ export class AvailableStoriesPage implements OnInit {
     private toastService: SimpleToastService,
     private profileService: ProfileService,
     private languageService: LanguageService,
-    private firebaseService: FireBaseService
+    private firebaseService: FireBaseService,
+    private reviewService: ReviewServiceService
   ) {
   }
 
@@ -97,7 +99,41 @@ export class AvailableStoriesPage implements OnInit {
     this.router.navigate(["/select-user-profile"]);
   }
 
+
+  /**
+   * Router to page 'story-review' component
+   * @param story the needed story to get the element id for the sender service
+   * @author Alexander Stolz
+   */
+  goToReview(story: StoryInformation | StoryInformationWithUrl){
+    this.reviewService.storyID = story.elementId;
+    this.reviewService.storyTitle = story.title;
+    this.router.navigate(["/story-review"]);
+  }
+
+
+    /**
+   * Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
+   * @param story transmitted story to create upl URL for changing the value inside the Firebase realtime database
+   * Access to function setitem() of the firebase service
+   * Seperated into three variables: key, data and dbNode
+   * @author Alexander Stolz
+   */
+  increaseCounter(story: StoryInformation | StoryInformationWithUrl){  
+    this.firebaseService.setItem(
+      "stories/"+ 
+      story.elementId+     
+      "/",
+      "downloadCounter",
+      (story.downloadCounter +1)
+    );
+
+    this.installPublicStory(story as StoryInformationWithUrl);
+ 
+    }
+
   addStory(story: StoryInformation | StoryInformationWithUrl) {
+    this.increaseCounter(story);
     if (story.medium === CLOUD && "url" in story) {
       // story is a public story and the URL is defined in the object
       this.installPublicStory(story as StoryInformationWithUrl);
@@ -220,7 +256,7 @@ export class AvailableStoriesPage implements OnInit {
       const fileTransfer: FileTransferObject = this.transfer.create();
       await loading.present();
       fileTransfer.onProgress((event: ProgressEvent) => {
-        // The loading instance hast to be refreshed within the zone.run method because otherwise
+        // The loading instance has to be refreshed within the zone.run method because otherwise
         // the progress is not updated automatically
         this.updateLoadingContent(
           this.downloadProgressStr(story.title, event.loaded, event.total),
