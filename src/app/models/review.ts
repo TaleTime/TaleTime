@@ -12,6 +12,7 @@ export class Review {
   public authorId:string;
   public comment: string;
   public date: string;
+  public rating: string;
   public ratingId:string;
 
 }

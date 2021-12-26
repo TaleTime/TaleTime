@@ -10,20 +10,45 @@
 
 
 <ion-content class="content">
+  <ion-card class="card">
+    <ion-card-content >
+      <ion-card-title>
+        {{ 'ADD_A_REVIEW' | translate }}
+      </ion-card-title>
 
-  <ion-card-content>
+      <ion-item>
+      <ion-textarea #textareaNewStoryReview placeholder="{{ 'WRITE_A_REVIEW' | translate }} {{currentStoryTitle}}"></ion-textarea>
+      </ion-item>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{ 'RATING' | translate }}</ion-label>
+                <ion-select [(ngModel)]="selectedRating" placeholder="1">
+                  <ion-select-option *ngFor="let r of rating">
+                    {{r.name}}
+                 </ion-select-option>
 
-    <ion-card-title>
-      {{ 'WRITE_A_REVIEW' | translate }} {{currentStoryTitle}}
-    </ion-card-title>
+                </ion-select>
 
-    <ion-item>
-      <ion-textarea #textareaNewStoryReview placeholder="Enter any notes here..."></ion-textarea>
-    </ion-item>
-    <ion-button (click)="addNewReview(textareaNewStoryReview.value)" >
-      {{ 'ADD_A_REVIEW' | translate }}
-    </ion-button>
+              </ion-item>
+          </ion-col>
+          <ion-col>
+            
+            <ion-button class="btn-send" item-end  (click)="addNewReview(textareaNewStoryReview.value)" >
+              <ion-icon name="send"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+   
+
+
   </ion-card-content>
+  </ion-card>
+
 
   <div *ngFor="let review of availableReview" >
   <ion-card class="card"  >

@@ -1,5 +1,5 @@
 import { Component, OnInit,NgZone,ApplicationRef } from '@angular/core';
-import {Router} from "@angular/router";
+import {Router,  NavigationEnd,ActivatedRoute} from "@angular/router";
 import { ReviewServiceService } from "src/app/services/review-service.service";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
 import {UserProfile} from "../../models/userProfile";
@@ -25,6 +25,14 @@ export class StoryReviewComponent implements OnInit {
   activeUserProfileName: string;
   activeUserProfileAvatarName: string;
   public activeUserProfile: UserProfile;
+  selectedRating: string;
+  rating = [
+    { name: "1", value: 1 },
+    { name: "2", value: 2 },
+    { name: "3", value: 3 },
+    { name: "4", value: 4 },
+    { name: "5", value: 5 }
+  ]
 
   public availableReview: Array<Review> = [];
 
@@ -38,6 +46,7 @@ export class StoryReviewComponent implements OnInit {
     private firebaseService: FireBaseService,
     private reviewService: ReviewServiceService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private authService: AuthService,
     private languageService: LanguageService,
@@ -68,20 +77,14 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   loadFirebaseStorieReview(){
+    this.availableReview = []
+    console.log(this.availableReview.length)
       this.firebaseService.getAllItems("ratings/"+this.currentStoryTitle).pipe(map((action) => action.map((a) => {
         const payload = a.payload.val();
           this.availableReview.push(payload);
         }))).subscribe();
+        console.log(this.availableReview.length)
   }
-  result: any = [];
-  removeDuplicates(): any {
-    this.availableReview.forEach((item) => {
-       if (this.result.indexOf(item) < 0) {
-          this.result.push(item);
-       }
-    });
-    return this.result;
- }
 
   /**
    * Router to page 'select-user-profile'
@@ -115,6 +118,7 @@ export class StoryReviewComponent implements OnInit {
          authorId:this.userId,
          comment: reviewText,
          date: mm + '/' + dd + '/' + yyyy,
+         rating: this.selectedRating,
          ratingId: "0"
       }
 
@@ -127,8 +131,8 @@ export class StoryReviewComponent implements OnInit {
         "ratingId",
         key
       );
-
-
+      console.log(this.router.url)
+      this.router.navigate([this.router.url])
     }
 
     /**
