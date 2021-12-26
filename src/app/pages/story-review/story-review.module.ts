@@ -1,12 +1,13 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule, Routes} from "@angular/router";
 
 import {IonicModule} from "@ionic/angular";
 
 import { StoryReviewComponent } from "./story-review.component";
 import {TranslateModule} from "@ngx-translate/core";
+
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule
   ],
   declarations: [StoryReviewComponent]
 })

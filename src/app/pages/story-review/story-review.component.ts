@@ -1,17 +1,16 @@
 import { Component, OnInit,NgZone,ApplicationRef } from '@angular/core';
-import {Router,  NavigationEnd,ActivatedRoute} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import { ReviewServiceService } from "src/app/services/review-service.service";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
 import {UserProfile} from "../../models/userProfile";
 import {TranslateService} from "@ngx-translate/core";
-import {AlertService} from "../../services/alert/alert.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
 import {CLOUD,FB_PATH_STORIES,FB_PATH_USERS, } from "../../constants/constants";
 import {Review} from "../../models/review"
 import { map } from 'rxjs/operators';
-import { sha256 } from "js-sha256";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-review',
@@ -50,7 +49,8 @@ export class StoryReviewComponent implements OnInit {
     private translate: TranslateService,
     private authService: AuthService,
     private languageService: LanguageService,
-    private profileService: ProfileService,
+    private profileService: ProfileService, 
+    public formBuilder: FormBuilder
     ) { 
 
   }
@@ -131,8 +131,20 @@ export class StoryReviewComponent implements OnInit {
         "ratingId",
         key
       );
-      console.log(this.router.url)
-      this.router.navigate([this.router.url])
+
+        this.reload();
+    }
+
+    /**
+     * Reload the current page to fetch current data
+     */
+    reload(){
+      let currentUrl = this.router.url;
+      this.router.navigateByUrl('/', {
+         skipLocationChange: true
+      }).then(() => {
+         this.router.navigate([currentUrl]);
+      });
     }
 
     /**
@@ -145,7 +157,7 @@ export class StoryReviewComponent implements OnInit {
       this.firebaseService.deleteItem("ratings/"+ 
       this.currentStoryTitle+     
       "/"+storyId)
-
+      this.reload();
       
     }
     
