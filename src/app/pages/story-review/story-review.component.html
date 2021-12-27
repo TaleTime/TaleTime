@@ -5,6 +5,9 @@
       <ion-img style="align-self: flex-end; width: 80px; height: 80px; padding: 10px"
                src="assets/imgs/profile/{{activeUserProfileAvatarName}}" (click)="goToSelectUserProfile()"></ion-img>
     </ion-buttons>
+    <ion-button slot="start" margin-start="100px" (click)="goBackToHomeScreen()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 

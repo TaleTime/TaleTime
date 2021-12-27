@@ -13,9 +13,9 @@ import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
 
 @Component({
-  selector: 'app-review',
-  templateUrl: './story-review.component.html',
-  styleUrls: ['./story-review.component.scss'],
+  selector: "app-review",
+  templateUrl: "./story-review.component.html",
+  styleUrls: ["./story-review.component.scss"],
 })
 export class StoryReviewComponent implements OnInit {
   public isLoaded: boolean = true;
@@ -31,7 +31,7 @@ export class StoryReviewComponent implements OnInit {
     {name: "3", value: 3},
     {name: "4", value: 4},
     {name: "5", value: 5}
-  ]
+  ];
 
   public availableReview: Array<Review> = [];
 
@@ -74,13 +74,13 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   loadFirebaseStorieReview() {
-    this.availableReview = []
-    console.log(this.availableReview.length)
+    this.availableReview = [];
+    console.log(this.availableReview.length);
     this.firebaseService.getAllItems("ratings/" + this.currentStoryTitle).pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
       this.availableReview.push(payload);
     }))).subscribe();
-    console.log(this.availableReview.length)
+    console.log(this.availableReview.length);
   }
 
   /**
@@ -105,20 +105,20 @@ export class StoryReviewComponent implements OnInit {
    */
   addNewReview(reviewText: string) {
     let today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     var yyyy = today.getFullYear();
 
     let newStoryReview: Review = {
       author: this.activeUserProfileName,
       authorId: this.userId,
       comment: reviewText,
-      date: mm + '/' + dd + '/' + yyyy,
+      date: mm + "/" + dd + "/" + yyyy,
       rating: this.selectedRating,
       ratingId: "0"
-    }
+    };
 
-    let key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview)
+    let key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
 
     newStoryReview.ratingId = key;
 
@@ -136,7 +136,7 @@ export class StoryReviewComponent implements OnInit {
    */
   reload() {
     let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', {
+    this.router.navigateByUrl("/", {
       skipLocationChange: true
     }).then(() => {
       this.router.navigate([currentUrl]);
@@ -152,9 +152,16 @@ export class StoryReviewComponent implements OnInit {
 
     this.firebaseService.deleteItem("ratings/" +
       this.currentStoryTitle +
-      "/" + storyId)
+      "/" + storyId);
     this.reload();
 
+  }
+
+  /**
+   * Navigates back to the homescreen.
+   */
+  goBackToHomeScreen() {
+    this.router.navigate(["/tabs/available-stories"]);
   }
 
 

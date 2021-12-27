@@ -97,7 +97,7 @@ export class StoryDetailsPage {
   }
 
   goBackToHomeScreen() {
-    this.router.navigate(["/tabs/story-menu"]);
+    this.router.navigate(["/tabs/available-stories"]);
   }
 
   goToEditScreen() {
