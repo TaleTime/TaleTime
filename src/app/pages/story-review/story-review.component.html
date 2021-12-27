@@ -12,74 +12,74 @@
 <ion-content class="content">
   <ion-card class="card">
 
-    
-    <ion-card-content >
+
+    <ion-card-content>
       <ion-card-title>
         {{ 'ADD_A_REVIEW' | translate }}
       </ion-card-title>
 
       <ion-item>
-      <ion-textarea #textareaNewStoryReview placeholder="{{ 'WRITE_A_REVIEW' | translate }} {{currentStoryTitle}}"></ion-textarea>
+        <ion-textarea #textareaNewStoryReview
+                      placeholder="{{ 'WRITE_A_REVIEW' | translate }} {{currentStoryTitle}}"></ion-textarea>
       </ion-item>
-      
+
       <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item>
               <ion-label>{{ 'RATING' | translate }}</ion-label>
-                <ion-select [(ngModel)]="selectedRating" placeholder="1">
-                  <ion-select-option *ngFor="let r of rating">
-                    {{r.name}}
-                 </ion-select-option>
+              <ion-select [(ngModel)]="selectedRating" placeholder="1">
+                <ion-select-option *ngFor="let r of rating">
+                  {{r.name}}
+                </ion-select-option>
 
-                </ion-select>
+              </ion-select>
 
-              </ion-item>
+            </ion-item>
           </ion-col>
           <ion-col>
-            
-            <ion-button class="btn-send"   expand="block"(click)="addNewReview(textareaNewStoryReview.value)" >
+
+            <ion-button class="btn-send" expand="block" (click)="addNewReview(textareaNewStoryReview.value)">
               <ion-icon name="send"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-   
 
-
-  </ion-card-content>
-  </ion-card>
-
-
-  <div *ngFor="let review of availableReview" >
-  <ion-card class="card"  >
-
-    <ion-card-content *ngIf="review.storyId === currentStoryID" >
-
-
-      <ion-card-title>
-        {{review.storyTitle}}
-      </ion-card-title>
-      <ion-card-subtitle>
-        {{review.author}}
-      </ion-card-subtitle>
-      <p>
-      {{review.date}}
-
-      </p>
-      <p>
-        {{review.comment}}
-      </p>
-      <p>
-        {{review.rating}}/5
-      </p>
-
-      <ion-button *ngIf="review.authorId === userId"  (click)="deleteReview(review.ratingId)" color="danger" fill="clear"
-            slot="end">
-      {{ 'COMMON_DELETE' | translate }}
-      </ion-button>
     </ion-card-content>
   </ion-card>
-</div> 
+
+
+  <div *ngFor="let review of availableReview">
+    <ion-card class="card">
+
+      <ion-card-content *ngIf="review.storyId === currentStoryID">
+
+
+        <ion-card-title>
+          {{review.storyTitle}}
+        </ion-card-title>
+        <ion-card-subtitle>
+          {{review.author}}
+        </ion-card-subtitle>
+        <p>
+          {{review.date}}
+
+        </p>
+        <p>
+          {{review.comment}}
+        </p>
+        <p>
+          {{review.rating}}/5
+        </p>
+
+        <ion-button *ngIf="review.authorId === userId" (click)="deleteReview(review.ratingId)" color="danger"
+                    fill="clear"
+                    slot="end">
+          {{ 'COMMON_DELETE' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
