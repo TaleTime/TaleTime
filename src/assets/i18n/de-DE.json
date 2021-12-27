@@ -133,5 +133,10 @@
   "APP_HOME_BUTTON": "Startseite",
   "STORY_BACK": "Zurück",
   "PAUSE": "Pause",
-  "TESTACCOUNT_DESCRIPTION": "Wenn Sie unsere App einmal ausprobieren möchten, bevor Sie sich registrieren, dann benutzen sie gerne unseren Test-Account:"
+  "TESTACCOUNT_DESCRIPTION": "Wenn Sie unsere App einmal ausprobieren möchten, bevor Sie sich registrieren, dann benutzen sie gerne unseren Test-Account:",
+  "EDIT_STORY": "Geschichte bearbeiten",
+  "TITLE": "Titel",
+  "AUTHOR": "Autor",
+  "DESCRIPTION": "Beschreibung",
+  "DETAILS": "Details"
 }

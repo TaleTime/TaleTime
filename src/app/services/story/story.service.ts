@@ -1,29 +1,21 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { File } from "@ionic-native/file/ngx";
-import { Platform } from "@ionic/angular";
-import { Storage } from "@ionic/storage";
-import { Observable } from "rxjs";
-import {
-  DEFAULT_READER,
-  DEFAULT_STORIES,
-  SINGLE_STORY_FILE_NAME,
-} from "../../constants/constants";
-import {
-  ChapterAttributes,
-  MtgaNextStoryNode,
-  MtgaStoryNode,
-  Story,
-  StoryMetaData,
-} from "../../models/story/story";
-import {
-  StoryInformation,
-  StoryInformationWithUrl,
-} from "../../models/storyInformation";
-import { LoggerService } from "../logger/logger.service";
-import { PublicStoryHelperService } from "../public-story-helper/public-story-helper.service";
-import { SaveGameService } from "../save-game/save-game.service";
-import { SettingsService } from "../settings/settings.service";
+import {HttpClient} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {File} from "@ionic-native/file/ngx";
+import {Platform} from "@ionic/angular";
+import {Storage} from "@ionic/storage";
+import {Observable} from "rxjs";
+import {DEFAULT_READER, DEFAULT_STORIES, SINGLE_STORY_FILE_NAME,} from "../../constants/constants";
+import {ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData,} from "../../models/story/story";
+import {StoryInformation, StoryInformationWithUrl,} from "../../models/storyInformation";
+import {LoggerService} from "../logger/logger.service";
+import {PublicStoryHelperService} from "../public-story-helper/public-story-helper.service";
+import {SaveGameService} from "../save-game/save-game.service";
+import {SettingsService} from "../settings/settings.service";
+import {LanguageService} from "../language/language.service";
+import {ProfileService} from "../profile/profile.service";
+import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
+import {first} from "rxjs/operators";
+import {FireBaseService} from "../firebase/firebaseService";
 
 @Injectable({
   providedIn: "root",
@@ -31,9 +23,14 @@ import { SettingsService } from "../settings/settings.service";
 export class StoryService {
   private readonly STORY_INFO_KEY = "STORY_INFO";
   private storyIndices: Map<string, number> = new Map<string, number>();
-  private _stories: Array<StoryInformation> = new Array<StoryInformation>();
+  // tslint:disable-next-line:variable-name
+  private _stories: Array<StoryInformationWithUrl> = new Array<StoryInformationWithUrl>();
   private story: Story = null;
   private currentNode: MtgaStoryNode;
+
+  // the stories available to be added by the user
+  // includes the default local and firebase ones.
+  public availableStories: StoryInformationWithUrl[];
 
   constructor(
     protected platform: Platform,
@@ -43,7 +40,10 @@ export class StoryService {
     private http: HttpClient,
     private settings: SettingsService,
     private saveGameService: SaveGameService,
-    private publicStoryHelper: PublicStoryHelperService
+    private publicStoryHelper: PublicStoryHelperService,
+    private languageService: LanguageService,
+    private profileService: ProfileService,
+    private firebaseService: FireBaseService
   ) {
     this.platform.ready().then(() => {
       this.storage.ready().then(() => {
@@ -51,8 +51,8 @@ export class StoryService {
           .get(this.STORY_INFO_KEY)
           .then((loadedStories) => {
             if (loadedStories) {
-              //this._stories = loadedStories;
-              //this.buildIndex();
+              // this._stories = loadedStories;
+              // this.buildIndex();
               this.loadDefaultStories().then((stories) => {
                 this._stories = stories;
                 this.buildIndex();
@@ -83,6 +83,40 @@ export class StoryService {
     }
   }
 
+  /**
+   * Fetches all the available stories
+   * including the local default ones and
+   * the stories stored on firebase
+   */
+  fetchAvailableStories(): void {
+    this.availableStories = [];
+    this.loadDeviceDefaultStories();
+    this.loadFirebaseStories();
+  }
+
+  /**
+   * Loads the (hardcoded) default stories into the availableStories array
+   * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
+   */
+  async loadDeviceDefaultStories() {
+    const lang = convertSystemLangToAvailableLanguage(
+      this.languageService.selected
+    );
+    const storieForChild = this.profileService.getActiveUserProfile().child;
+    this.availableStories.push(...this.getUserStoriesByLanguageAndChild(
+      lang,
+      storieForChild
+    ));
+  }
+
+  /**
+   * Loads the stories stored under /stories/ in the FireBase RealtimeDB
+   */
+  public loadFirebaseStories() {
+    this.firebaseService.getAllItems("stories").pipe(first())
+      .subscribe(value => value.forEach(e => this.availableStories.push(e.payload.val())),);
+  }
+
   public get stories(): Array<StoryInformation> {
     return this._stories;
   }
@@ -91,7 +125,7 @@ export class StoryService {
    * Add a new story to the storage and save
    * @param story Story to add
    */
-  public addStory(story: StoryInformation) {
+  public addStory(story: StoryInformationWithUrl) {
     const exists = this.storyIndices.get(story.id);
     if (!exists) {
       const index = this._stories.push(story) - 1;
@@ -232,11 +266,11 @@ export class StoryService {
     }
     this.logger.log(
       "Answer #" +
-        i +
-        " matched to the next node with the id: " +
-        id +
-        ". Loading node " +
-        id
+      i +
+      " matched to the next node with the id: " +
+      id +
+      ". Loading node " +
+      id
     );
     this.loadNode(id);
   }
@@ -291,24 +325,21 @@ export class StoryService {
   }
 
   private async loadDefaultStories() {
-    var arrayOfStories: Array<StoryInformationWithUrl> =
+    const arrayOfStories: Array<StoryInformationWithUrl> =
       new Array<StoryInformationWithUrl>();
-    for (let i = 0; i < DEFAULT_STORIES.length; i++) {
-      let pathOfStorie = DEFAULT_STORIES[i];
-      let langs = pathOfStorie["languages"];
-
-      for (let j = 0; j < langs.length; j++) {
+    for (const pathOfStorie of DEFAULT_STORIES) {
+      const langs = pathOfStorie.languages;
+      for (const item of langs) {
         const storyJson =
           "assets/stories/" +
           pathOfStorie.name +
           "/" +
-          langs[j] +
+          item +
           "/" +
           SINGLE_STORY_FILE_NAME;
-        let storie: Story;
-        let data = await this.getJSONFromAsset(storyJson);
+        const data = await this.getJSONFromAsset(storyJson);
         const newStory = new StoryInformation();
-        let storyInformation = data["mtga-story"].attributes;
+        const storyInformation = data["mtga-story"].attributes;
         newStory.id = storyInformation.id;
         newStory.folder = storyInformation.folder;
         newStory.title = storyInformation.title;
@@ -327,10 +358,11 @@ export class StoryService {
   }
 
   public getUserStoriesByLanguageAndChild(
+    // tslint:disable-next-line:ban-types
     lang: String,
     child: boolean
   ): Array<StoryInformationWithUrl> {
-    let array = this._stories.filter(
+    const array = this._stories.filter(
       (o) => o.language === lang && o.child === child
     ) as Array<StoryInformationWithUrl>;
     return array;

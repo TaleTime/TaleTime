@@ -13,11 +13,11 @@
   <ion-list>
 
     <ion-list-header>
-      {{'SETTINGS_GENERAL' | translate}}
+      <h2>{{'SETTINGS_GENERAL' | translate}}</h2>
     </ion-list-header>
 
     <ion-item>
-      <ion-icon slot="start" name="hand"></ion-icon>
+      <ion-icon slot="start" name="hand-left-outline"></ion-icon>
       <ion-label>{{'SETTINGS_INTERACTION' | translate}}</ion-label>
       <ion-toggle slot="end" [(ngModel)]="settings.interaction"></ion-toggle>
     </ion-item>
@@ -63,7 +63,7 @@
   <ion-list>
 
     <ion-list-header id="settingPageTitle">
-      {{'SETTINGS_VOICE' | translate}}
+      <h2>{{'SETTINGS_VOICE' | translate}}</h2>
     </ion-list-header>
 
     <ion-item>
@@ -88,9 +88,8 @@
   </ion-list>
 
   <ion-list>
-
     <ion-list-header>
-      {{'SETTINGS_USER' | translate}}
+      <h2>{{'SETTINGS_USER' | translate}}</h2>
     </ion-list-header>
     <ion-item (click)="goToUserAccount()" id="goToUserAccount">
       <ion-label>{{'SETTINGS_GO_TO_ACCOUNT' | translate}}</ion-label>
@@ -100,7 +99,7 @@
   <ion-list>
 
     <ion-list-header>
-      {{'SETTINGS_INFO' | translate}}
+      <h2>{{'SETTINGS_INFO' | translate}}</h2>
     </ion-list-header>
 
     <ion-item (click)="goToCreditsPage()">

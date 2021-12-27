@@ -1,14 +1,14 @@
 import {Component, NgZone, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {FileTransfer, FileTransferObject, } from "@ionic-native/file-transfer/ngx";
+import {FileTransfer, FileTransferObject,} from "@ionic-native/file-transfer/ngx";
 import {File} from "@ionic-native/file/ngx";
 import {HTTP} from "@ionic-native/http/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {LoadingController, NavController, Platform} from "@ionic/angular";
 import {TranslateService} from "@ngx-translate/core";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
-import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS, } from "../../constants/constants";
-import {StoryInformation, StoryInformationWithUrl, } from "../../models/storyInformation";
+import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS,} from "../../constants/constants";
+import {StoryInformation, StoryInformationWithUrl,} from "../../models/storyInformation";
 import {UserProfile} from "../../models/userProfile";
 import {AlertService} from "../../services/alert/alert.service";
 import {AuthService} from "../../services/auth/auth.service";
@@ -16,6 +16,7 @@ import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {StoryService} from "../../services/story/story.service";
+import {StoryInformationService} from "../../services/story-information/story-information.service";
 import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
 import { ReviewServiceService } from "src/app/services/review-service.service";
@@ -47,7 +48,7 @@ export class AvailableStoriesPage implements OnInit {
     private router: Router,
     private http: HTTP,
     private translate: TranslateService,
-    private storyService: StoryService,
+    public storyService: StoryService,
     private alert: AlertService,
     private platform: Platform,
     private transfer: FileTransfer,
@@ -58,16 +59,11 @@ export class AvailableStoriesPage implements OnInit {
     private profileService: ProfileService,
     private languageService: LanguageService,
     private firebaseService: FireBaseService,
-    private reviewService: ReviewServiceService
+    private reviewService: ReviewServiceService,
+    private storyInformationService: StoryInformationService
   ) {
   }
 
-  /*
-  ionViewWillEnter() {
-    this.loadDeviceDefaultStories();
-    this.loadPublicStories();
-  }
-   */
   ngOnInit() {
     this.activeUserProfile = this.profileService.getActiveUserProfile();
 
@@ -75,25 +71,12 @@ export class AvailableStoriesPage implements OnInit {
       this.activeUserProfileName = this.activeUserProfile.name;
       this.activeUserProfileAvatarName = this.activeUserProfile.avatar.name;
     }
-    this.loadDeviceDefaultStories();
+    // this.loadDeviceDefaultStories();
     this.loadFirebaseStories();
     // this.loadPublicStories();
+    this.storyService.fetchAvailableStories();
   }
 
-  /**
-   * Loads the (hardcoded) default stories into the availableStories array
-   * TODO Strings per Setter setzen, um im Setter eine Überprüfung des Strings vorzunehmen
-   */
-  async loadDeviceDefaultStories() {
-    const lang = convertSystemLangToAvailableLanguage(
-      this.languageService.selected
-    );
-    const storieForChild = this.activeUserProfile.child;
-    this.availableStories = this.storyService.getUserStoriesByLanguageAndChild(
-      lang,
-      storieForChild
-    );
-  }
 
   goToSelectUserProfile() {
     this.router.navigate(["/select-user-profile"]);
@@ -119,17 +102,17 @@ export class AvailableStoriesPage implements OnInit {
    * Seperated into three variables: key, data and dbNode
    * @author Alexander Stolz
    */
-  increaseCounter(story: StoryInformation | StoryInformationWithUrl){  
+  increaseCounter(story: StoryInformation | StoryInformationWithUrl){
     this.firebaseService.setItem(
-      "stories/"+ 
-      story.elementId+     
+      "stories/" +
+      story.elementId +
       "/",
       "downloadCounter",
-      (story.downloadCounter +1)
+      (story.downloadCounter + 1)
     );
 
     this.installPublicStory(story as StoryInformationWithUrl);
- 
+
     }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
@@ -155,32 +138,9 @@ export class AvailableStoriesPage implements OnInit {
     }
   }
 
-  /**
-   * Load the public stories available from the remote JSON file or an API
-   * specified by the PUBLIC_STORY_URL
-   *
-   * Not used anymore, replaced by loadFirebaseStories()
-   */
-  public loadPublicStories() {
-    console.log("Ime here");
-    const that = this;
-    this.http
-      .get(this.PUBLIC_STORY_URL, {}, {})
-      .then((data) => {
-        // von mir:
-        console.log("public stories ::" + data.data);
-        // von den:
-        const content = (data = JSON.parse(data.data));
-        for (const item of content) {
-          item.medium = CLOUD;
-          that.availableStories.push(item);
-        }
-      })
-      .catch((error) => {
-        console.log("1" + error.status);
-        console.log("2" + error.error); // error message as string
-        console.log("3" + error.headers);
-      });
+  showDetails(story: StoryInformation) {
+    this.storyInformationService.storyInformation = story;
+    this.router.navigate(["/story-details"]);
   }
 
   /**

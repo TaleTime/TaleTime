@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-card class="card" *ngFor="let story of availableStories" >
+  <ion-card class="card" *ngFor="let story of this.storyService.availableStories">
     <div class="cover">
       <ion-icon
         class="noCoverIcon"
@@ -39,6 +39,18 @@
         {{story.shortDescription}}
         <button (click)="goToReview(story)">Mehr Informationen</button>
       </p>
+      <ion-grid>
+        <ion-row justify-content-start>
+          <ion-button (click)="addStory(story)">
+            <ion-icon name="add-circle-outline">
+            </ion-icon>
+          </ion-button>
+          <ion-button (click)="showDetails(story)">
+            <ion-icon name="information-circle">
+            </ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 </ion-content>

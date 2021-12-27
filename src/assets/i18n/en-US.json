@@ -134,5 +134,10 @@
   "STORY_BACK": "Back",
   "PLAY": "Play",
   "PAUSE": "Pause",
-  "TESTACCOUNT_DESCRIPTION": "If you just want to try out our App feel free to use this Test-Account:"
+  "TESTACCOUNT_DESCRIPTION": "If you just want to try out our App feel free to use this Test-Account:",
+  "EDIT_STORY": "Edit story",
+  "TITLE": "title",
+  "AUTHOR": "author",
+  "DESCRIPTION": "description",
+  "DETAILS": "Details"
 }
