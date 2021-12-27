@@ -1,5 +1,7 @@
 import {NgModule} from "@angular/core";
 import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
+import {TabsPageModule} from "./tabs/tabs.module";
+import {TabsPage} from "./tabs/tabs.page";
 import {LoggedInGuard} from "ngx-auth-firebaseui";
 
 export const routes: Routes = [
@@ -43,6 +45,7 @@ export const routes: Routes = [
     canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/player/player.module").then(module => module.PlayerPageModule)
   },
+  // {path: "player:storieId", loadChildren: './pages/player/player.module'},
   {
     path: "select-user-profile",
     canActivate: [LoggedInGuard],
@@ -75,6 +78,12 @@ export const routes: Routes = [
     path: "story-details",
     canActivate: [LoggedInGuard],
     loadChildren: () => import("./pages/story-details/story-details.module").then(module => module.StoryDetailsPageModule)
+  }
+  ,
+  {
+    path: "story-review",
+    canActivate: [LoggedInGuard],
+    loadChildren: () => import("./pages/story-review/story-review.module").then(module => module.StoryReviewModule)
   },
   {
     path: "story-edit",

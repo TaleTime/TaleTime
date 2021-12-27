@@ -1,7 +1,12 @@
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {AngularFireDatabase, AngularFireList,} from "@angular/fire/database";
-import {Observable} from "rxjs";
+import { isPlatformServer } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import {
+  AngularFireDatabase,
+  AngularFireList,
+  AngularFireObject,
+} from "@angular/fire/database";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -9,8 +14,7 @@ import {Observable} from "rxjs";
 export class FireBaseService {
   private dbRef: AngularFireList<any>;
 
-  constructor(private http: HttpClient, private db: AngularFireDatabase) {
-  }
+  constructor(private http: HttpClient, private db: AngularFireDatabase) {}
 
   /**
    * Gets Data from dbNode
@@ -47,4 +51,17 @@ export class FireBaseService {
   public deleteItem(dbNode: string): void {
     this.db.object(dbNode).remove();
   }
+
+  /**
+   * Creates a new element with Automatic Hash ID
+   * @author Alexander Stolz
+   * @param dbNode Path to Parentnode (i.e. users/currentUser)
+   * @param data JSON-Data to commit
+   */
+  public addNewItem(dbNode:string, data:any):string{
+    let ref = this.db.list(dbNode).push(data);
+    return ref.key;
+
+  }
+
 }
