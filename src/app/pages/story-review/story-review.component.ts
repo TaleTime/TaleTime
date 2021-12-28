@@ -7,7 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
-import {FB_PATH_USERS,} from "../../constants/constants";
+import {FB_PATH_USERS} from "../../constants/constants";
 import {Review} from "../../models/review";
 import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
@@ -18,7 +18,7 @@ import {FormBuilder} from "@angular/forms";
   styleUrls: ["./story-review.component.scss"],
 })
 export class StoryReviewComponent implements OnInit {
-  public isLoaded: boolean = true;
+  public isLoaded = true;
   public currentStoryID: string;
   public currentStoryTitle: string;
   activeUserProfileName: string;
@@ -35,8 +35,6 @@ export class StoryReviewComponent implements OnInit {
 
   public availableReview: Array<Review> = [];
 
-  private pathToCurrentUser =
-    FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
   public userId: string = this.authService.currentUserAccount.uid;
 
   constructor(
@@ -101,6 +99,7 @@ export class StoryReviewComponent implements OnInit {
   }
 
   /**
+   * @author Alexander Stolz
    * Add new review for story
    */
   addNewReview(reviewText: string) {
@@ -132,6 +131,7 @@ export class StoryReviewComponent implements OnInit {
   }
 
   /**
+   * @author Alexander Stolz
    * Reload the current page to fetch current data
    */
   reload() {
