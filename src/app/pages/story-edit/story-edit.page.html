@@ -22,6 +22,16 @@
       <ion-label position="stacked">{{'DESCRIPTION' | translate}}</ion-label>
       <ion-input type="text" minlength="5" [(ngModel)]="description" text-right></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Tags</ion-label>
+      <ion-row class="tagRow" align-items-center>
+        <p><span *ngFor="let tag of tags" [ngClass]="'w3-'+tag.color"
+                 class="w3-tag w3-round w3-center">{{tag.name}}</span></p>
+        <ion-button (click)="presentAlertPrompt()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-row>
+    </ion-item>
   </ion-list>
   <ion-button
     expand="block"
