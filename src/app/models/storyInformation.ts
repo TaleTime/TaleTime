@@ -28,6 +28,18 @@ export class Reader {
   answersPartOfAudioFile: boolean;
 }
 
+/**
+ * Tag used in the available storys page
+ * and the editStorysPage.
+ *
+ * The colors attribute should match the
+ * available colors on w3.css, which can be found
+ * here:
+ *
+ * https://www.w3schools.com/w3css/w3css_colors.asp
+ *
+ * (minus the "w3-")
+ */
 export class Tag {
   name: string;
   color: string;

@@ -95,9 +95,11 @@ export class StoryEditPage {
     }
   }
 
+  /**
+   * Sets all n tags and saves them on firebase.
+   */
   setTags() {
     this.setStoryField("tags/", {});
-    console.log("tags sieht so aus::: " + this.tags);
     for (let i = 0; i < this.tags.length; i++) {
       this.setStoryField(`tags/${i}`, {name: this.tags[i].name, color: this.tags[i].color});
     }
@@ -109,7 +111,6 @@ export class StoryEditPage {
   refreshLocalStory() {
     this.fireBaseService.getItemById(FB_PATH_STORIES + "0/").pipe(map((a) => a.payload.toJSON()))
       .subscribe((story: StoryInformation) => {
-        console.log(story.shortDescription);
         this.storyInformationService.storyInformation = story;
       });
   }
@@ -121,7 +122,15 @@ export class StoryEditPage {
     this.router.navigate(["story-details"]);
   }
 
-  async presentAlertPrompt() {
+  /**
+   * Alert in which users can add a new tag.
+   * The color should match any of the w3-color available
+   * colors.
+   *
+   * They are listed here:
+   * https://www.w3schools.com/w3css/w3css_colors.asp
+   */
+  async presentAddTagAlert() {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",
       header: "Prompt!",
@@ -158,12 +167,12 @@ export class StoryEditPage {
     });
 
     await alert.present();
-
-    const {role} = await alert.onDidDismiss();
-    await alert.inputs;
-    console.log("onDidDismiss resolved with role", role);
   }
 
+  /**
+   * Alert to delete a tag. Is shown when a user clicks on a tag.
+   * @param index of the to be deleted tag in the local tag array.
+   */
   async presentAlertConfirm(index: number) {
     const alert = await this.alertController.create({
       cssClass: "my-custom-class",

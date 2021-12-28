@@ -27,7 +27,7 @@
       <ion-row class="tagRow" align-items-center>
         <p><span *ngFor="let tag of tags; let i = index" [attr.data-index]="i" [ngClass]="'w3-'+tag.color"
                  class="w3-tag w3-round w3-center" (click)="presentAlertConfirm(i)">{{tag.name}}</span></p>
-        <ion-button (click)="presentAlertPrompt()">
+        <ion-button (click)="presentAddTagAlert()">
           <ion-icon name="add-outline"></ion-icon>
         </ion-button>
       </ion-row>
