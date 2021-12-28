@@ -96,9 +96,9 @@ export class StoryEditPage {
   }
 
   setTags() {
+    this.setStoryField("tags/", {});
+    console.log("tags sieht so aus::: " + this.tags);
     for (let i = 0; i < this.tags.length; i++) {
-      const tag = `"name": "${this.tags[i].name}", "color": "${this.tags[i].color}"`;
-      console.log(tag);
       this.setStoryField(`tags/${i}`, {name: this.tags[i].name, color: this.tags[i].color});
     }
   }
@@ -163,5 +163,34 @@ export class StoryEditPage {
     await alert.inputs;
     console.log("onDidDismiss resolved with role", role);
   }
+
+  async presentAlertConfirm(index: number) {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: "Delete tag?",
+      message: "Soll der Tag" + this.tags[index].name + " gelöscht werden?",
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirm Cancel");
+          }
+        }, {
+          text: "Delete",
+          handler: () => {
+            if (index > -1) {
+              this.tags.splice(index, 1);
+            }
+            console.log("Confirm Okay");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 }
