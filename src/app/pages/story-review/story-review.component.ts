@@ -7,7 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
-import {FB_PATH_USERS,} from "../../constants/constants";
+// import {FB_PATH_USERS, } from "../../constants/constants";
 import {Review} from "../../models/review";
 import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
@@ -18,7 +18,7 @@ import {FormBuilder} from "@angular/forms";
   styleUrls: ["./story-review.component.scss"],
 })
 export class StoryReviewComponent implements OnInit {
-  public isLoaded: boolean = true;
+  // public isLoaded = true;
   public currentStoryID: string;
   public currentStoryTitle: string;
   activeUserProfileName: string;
@@ -35,8 +35,7 @@ export class StoryReviewComponent implements OnInit {
 
   public availableReview: Array<Review> = [];
 
-  private pathToCurrentUser =
-    FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+  // private pathToCurrentUser = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
   public userId: string = this.authService.currentUserAccount.uid;
 
   constructor(
@@ -59,7 +58,7 @@ export class StoryReviewComponent implements OnInit {
   ngOnInit(): void {
     this.currentStoryID = this.reviewService.storyID;
     this.currentStoryTitle = this.reviewService.storyTitle;
-    this.loadFirebaseStorieReview();
+    this.loadFirebaseStoryReview();
 
     this.activeUserProfile = this.profileService.getActiveUserProfile();
     if (this.activeUserProfile) {
@@ -73,7 +72,7 @@ export class StoryReviewComponent implements OnInit {
    * Loads the review stored under /reviews/ in the FireBase RealtimeDB
    * @author Alexander Stolz
    */
-  loadFirebaseStorieReview() {
+  loadFirebaseStoryReview() {
     this.availableReview = [];
     console.log(this.availableReview.length);
     this.firebaseService.getAllItems("ratings/" + this.currentStoryTitle).pipe(map((action) => action.map((a) => {
@@ -88,7 +87,7 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   goToSelectUserProfile() {
-    this.router.navigate(["/select-user-profile"]);
+    void this.router.navigate(["/select-user-profile"]);
   }
 
 
@@ -97,19 +96,19 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   goToAvailableStories() {
-    this.router.navigate(["/available-stories"]);
+    void this.router.navigate(["/available-stories"]);
   }
 
   /**
    * Add new review for story
    */
   addNewReview(reviewText: string) {
-    let today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const yyyy = today.getFullYear();
 
-    let newStoryReview: Review = {
+    const newStoryReview: Review = {
       author: this.activeUserProfileName,
       authorId: this.userId,
       comment: reviewText,
@@ -118,7 +117,7 @@ export class StoryReviewComponent implements OnInit {
       ratingId: "0"
     };
 
-    let key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
+    const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
 
     newStoryReview.ratingId = key;
 
@@ -135,11 +134,11 @@ export class StoryReviewComponent implements OnInit {
    * Reload the current page to fetch current data
    */
   reload() {
-    let currentUrl = this.router.url;
+    const currentUrl = this.router.url;
     this.router.navigateByUrl("/", {
       skipLocationChange: true
     }).then(() => {
-      this.router.navigate([currentUrl]);
+      void this.router.navigate([currentUrl]);
     });
   }
 
@@ -158,10 +157,10 @@ export class StoryReviewComponent implements OnInit {
   }
 
   /**
-   * Navigates back to the homescreen.
+   * Navigates back to the home-screen.
    */
   goBackToHomeScreen() {
-    this.router.navigate(["/tabs/available-stories"]);
+    void this.router.navigate(["/tabs/available-stories"]);
   }
 
 
