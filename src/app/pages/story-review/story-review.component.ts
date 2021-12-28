@@ -13,7 +13,7 @@ import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
 
 @Component({
-  selector: "app-review",
+  selector: "app-story-review",
   templateUrl: "./story-review.component.html",
   styleUrls: ["./story-review.component.scss"],
 })

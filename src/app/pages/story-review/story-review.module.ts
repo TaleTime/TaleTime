@@ -2,11 +2,11 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule, Routes} from "@angular/router";
-
+import {TranslateModule} from "@ngx-translate/core";
 import {IonicModule} from "@ionic/angular";
 
 import { StoryReviewComponent } from "./story-review.component";
-import {TranslateModule} from "@ngx-translate/core";
+import {DescriptionComponent} from "./description/description.component";
 
 
 const routes: Routes = [
@@ -25,7 +25,7 @@ const routes: Routes = [
     TranslateModule,
     ReactiveFormsModule
   ],
-  declarations: [StoryReviewComponent]
+  declarations: [StoryReviewComponent, DescriptionComponent]
 })
 export class StoryReviewModule {
 }
