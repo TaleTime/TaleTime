@@ -1,3 +1,5 @@
+import {Tag} from "../storyInformation";
+
 export interface PublicStory {
   "mtga-story": {
     attributes: PublicStoryMetaData;
@@ -15,7 +17,7 @@ export class PublicStoryMetaData {
   creator: string;
   medium: string;
   url: string;
-
+  tags: Tag[];
 }
 
 export interface MtgaStoryNode {

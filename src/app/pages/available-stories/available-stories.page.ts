@@ -17,9 +17,8 @@ import {ProfileService} from "../../services/profile/profile.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {StoryService} from "../../services/story/story.service";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
-import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
-import { ReviewServiceService } from "src/app/services/review-service.service";
+import {ReviewServiceService} from "src/app/services/review-service.service";
 
 /**
  * Die Klasse wird momentan als provisorischer Store zum testen genutzt
@@ -88,21 +87,21 @@ export class AvailableStoriesPage implements OnInit {
    * @param story the needed story to get the element id for the sender service
    * @author Alexander Stolz
    */
-  goToReview(story: StoryInformation | StoryInformationWithUrl){
+  goToReview(story: StoryInformation | StoryInformationWithUrl) {
     this.reviewService.storyID = story.elementId;
     this.reviewService.storyTitle = story.title;
     this.router.navigate(["/story-review"]);
   }
 
 
-    /**
+  /**
    * Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
    * @param story transmitted story to create upl URL for changing the value inside the Firebase realtime database
    * Access to function setitem() of the firebase service
    * Seperated into three variables: key, data and dbNode
    * @author Alexander Stolz
    */
-  increaseCounter(story: StoryInformation | StoryInformationWithUrl){
+  increaseCounter(story: StoryInformation | StoryInformationWithUrl) {
     this.firebaseService.setItem(
       "stories/" +
       story.elementId +
@@ -113,7 +112,7 @@ export class AvailableStoriesPage implements OnInit {
 
     this.installPublicStory(story as StoryInformationWithUrl);
 
-    }
+  }
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
     this.increaseCounter(story);

@@ -1,11 +1,12 @@
 import {Component} from "@angular/core";
-import {StoryInformation} from "../../models/storyInformation";
+import {StoryInformation, Tag} from "../../models/storyInformation";
 import {Router} from "@angular/router";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
 import {FireBaseService} from "../../services/firebase/firebaseService";
 import {FB_PATH_STORIES} from "../../constants/constants";
 import {map} from "rxjs/operators";
 import {StoryService} from "../../services/story/story.service";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: "app-story-edit",
@@ -22,11 +23,13 @@ export class StoryEditPage {
   // using authors would retrigger the *for directive
   // of angular on each edit
   tempAuthors: string[];
+  tags: Tag[];
 
   constructor(public router: Router,
               public storyInformationService: StoryInformationService,
               private fireBaseService: FireBaseService,
-              private storyService: StoryService
+              private storyService: StoryService,
+              private alertController: AlertController
   ) {
     // load the currently selected story
     const currentStoryInformation = this.storyInformationService.storyInformation;
@@ -36,6 +39,7 @@ export class StoryEditPage {
     this.description = currentStoryInformation.shortDescription;
     this.authors = currentStoryInformation.author;
     this.tempAuthors = [...currentStoryInformation.author];
+    this.tags = [...currentStoryInformation.tags];
   }
 
   /**
@@ -45,6 +49,7 @@ export class StoryEditPage {
     this.setStoryField("shortDescription", this.description);
     this.setStoryField("title", this.title);
     this.setAuthors();
+    this.setTags();
     this.submitted = true;
 
     this.storyService.fetchAvailableStories();
@@ -66,7 +71,7 @@ export class StoryEditPage {
    * @param fieldName the to be updated field (e.g. date, author, ...)
    * @param value the value to update the field to
    */
-  setStoryField(fieldName: string, value: string) {
+  setStoryField(fieldName: string, value: any) {
     this.fireBaseService.setItem("stories/0/", fieldName, value);
   }
 
@@ -91,12 +96,21 @@ export class StoryEditPage {
   }
 
   /**
+   * Sets all n tags and saves them on firebase.
+   */
+  setTags() {
+    this.setStoryField("tags/", {});
+    for (let i = 0; i < this.tags.length; i++) {
+      this.setStoryField(`tags/${i}`, {name: this.tags[i].name, color: this.tags[i].color});
+    }
+  }
+
+  /**
    * Retrieves the cloud story at index 0 and saves it to the local model.
    */
   refreshLocalStory() {
     this.fireBaseService.getItemById(FB_PATH_STORIES + "0/").pipe(map((a) => a.payload.toJSON()))
       .subscribe((story: StoryInformation) => {
-        console.log(story.shortDescription);
         this.storyInformationService.storyInformation = story;
       });
   }
@@ -107,5 +121,85 @@ export class StoryEditPage {
   goBackToStoryDetails() {
     this.router.navigate(["story-details"]);
   }
+
+  /**
+   * Alert in which users can add a new tag.
+   * The color should match any of the w3-color available
+   * colors.
+   *
+   * They are listed here:
+   * https://www.w3schools.com/w3css/w3css_colors.asp
+   */
+  async presentAddTagAlert() {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: "Prompt!",
+      inputs: [
+        {
+          name: "name",
+          type: "text",
+          placeholder: "Tag name"
+        },
+        {
+          name: "color",
+          type: "text",
+          id: "color",
+          placeholder: "Tag color"
+        },
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirm Cancel");
+          }
+        }, {
+          text: "Create",
+          handler: (alertData) => {
+            const newTag = {name: alertData.name, color: alertData.color} as Tag;
+            this.tags.push(newTag);
+            console.log("Confirm Ok" + newTag.name);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  /**
+   * Alert to delete a tag. Is shown when a user clicks on a tag.
+   * @param index of the to be deleted tag in the local tag array.
+   */
+  async presentAlertConfirm(index: number) {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: "Delete tag?",
+      message: "Soll der Tag" + this.tags[index].name + " gelöscht werden?",
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirm Cancel");
+          }
+        }, {
+          text: "Delete",
+          handler: () => {
+            if (index > -1) {
+              this.tags.splice(index, 1);
+            }
+            console.log("Confirm Okay");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
 
 }

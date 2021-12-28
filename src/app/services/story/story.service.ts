@@ -109,12 +109,19 @@ export class StoryService {
     ));
   }
 
+  public addToArray(value: any) {
+    if (value.tags === undefined) {
+      value.tags = [];
+    }
+    this.availableStories.push(value);
+  }
+
   /**
    * Loads the stories stored under /stories/ in the FireBase RealtimeDB
    */
   public loadFirebaseStories() {
     this.firebaseService.getAllItems("stories").pipe(first())
-      .subscribe(value => value.forEach(e => this.availableStories.push(e.payload.val())),);
+      .subscribe(value => value.forEach(e => this.addToArray(e.payload.val())));
   }
 
   public get stories(): Array<StoryInformation> {
@@ -350,6 +357,7 @@ export class StoryService {
         newStory.readers = storyInformation.readers;
         newStory.medium = storyInformation.medium;
         newStory.child = false;
+        newStory.tags = storyInformation.tags;
 
         arrayOfStories.push(newStory as StoryInformationWithUrl);
       }
