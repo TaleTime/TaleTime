@@ -1,14 +1,14 @@
 import {Component, NgZone, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {FileTransfer, FileTransferObject,} from "@ionic-native/file-transfer/ngx";
+import {FileTransfer, FileTransferObject} from "@ionic-native/file-transfer/ngx";
 import {File} from "@ionic-native/file/ngx";
 import {HTTP} from "@ionic-native/http/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {LoadingController, NavController, Platform} from "@ionic/angular";
 import {TranslateService} from "@ngx-translate/core";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
-import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS,} from "../../constants/constants";
-import {StoryInformation, StoryInformationWithUrl,} from "../../models/storyInformation";
+import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS} from "../../constants/constants";
+import {StoryInformation, StoryInformationWithUrl} from "../../models/storyInformation";
 import {UserProfile} from "../../models/userProfile";
 import {AlertService} from "../../services/alert/alert.service";
 import {AuthService} from "../../services/auth/auth.service";
@@ -95,25 +95,25 @@ export class AvailableStoriesPage implements OnInit {
   }
 
 
-    /**
-   * Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
-   * @param story transmitted story to create upl URL for changing the value inside the Firebase realtime database
-   * Access to function setitem() of the firebase service
-   * Seperated into three variables: key, data and dbNode
-   * @author Alexander Stolz
-   */
-  increaseCounter(story: StoryInformation | StoryInformationWithUrl){
-    this.firebaseService.setItem(
-      "stories/" +
-      story.elementId +
-      "/",
-      "downloadCounter",
-      (story.downloadCounter + 1)
-    );
+/**
+* Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
+* @param story transmitted story to create upl URL for changing the value inside the Firebase realtime database
+* Access to function setitem() of the firebase service
+* Seperated into three variables: key, data and dbNode
+* @author Alexander Stolz
+*/
+increaseCounter(story: StoryInformation | StoryInformationWithUrl){
+this.firebaseService.setItem(
+"stories/" +
+story.elementId +
+"/",
+"downloadCounter",
+(story.downloadCounter + 1)
+);
 
-    this.installPublicStory(story as StoryInformationWithUrl);
+this.installPublicStory(story as StoryInformationWithUrl);
 
-    }
+}
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
     this.increaseCounter(story);
