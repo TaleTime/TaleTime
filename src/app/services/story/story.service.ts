@@ -350,6 +350,7 @@ export class StoryService {
         newStory.readers = storyInformation.readers;
         newStory.medium = storyInformation.medium;
         newStory.child = false;
+        newStory.tags = storyInformation.tags;
 
         arrayOfStories.push(newStory as StoryInformationWithUrl);
       }

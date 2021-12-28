@@ -8,11 +8,28 @@
       "lang": "German",
       "desc": "Hey, ich bin eine Beschreibung von \"Der verlorene Ball\"",
       "child": false,
-      "date":"2016",
-      "creator": ["Sarah Philippi", "Lisa Roisch"],
+      "date": "2016",
+      "creator": [
+        "Sarah Philippi",
+        "Lisa Roisch"
+      ],
       "medium": "device",
-      "readers":[
-        { "name": "Kevin", "answersPartOfAudioFile": true }, { "name": "Raoul", "answersPartOfAudioFile": false }]
+      "readers": [
+        {
+          "name": "Kevin",
+          "answersPartOfAudioFile": true
+        },
+        {
+          "name": "Raoul",
+          "answersPartOfAudioFile": false
+        }
+      ],
+      "tags": [
+        {
+          "name": "Spannend",
+          "farbe": "blue"
+        }
+      ]
     },
     "mtga-story-node": {
       "0": {
