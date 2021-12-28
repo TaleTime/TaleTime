@@ -52,7 +52,7 @@
           </ion-button>
         </ion-row>
         <ion-row class="tagRow">
-          <p><span *ngFor="let tag of story.tags"
+          <p><span *ngFor="let tag of story.tags" [ngClass]="'w3-'+tag.color"
                    class="w3-tag w3-round w3-center">{{tag.name}}</span></p>
         </ion-row>
       </ion-grid>
