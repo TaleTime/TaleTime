@@ -26,8 +26,12 @@
       ],
       "tags": [
         {
-          "name": "Spannend",
-          "farbe": "blue"
+          "name": "Kinder",
+          "color": "blue"
+        },
+        {
+          "name": "Lehrreich",
+          "color": "green"
         }
       ]
     },
