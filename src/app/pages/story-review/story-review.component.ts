@@ -7,7 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
-import {FB_PATH_USERS} from "../../constants/constants";
+
 import {Review} from "../../models/review";
 import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
@@ -103,12 +103,12 @@ export class StoryReviewComponent implements OnInit {
    * Add new review for story
    */
   addNewReview(reviewText: string) {
-    let today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const yyyy = today.getFullYear();
 
-    let newStoryReview: Review = {
+    const newStoryReview: Review = {
       author: this.activeUserProfileName,
       authorId: this.userId,
       comment: reviewText,
@@ -117,7 +117,7 @@ export class StoryReviewComponent implements OnInit {
       ratingId: "0"
     };
 
-    let key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
+    const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
 
     newStoryReview.ratingId = key;
 
@@ -135,13 +135,14 @@ export class StoryReviewComponent implements OnInit {
    * Reload the current page to fetch current data
    */
   reload() {
-    let currentUrl = this.router.url;
+    const currentUrl = this.router.url;
     this.router.navigateByUrl("/", {
       skipLocationChange: true
     }).then(() => {
       this.router.navigate([currentUrl]);
     });
   }
+
 
   /**
    * Delete specific story
