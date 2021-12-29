@@ -6,7 +6,7 @@ import {Storage} from "@ionic/storage";
 import {Observable} from "rxjs";
 import {DEFAULT_READER, DEFAULT_STORIES, SINGLE_STORY_FILE_NAME,} from "../../constants/constants";
 import {ChapterAttributes, MtgaNextStoryNode, MtgaStoryNode, Story, StoryMetaData,} from "../../models/story/story";
-import {StoryInformation, StoryInformationWithUrl,} from "../../models/storyInformation";
+import {StoryInformation, StoryInformationWithUrl} from "../../models/storyInformation";
 import {LoggerService} from "../logger/logger.service";
 import {PublicStoryHelperService} from "../public-story-helper/public-story-helper.service";
 import {SaveGameService} from "../save-game/save-game.service";
