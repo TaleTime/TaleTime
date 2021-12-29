@@ -11,6 +11,8 @@ import {ProfileService} from "../../services/profile/profile.service";
 import {Review} from "../../models/review";
 import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
+import {Subscription} from "rxjs";
+
 
 @Component({
   selector: "app-story-review",
@@ -32,6 +34,7 @@ export class StoryReviewComponent implements OnInit {
     {name: "4", value: 4},
     {name: "5", value: 5}
   ];
+  subscription: Subscription;
 
   public availableReview: Array<Review> = [];
 
@@ -55,9 +58,11 @@ export class StoryReviewComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.currentStoryID = this.reviewService.storyID;
-    this.currentStoryTitle = this.reviewService.storyTitle;
+    this.reviewService.currentStoryId.subscribe(currentStoryId => this.currentStoryID = currentStoryId);
+    if (typeof this.currentStoryID === "undefined"){this.currentStoryID = "0"; }
+    this.reviewService.currentStoryTitle.subscribe(currentStoryTitle => this.currentStoryTitle = currentStoryTitle);
     this.loadFirebaseStorieReview();
+
 
     this.activeUserProfile = this.profileService.getActiveUserProfile();
     if (this.activeUserProfile) {
@@ -72,13 +77,14 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   loadFirebaseStorieReview() {
-    this.availableReview = [];
-    console.log(this.availableReview.length);
-    this.firebaseService.getAllItems("ratings/" + this.currentStoryTitle).pipe(map((action) => action.map((a) => {
+  this.availableReview =  [] as Review[];
+    console.log("__debug: "+this.availableReview.length);
+    this.firebaseService.getAllItems("ratings/" + this.currentStoryID).pipe(map((action) => action.filter((a) => {
       const payload = a.payload.val();
       this.availableReview.push(payload);
     }))).subscribe();
-    console.log(this.availableReview.length);
+    console.log(this.availableReview);
+
   }
 
   /**
@@ -117,16 +123,15 @@ export class StoryReviewComponent implements OnInit {
       ratingId: "0"
     };
 
-    const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
+    const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryID, newStoryReview);
 
     newStoryReview.ratingId = key;
 
     this.firebaseService.setItem(
-      "ratings/" + this.currentStoryTitle + "/" + key + "/",
+      "ratings/" + this.currentStoryID + "/" + key + "/",
       "ratingId",
       key
     );
-
     this.reload();
   }
 
@@ -150,9 +155,8 @@ export class StoryReviewComponent implements OnInit {
    * @param storyId Given story id
    */
   deleteReview(storyId: any) {
-
     this.firebaseService.deleteItem("ratings/" +
-      this.currentStoryTitle +
+      this.currentStoryID +
       "/" + storyId);
     this.reload();
 
@@ -164,6 +168,11 @@ export class StoryReviewComponent implements OnInit {
   goBackToHomeScreen() {
     this.router.navigate(["/tabs/available-stories"]);
   }
+
+  identify(index, item){
+    return item.id;
+  }
+
 
 
 }
