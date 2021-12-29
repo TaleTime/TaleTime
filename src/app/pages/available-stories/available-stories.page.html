@@ -9,48 +9,49 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-card class="card" *ngFor="let story of this.storyService.availableStories">
-    <div class="cover">
-      <ion-icon
-        class="noCoverIcon"
-        *ngIf="!story.cover"
-        name="book"
-        style="font-size: 64px;"
-      ></ion-icon>
-      <ion-img
-        *ngIf="story.cover"
-        src="assets/stories/{{story.folder}}/{{story.cover}}"
-      ></ion-img>
-    </div>
-    <ion-card-content>
-      <ion-card-title>
-        <ion-icon (click)="addStory(story)"
-          name="cloud-download"
-          *ngIf="story.medium === 'cloud'"
-        ></ion-icon>
-        {{story.title}}
-        <p  *ngIf="story.medium === 'cloud'">{{story.downloadCounter}} Downloads</p>
+  <ion-grid>
+    <ion-row *ngFor="let story of this.storyService.availableStories">
+          <ion-card class="card" >
+            <ion-card-content>
+            <ion-grid>
+              <ion-row >
+                <ion-col (click)="goToReview(story)">
+                  <ion-card-title>
+                    <ion-icon (click)="addStory(story)"
+                              name="cloud-download"
+                              *ngIf="story.medium === 'cloud'"
+                    ></ion-icon>
+                    {{story.title}}
 
-      </ion-card-title>
-      <ion-card-subtitle>
-        {{story.author.join(', ')}}
-      </ion-card-subtitle>
-      <p>
-        {{story.shortDescription}}
-        <button (click)="goToReview(story)">Mehr Informationen</button>
-      </p>
-      <ion-grid>
-        <ion-row justify-content-start>
-          <ion-button (click)="addStory(story)">
-            <ion-icon name="add-circle-outline">
-            </ion-icon>
-          </ion-button>
-          <ion-button (click)="showDetails(story)">
-            <ion-icon name="information-circle">
-            </ion-icon>
-          </ion-button>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+
+                  </ion-card-title>
+                </ion-col>
+                <ion-col>
+                  <ion-grid>
+                    <ion-row justify-content-start>
+                      <ion-button (click)="addStory(story)">
+                        <ion-icon name="add-circle-outline">
+                        </ion-icon>
+                      </ion-button>
+                      <ion-button (click)="showDetails(story)">
+
+                        <ion-icon name="information-circle">
+                        </ion-icon>
+                      </ion-button>
+
+                    </ion-row>
+                  </ion-grid>
+                </ion-col>
+
+
+              </ion-row>
+
+            </ion-grid>
+            </ion-card-content>
+          </ion-card>
+
+
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

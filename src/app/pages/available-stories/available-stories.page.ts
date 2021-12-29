@@ -17,7 +17,6 @@ import {ProfileService} from "../../services/profile/profile.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {StoryService} from "../../services/story/story.service";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
-import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
 import { ReviewServiceService } from "src/app/services/review-service.service";
 
@@ -89,8 +88,8 @@ export class AvailableStoriesPage implements OnInit {
    * @author Alexander Stolz
    */
   goToReview(story: StoryInformation | StoryInformationWithUrl){
-    this.reviewService.storyID = story.elementId;
-    this.reviewService.storyTitle = story.title;
+    this.reviewService.changeStoryId(story.elementId);
+    this.reviewService.changeStoryTitle(story.title);
     this.router.navigate(["/story-review"]);
   }
 
@@ -138,10 +137,7 @@ this.installPublicStory(story as StoryInformationWithUrl);
     }
   }
 
-  showDetails(story: StoryInformation) {
-    this.storyInformationService.storyInformation = story;
-    this.router.navigate(["/story-details"]);
-  }
+
 
   /**
    * Loads the stories stored under /stories/ in the FireBase RealtimeDB
@@ -149,7 +145,6 @@ this.installPublicStory(story as StoryInformationWithUrl);
   public loadFirebaseStories() {
     this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
-      console.log(payload.date);
       this.availableStories.push(payload);
     }))).subscribe();
   }
@@ -307,5 +302,14 @@ this.installPublicStory(story as StoryInformationWithUrl);
       this.translate.instant("STORY_ADDED_MSG", {story_title: storyTitle})
     );
     await al.present();
+  }
+
+  /**
+   *
+   * @param story
+   */
+  showDetails(story: StoryInformation) {
+    this.storyInformationService.storyInformation = story;
+    this.router.navigate(["/story-details"]);
   }
 }
