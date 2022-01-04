@@ -1,12 +1,14 @@
 import { isPlatformServer } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+
 import {
   AngularFireDatabase,
   AngularFireList,
   AngularFireObject,
 } from "@angular/fire/database";
 import { Observable } from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -33,6 +35,8 @@ export class FireBaseService {
   public getItemById(dbNode: string): Observable<any> {
     return this.db.object(dbNode).snapshotChanges();
   }
+
+
 
   /**
    * Sets/Updates the information. If the node doesn't exist it gets created

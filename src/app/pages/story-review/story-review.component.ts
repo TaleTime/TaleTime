@@ -7,18 +7,20 @@ import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
-// import {FB_PATH_USERS, } from "../../constants/constants";
+import {FB_PATH_USERS, } from "../../constants/constants";
 import {Review} from "../../models/review";
 import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
+import {Subscription} from "rxjs";
+
 
 @Component({
-  selector: "app-review",
+  selector: "app-story-review",
   templateUrl: "./story-review.component.html",
   styleUrls: ["./story-review.component.scss"],
 })
 export class StoryReviewComponent implements OnInit {
-  // public isLoaded = true;
+  public isLoaded = true;
   public currentStoryID: string;
   public currentStoryTitle: string;
   activeUserProfileName: string;
@@ -32,10 +34,12 @@ export class StoryReviewComponent implements OnInit {
     {name: "4", value: 4},
     {name: "5", value: 5}
   ];
+  subscription: Subscription;
 
   public availableReview: Array<Review> = [];
 
   // private pathToCurrentUser = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+
   public userId: string = this.authService.currentUserAccount.uid;
 
   constructor(
@@ -56,9 +60,12 @@ export class StoryReviewComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.currentStoryID = this.reviewService.storyID;
-    this.currentStoryTitle = this.reviewService.storyTitle;
-    this.loadFirebaseStoryReview();
+    this.reviewService.currentStoryId.subscribe(currentStoryId => this.currentStoryID = currentStoryId);
+    if (typeof this.currentStoryID === "undefined"){this.currentStoryID = "0"; }
+    this.reviewService.currentStoryTitle.subscribe(currentStoryTitle => this.currentStoryTitle = currentStoryTitle);
+    this.loadFirebaseStorieReview();
+
+
 
     this.activeUserProfile = this.profileService.getActiveUserProfile();
     if (this.activeUserProfile) {
@@ -72,14 +79,17 @@ export class StoryReviewComponent implements OnInit {
    * Loads the review stored under /reviews/ in the FireBase RealtimeDB
    * @author Alexander Stolz
    */
-  loadFirebaseStoryReview() {
-    this.availableReview = [];
-    console.log(this.availableReview.length);
-    this.firebaseService.getAllItems("ratings/" + this.currentStoryTitle).pipe(map((action) => action.map((a) => {
+
+  loadFirebaseStorieReview() {
+  this.availableReview =  [] as Review[];
+    console.log("__debug: "+this.availableReview.length);
+    this.firebaseService.getAllItems("ratings/" + this.currentStoryID).pipe(map((action) => action.filter((a) => {
+
       const payload = a.payload.val();
       this.availableReview.push(payload);
     }))).subscribe();
-    console.log(this.availableReview.length);
+    console.log(this.availableReview);
+
   }
 
   /**
@@ -100,6 +110,7 @@ export class StoryReviewComponent implements OnInit {
   }
 
   /**
+   * @author Alexander Stolz
    * Add new review for story
    */
   addNewReview(reviewText: string) {
@@ -117,20 +128,21 @@ export class StoryReviewComponent implements OnInit {
       ratingId: "0"
     };
 
-    const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryTitle, newStoryReview);
+    const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryID, newStoryReview);
+
 
     newStoryReview.ratingId = key;
 
     this.firebaseService.setItem(
-      "ratings/" + this.currentStoryTitle + "/" + key + "/",
+      "ratings/" + this.currentStoryID + "/" + key + "/",
       "ratingId",
       key
     );
-
     this.reload();
   }
 
   /**
+   * @author Alexander Stolz
    * Reload the current page to fetch current data
    */
   reload() {
@@ -142,15 +154,15 @@ export class StoryReviewComponent implements OnInit {
     });
   }
 
+
   /**
    * Delete specific story
    * @author Alexander Stolz
    * @param storyId Given story id
    */
   deleteReview(storyId: any) {
-
     this.firebaseService.deleteItem("ratings/" +
-      this.currentStoryTitle +
+      this.currentStoryID +
       "/" + storyId);
     this.reload();
 
@@ -162,6 +174,11 @@ export class StoryReviewComponent implements OnInit {
   goBackToHomeScreen() {
     void this.router.navigate(["/tabs/available-stories"]);
   }
+
+  identify(index, item){
+    return item.id;
+  }
+
 
 
 }

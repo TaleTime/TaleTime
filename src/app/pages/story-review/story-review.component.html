@@ -12,7 +12,9 @@
 </ion-header>
 
 
+
 <ion-content class="content">
+  <app-description></app-description>
   <ion-card class="card">
 
 
@@ -54,10 +56,10 @@
   </ion-card>
 
 
-  <div *ngFor="let review of availableReview">
+  <div *ngFor="let review of availableReview; trackBy:identify">
     <ion-card class="card">
 
-      <ion-card-content *ngIf="review.storyId === currentStoryID">
+      <ion-card-content>
 
 
         <ion-card-title>

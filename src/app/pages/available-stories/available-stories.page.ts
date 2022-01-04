@@ -1,14 +1,14 @@
 import {Component, NgZone, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {FileTransfer, FileTransferObject,} from "@ionic-native/file-transfer/ngx";
+import {FileTransfer, FileTransferObject} from "@ionic-native/file-transfer/ngx";
 import {File} from "@ionic-native/file/ngx";
 import {HTTP} from "@ionic-native/http/ngx";
 import {Zip} from "@ionic-native/zip/ngx";
 import {LoadingController, NavController, Platform} from "@ionic/angular";
 import {TranslateService} from "@ngx-translate/core";
 import {FireBaseService} from "src/app/services/firebase/firebaseService";
-import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS,} from "../../constants/constants";
-import {StoryInformation, StoryInformationWithUrl,} from "../../models/storyInformation";
+import {CLOUD, FB_PATH_STORIES, FB_PATH_USERS} from "../../constants/constants";
+import {StoryInformation, StoryInformationWithUrl} from "../../models/storyInformation";
 import {UserProfile} from "../../models/userProfile";
 import {AlertService} from "../../services/alert/alert.service";
 import {AuthService} from "../../services/auth/auth.service";
@@ -17,7 +17,6 @@ import {ProfileService} from "../../services/profile/profile.service";
 import {SimpleToastService} from "../../services/simple-toast/simple-toast.service";
 import {StoryService} from "../../services/story/story.service";
 import {StoryInformationService} from "../../services/story-information/story-information.service";
-import {convertSystemLangToAvailableLanguage} from "../../Util/UtilLanguage";
 import {map} from "rxjs/operators";
 import { ReviewServiceService } from "src/app/services/review-service.service";
 
@@ -89,31 +88,31 @@ export class AvailableStoriesPage implements OnInit {
    * @author Alexander Stolz
    */
   goToReview(story: StoryInformation | StoryInformationWithUrl){
-    this.reviewService.storyID = story.elementId;
-    this.reviewService.storyTitle = story.title;
+    this.reviewService.changeStoryId(story.elementId);
+    this.reviewService.changeStoryTitle(story.title);
     this.router.navigate(["/story-review"]);
   }
 
 
-    /**
-   * Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
-   * @param story transmitted story to create upl URL for changing the value inside the Firebase realtime database
-   * Access to function setitem() of the firebase service
-   * Seperated into three variables: key, data and dbNode
-   * @author Alexander Stolz
-   */
-  increaseCounter(story: StoryInformation | StoryInformationWithUrl){
-    this.firebaseService.setItem(
-      "stories/" +
-      story.elementId +
-      "/",
-      "downloadCounter",
-      (story.downloadCounter + 1)
-    );
+/**
+* Increases property 'downloadCoutner' of stories, if a new cloud version has been downloaded
+* @param story transmitted story to create upl URL for changing the value inside the Firebase realtime database
+* Access to function setitem() of the firebase service
+* Seperated into three variables: key, data and dbNode
+* @author Alexander Stolz
+*/
+increaseCounter(story: StoryInformation | StoryInformationWithUrl){
+this.firebaseService.setItem(
+"stories/" +
+story.elementId +
+"/",
+"downloadCounter",
+(story.downloadCounter + 1)
+);
 
-    this.installPublicStory(story as StoryInformationWithUrl);
+this.installPublicStory(story as StoryInformationWithUrl);
 
-    }
+}
 
   addStory(story: StoryInformation | StoryInformationWithUrl) {
     this.increaseCounter(story);
@@ -138,10 +137,7 @@ export class AvailableStoriesPage implements OnInit {
     }
   }
 
-  showDetails(story: StoryInformation) {
-    this.storyInformationService.storyInformation = story;
-    this.router.navigate(["/story-details"]);
-  }
+
 
   /**
    * Loads the stories stored under /stories/ in the FireBase RealtimeDB
@@ -149,7 +145,6 @@ export class AvailableStoriesPage implements OnInit {
   public loadFirebaseStories() {
     this.firebaseService.getAllItems("stories").pipe(map((action) => action.map((a) => {
       const payload = a.payload.val();
-      console.log(payload.date);
       this.availableStories.push(payload);
     }))).subscribe();
   }
@@ -307,5 +302,14 @@ export class AvailableStoriesPage implements OnInit {
       this.translate.instant("STORY_ADDED_MSG", {story_title: storyTitle})
     );
     await al.present();
+  }
+
+  /**
+   *
+   * @param story
+   */
+  showDetails(story: StoryInformation) {
+    this.storyInformationService.storyInformation = story;
+    this.router.navigate(["/story-details"]);
   }
 }

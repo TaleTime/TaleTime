@@ -1,0 +1,28 @@
+  <ion-card class="card">
+    <ion-img
+      src="{{coverUrl}}"
+      style="width:200px; height: auto; margin:0 auto"
+    ></ion-img>
+
+    <ion-card-header>
+      <ion-card-subtitle>Bereits &nbsp;{{downloadCounter}}-mal heruntergeladen</ion-card-subtitle>
+      <ion-card-title>{{storyTitle}}</ion-card-title>
+
+      <ion-chip *ngFor="let a of storyAuthor">
+        <ion-icon name="person-outline" color="dark"></ion-icon>
+        <ion-label>{{a}}</ion-label>
+      </ion-chip>
+
+    </ion-card-header>
+
+
+
+    <ion-card-content>
+      {{shortDescription}}
+    </ion-card-content>
+
+    <ion-chip *ngFor="let c of storyCategory" color="primary" outline>
+      <ion-label>{{c}}</ion-label>
+    </ion-chip>
+  </ion-card>
+
