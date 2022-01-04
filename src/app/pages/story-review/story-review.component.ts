@@ -7,7 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {AuthService} from "../../services/auth/auth.service";
 import {LanguageService} from "../../services/language/language.service";
 import {ProfileService} from "../../services/profile/profile.service";
-
+import {FB_PATH_USERS, } from "../../constants/constants";
 import {Review} from "../../models/review";
 import {map} from "rxjs/operators";
 import {FormBuilder} from "@angular/forms";
@@ -38,6 +38,8 @@ export class StoryReviewComponent implements OnInit {
 
   public availableReview: Array<Review> = [];
 
+  // private pathToCurrentUser = FB_PATH_USERS + this.authService.currentUserAccount.uid + "/";
+
   public userId: string = this.authService.currentUserAccount.uid;
 
   constructor(
@@ -64,6 +66,7 @@ export class StoryReviewComponent implements OnInit {
     this.loadFirebaseStorieReview();
 
 
+
     this.activeUserProfile = this.profileService.getActiveUserProfile();
     if (this.activeUserProfile) {
       this.activeUserProfileName = this.activeUserProfile.name;
@@ -76,10 +79,12 @@ export class StoryReviewComponent implements OnInit {
    * Loads the review stored under /reviews/ in the FireBase RealtimeDB
    * @author Alexander Stolz
    */
+
   loadFirebaseStorieReview() {
   this.availableReview =  [] as Review[];
     console.log("__debug: "+this.availableReview.length);
     this.firebaseService.getAllItems("ratings/" + this.currentStoryID).pipe(map((action) => action.filter((a) => {
+
       const payload = a.payload.val();
       this.availableReview.push(payload);
     }))).subscribe();
@@ -92,7 +97,7 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   goToSelectUserProfile() {
-    this.router.navigate(["/select-user-profile"]);
+    void this.router.navigate(["/select-user-profile"]);
   }
 
 
@@ -101,7 +106,7 @@ export class StoryReviewComponent implements OnInit {
    * @author Alexander Stolz
    */
   goToAvailableStories() {
-    this.router.navigate(["/available-stories"]);
+    void this.router.navigate(["/available-stories"]);
   }
 
   /**
@@ -125,6 +130,7 @@ export class StoryReviewComponent implements OnInit {
 
     const key = this.firebaseService.addNewItem("ratings/" + this.currentStoryID, newStoryReview);
 
+
     newStoryReview.ratingId = key;
 
     this.firebaseService.setItem(
@@ -144,7 +150,7 @@ export class StoryReviewComponent implements OnInit {
     this.router.navigateByUrl("/", {
       skipLocationChange: true
     }).then(() => {
-      this.router.navigate([currentUrl]);
+      void this.router.navigate([currentUrl]);
     });
   }
 
@@ -163,10 +169,10 @@ export class StoryReviewComponent implements OnInit {
   }
 
   /**
-   * Navigates back to the homescreen.
+   * Navigates back to the home-screen.
    */
   goBackToHomeScreen() {
-    this.router.navigate(["/tabs/available-stories"]);
+    void this.router.navigate(["/tabs/available-stories"]);
   }
 
   identify(index, item){
